@@ -1,36 +1,84 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>@yield('title', 'IZICAR')</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f8fb;
+    }
+    .sidebar {
+      width: 220px;
+      background: #14213d;
+      color: #fff;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .sidebar .logo { font-size: 20px; font-weight: bold; text-align: center; padding: 20px; background: #1f2d50; }
+    .sidebar ul { list-style: none; padding: 0; margin: 0; }
+    .sidebar ul li { padding: 12px 20px; cursor: pointer; }
+    .sidebar ul li a { color: #fff; text-decoration: none }
+    .sidebar ul li:hover { background: #1f2d50; }
+    .sidebar .bottom { padding: 20px; font-size: 14px; border-top: 1px solid rgba(255,255,255,0.2); }
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    .main { margin-left: 220px; padding: 20px; }
+    .page-header { font-size: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+    .search-box { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 250px; }
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    table { width: 100%; border-collapse: collapse; background: #fff; }
+    th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: left; font-size: 14px; }
+    th { background: #f1f3f5; }
+    tr:hover { background: #f9fafc; }
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    .btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .btn-add { background: #28a745; color: #fff; text-decoration: none; }
+    .btn-edit { background: #007bff; color: #fff; text-decoration: none; }
+    .btn-delete { background: #dc3545; color: #fff; }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div>
+      <div class="logo">IZICAR</div>
+      <ul>
+        <li>
+            <a href="{{route('clients.index')}}">Клиенты</a>
+        </li>
+        <li>Автомобили</li>
+        <li>Заказы</li>
+        <li>Просценка</li>
+        <li>Склад</li>
+        <li>Черновики</li>
+        <li>Деньги</li>
+        <li>Отчеты</li>
+        <li>Звонки</li>
+        <li>Чаты</li>
+      </ul>
+    </div>
+    <div class="bottom">
+      Поддержка<br>
+      Управление<br><br>
+      {{ Auth::user()->name ?? 'Гость' }}
+    </div>
+  </div>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+  <!-- Main Content -->
+  <div class="main">
+    @yield('content')
+  </div>
+</body>
 </html>

@@ -16,7 +16,9 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+
+Route::resource('clients', ClientController::class);
+
 
 
 
