@@ -133,7 +133,7 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <h2>IZICAR</h2>
-    <a href="#">Клиенты</a>
+    <a href="{{route('clients.index')}}">Клиенты</a>
     <a href="#">Автомобили</a>
     <a href="#">Заказы</a>
     <a href="#">Проценка</a>
