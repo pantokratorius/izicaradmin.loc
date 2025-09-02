@@ -199,12 +199,17 @@
                             <td onclick="openOrderModal({{ $order }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td onclick="openOrderModal({{ $order }})">{{ $order->mileage ?? '-' }}</td>
                             <td>
-
+                        <button   onclick="openOrderItemModal({{ $order->id }})"
+                            style="background:#2ddf6b;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-bottom: 5px">
+                        Добавить позиции
+                    </button>
+                  @if($client->orders->count())
                     <button id="toggle-btn-{{ $order->id }}"
                             onclick="toggleItems({{ $order->id }})"
                             style="background:#2d6cdf;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-bottom: 5px">
                         Показать позиции
                     </button>
+                  @endif
             <form
                   action="{{ route('orders.destroy', $order->id) }}"
                   method="POST" style="">
@@ -248,7 +253,15 @@
                     </td>
                 </tr>
             @endif
-
+@if($errors->any())
+    <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+        <ul style="margin:0; padding-left: 20px;">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                     @endforeach
                 </tbody>
             </table>
@@ -331,6 +344,43 @@
     </div>
 </div>
 
+<!-- OrderItem Modal -->
+<div id="orderItemModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('orderItemModal')">&times;</span>
+        <h3 id="orderItemModalTitle">Добавить позицию</h3>
+        <form id="orderItemForm" method="POST" action="{{ route('ordersitem.store') }}">
+            @csrf
+            <input type="hidden" name="order_id" id="orderItem_order_id" value="">
+
+            <div style="margin-bottom:10px;">
+                <label>Наименование</label>
+                <input type="text" name="part_name" id="orderItem_part_name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Цена закупки</label>
+                <input type="text" name="purchase_price" id="orderItem_purchase_price" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Цена продажи</label>
+                <input type="text" name="sale_price" id="orderItem_sale_price" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Поставщик</label>
+                <input type="text" name="supplier" id="orderItem_supplier" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Предоплата</label>
+                <input type="text" name="prepayment" id="orderItem_prepayment" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Количество</label>
+                <input type="number" name="quantity" id="orderItem_quantity" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
+            <button type="submit" class="btn">Сохранить</button>
+        </form>
+    </div>
+</div>
 <script>
 const tabs = document.querySelectorAll('.tab');
 const contents = document.querySelectorAll('.tab-content');
@@ -453,6 +503,33 @@ toggleBtn.addEventListener('click', () => {
         toggleBtn.textContent = 'Показать форму';
     }
 });
+
+function openOrderItemModal(orderId, item = null) {
+    const form = document.getElementById('orderItemForm');
+    document.getElementById('orderItem_order_id').value = orderId;
+
+    if(item) {
+        document.getElementById('orderItemModalTitle').innerText = 'Редактировать позицию';
+        form.action = '/ordersitem/' + item.id;
+        if(!form.querySelector('[name="_method"]')) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_method';
+            input.value = 'PUT';
+            form.appendChild(input);
+        }
+        ['part_name','purchase_price','sale_price','supplier','prepayment','quantity'].forEach(field => {
+            document.getElementById('orderItem_' + field).value = item[field] ?? '';
+        });
+    } else {
+        document.getElementById('orderItemModalTitle').innerText = 'Добавить позицию';
+        form.action = '{{ route("ordersitem.store") }}';
+        form.method = 'POST';
+        form.querySelectorAll('input').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
+    }
+    openModal('orderItemModal');
+}
+
 
 </script>
 

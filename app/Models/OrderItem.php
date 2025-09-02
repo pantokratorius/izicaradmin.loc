@@ -21,6 +21,11 @@ class OrderItem extends Model
         'status',
     ];
 
+
+    protected $attributes = [
+        'prepayment' => 0,
+    ];
+
     // Связь: одна запчасть принадлежит одному заказу
     public function order(): BelongsTo
     {

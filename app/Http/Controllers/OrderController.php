@@ -49,7 +49,7 @@ class OrderController extends Controller
         try {
             Order::create($request->all());
             return redirect()->back()->with('success', 'Заказ добавлен')->with('active_tab', 'orders');
-            
+
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Заказ не добавлен')->with('active_tab', 'orders');
         }
@@ -96,15 +96,11 @@ class OrderController extends Controller
 try {
             $order->update($request->all());
             return redirect()->back()->with('success', 'Заказ обновлен')->with('active_tab', 'orders');
-            
+
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Заказ не обновлен')->with('active_tab', 'orders');
         }
 
-
-        $order->update($request->all());
-
-        return redirect()->route('orders.index')->with('success', 'Order updated successfully.');
     }
 
     /**
