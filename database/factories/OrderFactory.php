@@ -21,6 +21,7 @@ class OrderFactory extends Factory
             'order_number' => $this->faker->unique()->numerify('ORD###'),
             'amount'       => $this->faker->randomFloat(2, 1000, 100000),
             'created_at' => $this->faker->dateTimeBetween('-1 years', 'now'),
+
             'vehicle_id'   => $hasVehicle ? Vehicle::inRandomOrder()->first()?->id : null,
             'client_id'    => $hasVehicle
                              ? Vehicle::inRandomOrder()->first()?->client_id // vehicle owner

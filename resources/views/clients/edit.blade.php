@@ -9,7 +9,9 @@
     .tab.active { background: #fff; font-weight: bold; border-top: 2px solid #14213d; }
     .tab-content { border: 1px solid #ccc; padding: 10px; background: #fff; display: none; }
     .tab-content.active { display: block; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; max-height: 300px; overflow-y: auto; display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px;
+        /* max-height: 300px;  */
+        overflow-y: auto; display: block; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; white-space: nowrap; }
     th { background: #eee; position: sticky; top: 0; }
     .btn { padding: 5px 10px; background: #14213d; color: #fff; border-radius: 4px; text-decoration: none; margin-bottom: 10px; display: inline-block; }
@@ -23,6 +25,10 @@
     <div>Клиенты > Редактировать</div>
 </div>
 
+
+<button id="toggleClientForm" class="btn" style="margin-bottom:10px;">Показать форму</button>
+
+<div id="clientFormContainer" style= "display: none">
 <form method="POST" action="{{ route('clients.update', $client->id) }}" style="background:#fff;padding:20px;border-radius:6px;margin-bottom:20px;">
     @csrf
     @method('PUT')
@@ -69,15 +75,15 @@
         @error('discount') <small style="color:red">{{ $message }}</small> @enderror
     </div>
     <button type="submit" style="background:#14213d;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Обновить</button>
-    <form id="delete-client-{{ $client->id }}" 
-        action="{{ route('clients.destroy', $client->id) }}" 
+    <form id="delete-client-{{ $client->id }}"
+        action="{{ route('clients.destroy', $client->id) }}"
         method="POST" style="display: none;">
       @csrf
       @method('DELETE')
       <button onclick="if(!confirm('Удалить клиента?')) return false " class="delete_client" data-id="{{$client->id}}" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
   </form>
 </form>
-
+</div>
 <!-- Tabs -->
 <div>
     <div class="tabs">
@@ -127,19 +133,19 @@
                     @foreach($client->vehicles ?? [] as $vehicle)
                         <tr style="cursor:pointer;" >
                             <td onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->vin }}</td>
-                            <td>{{ $vehicle->vehicle_type }}</td>
-                            <td>{{ $vehicle->brand }}</td>
-                            <td>{{ $vehicle->model }}</td>
-                            <td>{{ $vehicle->generation ?? '-' }}</td>
-                            <td>{{ $vehicle->body ?? '-' }}</td>
-                            <td>{{ $vehicle->modification ?? '-' }}</td>
-                            <td>{{ $vehicle->registration_number ?? '-' }}</td>
-                            <td>{{ $vehicle->sts ?? '-' }}</td>
-                            <td>{{ $vehicle->pts ?? '-' }}</td>
-                            <td>{{ $vehicle->year_of_manufacture }}</td>
-                            <td>{{ $vehicle->engine_type }}</td>
-                            <td><form 
-                  action="{{ route('vehicles.destroy', $vehicle->id) }}" 
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->brand }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->model }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->generation ?? '-' }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->body ?? '-' }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->modification ?? '-' }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->registration_number ?? '-' }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->sts ?? '-' }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->pts ?? '-' }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->year_of_manufacture }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->engine_type }}</td>
+                            <td><form
+                  action="{{ route('vehicles.destroy', $vehicle->id) }}"
                   method="POST" style="">
                     @csrf
                     @method('DELETE')
@@ -154,7 +160,7 @@
 
     <!-- Orders tab -->
 
-    
+
     <div id="orders" class="tab-content">
         <a href="javascript:void(0)" class="btn" onclick="openOrderModal()">Добавить заказ</a>
         @if($client->orders->isEmpty())
@@ -170,7 +176,7 @@
         <div class="errorMessage" style="background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
           {{ session('error') }}
         </div>
-      @endif  
+      @endif
             <table>
                 <thead>
                     <tr>
@@ -187,19 +193,62 @@
                     @foreach($client->orders ?? [] as $order)
                         <tr style="cursor:pointer;" >
                             <td onclick="openOrderModal({{ $order }})">{{ $order->order_number }}</td>
-                            <td>{{ $order->amount }}</td>
-                            <td>{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
-                            <td>{{ $order->vehicle ? $order->vehicle->brand.' '.$order->vehicle->model : '-' }}</td>
-                            <td>{{ $order->manager ? $order->manager->name : '-' }}</td>
-                            <td>{{ $order->mileage ?? '-' }}</td>
-                            <td><form  
-                  action="{{ route('orders.destroy', $order->id) }}" 
+                            <td onclick="openOrderModal({{ $order }})">{{ $order->amount }}</td>
+                            <td onclick="openOrderModal({{ $order }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
+                            <td onclick="openOrderModal({{ $order }})">{{ $order->vehicle ? $order->vehicle->brand.' '.$order->vehicle->model : '-' }}</td>
+                            <td onclick="openOrderModal({{ $order }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
+                            <td onclick="openOrderModal({{ $order }})">{{ $order->mileage ?? '-' }}</td>
+                            <td>
+
+                    <button id="toggle-btn-{{ $order->id }}"
+                            onclick="toggleItems({{ $order->id }})"
+                            style="background:#2d6cdf;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-bottom: 5px">
+                        Показать позиции
+                    </button>
+            <form
+                  action="{{ route('orders.destroy', $order->id) }}"
                   method="POST" style="">
                     @csrf
                     @method('DELETE')
                     <button onclick="if(!confirm('Удалить заказ?')) return false" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
                 </form></td>
                         </tr>
+
+ @if($order->items->count())
+                <tr>
+                    <td colspan="7" style="padding:0; border:none;">
+                        <div id="order-items-{{ $order->id }}" class="accordion-content">
+                            <table style="width:100%; border:1px solid #ccc;">
+                                <thead>
+                                    <tr style="background:#f0f0f0;">
+                                        <th>Наименование</th>
+                                        <th>Цена закупки</th>
+                                        <th>Цена продажи</th>
+                                        <th>Поставщик</th>
+                                        <th>Предоплата</th>
+                                        <th>Количество</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($order->items as $item)
+                                        <tr>
+                                            <td>{{ $item->part_name }}</td>
+                                            <td>{{ $item->purchase_price }}</td>
+                                            <td>{{ $item->sale_price }}</td>
+                                            <td>{{ $item->supplier }}</td>
+                                            <td>{{ $item->prepayment }}</td>
+                                            <td>{{ $item->quantity }}</td>
+                                            <td>{{ $item->status }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            @endif
+
                     @endforeach
                 </tbody>
             </table>
@@ -231,7 +280,7 @@
               @endforeach
               <button type="submit" class="btn" style="color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Сохранить</button>
             </form>
-              
+
     </div>
 </div>
 
@@ -310,9 +359,9 @@ window.onclick = function(event) {
 }
 
 // Vehicle modal open for edit or add
-function openVehicleModal(vehicle = null) { 
- 
-  
+function openVehicleModal(vehicle = null) {
+
+
     const form = document.getElementById('vehicleForm');
     if(vehicle) {
         document.getElementById('vehicleModalTitle').innerText = 'Редактировать автомобиль';
@@ -366,7 +415,7 @@ function openOrderModal(order = null) {
   setTimeout(() => {
       const success = document.querySelectorAll('.successMessage');
       const error = document.querySelectorAll('.errorMessage');
-      if (success){ 
+      if (success){
          [...success].forEach(item => {
           item.style.display = 'none';
         })
@@ -378,5 +427,51 @@ function openOrderModal(order = null) {
       }
   }, 2000);
 
+function toggleItems(orderId) {
+    let block = document.getElementById('order-items-' + orderId);
+    let btn = document.getElementById('toggle-btn-' + orderId);
+
+    block.classList.toggle('open');
+
+    if (block.classList.contains('open')) {
+        btn.textContent = 'Скрыть позиции';
+    } else {
+        btn.textContent = 'Показать позиции';
+    }
+}
+
+
+const toggleBtn = document.getElementById('toggleClientForm');
+const clientForm = document.getElementById('clientFormContainer');
+
+toggleBtn.addEventListener('click', () => {
+    if(clientForm.style.display === 'none' || clientForm.style.maxHeight === '0px') {
+        clientForm.style.display = 'block';
+        toggleBtn.textContent = 'Скрыть форму';
+    } else {
+        clientForm.style.display = 'none';
+        toggleBtn.textContent = 'Показать форму';
+    }
+});
+
 </script>
+
+<style>
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0;
+}
+.accordion-content.open {
+    padding: 10px 0;
+    max-height: 500px; /* достаточно большое значение */
+}
+
+
+#clientFormContainer {
+    transition: max-height 0.4s ease, padding 0.3s ease;
+}
+</style>
+
 @endsection
