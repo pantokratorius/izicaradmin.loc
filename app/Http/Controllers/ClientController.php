@@ -86,6 +86,6 @@ public function destroy($id)
 {
     DB::table('clients')->where('id', $id)->delete();
 
-    return redirect()->route('clients.index')->with('success', 'Клиент удалён!');
+    return redirect()->route('clients.index')->with('success', 'Клиент удален');
 }
 }

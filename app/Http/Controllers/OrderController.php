@@ -37,17 +37,23 @@ class OrderController extends Controller
     {
         $request->validate([
             'order_number' => 'required|unique:orders,order_number',
-            'amount'       => 'required|numeric',
-            'created_at'   => 'required|date',
+            'amount'       => 'nullable|numeric',
+            'created_at'   => 'nullable|date',
             'vehicle_id'   => 'nullable|exists:vehicles,id',
             'client_id'    => 'nullable|exists:clients,id',
             'manager_id'   => 'nullable|exists:users,id',
             'mileage'      => 'nullable|integer',
         ]);
 
-        Order::create($request->all());
+// dd($request->all());
+        try {
+            Order::create($request->all());
+            return redirect()->back()->with('success', 'Заказ добавлен')->with('active_tab', 'orders');
+            
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Заказ не добавлен')->with('active_tab', 'orders');
+        }
 
-        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     }
 
     /**
@@ -77,13 +83,24 @@ class OrderController extends Controller
     {
         $request->validate([
             'order_number' => 'required|unique:orders,order_number,' . $order->id,
-            'amount'       => 'required|numeric',
-            'created_at'   => 'required|date',
+            'amount'       => 'nullable|numeric',
+            'created_at'   => 'nullable|date',
             'vehicle_id'   => 'nullable|exists:vehicles,id',
             'client_id'    => 'nullable|exists:clients,id',
             'manager_id'   => 'nullable|exists:users,id',
             'mileage'      => 'nullable|integer',
         ]);
+
+
+
+try {
+            $order->update($request->all());
+            return redirect()->back()->with('success', 'Заказ обновлен')->with('active_tab', 'orders');
+            
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Заказ не обновлен')->with('active_tab', 'orders');
+        }
+
 
         $order->update($request->all());
 
@@ -96,6 +113,6 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
-        return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
+        return redirect()->back()->with('success', 'Заказ удален')->with('active_tab', 'orders');
     }
 }

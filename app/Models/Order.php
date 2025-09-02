@@ -12,12 +12,14 @@ class Order extends Model
     protected $fillable = [
         'order_number',
         'amount',
-        'created_at_order',
+        'created_at',
         'vehicle_id',
         'client_id',
         'manager_id',
         'mileage',
     ];
+
+
 
     // An order may belong to a vehicle (optional)
     public function vehicle()

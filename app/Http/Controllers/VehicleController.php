@@ -21,18 +21,19 @@ class VehicleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'client_id' => 'required|exists:clients,id',
-            'vin' => 'required|unique:vehicles',
-            'vehicle_type' => 'required',
-            'brand' => 'required',
-            'model' => 'required',
-            'year_of_manufacture' => 'required|integer',
-            'engine_type' => 'required',
+            'client_id' => 'required',
+            'vin' => 'unique:vehicles',
+            'year_of_manufacture' => 'integer|nullable',
         ]);
 
-        Vehicle::create($request->all());
-
-        return redirect()->back()->with('success', 'Транспортное средство добавлено');
+        try {
+            Vehicle::create($request->all());
+            return redirect()->back()->with('success', 'Транспортное средство добавлено');
+            
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Транспортное средство не добавлено');
+        }
+        
     }
 
     public function show(Vehicle $vehicle)

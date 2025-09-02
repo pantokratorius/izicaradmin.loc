@@ -22,6 +22,7 @@ class Vehicle extends Model
         'pts',
         'year_of_manufacture',
         'engine_type',
+        'client_id',
     ];
 
 

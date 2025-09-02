@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('first_name');   // имя
             $table->string('last_name')->nullable();    // фамилия
             $table->string('middle_name')->nullable(); // отчество
-            $table->string('phone')->unique(); // телефон
-            $table->string('email')->unique(); // email
+            $table->string('phone')->unique()->nullable(); // телефон
+            $table->string('email')->unique()->nullable(); // email
             $table->string('segment')->nullable(); // сегмент
-            $table->decimal('discount', 5, 2)->default(0); // скидка (например, 10.50%)
+            $table->decimal('discount', 5, 2)->default(0)->nullable(); // скидка (например, 10.50%)
             
             $table->timestamps();
         });

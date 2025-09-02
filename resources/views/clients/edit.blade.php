@@ -69,6 +69,13 @@
         @error('discount') <small style="color:red">{{ $message }}</small> @enderror
     </div>
     <button type="submit" style="background:#14213d;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Обновить</button>
+    <form id="delete-client-{{ $client->id }}" 
+        action="{{ route('clients.destroy', $client->id) }}" 
+        method="POST" style="display: none;">
+      @csrf
+      @method('DELETE')
+      <button onclick="if(!confirm('Удалить клиента?')) return false " class="delete_client" data-id="{{$client->id}}" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
+  </form>
 </form>
 
 <!-- Tabs -->
@@ -78,12 +85,26 @@
         <div class="tab" data-tab="orders">Заказы</div>
     </div>
 
+
+
     <!-- Vehicles tab -->
     <div id="vehicles" class="tab-content active">
         <a href="javascript:void(0)" class="btn" onclick="openVehicleModal()">Добавить автомобиль</a>
         @if($client->vehicles->isEmpty())
             <p>У клиента нет автомобилей.</p>
         @else
+
+        @if(session('success'))
+  <div class="successMessage" style="background: #d4edda; color: #155724; padding: 10px 15px; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 15px;">
+    {{ session('success') }}
+  </div>
+@endif
+
+@if(session('error'))
+  <div class="errorMessage" style="background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
+    {{ session('error') }}
+  </div>
+@endif
             <table>
                 <thead>
                     <tr>
@@ -99,12 +120,13 @@
                         <th>ПТС</th>
                         <th>Год</th>
                         <th>Тип двигателя</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($client->vehicles ?? [] as $vehicle)
-                        <tr style="cursor:pointer;" onclick="openVehicleModal({{ $vehicle }})">
-                            <td>{{ $vehicle->vin }}</td>
+                        <tr style="cursor:pointer;" >
+                            <td onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->vin }}</td>
                             <td>{{ $vehicle->vehicle_type }}</td>
                             <td>{{ $vehicle->brand }}</td>
                             <td>{{ $vehicle->model }}</td>
@@ -116,6 +138,13 @@
                             <td>{{ $vehicle->pts ?? '-' }}</td>
                             <td>{{ $vehicle->year_of_manufacture }}</td>
                             <td>{{ $vehicle->engine_type }}</td>
+                            <td><form 
+                  action="{{ route('vehicles.destroy', $vehicle->id) }}" 
+                  method="POST" style="">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="if(!confirm('Удалить автомобиль?')) return false" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
+                </form></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -124,11 +153,24 @@
     </div>
 
     <!-- Orders tab -->
+
+    
     <div id="orders" class="tab-content">
         <a href="javascript:void(0)" class="btn" onclick="openOrderModal()">Добавить заказ</a>
         @if($client->orders->isEmpty())
             <p>У клиента нет заказов.</p>
         @else
+        @if(session('success'))
+        <div class="successMessage" style="background: #d4edda; color: #155724; padding: 10px 15px; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 15px;">
+          {{ session('success') }}
+        </div>
+      @endif
+
+      @if(session('error'))
+        <div class="errorMessage" style="background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
+          {{ session('error') }}
+        </div>
+      @endif  
             <table>
                 <thead>
                     <tr>
@@ -138,17 +180,25 @@
                         <th>Автомобиль</th>
                         <th>Менеджер</th>
                         <th>Пробег</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($client->orders ?? [] as $order)
-                        <tr style="cursor:pointer;" onclick="openOrderModal({{ $order }})">
-                            <td>{{ $order->order_number }}</td>
+                        <tr style="cursor:pointer;" >
+                            <td onclick="openOrderModal({{ $order }})">{{ $order->order_number }}</td>
                             <td>{{ $order->amount }}</td>
-                            <td>{{ $order->created_at->format('d.m.Y') }}</td>
+                            <td>{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
                             <td>{{ $order->vehicle ? $order->vehicle->brand.' '.$order->vehicle->model : '-' }}</td>
                             <td>{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td>{{ $order->mileage ?? '-' }}</td>
+                            <td><form  
+                  action="{{ route('orders.destroy', $order->id) }}" 
+                  method="POST" style="">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="if(!confirm('Удалить заказ?')) return false" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
+                </form></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -162,25 +212,26 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('vehicleModal')">&times;</span>
         <h3 id="vehicleModalTitle">Добавить автомобиль</h3>
-        <form id="vehicleForm" method="POST" action="{{ route('vehicles.store') }}">
-            @csrf
-            <input type="hidden" name="client_id" value="{{ $client->id }}">
-            @php
-                $fields = [
-                    'vin'=>'VIN','vehicle_type'=>'Тип транспортного средства','brand'=>'Бренд','model'=>'Модель',
-                    'generation'=>'Поколение','body'=>'Кузов','modification'=>'Модификация',
-                    'registration_number'=>'Гос номер','sts'=>'СТС','pts'=>'ПТС',
-                    'year_of_manufacture'=>'Год','engine_type'=>'Тип двигателя'
-                ];
-            @endphp
-            @foreach($fields as $name => $label)
-                <div style="margin-bottom:10px;">
-                    <label>{{ $label }}</label>
-                    <input type="text" name="{{ $name }}" id="vehicle_{{ $name }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-                </div>
-            @endforeach
-            <button type="submit" class="btn">Сохранить</button>
-        </form>
+          <form id="vehicleForm" method="POST" action="{{ route('vehicles.store') }}">
+              @csrf
+              <input type="hidden" name="client_id" value="{{ $client->id }}">
+              @php
+                  $fields = [
+                      'vin'=>'VIN','vehicle_type'=>'Тип транспортного средства','brand'=>'Бренд','model'=>'Модель',
+                      'generation'=>'Поколение','body'=>'Кузов','modification'=>'Модификация',
+                      'registration_number'=>'Гос номер','sts'=>'СТС','pts'=>'ПТС',
+                      'year_of_manufacture'=>'Год','engine_type'=>'Тип двигателя'
+                  ];
+              @endphp
+              @foreach($fields as $name => $label)
+                  <div style="margin-bottom:10px;">
+                      <label>{{ $label }}</label>
+                      <input type="text" name="{{ $name }}" id="vehicle_{{ $name }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                  </div>
+              @endforeach
+              <button type="submit" class="btn" style="color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Сохранить</button>
+            </form>
+              
     </div>
 </div>
 
@@ -202,7 +253,7 @@
             </div>
             <div style="margin-bottom:10px;">
                 <label>Дата создания</label>
-                <input type="date" name="created_at" id="order_created_at" value="{{ date('Y-m-d') }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                <input type="date" name="created_at" id="created_at" value="{{ date('Y-m-d') }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
                 <label>Пробег</label>
@@ -234,14 +285,22 @@
 <script>
 const tabs = document.querySelectorAll('.tab');
 const contents = document.querySelectorAll('.tab-content');
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const target = tab.dataset.tab;
-        contents.forEach(c => c.classList.remove('active'));
-        document.getElementById(target).classList.add('active');
+function activateTab(tabName) {
+    tabs.forEach(t => {
+        t.classList.toggle('active', t.dataset.tab === tabName);
     });
+    contents.forEach(c => {
+        c.classList.toggle('active', c.id === tabName);
+    });
+}
+
+// default: vehicles, but use session value if exists
+let activeTab = "{{ session('active_tab', 'vehicles') }}";
+activateTab(activeTab);
+
+// add listeners
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => activateTab(tab.dataset.tab));
 });
 
 function openModal(id) { document.getElementById(id).style.display = 'block'; }
@@ -251,7 +310,9 @@ window.onclick = function(event) {
 }
 
 // Vehicle modal open for edit or add
-function openVehicleModal(vehicle = null) {
+function openVehicleModal(vehicle = null) { 
+ 
+  
     const form = document.getElementById('vehicleForm');
     if(vehicle) {
         document.getElementById('vehicleModalTitle').innerText = 'Редактировать автомобиль';
@@ -301,5 +362,21 @@ function openOrderModal(order = null) {
     }
     openModal('orderModal');
 }
+
+  setTimeout(() => {
+      const success = document.querySelectorAll('.successMessage');
+      const error = document.querySelectorAll('.errorMessage');
+      if (success){ 
+         [...success].forEach(item => {
+          item.style.display = 'none';
+        })
+      }
+      if (error) {
+        [...error].forEach(item => {
+          item.style.display = 'none';
+        })
+      }
+  }, 2000);
+
 </script>
 @endsection
