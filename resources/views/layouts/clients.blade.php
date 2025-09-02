@@ -64,14 +64,6 @@
 
   <!-- Main -->
   <div class="main">
-    <div class="page-header">
-      <div>Клиенты > Контакты</div>
-      <form method="GET" action="{{ route('clients.index') }}">
-        <input type="text" name="search" class="search-box"
-               placeholder="Поиск по наименованию и номеру телефона"
-               value="{{ request('search') }}">
-      </form>
-    </div>
 
     <table>
       <thead>

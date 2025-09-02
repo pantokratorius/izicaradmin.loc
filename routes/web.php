@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\VehicleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +20,9 @@ Route::middleware('auth')->group(function () {
 
 
 Route::resource('clients', ClientController::class);
+Route::resource('vehicles', VehicleController::class);
+Route::resource('orders', OrderController::class);
+
 
 
 
