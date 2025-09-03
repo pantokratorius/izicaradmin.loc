@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 Route::resource('clients', ClientController::class);
 Route::resource('vehicles', VehicleController::class);
 Route::resource('orders', OrderController::class);
-Route::resource('ordersitem', OrderItemController::class);
+Route::resource('orderitems', OrderItemController::class);
 
 
 

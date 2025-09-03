@@ -70,9 +70,10 @@ class OrderItemController extends Controller
         return redirect()->back()->with('success', 'Позиция заказа обновлена.')->with('active_tab', 'orders');;
     }
 
-    public function destroy(OrderItem $orderItem)
+    public function destroy($id)
     {
-        $orderItem->delete();
+         $orderitem = OrderItem::findOrFail($id);
+        $orderitem->delete();
         return redirect()->back()->with('success', 'Позиция заказа удалена.')->with('active_tab', 'orders');;
     }
 }

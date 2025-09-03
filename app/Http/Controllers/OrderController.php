@@ -108,6 +108,7 @@ try {
      */
     public function destroy(Order $order)
     {
+
         $order->delete();
         return redirect()->back()->with('success', 'Заказ удален')->with('active_tab', 'orders');
     }

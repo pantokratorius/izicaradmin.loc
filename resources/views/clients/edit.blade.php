@@ -24,7 +24,11 @@
 <div class="page-header">
     <div>Клиенты > Редактировать</div>
 </div>
-
+@if(session('error'))
+  <div class="errorMessage" style="background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
+    {{ session('error') }}
+  </div>
+@endif
 
 <button id="toggleClientForm" class="btn" style="margin-bottom:10px;">Показать форму</button>
 
@@ -75,14 +79,14 @@
         @error('discount') <small style="color:red">{{ $message }}</small> @enderror
     </div>
     <button type="submit" style="background:#14213d;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Обновить</button>
+</form>
     <form id="delete-client-{{ $client->id }}"
         action="{{ route('clients.destroy', $client->id) }}"
-        method="POST" style="display: none;">
+        method="POST" >
       @csrf
       @method('DELETE')
       <button onclick="if(!confirm('Удалить клиента?')) return false " class="delete_client" data-id="{{$client->id}}" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
   </form>
-</form>
 </div>
 <!-- Tabs -->
 <div>
@@ -106,11 +110,7 @@
   </div>
 @endif
 
-@if(session('error'))
-  <div class="errorMessage" style="background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
-    {{ session('error') }}
-  </div>
-@endif
+
             <table>
                 <thead>
                     <tr>
@@ -233,6 +233,7 @@
                                         <th>Предоплата</th>
                                         <th>Количество</th>
                                         <th>Статус</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -245,6 +246,17 @@
                                             <td>{{ $item->prepayment }}</td>
                                             <td>{{ $item->quantity }}</td>
                                             <td>{{ $item->status }}</td>
+                                             <td>
+
+            <form action="{{ route('orderitems.destroy', $item->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button onclick="return confirm('Удалить позицию?')"
+                        style="background:#77312f;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;">
+                    Удалить
+                </button>
+            </form>
+                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -349,7 +361,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('orderItemModal')">&times;</span>
         <h3 id="orderItemModalTitle">Добавить позицию</h3>
-        <form id="orderItemForm" method="POST" action="{{ route('ordersitem.store') }}">
+        <form id="orderItemForm" method="POST" action="{{ route('orderitems.store') }}">
             @csrf
             <input type="hidden" name="order_id" id="orderItem_order_id" value="">
 
@@ -510,7 +522,7 @@ function openOrderItemModal(orderId, item = null) {
 
     if(item) {
         document.getElementById('orderItemModalTitle').innerText = 'Редактировать позицию';
-        form.action = '/ordersitem/' + item.id;
+        form.action = '/orderitems/' + item.id;
         if(!form.querySelector('[name="_method"]')) {
             const input = document.createElement('input');
             input.type = 'hidden';
@@ -523,7 +535,7 @@ function openOrderItemModal(orderId, item = null) {
         });
     } else {
         document.getElementById('orderItemModalTitle').innerText = 'Добавить позицию';
-        form.action = '{{ route("ordersitem.store") }}';
+        form.action = '{{ route("orderitems.store") }}';
         form.method = 'POST';
         form.querySelectorAll('input').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
     }
