@@ -74,6 +74,8 @@ class OrderItemController extends Controller
     {
          $orderitem = OrderItem::findOrFail($id);
         $orderitem->delete();
-        return redirect()->back()->with('success', 'Позиция заказа удалена.')->with('active_tab', 'orders');;
+        return redirect()->back()->with('success', 'Позиция заказа удалена.')
+        ->with('active_tab', 'orders')
+        ->with('toggle-btn-', $orderitem->order_id);
     }
 }

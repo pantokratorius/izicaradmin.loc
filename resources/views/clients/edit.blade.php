@@ -502,6 +502,8 @@ function toggleItems(orderId) {
     }
 }
 
+let activeOrder = "{{ session('toggle-btn-', '') }}";
+if(activeOrder != '') toggleItems(activeOrder)
 
 const toggleBtn = document.getElementById('toggleClientForm');
 const clientForm = document.getElementById('clientFormContainer');
