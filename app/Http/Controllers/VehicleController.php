@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class VehicleController extends Controller
 {
@@ -31,11 +32,11 @@ class VehicleController extends Controller
         try {
             Vehicle::create($request->all());
             return redirect()->back()->with('success', 'Транспортное средство добавлено');
-            
+
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Транспортное средство не добавлено');
         }
-        
+
     }
 
     public function show(Vehicle $vehicle)
@@ -51,13 +52,13 @@ class VehicleController extends Controller
     public function update(Request $request, Vehicle $vehicle)
     {
         $request->validate([
-            'vin' => 'required|unique:vehicles,vin,'.$vehicle->id,
-            'vehicle_type' => 'required',
-            'brand' => 'required',
-            'model' => 'required',
-            'year_of_manufacture' => 'required|integer',
-            'engine_type' => 'required',
-        ]);
+        'client_id' => 'required',
+        'vin' => [
+            'required',
+            Rule::unique('vehicles', 'vin')->ignore($vehicle->id),
+        ],
+        'year_of_manufacture' => 'integer|nullable',
+    ]);
 
         session(['active_tab' => 'vehicles']);
 
@@ -70,9 +71,9 @@ class VehicleController extends Controller
         }
 
 
-        
 
-        
+
+
     }
 
     public function destroy(Vehicle $vehicle)

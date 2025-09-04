@@ -196,7 +196,7 @@
                             <td onclick="openOrderModal({{ $order }})">{{ $order->order_number }}</td>
                             <td onclick="openOrderModal({{ $order }})">{{ $order->amount }}</td>
                             <td onclick="openOrderModal({{ $order }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
-                            <td onclick="openOrderModal({{ $order }})">{{ $order->vehicle ? $order->vehicle->brand.' '.$order->vehicle->model : '-' }}</td>
+                            <td onclick="openOrderModal({{ $order }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
                             <td onclick="openOrderModal({{ $order }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td onclick="openOrderModal({{ $order }})">{{ $order->mileage ?? '-' }}</td>
                             <td>
@@ -344,7 +344,7 @@
 
 
 
-              
+
               @foreach($fields as $name => $label)
                   <div style="margin-bottom:10px;">
                       <label>{{ $label }}</label>
@@ -445,6 +445,14 @@
 
 <script>
 
+// // Brand options (from Blade variable)
+// const brands = [
+//     @foreach($brands as $brand)
+//     { value: {{ $brand->id }}, text: "{{ $brand->name }}" },
+//     @endforeach
+// ];
+
+
 // Create a custom searchable select
 function createCustomSelect(wrapperId, optionsData, hiddenInputName) {
     const wrapper = document.getElementById(wrapperId);
@@ -466,11 +474,11 @@ function createCustomSelect(wrapperId, optionsData, hiddenInputName) {
             const li = document.createElement('li');
             li.textContent = opt.text;
             li.dataset.value = opt.value;
-            li.addEventListener('click', () => {
+            li.addEventListener('click', async () => {
                 input.value = opt.text;
                 hiddenInput.value = opt.value;
                 ul.style.display = 'none';
-                if(typeof opt.onSelect === 'function') opt.onSelect(opt.value); // trigger dependent dropdown
+                if(typeof opt.onSelect === 'function') await opt.onSelect(opt.value); // trigger dependent dropdown
             });
             ul.appendChild(li);
         });
@@ -493,8 +501,6 @@ function createCustomSelect(wrapperId, optionsData, hiddenInputName) {
     return { renderOptions };
 }
 
-
-
 // Brand options (from Blade variable)
 const brands = [
     @foreach($brands as $brand)
@@ -502,55 +508,126 @@ const brands = [
     @endforeach
 ];
 
-const brandSelect = createCustomSelect('brand-wrapper', brands, 'car_brand_id');
-const modelSelect = createCustomSelect('model-wrapper', [], 'car_model_id');
-const generationSelect = createCustomSelect('generation-wrapper', [], 'car_generation_id');
-const serieSelect = createCustomSelect('serie-wrapper', [], 'car_serie_id');
-const modificationSelect = createCustomSelect('modification-wrapper', [], 'car_modification_id');
+
+
+
+// Initialize all selects
+const selects = [
+    { wrapperId: 'brand-wrapper', hiddenName: 'car_brand_id', fetchUrl: '/cars/models/' },
+    { wrapperId: 'model-wrapper', hiddenName: 'car_model_id', fetchUrl: '/cars/generations/' },
+    { wrapperId: 'generation-wrapper', hiddenName: 'car_generation_id', fetchUrl: '/cars/series/' },
+    { wrapperId: 'serie-wrapper', hiddenName: 'car_serie_id', fetchUrl: '/cars/modifications/' },
+    { wrapperId: 'modification-wrapper', hiddenName: 'car_modification_id', fetchUrl: null }
+];
+
+const selectObjects = selects.map(s => createCustomSelect(s.wrapperId, [], s.hiddenName));
+
+// Populate brand options
+selectObjects[0].renderOptions(brands);
 
 // Fetch dependent options
-function fetchOptions(url, callback){
-    fetch(url)
-        .then(res => res.json())
-        .then(data => callback(data.map(d => ({ value: d.id, text: d.name }))));
+async function fetchOptionsAsync(url){
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.map(d => ({ value: d.id, text: d.name }));
 }
 
-// When brand changes → load models
-brands.forEach(b => b.onSelect = function(value){
-    fetchOptions('/cars/models/' + value, data => modelSelect.renderOptions(data));
-});
+// Setup cascading selects
+async function setupCascadingSelects() {
+    for(let i=0; i<selects.length; i++){
+        const sel = selects[i];
+        const obj = selectObjects[i];
 
-// When model changes → load generations
-modelSelect.renderOptions = (function(originalRender){
-    return function(data){
-        originalRender(data);
-        data.forEach(d => d.onSelect = function(value){
-            fetchOptions('/cars/generations/' + value, data => generationSelect.renderOptions(data));
-        });
+        obj.renderOptions = (function(originalRender, index){
+            return function(data){
+                originalRender(data);
+                data.forEach(d => d.onSelect = async function(value){
+                    // Reset downstream selects
+                    for(let j=index+1; j<selectObjects.length; j++){
+                        selectObjects[j].renderOptions([]);
+                        const input = document.querySelector(`#${selects[j].wrapperId} .select-search`);
+                        const hidden = document.querySelector(`#${selects[j].wrapperId} input[type="hidden"]`);
+                        input.value = '';
+                        hidden.value = '';
+                    }
+                    // Fetch next level if exists
+                    if(selects[index].fetchUrl){
+                        const nextData = await fetchOptionsAsync(selects[index].fetchUrl + value);
+                        selectObjects[index+1].renderOptions(nextData);
+                    }
+                });
+            }
+        })(obj.renderOptions, i);
     }
-})(modelSelect.renderOptions);
+}
 
-// When generation changes → load series
-generationSelect.renderOptions = (function(originalRender){
-    return function(data){
-        originalRender(data);
-        data.forEach(d => d.onSelect = function(value){
-            fetchOptions('/cars/series/' + value, data => serieSelect.renderOptions(data));
-        });
+setupCascadingSelects();
+
+// Fill vehicle modal selects when editing
+async function fillVehicleSelects(vehicle) {
+    for(let i=0; i<selects.length; i++){
+        const sel = selects[i];
+        const obj = selectObjects[i];
+        const value = vehicle[sel.hiddenName];
+        if(!value) break;
+
+        let text = '';
+
+        if(i === 0){
+            const opt = brands.find(b => b.value == value);
+            text = opt ? opt.text : '';
+            obj.renderOptions(brands);
+        } else {
+            const prevValue = vehicle[selects[i-1].hiddenName];
+            const data = await fetchOptionsAsync(selects[i-1].fetchUrl + prevValue);
+            obj.renderOptions(data);
+            const opt = data.find(d => d.value == value);
+            text = opt ? opt.text : '';
+        }
+
+        const input = document.querySelector(`#${sel.wrapperId} .select-search`);
+        const hidden = document.querySelector(`#${sel.wrapperId} input[type="hidden"]`);
+        input.value = text;
+        hidden.value = value;
     }
-})(generationSelect.renderOptions);
+}
 
-// When series changes → load modifications
-serieSelect.renderOptions = (function(originalRender){
-    return function(data){
-        originalRender(data);
-        data.forEach(d => d.onSelect = function(value){
-            fetchOptions('/cars/modifications/' + value, data => modificationSelect.renderOptions(data));
-        });
+// Vehicle modal open for edit or add
+async function openVehicleModal(vehicle = null) {
+    const form = document.getElementById('vehicleForm');
+
+    if(vehicle) {
+        document.getElementById('vehicleModalTitle').innerText = 'Редактировать автомобиль';
+        form.action = '/vehicles/' + vehicle.id;
+        form.method = 'POST';
+
+        if(!form.querySelector('[name="_method"]')) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_method';
+            input.value = 'PUT';
+            form.appendChild(input);
+        }
+
+        // Fill normal inputs
+        for(let key in vehicle){
+            const el = document.getElementById('vehicle_'+key);
+            if(el) el.value = vehicle[key] ?? '';
+        }
+
+        // Fill cascading selects
+        await fillVehicleSelects(vehicle);
+
+    } else {
+        // New vehicle
+        document.getElementById('vehicleModalTitle').innerText = 'Добавить автомобиль';
+        form.action = '{{ route("vehicles.store") }}';
+        form.method = 'POST';
+        form.querySelectorAll('input').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
     }
-})(serieSelect.renderOptions);
 
-
+    openModal('vehicleModal');
+}
 
 
 </script>
@@ -584,32 +661,12 @@ window.onclick = function(event) {
     if(event.target.classList.contains('modal')) event.target.style.display = "none";
 }
 
-// Vehicle modal open for edit or add
-function openVehicleModal(vehicle = null) {
+// Initialize cascading selects
+setupCascadingSelects();
 
-    const form = document.getElementById('vehicleForm');
-    if(vehicle) {
-        document.getElementById('vehicleModalTitle').innerText = 'Редактировать автомобиль';
-        form.action = '/vehicles/' + vehicle.id;
-        form.method = 'POST';
-        if(!form.querySelector('[name="_method"]')) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = '_method';
-            input.value = 'PUT';
-            form.appendChild(input);
-        }
-        for(let key in vehicle) {
-            if(document.getElementById('vehicle_'+key)) document.getElementById('vehicle_'+key).value = vehicle[key] ?? '';
-        }
-    } else {
-        document.getElementById('vehicleModalTitle').innerText = 'Добавить автомобиль';
-        form.action = '{{ route("vehicles.store") }}';
-        form.method = 'POST';
-        form.querySelectorAll('input').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
-    }
-    openModal('vehicleModal');
-}
+// Populate brand options AFTER handlers are ready
+selectObjects[0].renderOptions(brands);
+
 
 // Order modal open for edit or add
 function openOrderModal(order = null) {
