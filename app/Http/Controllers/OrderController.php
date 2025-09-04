@@ -45,13 +45,14 @@ class OrderController extends Controller
             'mileage'      => 'nullable|integer',
         ]);
 
-// dd($request->all());
+        session(['active_tab' => 'orders']);
+
         try {
             Order::create($request->all());
-            return redirect()->back()->with('success', 'Заказ добавлен')->with('active_tab', 'orders');
+            return redirect()->back()->with('success', 'Заказ добавлен');
 
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Заказ не добавлен')->with('active_tab', 'orders');
+            return redirect()->back()->with('error', 'Заказ не добавлен');
         }
 
     }
@@ -91,14 +92,14 @@ class OrderController extends Controller
             'mileage'      => 'nullable|integer',
         ]);
 
+        session(['active_tab' => 'orders']);
 
-
-try {
+        try {
             $order->update($request->all());
-            return redirect()->back()->with('success', 'Заказ обновлен')->with('active_tab', 'orders');
+            return redirect()->back()->with('success', 'Заказ обновлен');
 
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Заказ не обновлен')->with('active_tab', 'orders');
+            return redirect()->back()->with('error', 'Заказ не обновлен');
         }
 
     }
@@ -108,8 +109,8 @@ try {
      */
     public function destroy(Order $order)
     {
-
+        session(['active_tab' => 'orders']);
         $order->delete();
-        return redirect()->back()->with('success', 'Заказ удален')->with('active_tab', 'orders');
+        return redirect()->back()->with('success', 'Заказ удален');
     }
 }

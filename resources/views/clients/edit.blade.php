@@ -2,6 +2,7 @@
 
 @section('title', 'Редактировать клиента')
 
+
 @section('content')
 <style>
     .tabs { display: flex; border-bottom: 2px solid #ccc; margin-bottom: 15px; }
@@ -134,11 +135,11 @@
                         <tr style="cursor:pointer;" >
                             <td onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->vin }}</td>
                             <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->brand }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->model }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->generation ?? '-' }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->brand->name ?? '-' }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->model->name ?? '-'}}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->generation->name ?? '-' }}</td>
                             <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->body ?? '-' }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->modification ?? '-' }}</td>
+                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->modification->name ?? '-' }}</td>
                             <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->registration_number ?? '-' }}</td>
                             <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->sts ?? '-' }}</td>
                             <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->pts ?? '-' }}</td>
@@ -297,6 +298,53 @@
                       'year_of_manufacture'=>'Год','engine_type'=>'Тип двигателя'
                   ];
               @endphp
+
+                <div style="margin-bottom:10px;">
+    <label>Марка</label>
+    <div class="custom-select" id="brand-wrapper">
+        <input type="text" placeholder="Выберите Марку..." class="select-search">
+        <ul class="select-options" style="display:none;"></ul>
+    </div>
+</div>
+
+<div style="margin-bottom:10px;">
+    <label>Модель</label>
+    <div class="custom-select" id="model-wrapper">
+        <input type="text" placeholder="Выберите Модель..." class="select-search">
+        <ul class="select-options" style="display:none;"></ul>
+    </div>
+</div>
+
+<div style="margin-bottom:10px;">
+    <label>Поколение</label>
+    <div class="custom-select" id="generation-wrapper">
+        <input type="text" placeholder="Выберите Поколение..." class="select-search">
+        <ul class="select-options" style="display:none;"></ul>
+    </div>
+</div>
+
+<div style="margin-bottom:10px;">
+    <label>Серия</label>
+    <div class="custom-select" id="serie-wrapper">
+        <input type="text" placeholder="Выберите Серию..." class="select-search">
+        <ul class="select-options" style="display:none;"></ul>
+    </div>
+</div>
+
+<div style="margin-bottom:10px;">
+    <label>Модификация</label>
+    <div class="custom-select" id="modification-wrapper">
+        <input type="text" placeholder="Выберите модификацию..." class="select-search">
+        <ul class="select-options" style="display:none;"></ul>
+    </div>
+</div>
+
+
+
+
+
+
+              
               @foreach($fields as $name => $label)
                   <div style="margin-bottom:10px;">
                       <label>{{ $label }}</label>
@@ -393,6 +441,122 @@
         </form>
     </div>
 </div>
+
+
+<script>
+
+// Create a custom searchable select
+function createCustomSelect(wrapperId, optionsData, hiddenInputName) {
+    const wrapper = document.getElementById(wrapperId);
+    const input = wrapper.querySelector('.select-search');
+    const ul = wrapper.querySelector('.select-options');
+
+    // Hidden input to store value
+    let hiddenInput = wrapper.querySelector('input[type="hidden"]');
+    if(!hiddenInput){
+        hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = hiddenInputName;
+        wrapper.appendChild(hiddenInput);
+    }
+
+    function renderOptions(data){
+        ul.innerHTML = '';
+        data.forEach(opt => {
+            const li = document.createElement('li');
+            li.textContent = opt.text;
+            li.dataset.value = opt.value;
+            li.addEventListener('click', () => {
+                input.value = opt.text;
+                hiddenInput.value = opt.value;
+                ul.style.display = 'none';
+                if(typeof opt.onSelect === 'function') opt.onSelect(opt.value); // trigger dependent dropdown
+            });
+            ul.appendChild(li);
+        });
+    }
+
+    renderOptions(optionsData);
+
+    input.addEventListener('focus', () => ul.style.display = 'block');
+    input.addEventListener('input', () => {
+        const filter = input.value.toLowerCase();
+        Array.from(ul.children).forEach(li => {
+            li.style.display = li.textContent.toLowerCase().includes(filter) ? '' : 'none';
+        });
+    });
+
+    document.addEventListener('click', e => {
+        if(!wrapper.contains(e.target)) ul.style.display = 'none';
+    });
+
+    return { renderOptions };
+}
+
+
+
+// Brand options (from Blade variable)
+const brands = [
+    @foreach($brands as $brand)
+    { value: {{ $brand->id }}, text: "{{ $brand->name }}" },
+    @endforeach
+];
+
+const brandSelect = createCustomSelect('brand-wrapper', brands, 'car_brand_id');
+const modelSelect = createCustomSelect('model-wrapper', [], 'car_model_id');
+const generationSelect = createCustomSelect('generation-wrapper', [], 'car_generation_id');
+const serieSelect = createCustomSelect('serie-wrapper', [], 'car_serie_id');
+const modificationSelect = createCustomSelect('modification-wrapper', [], 'car_modification_id');
+
+// Fetch dependent options
+function fetchOptions(url, callback){
+    fetch(url)
+        .then(res => res.json())
+        .then(data => callback(data.map(d => ({ value: d.id, text: d.name }))));
+}
+
+// When brand changes → load models
+brands.forEach(b => b.onSelect = function(value){
+    fetchOptions('/cars/models/' + value, data => modelSelect.renderOptions(data));
+});
+
+// When model changes → load generations
+modelSelect.renderOptions = (function(originalRender){
+    return function(data){
+        originalRender(data);
+        data.forEach(d => d.onSelect = function(value){
+            fetchOptions('/cars/generations/' + value, data => generationSelect.renderOptions(data));
+        });
+    }
+})(modelSelect.renderOptions);
+
+// When generation changes → load series
+generationSelect.renderOptions = (function(originalRender){
+    return function(data){
+        originalRender(data);
+        data.forEach(d => d.onSelect = function(value){
+            fetchOptions('/cars/series/' + value, data => serieSelect.renderOptions(data));
+        });
+    }
+})(generationSelect.renderOptions);
+
+// When series changes → load modifications
+serieSelect.renderOptions = (function(originalRender){
+    return function(data){
+        originalRender(data);
+        data.forEach(d => d.onSelect = function(value){
+            fetchOptions('/cars/modifications/' + value, data => modificationSelect.renderOptions(data));
+        });
+    }
+})(serieSelect.renderOptions);
+
+
+
+
+</script>
+
+
+
 <script>
 const tabs = document.querySelectorAll('.tab');
 const contents = document.querySelectorAll('.tab-content');
@@ -422,7 +586,6 @@ window.onclick = function(event) {
 
 // Vehicle modal open for edit or add
 function openVehicleModal(vehicle = null) {
-
 
     const form = document.getElementById('vehicleForm');
     if(vehicle) {
@@ -563,6 +726,17 @@ function openOrderItemModal(orderId, item = null) {
 #clientFormContainer {
     transition: max-height 0.4s ease, padding 0.3s ease;
 }
+
+
+
+
+
+.custom-select { position: relative; width: 100%; }
+.select-search { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+.select-options { position: absolute; top: 100%; left: 0; right: 0; max-height: 300px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; background: #fff; list-style: none; padding: 0; margin: 0; z-index: 1000; }
+.select-options li { padding: 6px; cursor: pointer; }
+.select-options li:hover { background: #f0f0f0; }
+
 </style>
 
 @endsection

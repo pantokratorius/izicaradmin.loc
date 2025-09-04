@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
@@ -25,6 +26,13 @@ Route::resource('vehicles', VehicleController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('orderitems', OrderItemController::class);
 
+Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
+
+Route::get('/cars/models/{brand}', [CarController::class, 'models']);
+Route::get('/cars/generations/{model}', [CarController::class, 'generations']);
+Route::get('/cars/series/{generation}', [CarController::class, 'series']);
+Route::get('/cars/modifications/{serie}', [CarController::class, 'modifications']);
+Route::get('/cars/characteristics/{modification}', [CarController::class, 'characteristics']);
 
 
 

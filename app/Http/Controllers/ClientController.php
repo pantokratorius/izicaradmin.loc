@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CarBrand;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +33,7 @@ public function index(Request $request)
     // форма добавления
     public function create()
     {
+
         return view('clients.create');
     }
 
@@ -57,12 +59,12 @@ public function index(Request $request)
     public function edit($id)
     {
         $client = Client::find($id);
-
+        $brands = CarBrand::orderBy('name')->get();
         if (!$client) {
             return redirect()->route('clients.index')->with('error', 'Клиент не найден');
         }
 
-        return view('clients.edit', compact('client'));
+        return view('clients.edit', compact('client', 'brands'));
     }
 
     // обновление клиента

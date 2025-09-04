@@ -26,6 +26,8 @@ class VehicleController extends Controller
             'year_of_manufacture' => 'integer|nullable',
         ]);
 
+        session(['active_tab' => 'vehicles']);
+
         try {
             Vehicle::create($request->all());
             return redirect()->back()->with('success', 'Транспортное средство добавлено');
@@ -57,13 +59,27 @@ class VehicleController extends Controller
             'engine_type' => 'required',
         ]);
 
-        $vehicle->update($request->all());
+        session(['active_tab' => 'vehicles']);
 
-        return redirect()->back()->with('success', 'Транспортное средство обновлено');
+           try {
+            $vehicle->update($request->all());
+            return redirect()->back()->with('success', 'Транспортное средство обновлено');
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Транспортное средство не обновлено');
+        }
+
+
+        
+
+        
     }
 
     public function destroy(Vehicle $vehicle)
     {
+
+        session(['active_tab' => 'vehicles']);
+
         $vehicle->delete();
         return redirect()->back()->with('success', 'Транспортное средство удалено');
     }
