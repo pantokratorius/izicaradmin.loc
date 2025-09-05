@@ -21,13 +21,13 @@ class VehicleController extends Controller
 
     public function store(Request $request)
     {
+        session(['active_tab' => 'vehicles']);
         $request->validate([
             'client_id' => 'required',
             'vin' => 'unique:vehicles',
             'year_of_manufacture' => 'integer|nullable',
         ]);
 
-        session(['active_tab' => 'vehicles']);
 
         try {
             Vehicle::create($request->all());
@@ -51,6 +51,7 @@ class VehicleController extends Controller
 
     public function update(Request $request, Vehicle $vehicle)
     {
+        session(['active_tab' => 'vehicles']);
         $request->validate([
         'client_id' => 'required',
         'vin' => [
@@ -60,7 +61,6 @@ class VehicleController extends Controller
         'year_of_manufacture' => 'integer|nullable',
     ]);
 
-        session(['active_tab' => 'vehicles']);
 
            try {
             $vehicle->update($request->all());
