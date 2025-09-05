@@ -35,6 +35,8 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        session(['active_tab' => 'orders']);
+        
         $request->validate([
             'order_number' => 'required|unique:orders,order_number',
             'amount'       => 'nullable|numeric',
@@ -45,7 +47,6 @@ class OrderController extends Controller
             'mileage'      => 'nullable|integer',
         ]);
 
-        session(['active_tab' => 'orders']);
 
         try {
             Order::create($request->all());
@@ -82,6 +83,9 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        session(['active_tab' => 'orders']);
+
+
         $request->validate([
             'order_number' => 'required|unique:orders,order_number,' . $order->id,
             'amount'       => 'nullable|numeric',
@@ -92,7 +96,6 @@ class OrderController extends Controller
             'mileage'      => 'nullable|integer',
         ]);
 
-        session(['active_tab' => 'orders']);
 
         try {
             $order->update($request->all());
