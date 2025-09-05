@@ -614,7 +614,30 @@ async function openVehicleModal(vehicle = null) {
 <script>
 const tabs = document.querySelectorAll('.tab');
 const contents = document.querySelectorAll('.tab-content');
-function activateTab(tabName) {
+
+function setTab(val){
+    const value = val;
+
+    fetch("{{ route('set.session') }}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ active_tab: value })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update the page instantly
+    })
+    .catch(error => console.error(error));
+}
+
+
+function activateTab(tabName) { 
+
+    setTab(tabName)
+
     tabs.forEach(t => {
         t.classList.toggle('active', t.dataset.tab === tabName);
     });
@@ -629,7 +652,9 @@ activateTab(activeTab);
 
 // add listeners
 tabs.forEach(tab => {
-    tab.addEventListener('click', () => activateTab(tab.dataset.tab));
+    tab.addEventListener('click', () => {
+        activateTab(tab.dataset.tab)
+    });
 });
 
 function openModal(id) { document.getElementById(id).style.display = 'block'; }

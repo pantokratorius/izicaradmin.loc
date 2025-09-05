@@ -90,4 +90,16 @@ public function destroy($id)
 
     return redirect()->route('clients.index')->with('success', 'Клиент удален');
 }
+
+
+public function setSessionAjax(Request $request){
+    $value = $request->input('active_tab');
+    $request->session()->put('active_tab', $value);
+
+    return response()->json([
+        'success' => true,
+    ]);
+}
+
+
 }

@@ -34,6 +34,7 @@ Route::get('/cars/series/{generation}', [CarController::class, 'series']);
 Route::get('/cars/modifications/{serie}', [CarController::class, 'modifications']);
 Route::get('/cars/characteristics/{modification}', [CarController::class, 'characteristics']);
 
+Route::post('/set-session', [ClientController::class, 'setSessionAjax'])->name('set.session');
 
 
 
