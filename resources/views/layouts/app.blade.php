@@ -78,6 +78,26 @@
 
   <!-- Main Content -->
   <div class="main">
+           @if(session('success'))
+        <div class="successMessage" style="float: right; background: #d4edda; color: #155724; padding: 10px 15px; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 15px;">
+          {{ session('success') }}
+        </div>
+      @endif
+
+      @if(session('error'))
+        <div class="errorMessage" style="float: right; background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
+          {{ session('error') }}
+        </div>
+      @endif
+      @if($errors->any())
+    <div style="float: right;background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+        <ul style="margin:0; padding-left: 20px;">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     @yield('content')
   </div>
 </body>

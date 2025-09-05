@@ -105,11 +105,6 @@
             <p>У клиента нет автомобилей.</p>
         @else
 
-        @if(session('success'))
-  <div class="successMessage" style="background: #d4edda; color: #155724; padding: 10px 15px; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 15px;">
-    {{ session('success') }}
-  </div>
-@endif
 
 
             <table>
@@ -167,17 +162,7 @@
         @if($client->orders->isEmpty())
             <p>У клиента нет заказов.</p>
         @else
-        @if(session('success'))
-        <div class="successMessage" style="background: #d4edda; color: #155724; padding: 10px 15px; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 15px;">
-          {{ session('success') }}
-        </div>
-      @endif
-
-      @if(session('error'))
-        <div class="errorMessage" style="background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
-          {{ session('error') }}
-        </div>
-      @endif
+ 
             <table>
                 <thead>
                     <tr>
@@ -266,15 +251,7 @@
                     </td>
                 </tr>
             @endif
-@if($errors->any())
-    <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-        <ul style="margin:0; padding-left: 20px;">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+
                     @endforeach
                 </tbody>
             </table>
@@ -386,7 +363,7 @@
                 <select name="vehicle_id" id="order_vehicle_id" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
                     <option value="">-- Не указан --</option>
                     @foreach($client->vehicles ?? [] as $vehicle)
-                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand }} {{ $vehicle->model }} ({{ $vehicle->vin }})</option>
+                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand->name }} {{ $vehicle->model->name }} ({{ $vehicle->vin }})</option>
                     @endforeach
                 </select>
             </div>
