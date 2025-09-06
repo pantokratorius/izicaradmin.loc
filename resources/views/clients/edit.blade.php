@@ -146,7 +146,13 @@
                     @csrf
                     @method('DELETE')
                     <button onclick="if(!confirm('Удалить автомобиль?')) return false" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
-                </form></td>
+                </form>
+            <button  onclick="openVehicleModal({{ $vehicle }})"
+
+                            style="background:#2d6cdf;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-top: 10px">
+                        Редактировать
+                    </button>
+            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -162,7 +168,7 @@
         @if($client->orders->isEmpty())
             <p>У клиента нет заказов.</p>
         @else
- 
+
             <table>
                 <thead>
                     <tr>
@@ -177,23 +183,23 @@
                 </thead>
                 <tbody>
                     @foreach($client->orders ?? [] as $order)
-                        <tr style="cursor:pointer;" >
-                            <td onclick="openOrderModal({{ $order }})">{{ $order->order_number }}</td>
-                            <td onclick="openOrderModal({{ $order }})">{{ $order->amount }}</td>
-                            <td onclick="openOrderModal({{ $order }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
-                            <td onclick="openOrderModal({{ $order }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
-                            <td onclick="openOrderModal({{ $order }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
-                            <td onclick="openOrderModal({{ $order }})">{{ $order->mileage ?? '-' }}</td>
-                            <td>
+                        <tr style="cursor:pointer; " class="toggle-btn-{{ $order->id }}" >
+                            <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ $order->amount }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
+                            <td style="display: flex; flex-direction: column;">
                         <button   onclick="openOrderItemModal({{ $order->id }})"
                             style="background:#2ddf6b;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-bottom: 5px">
-                        Добавить позиции
+                        Добавить
                     </button>
                   @if($client->orders->count())
-                    <button id="toggle-btn-{{ $order->id }}"
-                            onclick="toggleItems({{ $order->id }})"
+                    <button  onclick="openOrderModal({{ $order }})"
+
                             style="background:#2d6cdf;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-bottom: 5px">
-                        Показать позиции
+                        Редактировать
                     </button>
                   @endif
             <form
@@ -634,7 +640,7 @@ function setTab(val){
 }
 
 
-function activateTab(tabName) { 
+function activateTab(tabName) {
 
     setTab(tabName)
 
@@ -713,15 +719,15 @@ function openOrderModal(order = null) {
 
 function toggleItems(orderId) {
     let block = document.getElementById('order-items-' + orderId);
-    let btn = document.getElementById('toggle-btn-' + orderId);
+    let btn = document.querySelector('toggle-btn-' + orderId);
 
     block.classList.toggle('open');
 
-    if (block.classList.contains('open')) {
-        btn.textContent = 'Скрыть позиции';
-    } else {
-        btn.textContent = 'Показать позиции';
-    }
+    // if (block.classList.contains('open')) {
+    //     btn.textContent = 'Скрыть позиции';
+    // } else {
+    //     btn.textContent = 'Показать позиции';
+    // }
 }
 
 let activeOrder = "{{ session('toggle-btn-', '') }}";
