@@ -129,17 +129,17 @@
                     @foreach($client->vehicles ?? [] as $vehicle)
                         <tr style="cursor:pointer;" >
                             <td onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vin }}</td>
-                            <td  >{{ $vehicle->vehicle_type }}</td>
-                            <td  >{{ $vehicle->brand->name ?? '-' }}</td>
-                            <td  >{{ $vehicle->model->name ?? '-'}}</td>
-                            <td  >{{ $vehicle->generation->name ?? '-' }}</td>
-                            <td  >{{ $vehicle->body ?? '-' }}</td>
-                            <td  >{{ $vehicle->modification->name ?? '-' }}</td>
-                            <td  >{{ $vehicle->registration_number ?? '-' }}</td>
-                            <td  >{{ $vehicle->sts ?? '-' }}</td>
-                            <td  >{{ $vehicle->pts ?? '-' }}</td>
-                            <td  >{{ $vehicle->year_of_manufacture }}</td>
-                            <td  >{{ $vehicle->engine_type }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->brand->name ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->model->name ?? '-'}}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->generation->name ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->body ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->modification->name ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->registration_number ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->sts ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->pts ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->year_of_manufacture }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->engine_type }}</td>
                             <td><form
                   action="{{ route('vehicles.destroy', $vehicle->id) }}"
                   method="POST" style="">
