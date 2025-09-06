@@ -128,18 +128,18 @@
                 <tbody>
                     @foreach($client->vehicles ?? [] as $vehicle)
                         <tr style="cursor:pointer;" >
-                            <td onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->vin }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->brand->name ?? '-' }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->model->name ?? '-'}}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->generation->name ?? '-' }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->body ?? '-' }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->modification->name ?? '-' }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->registration_number ?? '-' }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->sts ?? '-' }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->pts ?? '-' }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->year_of_manufacture }}</td>
-                            <td  onclick="openVehicleModal({{ $vehicle }})">{{ $vehicle->engine_type }}</td>
+                            <td onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vin }}</td>
+                            <td  >{{ $vehicle->vehicle_type }}</td>
+                            <td  >{{ $vehicle->brand->name ?? '-' }}</td>
+                            <td  >{{ $vehicle->model->name ?? '-'}}</td>
+                            <td  >{{ $vehicle->generation->name ?? '-' }}</td>
+                            <td  >{{ $vehicle->body ?? '-' }}</td>
+                            <td  >{{ $vehicle->modification->name ?? '-' }}</td>
+                            <td  >{{ $vehicle->registration_number ?? '-' }}</td>
+                            <td  >{{ $vehicle->sts ?? '-' }}</td>
+                            <td  >{{ $vehicle->pts ?? '-' }}</td>
+                            <td  >{{ $vehicle->year_of_manufacture }}</td>
+                            <td  >{{ $vehicle->engine_type }}</td>
                             <td><form
                   action="{{ route('vehicles.destroy', $vehicle->id) }}"
                   method="POST" style="">
@@ -165,6 +165,11 @@
 
     <div id="orders" class="tab-content">
         <a href="javascript:void(0)" class="btn" onclick="openOrderModal()">Добавить заказ</a>
+        <div style="margin-bottom: 10px;">
+    <button id="resetOrdersBtn" type="button" onclick="resetOrdersFilter()" style="display:none;">
+        Показать все заказы
+    </button>
+</div>
         @if($client->orders->isEmpty())
             <p>У клиента нет заказов.</p>
         @else
@@ -183,7 +188,7 @@
                 </thead>
                 <tbody>
                     @foreach($client->orders ?? [] as $order)
-                        <tr style="cursor:pointer; " class="toggle-btn-{{ $order->id }}" >
+                        <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->amount }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
@@ -434,6 +439,36 @@
 //     { value: {{ $brand->id }}, text: "{{ $brand->name }}" },
 //     @endforeach
 // ];
+function resetOrdersFilter() {
+    document.querySelectorAll('#orders tbody tr').forEach(tr => {
+        tr.style.display = '';
+    });
+
+    // Hide reset button
+    document.getElementById('resetOrdersBtn').style.display = 'none';
+}
+
+
+function openVehiclesOrders(vehicle) {
+    // Switch to orders tab
+    activateTab('orders');
+
+    // Hide all orders rows first
+    document.querySelectorAll('#orders tbody tr').forEach(tr => {
+        tr.style.display = '';
+    });
+
+    if (vehicle && vehicle.id) {
+        document.querySelectorAll('#orders tbody tr').forEach(tr => {
+            const rowVehicleId = tr.getAttribute('data-vehicle-id');
+            tr.style.display = (rowVehicleId == vehicle.id) ? '' : 'none';
+        });
+
+        // Show reset button
+        document.getElementById('resetOrdersBtn').style.display = 'inline-block';
+    }
+}
+
 
 
 // Create a custom searchable select
@@ -576,7 +611,8 @@ async function fillVehicleSelects(vehicle) {
 }
 
 // Vehicle modal open for edit or add
-async function openVehicleModal(vehicle = null) {
+async function openVehicleModal(vehicle = null) { console.log(vehicle);
+
     const form = document.getElementById('vehicleForm');
 
     if(vehicle) {
@@ -595,7 +631,7 @@ async function openVehicleModal(vehicle = null) {
         // Fill normal inputs
         for(let key in vehicle){
             const el = document.getElementById('vehicle_'+key);
-            if(el) el.value = vehicle[key] ?? '';
+            if(el) el.value =  el.value = vehicle[key]?.name ?? (vehicle[key] ?? '');
         }
 
         // Fill cascading selects
@@ -719,15 +755,10 @@ function openOrderModal(order = null) {
 
 function toggleItems(orderId) {
     let block = document.getElementById('order-items-' + orderId);
-    let btn = document.querySelector('toggle-btn-' + orderId);
+    let btn = document.querySelector('#toggle-btn-' + orderId);
 
     block.classList.toggle('open');
 
-    // if (block.classList.contains('open')) {
-    //     btn.textContent = 'Скрыть позиции';
-    // } else {
-    //     btn.textContent = 'Показать позиции';
-    // }
 }
 
 let activeOrder = "{{ session('toggle-btn-', '') }}";
