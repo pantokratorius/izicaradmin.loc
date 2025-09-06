@@ -4,14 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class VehicleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $vehicles = Vehicle::with('client')->get();
-        return view('vehicles.index', compact('vehicles'));
+        $query = DB::table('vehicles');
+        $vehicles = Vehicle::with(['brand', 'model', 'generation', 'modification'])
+        ->orderBy('id', 'desc')
+    ->paginate(20);
+
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        // $query->where(function ($q) use ($search) {
+        //     $q->where('first_name', 'like', "%{$search}%")
+        //       ->orWhere('last_name', 'like', "%{$search}%")
+        //       ->orWhere('middle_name', 'like', "%{$search}%")
+        //       ->orWhere('email', 'like', "%{$search}%")
+        //       ->orWhere('phone', 'like', "%{$search}%");
+        // });
+    }
+
+    return view('vehicles.index', compact('vehicles'));
     }
 
     public function create()
@@ -23,7 +39,7 @@ class VehicleController extends Controller
     {
         session(['active_tab' => 'vehicles']);
         $request->validate([
-            'client_id' => 'required',
+            'vehicle_id' => 'required',
             'vin' => 'unique:vehicles',
             'year_of_manufacture' => 'integer|nullable',
         ]);
@@ -53,7 +69,7 @@ class VehicleController extends Controller
     {
         session(['active_tab' => 'vehicles']);
         $request->validate([
-        'client_id' => 'required',
+        'vehicle_id' => 'required',
         'vin' => [
             'required',
             Rule::unique('vehicles', 'vin')->ignore($vehicle->id),

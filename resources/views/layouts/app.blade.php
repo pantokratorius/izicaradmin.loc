@@ -58,7 +58,9 @@
         <li>
             <a href="{{route('clients.index')}}">Клиенты</a>
         </li>
-        <li>Автомобили</li>
+        <li>
+            <a href="{{route('vehicles.index')}}">Автомобили</a>
+        </li>
         <li>Заказы</li>
         <li>Проценка</li>
         <li>Склад</li>
