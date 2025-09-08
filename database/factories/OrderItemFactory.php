@@ -14,6 +14,8 @@ class OrderItemFactory extends Factory
     {
         return [
             'order_id' => Order::factory(), // создаём заказ, если не передан
+            'part_number' => $this->faker->numberBetween(1000, 1000000),
+            'part_make' => $this->faker->word . ' ' . $this->faker->randomElement(['Kayaba', 'Tp', 'Denso', 'Koyo']),
             'part_name' => $this->faker->word . ' ' . $this->faker->randomElement(['Filter', 'Brake', 'Spark Plug', 'Battery']),
             'sale_price' => $this->faker->randomFloat(2, 100, 5000),
             'purchase_price' => $this->faker->randomFloat(2, 50, 4000),

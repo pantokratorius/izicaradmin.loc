@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('vehicle_id')->nullable(); // Автомобиль на который был заказ
             $table->unsignedBigInteger('client_id')->nullable();  // Если заказ к клиенту напрямую
             $table->unsignedBigInteger('manager_id')->nullable(); // Ответственный менеджер
-
+            $table->tinyInteger('status')->default(1);
             $table->integer('mileage')->nullable();             // Пробег
             $table->timestamps();
 

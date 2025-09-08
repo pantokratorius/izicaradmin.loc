@@ -18,7 +18,7 @@
     .btn { padding: 5px 10px; background: #14213d; color: #fff; border-radius: 4px; text-decoration: none; margin-bottom: 10px; display: inline-block; }
     .btn:hover { background: #0f0f2d; }
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
-    .modal-content { background-color: #fff; margin: 5% auto; padding: 20px; border-radius: 6px; width: 500px; position: relative; max-height: 90vh; overflow-y: auto; }
+    .modal-content { background-color: #fff; margin: 5% auto; padding: 40px  200px; border-radius: 6px; width: 500px; position: relative; max-height: 90vh; overflow-y: auto; }
     .close { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; }
 </style>
 
@@ -179,6 +179,7 @@
                     <tr>
                         <th>Номер заказа</th>
                         <th>Сумма</th>
+                        <th>Статус</th>
                         <th>Дата создания</th>
                         <th>Автомобиль</th>
                         <th>Менеджер</th>
@@ -191,6 +192,7 @@
                         <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->amount }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
@@ -223,6 +225,8 @@
                             <table style="width:100%; border:1px solid #ccc;">
                                 <thead>
                                     <tr style="background:#f0f0f0;">
+                                        <th>Артикул</th>
+                                        <th>Бренд</th>
                                         <th>Наименование</th>
                                         <th>Цена закупки</th>
                                         <th>Цена продажи</th>
@@ -236,6 +240,8 @@
                                 <tbody>
                                     @foreach($order->items as $item)
                                         <tr>
+                                            <td>{{ $item->part_number }}</td>
+                                            <td>{{ $item->part_make }}</td>
                                             <td>{{ $item->part_name }}</td>
                                             <td>{{ $item->purchase_price }}</td>
                                             <td>{{ $item->sale_price }}</td>
@@ -401,6 +407,14 @@
             @csrf
             <input type="hidden" name="order_id" id="orderItem_order_id" value="">
 
+            <div style="margin-bottom:10px;">
+                <label>Артикул</label>
+                <input type="text" name="part_number" id="orderItem_part_number" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Бренд</label>
+                <input type="text" name="part_make" id="orderItem_part_make" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
             <div style="margin-bottom:10px;">
                 <label>Наименование</label>
                 <input type="text" name="part_name" id="orderItem_part_name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
@@ -754,10 +768,13 @@ function openOrderModal(order = null) {
   }, 2000);
 
 function toggleItems(orderId) {
-    let block = document.getElementById('order-items-' + orderId);
-    let btn = document.querySelector('#toggle-btn-' + orderId);
 
-    block.classList.toggle('open');
+window.location.href = "{{ route('orders.show', ':id') }}".replace(':id', orderId);
+
+    // let block = document.getElementById('order-items-' + orderId);
+    // let btn = document.querySelector('#toggle-btn-' + orderId);
+
+    // block.classList.toggle('open');
 
 }
 
@@ -791,7 +808,7 @@ function openOrderItemModal(orderId, item = null) {
             input.value = 'PUT';
             form.appendChild(input);
         }
-        ['part_name','purchase_price','sale_price','supplier','prepayment','quantity'].forEach(field => {
+        ['part_number','part_make','part_name','purchase_price','sale_price','supplier','prepayment','quantity'].forEach(field => {
             document.getElementById('orderItem_' + field).value = item[field] ?? '';
         });
     } else {
@@ -832,6 +849,11 @@ function openOrderItemModal(orderId, item = null) {
 .select-options { position: absolute; top: 100%; left: 0; right: 0; max-height: 300px; overflow-y: auto; border: 1px solid #ccc; border-radius: 4px; background: #fff; list-style: none; padding: 0; margin: 0; z-index: 1000; }
 .select-options li { padding: 6px; cursor: pointer; }
 .select-options li:hover { background: #f0f0f0; }
+
+#orderForm div label, #orderItemForm div label {
+    margin-bottom: 5px;
+    display: inline-block;
+}
 
 </style>
 

@@ -26,6 +26,7 @@ class OrderFactory extends Factory
             'client_id'    => $hasVehicle
                              ? Vehicle::inRandomOrder()->first()?->client_id // vehicle owner
                              : Client::inRandomOrder()->first()?->id,
+            'status' => $this->faker->randomElement([1,2,3]),
             'manager_id'   => User::inRandomOrder()->first()?->id,
             'mileage'      => $this->faker->numberBetween(0, 300000),
         ];

@@ -24,7 +24,7 @@
     .sidebar .logo { font-size: 20px; font-weight: bold; text-align: center; padding: 20px; background: #1f2d50; }
     .sidebar ul { list-style: none; padding: 0; margin: 0; }
     .sidebar ul li { padding: 12px 20px; cursor: pointer; }
-    .sidebar ul li a { color: #fff; text-decoration: none }
+    .sidebar ul li a { color: #fff; text-decoration: none; padding: 10px 30px; }
     .sidebar ul li:hover { background: #1f2d50; }
     .sidebar .bottom { padding: 20px; font-size: 14px; border-top: 1px solid rgba(255,255,255,0.2); }
 
@@ -56,12 +56,14 @@
       <div class="logo">IZICAR</div>
       <ul>
         <li>
-            <a href="{{route('clients.index')}}">Клиенты</a>
+            <a href="{{route('clients.index')}}"><img src="{{asset('storage/svg/clients.svg') }}" /> Клиенты</a>
         </li>
         <li>
-            <a href="{{route('vehicles.index')}}">Автомобили</a>
+            <a href="{{route('vehicles.index')}}"><img src="{{asset('storage/svg/autos.svg') }}" /> Автомобили</a>
         </li>
-        <li>Заказы</li>
+        <li>
+            <a href="{{route('orders.index')}}"><img src="{{asset('storage/svg/orders.svg') }}" /> Заказы</a>
+        </li>
         <li>Проценка</li>
         <li>Склад</li>
         <li>Черновики</li>

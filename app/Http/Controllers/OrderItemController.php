@@ -19,30 +19,25 @@ class OrderItemController extends Controller
         return view('order_items.create');
     }
 
-    public function store(Request $request)
-    {
+        public function store(Request $request)
+        {
+            $data = $request->validate([
+                'order_id'       => 'required|exists:orders,id',
+                'part_number'    => 'nullable|string|max:255',
+                'part_make'      => 'nullable|string|max:255',
+                'part_name'      => 'nullable|string|max:255',
+                'purchase_price' => 'nullable|numeric',
+                'sale_price'     => 'nullable|numeric',
+                'supplier'       => 'nullable|string|max:255',
+                'prepayment'     => 'nullable|numeric',
+                'quantity'       => 'nullable|integer|min:1',
+                'status'         => 'nullable|string|max:255',
+            ]);
 
-        $validator = Validator::make($request->all(), [
-            'order_id' => 'required|exists:orders,id',
-            'part_name' => 'required|string|max:255',
-            'sale_price' => 'numeric',
-            'purchase_price' => 'nullable|numeric',
-            'supplier' => 'nullable|string|max:255',
-            'prepayment' => 'nullable|numeric',
-            'quantity' => 'required|integer|min:1',
-        ]);
+            $item = OrderItem::create($data);
 
-          if ($validator->fails()) {
-                return redirect()->back()
-                         ->withErrors($validator)
-                         ->withInput()
-                         ->with('active_tab', 'orders'); // <-- вот тут
-    }
-
-
-        OrderItem::create($validator->validated());
-        return redirect()->back()->with('success', 'Позиция заказа успешно создана.')->with('active_tab', 'orders');
-    }
+            return response()->json(['success' => true, 'item' => $item]);
+        }
 
     public function show(OrderItem $orderItem)
     {
@@ -54,28 +49,30 @@ class OrderItemController extends Controller
         return view('order_items.edit', compact('orderItem'))->with('active_tab', 'orders');;
     }
 
-    public function update(Request $request, OrderItem $orderItem)
+    public function update(Request $request, OrderItem $orderitem)
     {
-        $request->validate([
-            'order_id' => 'required|exists:orders,id',
-            'part_name' => 'required|string|max:255',
-            'sale_price' => 'numeric',
-            'purchase_price' => 'numeric',
-            'supplier' => 'nullable|string|max:255',
-            'prepayment' => 'nullable|numeric',
-            'quantity' => 'required|integer|min:1',
+        $data = $request->validate([
+            'part_number'    => 'nullable|string|max:255',
+            'part_make'      => 'nullable|string|max:255',
+            'part_name'      => 'nullable|string|max:255',
+            'purchase_price' => 'nullable|numeric',
+            'sale_price'     => 'nullable|numeric',
+            'supplier'       => 'nullable|string|max:255',
+            'prepayment'     => 'nullable|numeric',
+            'quantity'       => 'nullable|integer|min:1',
+            'status'         => 'nullable|string|max:255',
         ]);
 
-        $orderItem->update($request->all());
-        return redirect()->back()->with('success', 'Позиция заказа обновлена.')->with('active_tab', 'orders');;
+        $orderitem->update($data);
+
+        return response()->json(['success' => true, 'item' => $orderitem]);
     }
 
-    public function destroy($id)
-    {
-         $orderitem = OrderItem::findOrFail($id);
-        $orderitem->delete();
-        return redirect()->back()->with('success', 'Позиция заказа удалена.')
-        ->with('active_tab', 'orders')
-        ->with('toggle-btn-', $orderitem->order_id);
-    }
+   
+public function destroy(OrderItem $orderitem)
+{
+    $orderitem->delete();
+
+    return response()->json(['success' => true]);
+}
 }

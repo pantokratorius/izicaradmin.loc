@@ -18,6 +18,7 @@ class Order extends Model
         'client_id',
         'manager_id',
         'mileage',
+        'status',
     ];
 
 
