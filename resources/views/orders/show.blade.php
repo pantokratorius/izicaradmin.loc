@@ -156,6 +156,7 @@
     float: right;
     font-size: 24px;
     cursor: pointer;
+    padding: 20px
 }
 
 /* Формы */

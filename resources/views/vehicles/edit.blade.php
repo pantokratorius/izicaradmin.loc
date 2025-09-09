@@ -149,7 +149,7 @@
                 </form>
             <button  onclick="openVehicleModal({{ $vehicle }})"
 
-                            style="background:#2d6cdf;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-top: 10px">
+                            style="btn btn-sm btn-warning;margin-top: 10px; cursor: pointer">
                         Редактировать
                     </button>
             </td>
@@ -477,7 +477,8 @@ function openVehiclesOrders(vehicle) {
         });
 
         // Show reset button
-        document.getElementById('resetOrdersBtn').style.display = 'inline-block';
+        document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
+        document.getElementById('resetOrdersBtn').style.display = 'block';
     }
 }
 

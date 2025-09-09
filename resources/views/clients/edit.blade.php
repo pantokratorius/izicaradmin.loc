@@ -34,7 +34,7 @@
 <button id="toggleClientForm" class="btn" style="margin-bottom:10px;">Показать форму</button>
 
 <div id="clientFormContainer" style= "display: none">
-<form method="POST" action="{{ route('clients.update', $client->id) }}" style="background:#fff;padding:20px;border-radius:6px;margin-bottom:20px;">
+<form method="POST" action="{{ route('clients.update', $client->id) }}" style="background:#fff;padding:20px 20px 20px 20px; border-radius:6px;margin-bottom:70px;">
     @csrf
     @method('PUT')
     <!-- Client fields -->
@@ -81,12 +81,12 @@
     </div>
     <button type="submit" style="background:#14213d;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Обновить</button>
 </form>
-    <form id="delete-client-{{ $client->id }}"
+    <form id="delete-client-{{ $client->id }}" style="margin: -124px 20px 40px 153px"
         action="{{ route('clients.destroy', $client->id) }}"
         method="POST" >
       @csrf
       @method('DELETE')
-      <button onclick="if(!confirm('Удалить клиента?')) return false " class="delete_client" data-id="{{$client->id}}" style="btn btn-sm btn-danger; cursor: pointer">🗑</button>
+      <button onclick="if(!confirm('Удалить клиента?')) return false " class="delete_client" data-id="{{$client->id}}" style="btn btn-sm btn-danger; background: #990202; cursor: pointer;color:#fff;padding:10px 20px;border:none;border-radius:4px; ">Удалить</button>
   </form>
 </div>
 <!-- Tabs -->
@@ -140,7 +140,7 @@
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->pts ?? '-' }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->year_of_manufacture }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->engine_type }}</td>
-                            <td><form
+                            <td style="display: flex; flex-direction: row-reverse"><form
                   action="{{ route('vehicles.destroy', $vehicle->id) }}"
                   method="POST" style="">
                     @csrf
@@ -149,7 +149,7 @@
                 </form>
             <button  onclick="openVehicleModal({{ $vehicle }})"
 
-                            style="btn btn-sm btn-warning;margin-top: 10px; cursor: pointer">
+                            style="btn btn-sm btn-warning; cursor: pointer; margin-right: 5px">
                         ✏
                     </button>
             </td>
@@ -479,7 +479,8 @@ function openVehiclesOrders(vehicle) {
         });
 
         // Show reset button
-        document.getElementById('resetOrdersBtn').style.display = 'inline-block';
+        document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
+        document.getElementById('resetOrdersBtn').style.display = 'block';
     }
 }
 
