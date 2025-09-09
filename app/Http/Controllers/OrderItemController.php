@@ -51,6 +51,7 @@ class OrderItemController extends Controller
 
     public function update(Request $request, OrderItem $orderitem)
     {
+
         $data = $request->validate([
             'part_number'    => 'nullable|string|max:255',
             'part_make'      => 'nullable|string|max:255',

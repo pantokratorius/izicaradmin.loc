@@ -18,7 +18,7 @@
     .btn { padding: 5px 10px; background: #14213d; color: #fff; border-radius: 4px; text-decoration: none; margin-bottom: 10px; display: inline-block; }
     .btn:hover { background: #0f0f2d; }
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
-    .modal-content { background-color: #fff; margin: 5% auto; padding: 40px  200px; border-radius: 6px; width: 500px; position: relative; max-height: 90vh; overflow-y: auto; }
+    .modal-content { background-color: #fff; margin: 5% auto; padding: 40px; border-radius: 6px; width: 500px; position: relative; max-height: 90vh; overflow-y: auto; }
     .close { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; }
 </style>
 
@@ -86,7 +86,7 @@
         method="POST" >
       @csrf
       @method('DELETE')
-      <button onclick="if(!confirm('Удалить клиента?')) return false " class="delete_client" data-id="{{$client->id}}" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
+      <button onclick="if(!confirm('Удалить клиента?')) return false " class="delete_client" data-id="{{$client->id}}" style="btn btn-sm btn-danger; cursor: pointer">🗑</button>
   </form>
 </div>
 <!-- Tabs -->
@@ -145,12 +145,12 @@
                   method="POST" style="">
                     @csrf
                     @method('DELETE')
-                    <button onclick="if(!confirm('Удалить автомобиль?')) return false" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
+                    <button onclick="if(!confirm('Удалить автомобиль?')) return false" style="btn btn-sm btn-danger; cursor: pointer">🗑</button>
                 </form>
             <button  onclick="openVehicleModal({{ $vehicle }})"
 
-                            style="background:#2d6cdf;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-top: 10px">
-                        Редактировать
+                            style="btn btn-sm btn-warning;margin-top: 10px; cursor: pointer">
+                        ✏
                     </button>
             </td>
                         </tr>
@@ -197,16 +197,16 @@
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
-                            <td style="display: flex; flex-direction: column;">
+                            <td style="display: flex; align-items: flex-start">
                         <button   onclick="openOrderItemModal({{ $order->id }})"
-                            style="background:#2ddf6b;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-bottom: 5px">
-                        Добавить
+                            style="background:#2ddf6b;color:#fff;padding:4px 12px;border:none;border-radius:4px;cursor:pointer;">
+                        +
                     </button>
                   @if($client->orders->count())
                     <button  onclick="openOrderModal({{ $order }})"
 
-                            style="background:#2d6cdf;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;margin-bottom: 5px">
-                        Редактировать
+                            style="btn btn-sm btn-warning; margin: 0 5px; cursor: pointer">
+                        ✏
                     </button>
                   @endif
             <form
@@ -214,7 +214,7 @@
                   method="POST" style="">
                     @csrf
                     @method('DELETE')
-                    <button onclick="if(!confirm('Удалить заказ?')) return false" style="background:#77312f;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Удалить</button>
+                    <button onclick="if(!confirm('Удалить заказ?')) return false" style="btn btn-sm btn-danger; cursor: pointer">🗑</button>
                 </form></td>
                         </tr>
 
@@ -255,8 +255,8 @@
                 @csrf
                 @method('DELETE')
                 <button onclick="return confirm('Удалить позицию?')"
-                        style="background:#77312f;color:#fff;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;">
-                    Удалить
+                        style="btn btn-sm btn-danger; cursor: pointer">
+                    🗑
                 </button>
             </form>
                                              </td>
@@ -715,9 +715,9 @@ tabs.forEach(tab => {
 
 function openModal(id) { document.getElementById(id).style.display = 'block'; }
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-window.onclick = function(event) {
-    if(event.target.classList.contains('modal')) event.target.style.display = "none";
-}
+// window.onclick = function(event) {
+//     if(event.target.classList.contains('modal')) event.target.style.display = "none";
+// }
 
 // Initialize cascading selects
 setupCascadingSelects();

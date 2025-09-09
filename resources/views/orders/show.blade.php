@@ -26,10 +26,10 @@
     </div>
 
     {{-- Позиции заказа --}}
-    <div class="card">
+    <div class="card" style="margin-bottom: 10px">
       <div class="card-header d-flex justify-content-between align-items-center">
     <span>Позиции</span>
-    <button class="btn btn-sm btn-success" onclick="openItemModal({{ $order->id }})">
+    <button class="btn" style="background: #d7d7d7" onclick="openItemModal({{ $order->id }})">
         ➕ Добавить позицию
     </button>
 </div>
@@ -47,23 +47,22 @@
                         <th>Предоплата</th>
                         <th>Количество</th>
                         <th>Статус</th>
-                        <th class="text-end">Действия</th>
+                        <th class="text-end"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($order->items as $item)
                     <tr id="item-row-{{ $item->id }}">
-                        <td>{{ $item->part_number }}</td>
-                        <td>{{ $item->part_make }}</td>
-                        <td>{{ $item->part_name }}</td>
-                        <td>{{ $item->purchase_price }}</td>
-                        <td>{{ $item->sale_price }}</td>
-                        <td>{{ $item->supplier }}</td>
-                        <td>{{ $item->prepayment }}</td>
-                        <td>{{ $item->quantity }}</td>
-                        <td>{{ $item->status }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_number }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_make }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_name }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->purchase_price }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->sale_price }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->supplier }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->prepayment }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->quantity }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->status }}</td>
                         <td class="text-end">
-                            <button class="btn btn-sm btn-warning" onclick='openItemModal({{ $order->id }}, @json($item))'>✏</button>
                             <button class="btn btn-sm btn-danger" onclick="deleteItem({{ $item->id }})">🗑</button>
                         </td>
                     </tr>
@@ -80,7 +79,7 @@
 
     {{-- Кнопка назад --}}
     <div style="margin-top: 10px">
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">← Назад к заказу</a>
+        <a href="#" onclick="window.history.back()" class="btn btn-secondary">← Назад к заказу</a>
     </div>
 </div>
 
@@ -216,10 +215,11 @@ document.getElementById('itemForm').addEventListener('submit', function(e) {
     let formData = new FormData(this);
     let itemId = document.getElementById('item_id').value;
     let url = itemId ? `/orderitems/${itemId}` : `/orderitems`;
-    let method = itemId ? 'PUT' : 'POST';
-
+   if (itemId) {
+        formData.append('_method', 'PUT'); // 👈 имитируем PUT
+    }
     fetch(url, {
-        method: method,
+        method: 'POST',
         headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
         body: formData
     })
