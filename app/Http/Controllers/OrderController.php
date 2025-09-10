@@ -42,6 +42,7 @@ class OrderController extends Controller
             'amount'       => 'nullable|numeric',
             'created_at'   => 'nullable|date',
             'vehicle_id'   => 'nullable|exists:vehicles,id',
+            'prepayment'     => 'nullable|numeric',
             'client_id'    => 'nullable|exists:clients,id',
             'manager_id'   => 'nullable|exists:users,id',
             'mileage'      => 'nullable|integer',
@@ -92,6 +93,7 @@ class OrderController extends Controller
             'created_at'   => 'nullable|date',
             'vehicle_id'   => 'nullable|exists:vehicles,id',
             'client_id'    => 'nullable|exists:clients,id',
+            'prepayment'     => 'nullable|numeric',
             'manager_id'   => 'nullable|exists:users,id',
             'mileage'      => 'nullable|integer',
         ]);

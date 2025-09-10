@@ -18,16 +18,13 @@ class OrderItem extends Model
         'sale_price',
         'purchase_price',
         'supplier',
-        'prepayment',
         'quantity',
         'status',
         'margin',
     ];
 
 
-    protected $attributes = [
-        'prepayment' => 0,
-    ];
+    
 
     // Связь: одна запчасть принадлежит одному заказу
     public function order(): BelongsTo
@@ -35,7 +32,7 @@ class OrderItem extends Model
         return $this->belongsTo(Order::class);
     }
 
-       public function getAmountAttribute()
+       public function getSummAttribute()
     {
         $globalMargin = Setting::first()->margin ?? 0;
 
@@ -44,6 +41,22 @@ class OrderItem extends Model
 
         // цена с маржой
         $base = $this->purchase_price * (1 + $margin / 100) * $this->quantity;
+
+        // скидка клиента
+        $discount = $this->order->client->discount ?? 0;
+
+        return $base * (1 - $discount / 100);
+    }
+
+           public function getAmountAttribute()
+    {
+        $globalMargin = Setting::first()->margin ?? 0;
+
+        // приоритет маржи
+        $margin = $this->margin ?? $this->order->margin ?? $globalMargin;
+
+        // цена с маржой
+        $base = $this->purchase_price * (1 + $margin / 100) ;
 
         // скидка клиента
         $discount = $this->order->client->discount ?? 0;

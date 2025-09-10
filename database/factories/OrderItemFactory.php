@@ -20,7 +20,7 @@ class OrderItemFactory extends Factory
             'sale_price' => $this->faker->randomFloat(2, 100, 5000),
             'purchase_price' => $this->faker->randomFloat(2, 50, 4000),
             'supplier' => $this->faker->company,
-            'prepayment' => $this->faker->randomFloat(2, 0, 1000),
+            
             'quantity' => $this->faker->numberBetween(1, 10),
             'status' => $this->faker->randomElement([1,2,3]),
             'created_at' => $this->faker->optional()->dateTimeBetween('now', '+30 days'),

@@ -23,6 +23,7 @@ class OrderFactory extends Factory
             'order_number' => $counter++,
             // 'amount'       => $this->faker->randomFloat(2, 1000, 100000),
             'created_at' => $this->faker->dateTimeBetween('-1 years', 'now'),
+            'prepayment' => $this->faker->randomFloat(2, 0, 1000),
 
             'vehicle_id'   => $hasVehicle ? Vehicle::inRandomOrder()->first()?->id : null,
             'client_id'    => $hasVehicle

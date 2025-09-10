@@ -43,9 +43,9 @@
                         <th>Название</th>
                         <th>Закупка</th>
                         <th>Продажа</th>
-                        <th>Поставщик</th>
-                        <th>Предоплата</th>
                         <th>Количество</th>
+                        <th>Сумма</th>
+                        <th>Поставщик</th>
                         <th>Статус</th>
                         <th>Наценка %</th>
                         <th class="text-end"></th>
@@ -59,9 +59,9 @@
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_name }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->purchase_price, 2, ',', ' ') }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->amount, 2, ',', ' ') }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->supplier }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->prepayment }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->quantity }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->summ, 2, ',', ' ') }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->supplier }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->status }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->margin }}</td>
                         <td class="text-end">
@@ -112,16 +112,13 @@
             <label>Поставщик</label>
             <input type="text" name="supplier" id="supplier">
 
-            <label>Предоплата</label>
-            <input type="number" step="0.01" name="prepayment" id="prepayment">
-
             <label>Количество</label>
             <input type="number" name="quantity" id="quantity" value="1">
 
             <label>Статус</label>
             <input type="text" name="status" id="status">
 
-            <label>Наценка</label>
+            <label>Наценка %</label>
             <input type="text" name="margin" id="margin">
 
             <div class="modal-actions">
@@ -196,7 +193,6 @@ function openItemModal(orderId, item = null) {
         document.getElementById('part_name').value = item.part_name;
         document.getElementById('purchase_price').value = item.purchase_price;
         document.getElementById('supplier').value = item.supplier;
-        document.getElementById('prepayment').value = item.prepayment;
         document.getElementById('quantity').value = item.quantity;
         document.getElementById('status').value = item.status;
         document.getElementById('margin').value = item.margin;

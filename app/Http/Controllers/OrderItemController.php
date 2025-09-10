@@ -29,7 +29,7 @@ class OrderItemController extends Controller
                 'purchase_price' => 'nullable|numeric',
                 'sale_price'     => 'nullable|numeric',
                 'supplier'       => 'nullable|string|max:255',
-                'prepayment'     => 'nullable|numeric',
+                
                 'quantity'       => 'nullable|integer|min:1',
                 'status'         => 'nullable|string|max:255',
             ]);
@@ -58,7 +58,6 @@ class OrderItemController extends Controller
             'purchase_price' => 'nullable|numeric',
             'sale_price'     => 'nullable|numeric',
             'supplier'       => 'nullable|string|max:255',
-            'prepayment'     => 'nullable|numeric',
             'quantity'       => 'nullable|integer|min:1',
             'status'         => 'nullable|string|max:255',
             'margin'         => 'nullable|numeric',

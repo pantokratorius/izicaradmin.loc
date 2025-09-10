@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
+
+
+
     use HasFactory;
 
     protected $fillable = [
@@ -18,8 +21,14 @@ class Order extends Model
         'client_id',
         'manager_id',
         'mileage',
+        'prepayment',
         'status',
         'margin',
+    ];
+
+    
+    protected $attributes = [
+        'prepayment' => 0,
     ];
 
 
@@ -59,7 +68,7 @@ class Order extends Model
             $base = $item->purchase_price * (1 + $margin / 100) * $item->quantity;
 
             // применяем скидку клиента
-            return $base * (1 - $discount / 100);
+            return $base * (1 - $discount / 100) - $this->prepayment;
         });
     }
 }

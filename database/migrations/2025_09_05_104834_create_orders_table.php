@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->tinyInteger('status')->default(1);
             $table->integer('mileage')->nullable();             // Пробег
             $table->decimal('margin', 5, 2)->default(null)->nullable();
+            $table->decimal('prepayment', 10, 2)->nullable(); // Предоплата
             $table->timestamps();
 
             // Foreign keys

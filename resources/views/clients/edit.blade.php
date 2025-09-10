@@ -184,13 +184,14 @@
                         <th>Автомобиль</th>
                         <th>Менеджер</th>
                         <th>Пробег</th>
-                        <th>Наценка</th>
+                        <th>Наценка %</th>
+                        <th>Предоплата</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($client->orders ?? [] as $order)
-                        <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
+                        <tr style="cursor:pointer; " id="tПредоплатаoggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ') }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
@@ -199,6 +200,7 @@
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
                             <td>{{ $order->margin ?? '-' }}</td>
+                            <td>{{ $order->prepayment ?? '-' }}</td>
                             <td style="display: flex; align-items: flex-start">
                         <button   onclick="openOrderItemModal({{ $order->id }})"
                             style="background:#2ddf6b;color:#fff;padding:4px 12px;border:none;border-radius:4px;cursor:pointer;">
@@ -233,7 +235,6 @@
                                         <th>Цена закупки</th>
                                         <th>Цена продажи</th>
                                         <th>Поставщик</th>
-                                        <th>Предоплата</th>
                                         <th>Количество</th>
                                         <th>Статус</th>
                                         <th></th>
@@ -248,7 +249,6 @@
                                             <td>{{ $item->purchase_price }}</td>
                                             <td>{{ $item->sale_price }}</td>
                                             <td>{{ $item->supplier }}</td>
-                                            <td>{{ $item->prepayment }}</td>
                                             <td>{{ $item->quantity }}</td>
                                             <td>{{ $item->status }}</td>
                                              <td>
@@ -366,7 +366,7 @@
                 <input type="text" name="order_number" value="{{$orders_count}}" id="order_order_number" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
-                <label>Наценка</label>
+                <label>Наценка %</label>
                 <input type="text" name="margin" id="order_margin" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
@@ -376,6 +376,10 @@
             <div style="margin-bottom:10px;">
                 <label>Пробег</label>
                 <input type="text" name="mileage" id="order_mileage" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Предоплата</label>
+                <input type="text" name="prepayment" id="order_prepayment" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
                 <label>Автомобиль (если есть)</label>
@@ -396,7 +400,7 @@
                 </select>
             </div>
             <div style="margin-bottom:10px;">
-                <label>Наценка</label>
+                <label>Наценка %</label>
                 <input type="text" name="margin" id="order_margin" value="" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <button type="submit" class="btn">Сохранить</button>
@@ -436,10 +440,6 @@
             <div style="margin-bottom:10px;">
                 <label>Поставщик</label>
                 <input type="text" name="supplier" id="orderItem_supplier" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-            </div>
-            <div style="margin-bottom:10px;">
-                <label>Предоплата</label>
-                <input type="text" name="prepayment" id="orderItem_prepayment" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
                 <label>Количество</label>
@@ -817,7 +817,7 @@ function openOrderItemModal(orderId, item = null) {
             input.value = 'PUT';
             form.appendChild(input);
         }
-        ['part_number','part_make','part_name','purchase_price','sale_price','supplier','prepayment','quantity'].forEach(field => {
+        ['part_number','part_make','part_name','purchase_price','sale_price','supplier','quantity'].forEach(field => {
             document.getElementById('orderItem_' + field).value = item[field] ?? '';
         });
     } else {
