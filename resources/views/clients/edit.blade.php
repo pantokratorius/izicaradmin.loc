@@ -184,6 +184,7 @@
                         <th>Автомобиль</th>
                         <th>Менеджер</th>
                         <th>Пробег</th>
+                        <th>Наценка</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -191,12 +192,13 @@
                     @foreach($client->orders ?? [] as $order)
                         <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->amount }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ') }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
+                            <td>{{ $order->margin ?? '-' }}</td>
                             <td style="display: flex; align-items: flex-start">
                         <button   onclick="openOrderItemModal({{ $order->id }})"
                             style="background:#2ddf6b;color:#fff;padding:4px 12px;border:none;border-radius:4px;cursor:pointer;">
@@ -363,10 +365,10 @@
                 <label>Номер заказа</label>
                 <input type="text" name="order_number" value="{{$orders_count}}" id="order_order_number" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
-            {{-- <div style="margin-bottom:10px;">
-                <label>Сумма заказа</label>
-                <input type="text" name="amount" id="order_amount" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-            </div> --}}
+            <div style="margin-bottom:10px;">
+                <label>Наценка</label>
+                <input type="text" name="margin" id="order_margin" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
             <div style="margin-bottom:10px;">
                 <label>Дата создания</label>
                 <input type="date" name="created_at" id="created_at" value="{{ date('Y-m-d') }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
@@ -392,6 +394,10 @@
                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Наценка</label>
+                <input type="text" name="margin" id="order_margin" value="" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <button type="submit" class="btn">Сохранить</button>
         </form>
@@ -749,8 +755,6 @@ function openOrderModal(order = null) {
         form.action = '{{ route("orders.store") }}';
         form.method = 'POST';
         form.querySelectorAll('input').forEach(i => { if(i.type !== 'hidden' && !['order_number', 'created_at'].includes(i.name)){ 
-            console.log(i.id);
-            
             i.value = '';
         } });
     }

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('comment')->nullable(); // Поставщик
             $table->decimal('prepayment', 10, 2)->nullable(); // Предоплата
             $table->integer('quantity')->default(1); // Количество
+            $table->decimal('margin', 5, 2)->default(null)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
 

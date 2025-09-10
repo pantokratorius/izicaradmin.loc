@@ -190,7 +190,7 @@
                     @foreach($client->orders ?? [] as $order)
                         <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->amount }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ') }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>

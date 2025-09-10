@@ -51,7 +51,6 @@ class OrderItemController extends Controller
 
     public function update(Request $request, OrderItem $orderitem)
     {
-
         $data = $request->validate([
             'part_number'    => 'nullable|string|max:255',
             'part_make'      => 'nullable|string|max:255',
@@ -62,8 +61,8 @@ class OrderItemController extends Controller
             'prepayment'     => 'nullable|numeric',
             'quantity'       => 'nullable|integer|min:1',
             'status'         => 'nullable|string|max:255',
+            'margin'         => 'nullable|numeric',
         ]);
-
         $orderitem->update($data);
 
         return response()->json(['success' => true, 'item' => $orderitem]);

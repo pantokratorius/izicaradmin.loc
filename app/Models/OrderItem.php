@@ -21,6 +21,7 @@ class OrderItem extends Model
         'prepayment',
         'quantity',
         'status',
+        'margin',
     ];
 
 
@@ -32,5 +33,21 @@ class OrderItem extends Model
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+       public function getAmountAttribute()
+    {
+        $globalMargin = Setting::first()->margin ?? 0;
+
+        // приоритет маржи
+        $margin = $this->margin ?? $this->order->margin ?? $globalMargin;
+
+        // цена с маржой
+        $base = $this->purchase_price * (1 + $margin / 100) * $this->quantity;
+
+        // скидка клиента
+        $discount = $this->order->client->discount ?? 0;
+
+        return $base * (1 - $discount / 100);
     }
 }

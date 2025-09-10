@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('manager_id')->nullable(); // Ответственный менеджер
             $table->tinyInteger('status')->default(1);
             $table->integer('mileage')->nullable();             // Пробег
+            $table->decimal('margin', 5, 2)->default(null)->nullable();
             $table->timestamps();
 
             // Foreign keys

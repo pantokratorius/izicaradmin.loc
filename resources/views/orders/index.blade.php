@@ -47,7 +47,7 @@
           <tr class="order-row" data-id="{{ $order->id }}">
             <td>{{ $loop->iteration }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ $order->amount }}</td>
+            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ') }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>

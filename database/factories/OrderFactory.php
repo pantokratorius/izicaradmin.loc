@@ -31,6 +31,7 @@ class OrderFactory extends Factory
             'status' => $this->faker->randomElement([1,2,3]),
             'manager_id'   => User::inRandomOrder()->first()?->id,
             'mileage'      => $this->faker->numberBetween(0, 300000),
+            
         ];
     }
 }

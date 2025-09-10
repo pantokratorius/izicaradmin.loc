@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->decimal('margin', 5, 2)->default(0); // глобальная маржа в %
+            $table->decimal('margin', 5, 2)->default(20); // глобальная маржа в %
             $table->timestamps();
         });
     }

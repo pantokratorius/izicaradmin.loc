@@ -19,6 +19,7 @@ class Order extends Model
         'manager_id',
         'mileage',
         'status',
+        'margin',
     ];
 
 
@@ -46,10 +47,19 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function getAmountAttribute()
+       public function getAmountAttribute()
     {
-        return $this->items->sum(function ($item) {
-            return $item->purchase_price * $item->quantity;
+        $globalMargin = Setting::first()->margin ?? 0;
+        $discount = $this->client->discount ?? 0;
+
+        return $this->items->sum(function ($item) use ($globalMargin, $discount) {
+            // приоритет маржи: item → order → settings
+            $margin = $item->margin ?? $this->margin ?? $globalMargin;
+
+            $base = $item->purchase_price * (1 + $margin / 100) * $item->quantity;
+
+            // применяем скидку клиента
+            return $base * (1 - $discount / 100);
         });
     }
 }
