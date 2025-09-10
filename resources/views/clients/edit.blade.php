@@ -25,11 +25,7 @@
 <div class="page-header">
     <div>Клиенты > Редактировать</div>
 </div>
-@if(session('error'))
-  <div class="errorMessage" style="background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
-    {{ session('error') }}
-  </div>
-@endif
+
 
 <button id="toggleClientForm" class="btn" style="margin-bottom:10px;">Показать форму</button>
 

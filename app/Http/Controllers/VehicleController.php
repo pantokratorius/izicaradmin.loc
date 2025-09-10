@@ -39,7 +39,6 @@ class VehicleController extends Controller
     {
         session(['active_tab' => 'vehicles']);
         $request->validate([
-            'vehicle_id' => 'required',
             'vin' => 'unique:vehicles',
             'year_of_manufacture' => 'integer|nullable',
         ]);
@@ -69,7 +68,6 @@ class VehicleController extends Controller
     {
         session(['active_tab' => 'vehicles']);
         $request->validate([
-        'vehicle_id' => 'required',
         'vin' => [
             'required',
             Rule::unique('vehicles', 'vin')->ignore($vehicle->id),

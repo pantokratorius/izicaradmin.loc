@@ -284,8 +284,7 @@
               <input type="hidden" name="client_id" value="{{ $client->id }}">
               @php
                   $fields = [
-                      'vin'=>'VIN','vehicle_type'=>'Тип транспортного средства','brand'=>'Бренд','model'=>'Модель',
-                      'generation'=>'Поколение','body'=>'Кузов','modification'=>'Модификация',
+                      'vin'=>'VIN','vehicle_type'=>'Тип транспортного средства',
                       'registration_number'=>'Гос номер','sts'=>'СТС','pts'=>'ПТС',
                       'year_of_manufacture'=>'Год','engine_type'=>'Тип двигателя'
                   ];
