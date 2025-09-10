@@ -362,10 +362,6 @@
                 <input type="text" name="order_number" value="{{$orders_count}}" id="order_order_number" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
-                <label>Наценка %</label>
-                <input type="text" name="margin" id="order_margin" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-            </div>
-            <div style="margin-bottom:10px;">
                 <label>Дата создания</label>
                 <input type="date" name="created_at" id="created_at" value="{{ date('Y-m-d') }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
