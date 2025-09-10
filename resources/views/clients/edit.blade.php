@@ -174,6 +174,7 @@
                 <thead>
                     <tr>
                         <th>Номер заказа</th>
+                        <th>Закупка</th>
                         <th>Сумма</th>
                         <th>Статус</th>
                         <th>Дата создания</th>
@@ -189,7 +190,8 @@
                     @foreach($client->orders ?? [] as $order)
                         <tr style="cursor:pointer; " id="tПредоплатаoggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ') }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
@@ -229,7 +231,6 @@
                                         <th>Бренд</th>
                                         <th>Наименование</th>
                                         <th>Цена закупки</th>
-                                        <th>Цена продажи</th>
                                         <th>Поставщик</th>
                                         <th>Количество</th>
                                         <th>Статус</th>
@@ -243,7 +244,6 @@
                                             <td>{{ $item->part_make }}</td>
                                             <td>{{ $item->part_name }}</td>
                                             <td>{{ $item->purchase_price }}</td>
-                                            <td>{{ $item->sale_price }}</td>
                                             <td>{{ $item->supplier }}</td>
                                             <td>{{ $item->quantity }}</td>
                                             <td>{{ $item->status }}</td>
@@ -424,10 +424,6 @@
             <div style="margin-bottom:10px;">
                 <label>Цена закупки</label>
                 <input type="text" name="purchase_price" id="orderItem_purchase_price" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-            </div>
-            <div style="margin-bottom:10px;">
-                <label>Цена продажи</label>
-                <input type="text" name="sale_price" id="orderItem_sale_price" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
                 <label>Поставщик</label>
@@ -809,7 +805,7 @@ function openOrderItemModal(orderId, item = null) {
             input.value = 'PUT';
             form.appendChild(input);
         }
-        ['part_number','part_make','part_name','purchase_price','sale_price','supplier','quantity'].forEach(field => {
+        ['part_number','part_make','part_name','purchase_price','supplier','quantity'].forEach(field => {
             document.getElementById('orderItem_' + field).value = item[field] ?? '';
         });
     } else {

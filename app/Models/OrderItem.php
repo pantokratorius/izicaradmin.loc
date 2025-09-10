@@ -15,7 +15,6 @@ class OrderItem extends Model
         'part_number',
         'part_make',
         'part_name',
-        'sale_price',
         'purchase_price',
         'supplier',
         'quantity',
@@ -61,6 +60,6 @@ class OrderItem extends Model
         // скидка клиента
         $discount = $this->order->client->discount ?? 0;
 
-        return $base * (1 - $discount / 100);
+        return ceil( $base * (1 - $discount / 100) / .5)  * .5; 
     }
 }

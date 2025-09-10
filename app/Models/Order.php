@@ -61,7 +61,7 @@ class Order extends Model
         $globalMargin = Setting::first()->margin ?? 0;
         $discount = $this->client->discount ?? 0;
 
-        return $this->items->sum(function ($item) use ($globalMargin, $discount) {
+        $res =  $this->items->sum(function ($item) use ($globalMargin, $discount) {
             // приоритет маржи: item → order → settings
             $margin = $item->margin ?? $this->margin ?? $globalMargin;
 
@@ -70,5 +70,16 @@ class Order extends Model
             // применяем скидку клиента
             return $base * (1 - $discount / 100);
         })  - $this->prepayment;
+
+        return ceil($res / .5)  * .5;
+    }
+
+    public function getPurchaseSumAttribute()
+    {
+        $res = $this->items->sum(function ($item) {
+            return $item->purchase_price * $item->quantity;
+        });
+
+        return ceil($res / .5)  * .5;
     }
 }

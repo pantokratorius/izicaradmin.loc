@@ -27,13 +27,11 @@ class OrderItemController extends Controller
                 'part_make'      => 'nullable|string|max:255',
                 'part_name'      => 'nullable|string|max:255',
                 'purchase_price' => 'nullable|numeric',
-                'sale_price'     => 'nullable|numeric',
                 'supplier'       => 'nullable|string|max:255',
                 
                 'quantity'       => 'nullable|integer|min:1',
-                'status'         => 'nullable|string|max:255',
             ]);
-
+$data['status'] = 1;
             $item = OrderItem::create($data);
 
             return response()->json(['success' => true, 'item' => $item]);
@@ -56,7 +54,6 @@ class OrderItemController extends Controller
             'part_make'      => 'nullable|string|max:255',
             'part_name'      => 'nullable|string|max:255',
             'purchase_price' => 'nullable|numeric',
-            'sale_price'     => 'nullable|numeric',
             'supplier'       => 'nullable|string|max:255',
             'quantity'       => 'nullable|integer|min:1',
             'status'         => 'nullable|string|max:255',

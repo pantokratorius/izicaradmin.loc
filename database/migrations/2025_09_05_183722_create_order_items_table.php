@@ -13,7 +13,6 @@ return new class extends Migration {
             $table->string('part_number');            // Артикул запчасти
             $table->string('part_make');            // Бренд запчасти
             $table->string('part_name');            // Наименование запчасти
-            $table->decimal('sale_price', 10, 2)->nullable();   // Цена продажи
             $table->decimal('purchase_price', 10, 2)->nullable(); // Цена закупки
             $table->string('supplier')->nullable(); // Поставщик
             $table->string('comment')->nullable(); // Поставщик

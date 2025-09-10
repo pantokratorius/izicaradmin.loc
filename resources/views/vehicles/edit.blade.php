@@ -227,7 +227,6 @@
                                         <th>Бренд</th>
                                         <th>Наименование</th>
                                         <th>Цена закупки</th>
-                                        <th>Цена продажи</th>
                                         <th>Поставщик</th>
                                         <th>Предоплата</th>
                                         <th>Количество</th>
@@ -242,7 +241,6 @@
                                             <td>{{ $item->part_make }}</td>
                                             <td>{{ $item->part_name }}</td>
                                             <td>{{ $item->purchase_price }}</td>
-                                            <td>{{ $item->sale_price }}</td>
                                             <td>{{ $item->supplier }}</td>
                                             <td>{{ $item->prepayment }}</td>
                                             <td>{{ $item->quantity }}</td>
@@ -419,10 +417,6 @@
             <div style="margin-bottom:10px;">
                 <label>Цена закупки</label>
                 <input type="text" name="purchase_price" id="orderItem_purchase_price" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-            </div>
-            <div style="margin-bottom:10px;">
-                <label>Цена продажи</label>
-                <input type="text" name="sale_price" id="orderItem_sale_price" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
                 <label>Поставщик</label>
@@ -803,7 +797,7 @@ function openOrderItemModal(orderId, item = null) {
             input.value = 'PUT';
             form.appendChild(input);
         }
-        ['part_number','part_make','part_name','purchase_price','sale_price','supplier','prepayment','quantity'].forEach(field => {
+        ['part_number','part_make','part_name','purchase_price','supplier','prepayment','quantity'].forEach(field => {
             document.getElementById('orderItem_' + field).value = item[field] ?? '';
         });
     } else {
