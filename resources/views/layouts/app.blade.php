@@ -64,6 +64,9 @@
         <li>
             <a href="{{route('orders.index')}}"><img src="{{asset('storage/svg/orders.svg') }}" /> Заказы</a>
         </li>
+        <li>
+            <a href="{{route('settings.edit')}}"><img src="{{asset('storage/svg/settings.svg') }}" /> Настройки</a>
+        </li>
         <li>Проценка</li>
         <li>Склад</li>
         <li>Черновики</li>

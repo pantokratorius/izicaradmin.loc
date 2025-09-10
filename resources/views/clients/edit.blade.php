@@ -361,12 +361,12 @@
             <input type="hidden" name="client_id" value="{{ $client->id }}">
             <div style="margin-bottom:10px;">
                 <label>Номер заказа</label>
-                <input type="text" name="order_number" id="order_order_number" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                <input type="text" name="order_number" value="{{$orders_count}}" id="order_order_number" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
-            <div style="margin-bottom:10px;">
+            {{-- <div style="margin-bottom:10px;">
                 <label>Сумма заказа</label>
                 <input type="text" name="amount" id="order_amount" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-            </div>
+            </div> --}}
             <div style="margin-bottom:10px;">
                 <label>Дата создания</label>
                 <input type="date" name="created_at" id="created_at" value="{{ date('Y-m-d') }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
@@ -748,7 +748,11 @@ function openOrderModal(order = null) {
         document.getElementById('orderModalTitle').innerText = 'Добавить заказ';
         form.action = '{{ route("orders.store") }}';
         form.method = 'POST';
-        form.querySelectorAll('input').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
+        form.querySelectorAll('input').forEach(i => { if(i.type !== 'hidden' && !['order_number', 'created_at'].includes(i.name)){ 
+            console.log(i.id);
+            
+            i.value = '';
+        } });
     }
     openModal('orderModal');
 }
