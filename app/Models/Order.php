@@ -68,7 +68,7 @@ class Order extends Model
             $base = $item->purchase_price * (1 + $margin / 100) * $item->quantity;
 
             // применяем скидку клиента
-            return $base * (1 - $discount / 100) - $this->prepayment;
-        });
+            return $base * (1 - $discount / 100);
+        })  - $this->prepayment;
     }
 }

@@ -35,6 +35,7 @@
           <th>№</th>
           <th>Номер заказа</th>
         <th>Сумма</th>
+        <th>Предоплата</th>
         <th>Статус</th>
         <th>Дата создания</th>
         <th>Автомобиль</th>
@@ -48,6 +49,7 @@
             <td>{{ $loop->iteration }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ') }}</td>
+            <td onclick="toggleItems({{ $order->id }})">{{ $order->prepayment }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
