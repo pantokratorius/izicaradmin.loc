@@ -18,6 +18,8 @@
 /public/storage
 /storage/*.key
 /storage/pail
+# разрешаем svg в хранилище
+!/storage/app/public/svg
 /vendor
 Homestead.json
 Homestead.yaml
