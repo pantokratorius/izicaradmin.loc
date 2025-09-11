@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('order_id'); // связь с заказом
             $table->string('part_number');            // Артикул запчасти
-            $table->string('part_make');            // Бренд запчасти
-            $table->string('part_name');            // Наименование запчасти
+            $table->string('part_make')->nullable();            // Бренд запчасти
+            $table->string('part_name')->nullable();            // Наименование запчасти
             $table->decimal('purchase_price', 10, 2)->nullable(); // Цена закупки
             $table->string('supplier')->nullable(); // Поставщик
             $table->string('comment')->nullable(); // Поставщик

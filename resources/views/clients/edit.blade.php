@@ -19,7 +19,7 @@
     .btn:hover { background: #0f0f2d; }
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
     .modal-content { background-color: #fff; margin: 5% auto; padding: 40px; border-radius: 6px; width: 500px; position: relative; max-height: 90vh; overflow-y: auto; }
-    .close { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; }
+    .close { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; padding: 20px }
 </style>
 
 <div class="page-header">
@@ -200,10 +200,7 @@
                             <td>{{ $order->margin ?? '-' }}</td>
                             <td>{{ $order->prepayment ?? '-' }}</td>
                             <td style="display: flex; align-items: flex-start">
-                        <button   onclick="openOrderItemModal({{ $order->id }})"
-                            style="background:#2ddf6b;color:#fff;padding:4px 12px;border:none;border-radius:4px;cursor:pointer;">
-                        +
-                    </button>
+                      
                   @if($client->orders->count())
                     <button  onclick="openOrderModal({{ $order }})"
 
@@ -791,32 +788,6 @@ toggleBtn.addEventListener('click', () => {
     }
 });
 
-function openOrderItemModal(orderId, item = null) {
-    const form = document.getElementById('orderItemForm');
-    document.getElementById('orderItem_order_id').value = orderId;
-
-    if(item) {
-        document.getElementById('orderItemModalTitle').innerText = 'Редактировать позицию';
-        form.action = '/orderitems/' + item.id;
-        if(!form.querySelector('[name="_method"]')) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = '_method';
-            input.value = 'PUT';
-            form.appendChild(input);
-        }
-        ['part_number','part_make','part_name','purchase_price','supplier','quantity'].forEach(field => {
-            document.getElementById('orderItem_' + field).value = item[field] ?? '';
-        });
-    } else {
-        document.getElementById('orderItemModalTitle').innerText = 'Добавить позицию';
-        form.action = '{{ route("orderitems.store") }}';
-        form.method = 'POST';
-        form.querySelectorAll('input').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
-    }
-    openModal('orderItemModal');
-}
-
 
 </script>
 
@@ -847,9 +818,10 @@ function openOrderItemModal(orderId, item = null) {
 .select-options li { padding: 6px; cursor: pointer; }
 .select-options li:hover { background: #f0f0f0; }
 
-#orderForm div label, #orderItemForm div label {
+#orderForm div label, #orderItemForm div label, #vehicleForm div label {
     margin-bottom: 5px;
     display: inline-block;
+    font-weight: bold;
 }
 
 </style>

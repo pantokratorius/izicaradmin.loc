@@ -19,7 +19,7 @@
     .btn:hover { background: #0f0f2d; }
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
     .modal-content { background-color: #fff; margin: 5% auto; padding: 40px 200px; border-radius: 6px; width: 500px; position: relative; max-height: 90vh; overflow-y: auto; }
-    .close { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; }
+    .close { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; padding: 20px; }
 </style>
 
 <div class="page-header">
@@ -839,9 +839,10 @@ function openOrderItemModal(orderId, item = null) {
 .select-options li { padding: 6px; cursor: pointer; }
 .select-options li:hover { background: #f0f0f0; }
 
-#orderForm div label, #orderItemForm div label {
+#orderForm div label, #orderItemForm div label, #vehicleForm div label {
     margin-bottom: 5px;
     display: inline-block;
+    font-weight: bold;
 }
 
 </style>

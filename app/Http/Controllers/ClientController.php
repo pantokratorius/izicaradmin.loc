@@ -84,7 +84,7 @@ public function index(Request $request)
         'updated_at'  => now(),
     ]);
 
-    return redirect()->route('clients.index')->with('success', 'Данные клиента обновлены!');
+    return redirect()->back()->with('success', 'Данные клиента обновлены!');
 }
 
 public function destroy($id)
