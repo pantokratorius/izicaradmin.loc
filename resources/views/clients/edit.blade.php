@@ -184,6 +184,7 @@
                         <th>Наценка %</th>
                         <th>Предоплата</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -199,7 +200,8 @@
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
                             <td>{{ $order->margin ?? '-' }}</td>
                             <td>{{ $order->prepayment ?? '-' }}</td>
-                            <td style="display: flex; align-items: flex-start">
+                            <td >
+                                <div style="display: flex; align-items: flex-start">
                       
                   @if($client->orders->count())
                     <button  onclick="openOrderModal({{ $order }})"
@@ -214,7 +216,16 @@
                     @csrf
                     @method('DELETE')
                     <button onclick="if(!confirm('Удалить заказ?')) return false" style="btn btn-sm btn-danger; cursor: pointer">🗑</button>
-                </form></td>
+                </form>
+            </div></td>
+                <td>
+                <a href="{{ route('orders.print', $order->id) }}" target="_blank" class="btn btn-secondary">
+                🖨️ Заказ 1
+                </a>
+                <a href="{{ route('orders.print2', $order->id) }}" target="_blank" class="btn btn-secondary">
+                🖨️ Заказ 2
+                </a>
+            </td>
                         </tr>
 
  @if($order->items->count())

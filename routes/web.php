@@ -21,6 +21,12 @@ Route::middleware('auth')->group(function () {
 
 
 
+Route::get('/orders/{order}/print', [OrderController::class, 'print'])
+    ->name('orders.print');
+
+Route::get('/orders/{order}/print2', [OrderController::class, 'print2'])
+    ->name('orders.print2');
+
 
 Route::resource('clients', ClientController::class);
 Route::resource('vehicles', VehicleController::class);

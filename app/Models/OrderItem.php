@@ -47,7 +47,7 @@ class OrderItem extends Model
         return $base * (1 - $discount / 100);
     }
 
-           public function getAmountAttribute()
+    public function getAmountAttribute()
     {
         $globalMargin = Setting::first()->margin ?? 0;
 
