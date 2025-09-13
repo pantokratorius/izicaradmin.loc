@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CarBrand;
 use App\Models\Client;
 use App\Models\Order;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -62,12 +63,13 @@ public function index(Request $request)
         $client = Client::find($id);
         $brands = CarBrand::orderBy('name')->get();
         $orders_count = Order::count() + 1;
+        $globalMargin = Setting::first()->margin ?? 0;
         
         if (!$client) {
             return redirect()->route('clients.index')->with('error', 'Клиент не найден');
         }
 
-        return view('clients.edit', compact('client', 'brands', 'orders_count'));
+        return view('clients.edit', compact('client', 'brands', 'orders_count', 'globalMargin'));
     }
 
     // обновление клиента

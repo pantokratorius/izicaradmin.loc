@@ -69,7 +69,7 @@ class Order extends Model
 
             // применяем скидку клиента
             return $base * (1 - $discount / 100);
-        })  - $this->prepayment;
+        }) ;
 
         return ceil($res / .5)  * .5;
     }

@@ -176,13 +176,14 @@
                         <th>Номер заказа</th>
                         <th>Закупка</th>
                         <th>Продажа</th>
+                        <th>Предоплата</th>
+                        <th>Остаток</th>
                         <th>Статус</th>
                         <th>Дата создания</th>
                         <th>Автомобиль</th>
                         <th>Менеджер</th>
                         <th>Пробег</th>
                         <th>Наценка %</th>
-                        <th>Предоплата</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -193,13 +194,14 @@
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
+                            <td>{{ number_format($order->prepayment, 2, ',', ' ') ?? '-' }}</td>
+                            <td>{{ number_format($order->amount - $order->prepayment, 2, ',', ' ') ?? '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
-                            <td>{{ $order->margin ?? '-' }}</td>
-                            <td>{{ $order->prepayment ?? '-' }}</td>
+                            <td>{{ $order->margin ?? $globalMargin ?? '-' }}</td>
                             <td >
                                 <div style="display: flex; align-items: flex-start">
                       
