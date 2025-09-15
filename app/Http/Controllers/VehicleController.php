@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CarBrand;
+use App\Models\CarGeneration;
+use App\Models\CarModel;
+use App\Models\CarModification;
+use App\Models\CarSerie;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -59,9 +64,23 @@ class VehicleController extends Controller
         return view('vehicles.show', compact('vehicle'));
     }
 
-    public function edit(Vehicle $vehicle)
+  public function edit(Vehicle $vehicle)
     {
-        return view('vehicles.edit', compact('vehicle'));
+
+        // dd($vehicle->brand->id);
+        // $vehicle = Vehicle::with(['brand', 'model', 'generation', 'serie', 'modification'])
+        //     ->findOrFail($vehicle->id);
+
+        // instead of manually pulling all, you can also:
+        $brands = CarBrand::all();
+        $models = CarModel::where('car_brand_id', $vehicle->brand_id)->get();
+        $generations = CarGeneration::where('car_model_id', $vehicle->model_id)->get();
+        $series = CarSerie::where('car_generation_id', $vehicle->generation_id)->get();
+        $modifications = CarModification::where('car_serie_id', $vehicle->serie_id)->get();
+
+        return view('vehicles.edit', compact(
+            'vehicle', 'brands', 'models', 'generations', 'series', 'modifications'
+        ));
     }
 
     public function update(Request $request, Vehicle $vehicle)
@@ -77,14 +96,11 @@ class VehicleController extends Controller
 
            try {
             $vehicle->update($request->all());
-            return redirect()->back()->with('success', 'Транспортное средство обновлено');
+            return redirect()->route('vehicles.index')->with('success', 'Транспортное средство обновлено');
 
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Транспортное средство не обновлено');
+            return redirect()->route('vehicles.index')->with('error', 'Транспортное средство не обновлено');
         }
-
-
-
 
 
     }
@@ -97,4 +113,10 @@ class VehicleController extends Controller
         $vehicle->delete();
         return redirect()->back()->with('success', 'Транспортное средство удалено');
     }
+
+    
+
+
+
+
 }

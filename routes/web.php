@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 
 Route::get('/', function () {
@@ -39,10 +40,13 @@ Route::get('/cars/models/{brand}', [CarController::class, 'models']);
 Route::get('/cars/generations/{model}', [CarController::class, 'generations']);
 Route::get('/cars/series/{generation}', [CarController::class, 'series']);
 Route::get('/cars/modifications/{serie}', [CarController::class, 'modifications']);
-Route::get('/cars/characteristics/{modification}', [CarController::class, 'characteristics']);
 
 Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
 Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+
+Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+Route::get('/reports/data', [ReportController::class, 'data'])->name('reports.data');
+
 
 Route::post('/set-session', [ClientController::class, 'setSessionAjax'])->name('set.session');
 

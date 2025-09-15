@@ -67,11 +67,13 @@
         <li>
             <a href="{{route('settings.edit')}}"><img src="{{asset('storage/svg/settings.svg') }}" /> Настройки</a>
         </li>
+        <li>
+          <a href="{{route('reports.index')}}"><img src="{{asset('storage/svg/reports.svg') }}" /> Отчеты</a>  
+        </li>
         <li>Проценка</li>
         <li>Склад</li>
         <li>Черновики</li>
         <li>Деньги</li>
-        <li>Отчеты</li>
         <li>Звонки</li>
         <li>Чаты</li>
       </ul>
