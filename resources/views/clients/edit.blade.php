@@ -184,6 +184,7 @@
                         <th>Менеджер</th>
                         <th>Пробег</th>
                         <th>Наценка %</th>
+                        <th>Прибыль</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -201,7 +202,9 @@
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
-                            <td>{{ $order->margin ?? $globalMargin ?? '-' }}</td>
+                            <td toggleItems({{ $order->id }})">{{ $order->margin ?? $globalMargin ?? '-' }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->purchase_sum, 2, ',', ' ') }} 
+                                ({{ number_format( ($order->amount - $order->purchase_sum) / $order->purchase_sum * 100 , 2, ',', ' ')}}%)</td>
                             <td >
                                 <div style="display: flex; align-items: flex-start">
                       
@@ -448,7 +451,14 @@
     </div>
 </div>
 
-
+<script>
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+        // If coming from browser cache, force reload
+        window.location.reload();
+    }
+});
+</script>
 <script>
 
 // // Brand options (from Blade variable)
