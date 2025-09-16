@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->string('part_make')->nullable();            // Бренд запчасти
             $table->string('part_name')->nullable();            // Наименование запчасти
             $table->decimal('purchase_price', 10, 2)->nullable(); // Цена закупки
+            $table->decimal('sell_price', 10, 2)->nullable(); // Цена закупки
             $table->string('supplier')->nullable(); // Поставщик
             $table->string('comment')->nullable(); // Поставщик
             

@@ -27,6 +27,7 @@ class OrderItemController extends Controller
                 'part_make'      => 'nullable|string|max:255',
                 'part_name'      => 'nullable|string|max:255',
                 'purchase_price' => 'nullable|numeric',
+                'sell_price' => 'nullable|numeric',
                 'supplier'       => 'nullable|string|max:255',
                 
                 'quantity'       => 'nullable|integer|min:1',
@@ -54,6 +55,7 @@ $data['status'] = 1;
             'part_make'      => 'nullable|string|max:255',
             'part_name'      => 'nullable|string|max:255',
             'purchase_price' => 'nullable|numeric',
+            'sell_price' => 'nullable|numeric',
             'supplier'       => 'nullable|string|max:255',
             'quantity'       => 'nullable|integer|min:1',
             'status'         => 'nullable|string|max:255',

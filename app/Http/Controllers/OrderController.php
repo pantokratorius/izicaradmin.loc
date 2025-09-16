@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Client;
+use App\Models\Setting;
 use App\Models\Vehicle;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -64,8 +65,9 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $globalMargin = Setting::first()->margin ?? 0;
         $order->load(['client', 'vehicle', 'manager']);
-        return view('orders.show', compact('order'));
+        return view('orders.show', compact('order', 'globalMargin'));
     }
 
     /**

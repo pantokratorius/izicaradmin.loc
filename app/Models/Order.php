@@ -65,7 +65,7 @@ class Order extends Model
             // приоритет маржи: item → order → settings
             $margin = $item->margin ?? $this->margin ?? $globalMargin;
 
-            $base = $item->purchase_price * (1 + $margin / 100) * $item->quantity;
+            $base = $item->sell_price > 0 ? $item->sell_price : $item->purchase_price * (1 + $margin / 100) * $item->quantity;
 
             // применяем скидку клиента
             return $base * (1 - $discount / 100);

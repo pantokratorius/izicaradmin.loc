@@ -231,54 +231,6 @@
                 </select>
             </td>
                         </tr>
-
- @if($order->items->count())
-                <tr>
-                    <td colspan="7" style="padding:0; border:none;">
-                        <div id="order-items-{{ $order->id }}" class="accordion-content">
-                            <table style="width:100%; border:1px solid #ccc;">
-                                <thead>
-                                    <tr style="background:#f0f0f0;">
-                                        <th>Артикул</th>
-                                        <th>Бренд</th>
-                                        <th>Наименование</th>
-                                        <th>Цена закупки</th>
-                                        <th>Поставщик</th>
-                                        <th>Количество</th>
-                                        <th>Статус</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($order->items as $item)
-                                        <tr>
-                                            <td>{{ $item->part_number }}</td>
-                                            <td>{{ $item->part_make }}</td>
-                                            <td>{{ $item->part_name }}</td>
-                                            <td>{{ $item->purchase_price }}</td>
-                                            <td>{{ $item->supplier }}</td>
-                                            <td>{{ $item->quantity }}</td>
-                                            <td>{{ $item->status }}</td>
-                                             <td>
-
-            <form action="{{ route('orderitems.destroy', $item->id) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button onclick="return confirm('Удалить позицию?')"
-                        style="btn btn-sm btn-danger; cursor: pointer">
-                    🗑
-                </button>
-            </form>
-                                             </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </td>
-                </tr>
-            @endif
-
                     @endforeach
                 </tbody>
             </table>

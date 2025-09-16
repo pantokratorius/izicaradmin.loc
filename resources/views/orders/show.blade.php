@@ -58,12 +58,20 @@
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_make }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_name }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->purchase_price, 2, ',', ' ') }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->amount, 2, ',', ' ') }}</td>
+                        <td 
+                            @if($item->sell_price > 0 )
+                                style="background-color: #dcefff"
+                            @endif
+                        onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->sell_price ? number_format($item->sell_price, 2, ',', ' ') : number_format($item->amount, 2, ',', ' ') }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->quantity }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->summ, 2, ',', ' ') }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->supplier }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->status }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->margin }}</td>
+                        <td 
+                        @if($item->margin)
+                            style="background-color: #dfffdc"
+                            @endif
+                        onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->margin ?? $globalMargin }}</td>
                         <td class="text-end">
                             <button class="btn btn-sm btn-danger" onclick="deleteItem({{ $item->id }})">🗑</button>
                         </td>
@@ -107,6 +115,9 @@
 
             <label>Закупка</label>
             <input type="number" step="0.01" name="purchase_price" id="purchase_price">
+            
+            <label>Продажа</label>
+            <input type="number" step="0.01" name="sell_price" id="sell_price">
 
 
             <label>Поставщик</label>
@@ -192,6 +203,7 @@ function openItemModal(orderId, item = null) {
         document.getElementById('part_make').value = item.part_make;
         document.getElementById('part_name').value = item.part_name;
         document.getElementById('purchase_price').value = item.purchase_price;
+        document.getElementById('sell_price').value = item.sell_price;
         document.getElementById('supplier').value = item.supplier;
         document.getElementById('quantity').value = item.quantity;
         document.getElementById('status').value = item.status;
