@@ -173,7 +173,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Номер заказа</th>
+                        <th>№ заказа</th>
                         <th>Закупка</th>
                         <th>Продажа</th>
                         <th>Предоплата</th>
@@ -322,7 +322,7 @@
             @csrf
             <input type="hidden" name="client_id" value="{{ $client->id }}">
             <div style="margin-bottom:10px;">
-                <label>Номер заказа</label>
+                <label>№ заказа</label>
                 <input type="text" name="order_number" value="{{$orders_count}}" id="order_order_number" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
