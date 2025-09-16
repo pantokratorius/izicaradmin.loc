@@ -36,8 +36,8 @@
 <h3>ДИСТАНЦИОННЫЙ ЗАКАЗ ТОВАРА №{{ $order->order_number }} от {{ $order->created_at->format('d.m.Y') }}</h3>
 
 <p>
-    Марка автомобиля: {{ $order->vehicle->brand->name }},  
-    VIN: {{ $order->vehicle->vin }}
+    Марка автомобиля: {{ $order->vehicle->brand->name ?? '-' }},  
+    VIN: {{ $order->vehicle->vin  ?? '-'}}
 </p>
 
 <table>
@@ -111,7 +111,7 @@
     <div>
         <strong>Заказчик</strong><br>
         ФИО: {{ $order->client->last_name }} {{ $order->client->middle_name }} {{ $order->client->first_name }}<br>
-        Тел: {{ $order->vehicle->client->phone }}<br>
+        Тел: {{ $order->vehicle->client->phone ?? '-' }}<br>
         Контактные данные верны, с условиями<br> поставки и выдачи товара согласен.<br>
         Подпись _______________
     </div>

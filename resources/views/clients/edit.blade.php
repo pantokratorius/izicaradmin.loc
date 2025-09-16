@@ -224,12 +224,11 @@
                 </form>
             </div></td>
                 <td>
-                <a href="{{ route('orders.print', $order->id) }}" target="_blank" class="btn btn-secondary">
-                🖨️ Заказ 1
-                </a>
-                <a href="{{ route('orders.print2', $order->id) }}" target="_blank" class="btn btn-secondary">
-                🖨️ Заказ 2
-                </a>
+                <select onchange="openPrint(this, {{ $order->id }})" class="form-select">
+                    <option value="">🖨️ Печать...</option>
+                    <option value="{{ route('orders.print', $order->id) }}">Заказ 1</option>
+                    <option value="{{ route('orders.print2', $order->id) }}">Заказ 2</option>
+                </select>
             </td>
                         </tr>
 
@@ -450,6 +449,16 @@
         </form>
     </div>
 </div>
+
+
+<script>
+function openPrint(select, orderId) {
+    if (select.value) {
+        window.open(select.value, '_blank');
+        select.selectedIndex = 0; // сбрасываем обратно на первый вариант
+    }
+}
+</script>
 
 <script>
 window.addEventListener("pageshow", function (event) {
