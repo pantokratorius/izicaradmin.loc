@@ -89,6 +89,85 @@
     </tfoot>
     @endif
 </table>
+@if($hasResults)
+    <h2 style="margin-top:30px;">График продаж по клиентам</h2>
+    <canvas id="salesChart" height="120"></canvas>
+@endif
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const periodSelect = document.getElementById('period-select');
+const dateControls = document.getElementById('date-controls');
+const dateInput = document.getElementById('date-input');
+const dateLabel = document.getElementById('date-label');
+const monthYearSelects = document.getElementById('month-year-selects');
+const yearSelect = document.getElementById('year-select');
+
+periodSelect.addEventListener('change', () => {
+    if(periodSelect.value==='range') {
+        dateControls.style.display = 'none';
+    } else {
+        dateControls.style.display = 'inline';
+        dateInput.style.display = (periodSelect.value==='day') ? 'inline-block' : 'none';
+        dateLabel.style.display = (periodSelect.value==='day') ? 'inline' : 'none';
+        monthYearSelects.style.display = (periodSelect.value==='month') ? 'inline' : 'none';
+        yearSelect.style.display = (periodSelect.value==='year') ? 'inline' : 'none';
+    }
+});
+
+@if($hasResults)
+// Prepare data from Laravel
+const clients = @json(array_column($results, 'client_name'));
+const sales = @json(array_column($results, 'total_sum'));
+const profit = @json(array_column($results, 'profit'));
+
+const ctx = document.getElementById('salesChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: clients,
+        datasets: [
+            {
+                label: 'Сумма продаж',
+                data: sales,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Прибыль',
+                data: profit,
+                backgroundColor: 'rgba(75, 192, 75, 0.6)',
+                borderColor: 'rgba(75, 192, 75, 1)',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top'
+            },
+            title: {
+                display: true,
+                text: 'Продажи и прибыль по клиентам'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value.toLocaleString() + ' ₽';
+                    }
+                }
+            }
+        }
+    }
+});
+@endif
+</script>
+
 
 <script>
 const periodSelect = document.getElementById('period-select');
