@@ -224,7 +224,7 @@
                 </form>
             </div></td>
                 <td>
-                <select onchange="openPrint(this, {{ $order->id }})" class="form-select">
+                <select onchange="openPrint(this, {{ $order->id }})" class="print-select">
                     <option value="">🖨️ Печать...</option>
                     <option value="{{ route('orders.print', $order->id) }}">Заказ 1</option>
                     <option value="{{ route('orders.print2', $order->id) }}">Заказ 2</option>
@@ -856,6 +856,29 @@ toggleBtn.addEventListener('click', () => {
     font-weight: bold;
 }
 
+</style>
+<style>
+.print-select {
+    display: inline-block;
+    width: auto;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background-color: #6c757d; /* как .btn-secondary */
+    color: #fff;
+    border: 1px solid #6c757d;
+    cursor: pointer;
+    font-weight: 500;
+    appearance: none; /* убираем стандартную стрелку */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2rem;
+}
+.print-select:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
 </style>
 
 @endsection
