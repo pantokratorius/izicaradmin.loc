@@ -27,8 +27,8 @@
 <h3>ДИСТАНЦИОННЫЙ ЗАКАЗ ТОВАРА №{{ $order->id }} от {{ $order->created_at->format('d.m.Y') }}</h3>
 
 <p>
-    Марка автомобиля: {{ $order->vehicle->brand->name }}<br>
-    VIN: {{ $order->vehicle->vin }}
+    Марка автомобиля: {{  $order->vehicle->brand->name ?? '-'}}<br>
+    VIN: {{ $order->vehicle->vin ?? '-' }}
 </p>
 
 <table>
@@ -77,7 +77,7 @@
     </tr>
     <tr>
         <td>Остаток: {{ number_format($order->amount , 2, ',', ' ') }} р.</td>
-        <td>Тел: {{ $order->vehicle->client->phone }}</td>
+        <td>Тел: {{ $order->vehicle->client->phone ?? '-' }}</td>
     </tr>
 </table>
 
