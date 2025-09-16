@@ -191,7 +191,7 @@
                 </thead>
                 <tbody>
                     @foreach($client->orders ?? [] as $order)
-                        <tr style="cursor:pointer; " id="tПредоплатаoggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
+                        <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
