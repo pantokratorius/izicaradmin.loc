@@ -195,8 +195,8 @@
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
-                            <td>{{ number_format($order->prepayment, 2, ',', ' ') ?? '-' }}</td>
-                            <td>{{ number_format($order->amount - $order->prepayment, 2, ',', ' ') ?? '-' }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->prepayment, 2, ',', ' ') ?? '-' }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->prepayment, 2, ',', ' ') ?? '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
