@@ -126,7 +126,7 @@
                         <tr style="cursor:pointer;" >
                             <td onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vin }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->brand->name ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->brand->name ?? $vehicle->brand_name }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->model->name ?? '-'}}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->generation->name ?? '-' }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->body ?? '-' }}</td>
@@ -199,7 +199,7 @@
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->prepayment, 2, ',', ' ') ?? '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
+                            <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? ($order->vehicle->brand->name ?? $order->vehicle->brand_name).' '.($order->vehicle->model->name ?? $order->vehicle->model_name) : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->margin ?? $globalMargin ?? '-' }}</td>
@@ -342,7 +342,7 @@
                 <select name="vehicle_id" id="order_vehicle_id" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
                     <option value="">-- Не указан --</option>
                     @foreach($client->vehicles ?? [] as $vehicle)
-                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand->name }} {{ $vehicle->model->name }} ({{ $vehicle->vin }})</option>
+                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand->name ?? '-' }} {{ $vehicle->model->name  ?? '-'}} ({{ $vehicle->vin }})</option>
                     @endforeach
                 </select>
             </div>
