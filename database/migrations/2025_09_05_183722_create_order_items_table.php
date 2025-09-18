@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id'); // связь с заказом
-            $table->string('part_number');            // Артикул запчасти
+            $table->string('part_number')->nullable();            // Артикул запчасти
             $table->string('part_make')->nullable();            // Бренд запчасти
             $table->string('part_name')->nullable();            // Наименование запчасти
             $table->decimal('purchase_price', 10, 2)->nullable(); // Цена закупки

@@ -124,14 +124,14 @@ class OrderController extends Controller
 
     public function print(Order $order)
     {
-        $order->load(['vehicle.brand', 'vehicle.client', 'items']);
+        $order->load(['client', 'vehicle.brand', 'vehicle.client', 'items']);
 
         return view('orders.print', compact('order'));
     }
 
     public function print2(Order $order)
     {
-        $order->load(['vehicle.brand', 'vehicle.client', 'items']);
+        $order->load(['client', 'vehicle.brand', 'vehicle.client', 'items']);
 
         return view('orders.print2', compact('order'));
     }

@@ -10,7 +10,7 @@
     <div class="card mb-4">
         <div class="card-header">Клиент</div>
         <div class="card-body">
-            <p><strong>Имя:</strong> {{ $order->client->first_name ?? '—' }} {{ $order->client->middle_name ?? '' }} {{ $order->client->last_name ?? '' }}</p>
+            <p><strong>Имя:</strong> {{ $order->client->first_name ?? '—' }} {{ $order->client?->middle_name ?? '' }} {{ $order->client?->last_name ?? '' }}</p>
             <p><strong>Email:</strong> {{ $order->client->email ?? '—' }}</p>
             <p><strong>Телефон:</strong> {{ $order->client->phone ?? '—' }}</p>
         </div>
@@ -48,6 +48,7 @@
                         <th>Поставщик</th>
                         <th>Статус</th>
                         <th>Наценка %</th>
+                        <th>Комментарий</th>
                         <th class="text-end"></th>
                     </tr>
                 </thead>
@@ -62,11 +63,12 @@
                             @if($item->sell_price > 0 )
                                 style="background-color: #dcefff"
                             @endif
-                        onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->sell_price ? number_format($item->sell_price, 2, ',', ' ') : number_format($item->amount, 2, ',', ' ') }}</td>
+                        onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->sell_price ? number_format($item->sell_price * $item->quantity, 2, ',', ' ') : number_format($item->amount, 2, ',', ' ') }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->quantity }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->summ, 2, ',', ' ') }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->supplier }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->status }}</td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->comment }}</td>
                         <td 
                         @if($item->margin)
                             style="background-color: #dfffdc"
@@ -131,6 +133,9 @@
 
             <label>Наценка %</label>
             <input type="text" name="margin" id="margin">
+
+            <label>Наценка %</label>
+            <input type="text" name="comment" id="comment">
 
             <div class="modal-actions">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
@@ -208,6 +213,7 @@ function openItemModal(orderId, item = null) {
         document.getElementById('quantity').value = item.quantity;
         document.getElementById('status').value = item.status;
         document.getElementById('margin').value = item.margin;
+        document.getElementById('comment').value = item.comment;
     } else {
         document.getElementById('itemModalTitle').innerText = 'Добавить позицию';
         document.getElementById('item_id').value = '';

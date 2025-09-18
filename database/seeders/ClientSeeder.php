@@ -7,8 +7,13 @@ use App\Models\Client;
 
 class ClientSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        Client::factory()->count(50) ->withVehicles(rand(1, 5))->create(); // создаст 50 клиентов
+        $clients = include database_path('seeders/data/clients.php');
+
+        foreach ($clients as $client) {
+            Client::updateOrCreate(['id' => $client['id']], $client);
+        }
     }
 }
+

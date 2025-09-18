@@ -26,7 +26,6 @@
     <div>Клиенты > Редактировать</div>
 </div>
 
-
 <button id="toggleClientForm" class="btn" style="margin-bottom:10px;">Показать форму</button>
 
 <div id="clientFormContainer" style= "display: none">
@@ -165,8 +164,8 @@
     <button id="resetOrdersBtn" type="button" onclick="resetOrdersFilter()" style="display:none;">
         Показать все заказы
     </button>
-</div>
-        @if($client->orders->isEmpty())
+</div>  
+        @if($allOrders->isEmpty())
             <p>У клиента нет заказов.</p>
         @else
 
@@ -185,12 +184,14 @@
                         <th>Пробег</th>
                         <th>Наценка %</th>
                         <th>Прибыль</th>
+                        <th>Комментарий</th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($client->orders ?? [] as $order)
+                    
+                    @foreach($allOrders ?? [] as $order)
                         <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
@@ -204,11 +205,12 @@
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->margin ?? $globalMargin ?? '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->purchase_sum, 2, ',', ' ') }} 
-                                ({{ number_format( ($order->amount - $order->purchase_sum) / $order->purchase_sum * 100 , 2, ',', ' ')}}%)</td>
+                                ({{$order->purchase_sum > 0 ?  number_format( ($order->amount - $order->purchase_sum) / $order->purchase_sum * 100 , 2, ',', ' ') : 0}}%)</td>
+                                <td onclick="toggleItems({{ $order->id }})"></td>
                             <td >
                                 <div style="display: flex; align-items: flex-start">
                       
-                  @if($client->orders->count())
+                  @if(!$allOrders->isEmpty())
                     <button  onclick="openOrderModal({{ $order }})"
 
                             style="btn btn-sm btn-warning; margin: 0 5px; cursor: pointer">
@@ -358,6 +360,10 @@
             <div style="margin-bottom:10px;">
                 <label>Наценка %</label>
                 <input type="text" name="margin" id="order_margin" value="" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Комментарий</label>
+                <input type="text" name="comment" id="order_comment" value="" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <button type="submit" class="btn">Сохранить</button>
         </form>

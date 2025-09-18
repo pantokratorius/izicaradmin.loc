@@ -110,7 +110,7 @@
     </div>
     <div>
         <strong>Заказчик</strong><br>
-        ФИО: {{ $order->client->last_name }} {{ $order->client->middle_name }} {{ $order->client->first_name }}<br>
+        ФИО: {{ $order->client->last_name ?? $order->vehicle?->client?->last_name }} {{ $order->client->middle_name ?? $order->vehicle?->client?->middle_name }} {{ $order->client->first_name ?? $order->vehicle?->client?->first_name}}<br>
         Тел: {{ $order->vehicle->client->phone ?? '-' }}<br>
         Контактные данные верны, с условиями<br> поставки и выдачи товара согласен.<br>
         Подпись _______________

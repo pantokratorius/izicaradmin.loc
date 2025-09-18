@@ -73,7 +73,7 @@
 <table class="no-border">
     <tr>
         <td>Предоплата: {{ number_format($order->prepayment, 2, ',', ' ') }} р.</td>
-        <td>ФИО: {{ $order->client->last_name }} {{ $order->client->middle_name }} {{ $order->client->first_name }}</td>
+        <td>ФИО: {{ $order->client->last_name ?? $order->vehicle?->client?->last_name }} {{ $order->client->middle_name ?? $order->vehicle?->client?->middle_name }} {{ $order->client->first_name ?? $order->vehicle?->client?->first_name}}</td>
     </tr>
     <tr>
         <td>Остаток: {{ number_format($order->amount , 2, ',', ' ') }} р.</td>

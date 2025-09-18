@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Vehicle;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Vehicle;
 
 class VehicleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        Vehicle::factory()->count(50)->create();
+        $clients = include database_path('seeders/data/clients.php');
+
+        foreach ($clients as $client) {
+            Vehicle::updateOrCreate(['id' => $client['id']], $client);
+        }
     }
 }

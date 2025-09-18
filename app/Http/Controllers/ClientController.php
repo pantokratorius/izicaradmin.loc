@@ -60,7 +60,16 @@ public function index(Request $request)
     // форма редактирования
     public function edit($id)
     {
-        $client = Client::find($id);
+
+    $client = Client::with([
+        'orders.vehicle',    // orders linked directly + their vehicle
+        'vehicles.orders'    // orders linked through vehicles
+    ])->findOrFail($id);
+
+    $allOrders = $client->orders
+        ->merge($client->vehicles->flatMap->orders)
+        ->unique('id') // avoid duplicates if some order is linked twice
+        ->values();
         $brands = CarBrand::orderBy('name')->get();
         $orders_count = Order::count() + 1;
         $globalMargin = Setting::first()->margin ?? 0;
@@ -69,7 +78,7 @@ public function index(Request $request)
             return redirect()->route('clients.index')->with('error', 'Клиент не найден');
         }
 
-        return view('clients.edit', compact('client', 'brands', 'orders_count', 'globalMargin'));
+        return view('clients.edit', compact('client', 'brands', 'orders_count', 'globalMargin', 'allOrders'));
     }
 
     // обновление клиента

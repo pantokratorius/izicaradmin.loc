@@ -37,6 +37,11 @@ class Vehicle extends Model
         return $this->belongsTo(Client::class);
     }
 
+     public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function brand()
     {
         return $this->belongsTo(CarBrand::class, 'car_brand_id');
