@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('generation_name')->nullable();   // тип транспортного средства
             $table->string('serie_name')->nullable();   // тип транспортного средства
             $table->string('modification_name')->nullable();   // тип транспортного средства
-            $table->string('vin')->unique();
+            $table->string('vin')->unique()->nullable();
             $table->string('vehicle_type')->nullable();   // тип транспортного средства
             $table->string('registration_number')->nullable(); // гос номер
             $table->string('sts')->nullable();
