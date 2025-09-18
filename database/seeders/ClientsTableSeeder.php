@@ -21,7 +21,6 @@ class ClientsTableSeeder extends Seeder
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Toyota Passo',
 ),
 array (
   'id' => 17,
@@ -34,7 +33,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Mercedes WDB124',
 ),
 array (
   'id' => 18,
@@ -47,7 +45,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Audi A5',
 ),
 array (
   'id' => 19,
@@ -60,7 +57,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Opel Astra G',
 ),
 array (
   'id' => 20,
@@ -73,7 +69,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Hyundai Solaris',
 ),
 array (
   'id' => 21,
@@ -86,7 +81,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Kia Cerato',
 ),
 array (
   'id' => 22,
@@ -99,7 +93,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Renault Sandero Diesel',
 ),
 array (
   'id' => 23,
@@ -112,7 +105,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Opel Mokka',
 ),
 array (
   'id' => 24,
@@ -125,7 +117,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Рома Ауди',
 ),
 array (
   'id' => 25,
@@ -138,7 +129,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Ford Focus',
 ),
 array (
   'id' => 26,
@@ -151,7 +141,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Honda Civic',
 ),
 array (
   'id' => 27,
@@ -164,7 +153,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Honda Jazz',
 ),
 array (
   'id' => 28,
@@ -177,7 +165,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Kia Rio',
 ),
 array (
   'id' => 29,
@@ -190,7 +177,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Honda Fit',
 ),
 array (
   'id' => 30,
@@ -203,7 +189,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'Renault Sandero',
 ),
 array (
   'id' => 31,
@@ -216,7 +201,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Nissan Almera',
 ),
 array (
   'id' => 32,
@@ -229,7 +213,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'SsangYoung Action',
 ),
 array (
   'id' => 33,
@@ -242,7 +225,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Nissan Tiida',
 ),
 array (
   'id' => 34,
@@ -255,7 +237,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Opel Astra',
 ),
 array (
   'id' => 35,
@@ -268,7 +249,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Hyundai Starex',
 ),
 array (
   'id' => 36,
@@ -281,7 +261,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Peugeot 308',
 ),
 array (
   'id' => 37,
@@ -294,7 +273,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Hyundai Solaris',
 ),
 array (
   'id' => 38,
@@ -307,7 +285,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 39,
@@ -320,7 +297,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => 'BMW E90',
 ),
 array (
   'id' => 40,
@@ -333,7 +309,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'MAZDA BT-50',
 ),
 array (
   'id' => 41,
@@ -346,7 +321,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'TOYOTA HILUX SURF',
 ),
 array (
   'id' => 42,
@@ -359,7 +333,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Renault Logan',
 ),
 array (
   'id' => 43,
@@ -372,7 +345,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 44,
@@ -385,7 +357,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Opel Corsa',
 ),
 array (
   'id' => 45,
@@ -398,7 +369,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 46,
@@ -411,7 +381,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Nissan Tiida',
 ),
 array (
   'id' => 47,
@@ -424,7 +393,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Mercedes W210',
 ),
 array (
   'id' => 48,
@@ -437,7 +405,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Маляр (Женя Гаражи)',
 ),
 array (
   'id' => 49,
@@ -450,7 +417,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Volvo / Land Rover',
 ),
 array (
   'id' => 50,
@@ -463,7 +429,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Daewoo Winstorm',
 ),
 array (
   'id' => 51,
@@ -476,7 +441,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 52,
@@ -489,7 +453,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Opel Astrs H',
 ),
 array (
   'id' => 53,
@@ -502,7 +465,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Opel Astra',
 ),
 array (
   'id' => 54,
@@ -515,7 +477,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'От Вани',
 ),
 array (
   'id' => 55,
@@ -528,7 +489,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Volkswagen Jetta ',
 ),
 array (
   'id' => 56,
@@ -541,7 +501,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Sonata Tagaz',
 ),
 array (
   'id' => 57,
@@ -554,7 +513,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Peugeot 308',
 ),
 array (
   'id' => 58,
@@ -567,7 +525,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Mazda Demio',
 ),
 array (
   'id' => 59,
@@ -580,7 +537,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Mercedes Kombi',
 ),
 array (
   'id' => 60,
@@ -593,7 +549,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Renault Logan',
 ),
 array (
   'id' => 61,
@@ -606,7 +561,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 62,
@@ -619,7 +573,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Schoda Octavia',
 ),
 array (
   'id' => 63,
@@ -632,7 +585,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 64,
@@ -645,7 +597,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 65,
@@ -658,7 +609,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Kia Carrens',
 ),
 array (
   'id' => 66,
@@ -671,7 +621,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Volksvagen Passat B8',
 ),
 array (
   'id' => 67,
@@ -684,7 +633,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Nissan Terrano',
 ),
 array (
   'id' => 68,
@@ -697,7 +645,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Chevrolet aveo',
 ),
 array (
   'id' => 69,
@@ -710,7 +657,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'KIA Ceed',
 ),
 array (
   'id' => 71,
@@ -723,7 +669,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 73,
@@ -736,7 +681,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Kia Ceed',
 ),
 array (
   'id' => 74,
@@ -749,7 +693,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 75,
@@ -762,7 +705,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Toyota Prius',
 ),
 array (
   'id' => 76,
@@ -775,7 +717,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Mitsubisbi Outlander',
 ),
 array (
   'id' => 77,
@@ -788,7 +729,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'NISSAN X-TRAIL',
 ),
 array (
   'id' => 78,
@@ -801,7 +741,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 79,
@@ -814,7 +753,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 80,
@@ -827,7 +765,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Октавия',
 ),
 array (
   'id' => 81,
@@ -840,7 +777,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 82,
@@ -853,7 +789,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 83,
@@ -866,7 +801,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 84,
@@ -879,7 +813,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Hyundai Starex',
 ),
 array (
   'id' => 85,
@@ -892,7 +825,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 86,
@@ -905,7 +837,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 87,
@@ -918,7 +849,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 88,
@@ -931,7 +861,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 89,
@@ -944,7 +873,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-09-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 90,
@@ -957,7 +885,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Teana',
 ),
 array (
   'id' => 91,
@@ -970,7 +897,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 92,
@@ -983,7 +909,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 93,
@@ -996,7 +921,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 94,
@@ -1009,7 +933,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Nissan Teana',
 ),
 array (
   'id' => 95,
@@ -1022,7 +945,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 97,
@@ -1035,7 +957,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 99,
@@ -1048,7 +969,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 100,
@@ -1061,7 +981,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 101,
@@ -1074,7 +993,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 102,
@@ -1087,7 +1005,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 103,
@@ -1100,7 +1017,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 104,
@@ -1113,7 +1029,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Camry 30',
 ),
 array (
   'id' => 105,
@@ -1126,7 +1041,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Santa Fe',
 ),
 array (
   'id' => 106,
@@ -1139,7 +1053,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Kia Spectra Иж',
 ),
 array (
   'id' => 107,
@@ -1152,7 +1065,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 108,
@@ -1165,7 +1077,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 109,
@@ -1178,7 +1089,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 110,
@@ -1191,7 +1101,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 111,
@@ -1204,7 +1113,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 112,
@@ -1217,7 +1125,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 113,
@@ -1230,7 +1137,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Hyundai I40',
 ),
 array (
   'id' => 114,
@@ -1243,7 +1149,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Corolla',
 ),
 array (
   'id' => 115,
@@ -1256,7 +1161,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Lexus IS200',
 ),
 array (
   'id' => 116,
@@ -1269,7 +1173,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 117,
@@ -1282,7 +1185,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 118,
@@ -1295,7 +1197,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Epica',
 ),
 array (
   'id' => 119,
@@ -1308,7 +1209,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 120,
@@ -1321,7 +1221,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 121,
@@ -1334,7 +1233,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 122,
@@ -1347,7 +1245,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 123,
@@ -1360,7 +1257,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Cayen',
 ),
 array (
   'id' => 124,
@@ -1373,7 +1269,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 125,
@@ -1386,7 +1281,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 126,
@@ -1399,7 +1293,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-10-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 127,
@@ -1412,7 +1305,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 128,
@@ -1425,7 +1317,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Escape',
 ),
 array (
   'id' => 129,
@@ -1438,7 +1329,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 130,
@@ -1451,7 +1341,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 131,
@@ -1464,7 +1353,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 132,
@@ -1477,7 +1365,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 133,
@@ -1490,7 +1377,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 134,
@@ -1503,7 +1389,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Honda Civic',
 ),
 array (
   'id' => 135,
@@ -1516,7 +1401,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Lancer от Андрея',
 ),
 array (
   'id' => 136,
@@ -1529,7 +1413,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 137,
@@ -1542,7 +1425,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 138,
@@ -1555,7 +1437,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 139,
@@ -1568,7 +1449,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 140,
@@ -1581,7 +1461,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Land Rover',
 ),
 array (
   'id' => 141,
@@ -1594,7 +1473,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 142,
@@ -1607,7 +1485,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 143,
@@ -1620,7 +1497,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Colt Z25A',
 ),
 array (
   'id' => 144,
@@ -1633,7 +1509,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Carina',
 ),
 array (
   'id' => 145,
@@ -1646,7 +1521,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 146,
@@ -1659,7 +1533,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Fiat Albea',
 ),
 array (
   'id' => 147,
@@ -1672,7 +1545,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 148,
@@ -1685,7 +1557,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 149,
@@ -1698,7 +1569,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 150,
@@ -1711,7 +1581,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Schoda Rapid',
 ),
 array (
   'id' => 151,
@@ -1724,7 +1593,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Schoda Octavia',
 ),
 array (
   'id' => 152,
@@ -1737,7 +1605,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 153,
@@ -1750,7 +1617,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Opel Astra',
 ),
 array (
   'id' => 154,
@@ -1763,7 +1629,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Passat',
 ),
 array (
   'id' => 155,
@@ -1776,7 +1641,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 156,
@@ -1789,7 +1653,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 157,
@@ -1802,7 +1665,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Отец Петюни',
 ),
 array (
   'id' => 158,
@@ -1815,7 +1677,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Sonata Tagaz',
 ),
 array (
   'id' => 159,
@@ -1828,7 +1689,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 160,
@@ -1841,7 +1701,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 162,
@@ -1854,7 +1713,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-11-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'BMW G30',
 ),
 array (
   'id' => 163,
@@ -1867,7 +1725,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Nissan Teana',
 ),
 array (
   'id' => 164,
@@ -1880,7 +1737,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Mazda 3',
 ),
 array (
   'id' => 165,
@@ -1893,7 +1749,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 166,
@@ -1906,7 +1761,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 167,
@@ -1919,7 +1773,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Solaris',
 ),
 array (
   'id' => 168,
@@ -1932,7 +1785,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'BMW 1',
 ),
 array (
   'id' => 169,
@@ -1945,7 +1797,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Купер',
 ),
 array (
   'id' => 170,
@@ -1958,7 +1809,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 171,
@@ -1971,7 +1821,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Cruze',
 ),
 array (
   'id' => 172,
@@ -1984,7 +1833,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'СТО',
 ),
 array (
   'id' => 173,
@@ -1997,7 +1845,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Пупочек',
 ),
 array (
   'id' => 174,
@@ -2010,7 +1857,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 175,
@@ -2023,7 +1869,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Lifan',
 ),
 array (
   'id' => 176,
@@ -2036,7 +1881,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Almera Classic',
 ),
 array (
   'id' => 177,
@@ -2049,7 +1893,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Соренто',
 ),
 array (
   'id' => 178,
@@ -2062,7 +1905,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Chery Tiggo',
 ),
 array (
   'id' => 179,
@@ -2075,7 +1917,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'W210',
 ),
 array (
   'id' => 180,
@@ -2088,7 +1929,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 181,
@@ -2101,7 +1941,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 182,
@@ -2114,7 +1953,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 183,
@@ -2127,7 +1965,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Fiesta',
 ),
 array (
   'id' => 184,
@@ -2140,7 +1977,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2019-12-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Lancer',
 ),
 array (
   'id' => 185,
@@ -2153,7 +1989,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Свифт',
 ),
 array (
   'id' => 186,
@@ -2166,7 +2001,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Renault Clio',
 ),
 array (
   'id' => 187,
@@ -2179,7 +2013,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Carina',
 ),
 array (
   'id' => 188,
@@ -2192,7 +2025,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Маляр',
 ),
 array (
   'id' => 189,
@@ -2205,7 +2037,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 190,
@@ -2218,7 +2049,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'CRV',
 ),
 array (
   'id' => 191,
@@ -2231,7 +2061,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Fiat Albea',
 ),
 array (
   'id' => 192,
@@ -2244,7 +2073,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Opel Astra',
 ),
 array (
   'id' => 193,
@@ -2257,7 +2085,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Accord',
 ),
 array (
   'id' => 194,
@@ -2270,7 +2097,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Инфинити',
 ),
 array (
   'id' => 195,
@@ -2283,7 +2109,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Cruze',
 ),
 array (
   'id' => 196,
@@ -2296,7 +2121,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Opel Astra',
 ),
 array (
   'id' => 197,
@@ -2309,7 +2133,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Audi Q5',
 ),
 array (
   'id' => 198,
@@ -2322,7 +2145,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 199,
@@ -2335,7 +2157,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 200,
@@ -2348,7 +2169,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'от Димы Teana',
 ),
 array (
   'id' => 201,
@@ -2361,7 +2181,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Prellude',
 ),
 array (
   'id' => 202,
@@ -2374,7 +2193,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'от Жени',
 ),
 array (
   'id' => 203,
@@ -2387,7 +2205,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 204,
@@ -2400,7 +2217,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-01-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 206,
@@ -2413,7 +2229,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Rover',
 ),
 array (
   'id' => 207,
@@ -2426,7 +2241,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 208,
@@ -2439,7 +2253,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 209,
@@ -2452,7 +2265,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 210,
@@ -2465,7 +2277,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Cooper',
 ),
 array (
   'id' => 211,
@@ -2478,7 +2289,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Mazda3',
 ),
 array (
   'id' => 212,
@@ -2491,7 +2301,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Opel',
 ),
 array (
   'id' => 213,
@@ -2504,7 +2313,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 214,
@@ -2517,7 +2325,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'ASX',
 ),
 array (
   'id' => 215,
@@ -2530,7 +2337,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'GL',
 ),
 array (
   'id' => 216,
@@ -2543,7 +2349,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Logan',
 ),
 array (
   'id' => 218,
@@ -2556,7 +2361,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Пежо 308',
 ),
 array (
   'id' => 219,
@@ -2569,7 +2373,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Туарег',
 ),
 array (
   'id' => 220,
@@ -2582,7 +2385,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'W212',
 ),
 array (
   'id' => 221,
@@ -2595,7 +2397,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 222,
@@ -2608,7 +2409,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 223,
@@ -2621,7 +2421,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Rav-4',
 ),
 array (
   'id' => 224,
@@ -2634,7 +2433,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Lancer',
 ),
 array (
   'id' => 226,
@@ -2647,7 +2445,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 227,
@@ -2660,7 +2457,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 228,
@@ -2673,7 +2469,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 229,
@@ -2686,7 +2481,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Логан',
 ),
 array (
   'id' => 230,
@@ -2699,7 +2493,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 231,
@@ -2712,7 +2505,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 232,
@@ -2725,7 +2517,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Getz',
 ),
 array (
   'id' => 233,
@@ -2738,7 +2529,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'X-Trail',
 ),
 array (
   'id' => 234,
@@ -2751,7 +2541,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-02-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'брат Антона',
 ),
 array (
   'id' => 235,
@@ -2764,7 +2553,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'СТО',
 ),
 array (
   'id' => 236,
@@ -2777,7 +2565,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 237,
@@ -2790,7 +2577,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Стекла',
 ),
 array (
   'id' => 238,
@@ -2803,7 +2589,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 239,
@@ -2816,7 +2601,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 240,
@@ -2829,7 +2613,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 241,
@@ -2842,7 +2625,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 242,
@@ -2855,7 +2637,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 243,
@@ -2868,7 +2649,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Demio',
 ),
 array (
   'id' => 244,
@@ -2881,7 +2661,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 245,
@@ -2894,7 +2673,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 246,
@@ -2907,7 +2685,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 247,
@@ -2920,7 +2697,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 248,
@@ -2933,7 +2709,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 249,
@@ -2946,7 +2721,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 250,
@@ -2959,7 +2733,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'C-Elysee',
 ),
 array (
   'id' => 251,
@@ -2972,7 +2745,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Rio',
 ),
 array (
   'id' => 252,
@@ -2985,7 +2757,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Camry 40',
 ),
 array (
   'id' => 253,
@@ -2998,7 +2769,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Honda Civic',
 ),
 array (
   'id' => 254,
@@ -3011,7 +2781,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 255,
@@ -3024,7 +2793,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Королла',
 ),
 array (
   'id' => 256,
@@ -3037,7 +2805,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 257,
@@ -3050,7 +2817,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 258,
@@ -3063,7 +2829,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 259,
@@ -3076,7 +2841,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 260,
@@ -3089,7 +2853,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 261,
@@ -3102,7 +2865,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 262,
@@ -3115,7 +2877,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-03-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 263,
@@ -3128,7 +2889,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 264,
@@ -3141,7 +2901,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 265,
@@ -3154,7 +2913,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'СТО',
 ),
 array (
   'id' => 266,
@@ -3167,7 +2925,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 267,
@@ -3180,7 +2937,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 268,
@@ -3193,7 +2949,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 269,
@@ -3206,7 +2961,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 270,
@@ -3219,7 +2973,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 271,
@@ -3232,7 +2985,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 272,
@@ -3245,7 +2997,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 273,
@@ -3258,7 +3009,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 274,
@@ -3271,7 +3021,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 275,
@@ -3284,7 +3033,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 276,
@@ -3297,7 +3045,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Geely Emgrand',
 ),
 array (
   'id' => 277,
@@ -3310,7 +3057,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-04-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 278,
@@ -3323,7 +3069,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 279,
@@ -3336,7 +3081,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 280,
@@ -3349,7 +3093,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Pajero',
 ),
 array (
   'id' => 281,
@@ -3362,7 +3105,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Тигуан',
 ),
 array (
   'id' => 282,
@@ -3375,7 +3117,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Эпика от Олега',
 ),
 array (
   'id' => 283,
@@ -3388,7 +3129,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 284,
@@ -3401,7 +3141,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 285,
@@ -3414,7 +3153,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 286,
@@ -3427,7 +3165,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 287,
@@ -3440,7 +3177,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Rav4',
 ),
 array (
   'id' => 288,
@@ -3453,7 +3189,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 289,
@@ -3466,7 +3201,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Аутлэндер',
 ),
 array (
   'id' => 290,
@@ -3479,7 +3213,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'СТО',
 ),
 array (
   'id' => 291,
@@ -3492,7 +3225,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 292,
@@ -3505,7 +3237,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 293,
@@ -3518,7 +3249,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Хюндай Латива',
 ),
 array (
   'id' => 294,
@@ -3531,7 +3261,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 295,
@@ -3544,7 +3273,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-05-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 297,
@@ -3557,7 +3285,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 298,
@@ -3570,7 +3297,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 299,
@@ -3583,7 +3309,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 300,
@@ -3596,7 +3321,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 301,
@@ -3609,7 +3333,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 302,
@@ -3622,7 +3345,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 304,
@@ -3635,7 +3357,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 305,
@@ -3648,7 +3369,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 306,
@@ -3661,7 +3381,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 307,
@@ -3674,7 +3393,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 308,
@@ -3687,7 +3405,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 309,
@@ -3700,7 +3417,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 310,
@@ -3713,7 +3429,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 311,
@@ -3726,7 +3441,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 312,
@@ -3739,7 +3453,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 313,
@@ -3752,7 +3465,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 314,
@@ -3765,7 +3477,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Familia',
 ),
 array (
   'id' => 315,
@@ -3778,7 +3489,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 316,
@@ -3791,7 +3501,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 317,
@@ -3804,7 +3513,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 318,
@@ -3817,7 +3525,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 319,
@@ -3830,7 +3537,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Golf',
 ),
 array (
   'id' => 320,
@@ -3843,7 +3549,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 321,
@@ -3856,7 +3561,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 322,
@@ -3869,7 +3573,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 323,
@@ -3882,7 +3585,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 324,
@@ -3895,7 +3597,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 325,
@@ -3908,7 +3609,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-06-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 326,
@@ -3921,7 +3621,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 327,
@@ -3934,7 +3633,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 328,
@@ -3947,7 +3645,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'Sonata Тагаз 131 л.с.',
 ),
 array (
   'id' => 329,
@@ -3960,7 +3657,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 330,
@@ -3973,7 +3669,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 331,
@@ -3986,7 +3681,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'L200',
 ),
 array (
   'id' => 332,
@@ -3999,7 +3693,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 333,
@@ -4012,7 +3705,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 334,
@@ -4025,7 +3717,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 335,
@@ -4038,7 +3729,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 336,
@@ -4051,7 +3741,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 337,
@@ -4064,7 +3753,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 338,
@@ -4077,7 +3765,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 339,
@@ -4090,7 +3777,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 340,
@@ -4103,7 +3789,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 341,
@@ -4116,7 +3801,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 342,
@@ -4129,7 +3813,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 343,
@@ -4142,7 +3825,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 344,
@@ -4155,7 +3837,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 345,
@@ -4168,7 +3849,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 346,
@@ -4181,7 +3861,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 347,
@@ -4194,7 +3873,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 348,
@@ -4207,7 +3885,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 349,
@@ -4220,7 +3897,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 350,
@@ -4233,7 +3909,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 351,
@@ -4246,7 +3921,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-07-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 352,
@@ -4259,7 +3933,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 353,
@@ -4272,7 +3945,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 354,
@@ -4285,7 +3957,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 355,
@@ -4298,7 +3969,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 356,
@@ -4311,7 +3981,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 357,
@@ -4324,7 +3993,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 358,
@@ -4337,7 +4005,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 359,
@@ -4350,7 +4017,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 360,
@@ -4363,7 +4029,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 361,
@@ -4376,7 +4041,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 362,
@@ -4389,7 +4053,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => '+7 928 231-78-07',
 ),
 array (
   'id' => 363,
@@ -4402,7 +4065,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 364,
@@ -4415,7 +4077,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 365,
@@ -4428,7 +4089,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 366,
@@ -4441,7 +4101,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 367,
@@ -4454,7 +4113,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 368,
@@ -4467,7 +4125,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 369,
@@ -4480,7 +4137,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 370,
@@ -4493,7 +4149,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 371,
@@ -4506,7 +4161,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 372,
@@ -4519,7 +4173,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 373,
@@ -4532,7 +4185,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-08-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 374,
@@ -4545,7 +4197,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => '+7 905 472-52-54',
 ),
 array (
   'id' => 375,
@@ -4558,7 +4209,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 376,
@@ -4571,7 +4221,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 377,
@@ -4584,7 +4233,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 378,
@@ -4597,7 +4245,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 379,
@@ -4610,7 +4257,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 380,
@@ -4623,7 +4269,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 381,
@@ -4636,7 +4281,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 382,
@@ -4649,7 +4293,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 383,
@@ -4662,7 +4305,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => '+7 989 760-87-29 Алена',
 ),
 array (
   'id' => 384,
@@ -4675,7 +4317,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 385,
@@ -4688,7 +4329,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 386,
@@ -4701,7 +4341,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 387,
@@ -4714,7 +4353,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 388,
@@ -4727,7 +4365,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 389,
@@ -4740,7 +4377,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 390,
@@ -4753,7 +4389,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 391,
@@ -4766,7 +4401,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 392,
@@ -4779,7 +4413,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 393,
@@ -4792,7 +4425,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 394,
@@ -4805,7 +4437,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 395,
@@ -4818,7 +4449,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 396,
@@ -4831,7 +4461,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 397,
@@ -4844,7 +4473,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 398,
@@ -4857,7 +4485,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 399,
@@ -4870,7 +4497,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-09-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 400,
@@ -4883,7 +4509,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 401,
@@ -4896,7 +4521,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 402,
@@ -4909,7 +4533,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 403,
@@ -4922,7 +4545,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 404,
@@ -4935,7 +4557,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 405,
@@ -4948,7 +4569,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 406,
@@ -4961,7 +4581,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 407,
@@ -4974,7 +4593,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 408,
@@ -4987,7 +4605,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 409,
@@ -5000,7 +4617,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 410,
@@ -5013,7 +4629,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => '+7 908-685-43-92',
 ),
 array (
   'id' => 411,
@@ -5026,7 +4641,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 412,
@@ -5039,7 +4653,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 413,
@@ -5052,7 +4665,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 414,
@@ -5065,7 +4677,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 415,
@@ -5078,7 +4689,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 416,
@@ -5091,7 +4701,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 417,
@@ -5104,7 +4713,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 418,
@@ -5117,7 +4725,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-10-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 419,
@@ -5130,7 +4737,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 420,
@@ -5143,7 +4749,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 421,
@@ -5156,7 +4761,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 422,
@@ -5169,7 +4773,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 423,
@@ -5182,7 +4785,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 424,
@@ -5195,7 +4797,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 425,
@@ -5208,7 +4809,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 426,
@@ -5221,7 +4821,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 427,
@@ -5234,7 +4833,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 428,
@@ -5247,7 +4845,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 429,
@@ -5260,7 +4857,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 430,
@@ -5273,7 +4869,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 431,
@@ -5286,7 +4881,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 432,
@@ -5299,7 +4893,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 433,
@@ -5312,7 +4905,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 434,
@@ -5325,7 +4917,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 435,
@@ -5338,7 +4929,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-11-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 436,
@@ -5351,7 +4941,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 437,
@@ -5364,7 +4953,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 438,
@@ -5377,7 +4965,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 439,
@@ -5390,7 +4977,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 440,
@@ -5403,7 +4989,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 441,
@@ -5416,7 +5001,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 442,
@@ -5429,7 +5013,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 443,
@@ -5442,7 +5025,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 444,
@@ -5455,7 +5037,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 445,
@@ -5468,7 +5049,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 446,
@@ -5481,7 +5061,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 447,
@@ -5494,7 +5073,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 448,
@@ -5507,7 +5085,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 449,
@@ -5520,7 +5097,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 450,
@@ -5533,7 +5109,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 451,
@@ -5546,7 +5121,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 452,
@@ -5559,7 +5133,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 453,
@@ -5572,7 +5145,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 454,
@@ -5585,7 +5157,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 455,
@@ -5598,7 +5169,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2020-12-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 456,
@@ -5611,7 +5181,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-01-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 457,
@@ -5624,7 +5193,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-01-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 458,
@@ -5637,7 +5205,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-01-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 459,
@@ -5650,7 +5217,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-01-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 460,
@@ -5663,7 +5229,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-01-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 461,
@@ -5676,7 +5241,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-01-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 462,
@@ -5689,7 +5253,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-01-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 463,
@@ -5702,7 +5265,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-01-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 464,
@@ -5715,7 +5277,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-01-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 465,
@@ -5728,7 +5289,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 466,
@@ -5741,7 +5301,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 467,
@@ -5754,7 +5313,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 468,
@@ -5767,7 +5325,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 469,
@@ -5780,7 +5337,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 470,
@@ -5793,7 +5349,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 471,
@@ -5806,7 +5361,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 472,
@@ -5819,7 +5373,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 473,
@@ -5832,7 +5385,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 474,
@@ -5845,7 +5397,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 475,
@@ -5858,7 +5409,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 476,
@@ -5871,7 +5421,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 477,
@@ -5884,7 +5433,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 478,
@@ -5897,7 +5445,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 479,
@@ -5910,7 +5457,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 480,
@@ -5923,7 +5469,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 481,
@@ -5936,7 +5481,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 482,
@@ -5949,7 +5493,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 483,
@@ -5962,7 +5505,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 484,
@@ -5975,7 +5517,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-02-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 485,
@@ -5988,7 +5529,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 486,
@@ -6001,7 +5541,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 487,
@@ -6014,7 +5553,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 488,
@@ -6027,7 +5565,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 489,
@@ -6040,7 +5577,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 490,
@@ -6053,7 +5589,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 491,
@@ -6066,7 +5601,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 492,
@@ -6079,7 +5613,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 493,
@@ -6092,7 +5625,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 494,
@@ -6105,7 +5637,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 495,
@@ -6118,7 +5649,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 496,
@@ -6131,7 +5661,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 497,
@@ -6144,7 +5673,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 498,
@@ -6157,7 +5685,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 499,
@@ -6170,7 +5697,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 501,
@@ -6183,7 +5709,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 502,
@@ -6196,7 +5721,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 503,
@@ -6209,7 +5733,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 504,
@@ -6222,7 +5745,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 505,
@@ -6235,7 +5757,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 506,
@@ -6248,7 +5769,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 507,
@@ -6261,7 +5781,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 508,
@@ -6274,7 +5793,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 509,
@@ -6287,7 +5805,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-03-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 510,
@@ -6300,7 +5817,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 511,
@@ -6313,7 +5829,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 512,
@@ -6326,7 +5841,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 513,
@@ -6339,7 +5853,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 514,
@@ -6352,7 +5865,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 515,
@@ -6365,7 +5877,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 516,
@@ -6378,7 +5889,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 517,
@@ -6391,7 +5901,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 518,
@@ -6404,7 +5913,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 519,
@@ -6417,7 +5925,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 520,
@@ -6430,7 +5937,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 521,
@@ -6443,7 +5949,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 522,
@@ -6456,7 +5961,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 523,
@@ -6469,7 +5973,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 524,
@@ -6482,7 +5985,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 525,
@@ -6495,7 +5997,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 526,
@@ -6508,7 +6009,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 527,
@@ -6521,7 +6021,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 528,
@@ -6534,7 +6033,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 529,
@@ -6547,7 +6045,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 530,
@@ -6560,7 +6057,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 531,
@@ -6573,7 +6069,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 532,
@@ -6586,7 +6081,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 533,
@@ -6599,7 +6093,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 534,
@@ -6612,7 +6105,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-04-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 535,
@@ -6625,7 +6117,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 536,
@@ -6638,7 +6129,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 537,
@@ -6651,7 +6141,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 538,
@@ -6664,7 +6153,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 539,
@@ -6677,7 +6165,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 540,
@@ -6690,7 +6177,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 541,
@@ -6703,7 +6189,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 542,
@@ -6716,7 +6201,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 543,
@@ -6729,7 +6213,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 544,
@@ -6742,7 +6225,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 545,
@@ -6755,7 +6237,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 546,
@@ -6768,7 +6249,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => '+7 918 0545077',
 ),
 array (
   'id' => 547,
@@ -6781,7 +6261,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 548,
@@ -6794,7 +6273,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 549,
@@ -6807,7 +6285,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 550,
@@ -6820,7 +6297,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 551,
@@ -6833,7 +6309,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 552,
@@ -6846,7 +6321,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-05-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 554,
@@ -6859,7 +6333,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 555,
@@ -6872,7 +6345,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 556,
@@ -6885,7 +6357,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 557,
@@ -6898,7 +6369,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 558,
@@ -6911,7 +6381,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 559,
@@ -6924,7 +6393,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 560,
@@ -6937,7 +6405,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 561,
@@ -6950,7 +6417,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 562,
@@ -6963,7 +6429,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 563,
@@ -6976,7 +6441,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 564,
@@ -6989,7 +6453,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 565,
@@ -7002,7 +6465,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 566,
@@ -7015,7 +6477,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 567,
@@ -7028,7 +6489,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 568,
@@ -7041,7 +6501,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 569,
@@ -7054,7 +6513,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 571,
@@ -7067,7 +6525,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 572,
@@ -7080,7 +6537,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 573,
@@ -7093,7 +6549,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 574,
@@ -7106,7 +6561,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 575,
@@ -7119,7 +6573,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-06-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 576,
@@ -7132,7 +6585,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 577,
@@ -7145,7 +6597,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 578,
@@ -7158,7 +6609,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 579,
@@ -7171,7 +6621,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 580,
@@ -7184,7 +6633,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 581,
@@ -7197,7 +6645,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 582,
@@ -7210,7 +6657,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 583,
@@ -7223,7 +6669,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 584,
@@ -7236,7 +6681,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 585,
@@ -7249,7 +6693,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 586,
@@ -7262,7 +6705,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 587,
@@ -7275,7 +6717,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-07-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 588,
@@ -7288,7 +6729,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 589,
@@ -7301,7 +6741,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 590,
@@ -7314,7 +6753,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 591,
@@ -7327,7 +6765,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 592,
@@ -7340,7 +6777,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 593,
@@ -7353,7 +6789,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 594,
@@ -7366,7 +6801,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 595,
@@ -7379,7 +6813,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 596,
@@ -7392,7 +6825,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 597,
@@ -7405,7 +6837,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 598,
@@ -7418,7 +6849,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 599,
@@ -7431,7 +6861,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 600,
@@ -7444,7 +6873,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 601,
@@ -7457,7 +6885,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 602,
@@ -7470,7 +6897,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 603,
@@ -7483,7 +6909,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 604,
@@ -7496,7 +6921,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 605,
@@ -7509,7 +6933,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 606,
@@ -7522,7 +6945,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 607,
@@ -7535,7 +6957,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 608,
@@ -7548,7 +6969,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 609,
@@ -7561,7 +6981,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 610,
@@ -7574,7 +6993,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-08-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 611,
@@ -7587,7 +7005,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 612,
@@ -7600,7 +7017,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 613,
@@ -7613,7 +7029,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 614,
@@ -7626,7 +7041,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 615,
@@ -7639,7 +7053,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 616,
@@ -7652,7 +7065,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 617,
@@ -7665,7 +7077,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 618,
@@ -7678,7 +7089,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 619,
@@ -7691,7 +7101,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 620,
@@ -7704,7 +7113,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 621,
@@ -7717,7 +7125,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 622,
@@ -7730,7 +7137,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 623,
@@ -7743,7 +7149,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 624,
@@ -7756,7 +7161,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 625,
@@ -7769,7 +7173,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => 'СТО',
 ),
 array (
   'id' => 626,
@@ -7782,7 +7185,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 627,
@@ -7795,7 +7197,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 628,
@@ -7808,7 +7209,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 629,
@@ -7821,7 +7221,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 630,
@@ -7834,7 +7233,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-09-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 631,
@@ -7847,7 +7245,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 632,
@@ -7860,7 +7257,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 633,
@@ -7873,7 +7269,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 634,
@@ -7886,7 +7281,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 635,
@@ -7899,7 +7293,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 636,
@@ -7912,7 +7305,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 637,
@@ -7925,7 +7317,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 638,
@@ -7938,7 +7329,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 639,
@@ -7951,7 +7341,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 640,
@@ -7964,7 +7353,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 641,
@@ -7977,7 +7365,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 642,
@@ -7990,7 +7377,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 643,
@@ -8003,7 +7389,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 644,
@@ -8016,7 +7401,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 645,
@@ -8029,7 +7413,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-10-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 646,
@@ -8042,7 +7425,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 647,
@@ -8055,7 +7437,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 648,
@@ -8068,7 +7449,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 649,
@@ -8081,7 +7461,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 650,
@@ -8094,7 +7473,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 651,
@@ -8107,7 +7485,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 652,
@@ -8120,7 +7497,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 653,
@@ -8133,7 +7509,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 654,
@@ -8146,7 +7521,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 655,
@@ -8159,7 +7533,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 656,
@@ -8172,7 +7545,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 657,
@@ -8185,7 +7557,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 658,
@@ -8198,7 +7569,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 659,
@@ -8211,7 +7581,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 660,
@@ -8224,7 +7593,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 661,
@@ -8237,7 +7605,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-11-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 662,
@@ -8250,7 +7617,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 663,
@@ -8263,7 +7629,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 664,
@@ -8276,7 +7641,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 665,
@@ -8289,7 +7653,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 666,
@@ -8302,7 +7665,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 667,
@@ -8315,7 +7677,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 668,
@@ -8328,7 +7689,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 669,
@@ -8341,7 +7701,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 670,
@@ -8354,7 +7713,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 671,
@@ -8367,7 +7725,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2021-12-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 672,
@@ -8380,7 +7737,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 673,
@@ -8393,7 +7749,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 674,
@@ -8406,7 +7761,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 675,
@@ -8419,7 +7773,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 676,
@@ -8432,7 +7785,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 677,
@@ -8445,7 +7797,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 678,
@@ -8458,7 +7809,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 679,
@@ -8471,7 +7821,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 680,
@@ -8484,7 +7833,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 681,
@@ -8497,7 +7845,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-01-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 682,
@@ -8510,7 +7857,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 683,
@@ -8523,7 +7869,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 684,
@@ -8536,7 +7881,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 685,
@@ -8549,7 +7893,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 686,
@@ -8562,7 +7905,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 687,
@@ -8575,7 +7917,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 688,
@@ -8588,7 +7929,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 689,
@@ -8601,7 +7941,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 690,
@@ -8614,7 +7953,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 691,
@@ -8627,7 +7965,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 692,
@@ -8640,7 +7977,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 693,
@@ -8653,7 +7989,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-02-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 694,
@@ -8666,7 +8001,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 695,
@@ -8679,7 +8013,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 696,
@@ -8692,7 +8025,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 697,
@@ -8705,7 +8037,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 698,
@@ -8718,7 +8049,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 699,
@@ -8731,7 +8061,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 700,
@@ -8744,7 +8073,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 701,
@@ -8757,7 +8085,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 702,
@@ -8770,7 +8097,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 703,
@@ -8783,7 +8109,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 704,
@@ -8796,7 +8121,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 705,
@@ -8809,7 +8133,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 706,
@@ -8822,7 +8145,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 707,
@@ -8835,7 +8157,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 708,
@@ -8848,7 +8169,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 709,
@@ -8861,7 +8181,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 710,
@@ -8874,7 +8193,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 711,
@@ -8887,7 +8205,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 712,
@@ -8900,7 +8217,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 713,
@@ -8913,7 +8229,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 714,
@@ -8926,7 +8241,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 715,
@@ -8939,7 +8253,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 716,
@@ -8952,7 +8265,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-03-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 717,
@@ -8965,7 +8277,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 718,
@@ -8978,7 +8289,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 719,
@@ -8991,7 +8301,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 720,
@@ -9004,7 +8313,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 721,
@@ -9017,7 +8325,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 722,
@@ -9030,7 +8337,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 723,
@@ -9043,7 +8349,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 724,
@@ -9056,7 +8361,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 725,
@@ -9069,7 +8373,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => '+7 988 311-82-40',
 ),
 array (
   'id' => 726,
@@ -9082,7 +8385,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 727,
@@ -9095,7 +8397,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 728,
@@ -9108,7 +8409,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 729,
@@ -9121,7 +8421,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-04-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 730,
@@ -9134,7 +8433,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 731,
@@ -9147,7 +8445,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 732,
@@ -9160,7 +8457,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 733,
@@ -9173,7 +8469,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 734,
@@ -9186,7 +8481,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 735,
@@ -9199,7 +8493,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 736,
@@ -9212,7 +8505,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 737,
@@ -9225,7 +8517,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 738,
@@ -9238,7 +8529,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 739,
@@ -9251,7 +8541,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 740,
@@ -9264,7 +8553,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 741,
@@ -9277,7 +8565,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-05-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 742,
@@ -9290,7 +8577,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 743,
@@ -9303,7 +8589,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 744,
@@ -9316,7 +8601,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 745,
@@ -9329,7 +8613,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 746,
@@ -9342,7 +8625,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 747,
@@ -9355,7 +8637,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 748,
@@ -9368,7 +8649,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 749,
@@ -9381,7 +8661,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 750,
@@ -9394,7 +8673,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 751,
@@ -9407,7 +8685,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 752,
@@ -9420,7 +8697,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 753,
@@ -9433,7 +8709,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 754,
@@ -9446,7 +8721,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 755,
@@ -9459,7 +8733,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 756,
@@ -9472,7 +8745,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 757,
@@ -9485,7 +8757,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 758,
@@ -9498,7 +8769,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 759,
@@ -9511,7 +8781,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 760,
@@ -9524,7 +8793,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 761,
@@ -9537,7 +8805,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-06-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 762,
@@ -9550,7 +8817,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 763,
@@ -9563,7 +8829,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 764,
@@ -9576,7 +8841,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 765,
@@ -9589,7 +8853,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 766,
@@ -9602,7 +8865,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 767,
@@ -9615,7 +8877,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 768,
@@ -9628,7 +8889,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 769,
@@ -9641,7 +8901,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 770,
@@ -9654,7 +8913,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 771,
@@ -9667,7 +8925,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 772,
@@ -9680,7 +8937,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 773,
@@ -9693,7 +8949,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 774,
@@ -9706,7 +8961,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-07-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 775,
@@ -9719,7 +8973,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 776,
@@ -9732,7 +8985,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 777,
@@ -9745,7 +8997,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 778,
@@ -9758,7 +9009,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 779,
@@ -9771,7 +9021,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 780,
@@ -9784,7 +9033,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 781,
@@ -9797,7 +9045,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 782,
@@ -9810,7 +9057,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 783,
@@ -9823,7 +9069,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 784,
@@ -9836,7 +9081,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 785,
@@ -9849,7 +9093,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 786,
@@ -9862,7 +9105,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 787,
@@ -9875,7 +9117,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 788,
@@ -9888,7 +9129,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 789,
@@ -9901,7 +9141,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 790,
@@ -9914,7 +9153,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 791,
@@ -9927,7 +9165,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 792,
@@ -9940,7 +9177,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 793,
@@ -9953,7 +9189,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 794,
@@ -9966,7 +9201,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 795,
@@ -9979,7 +9213,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 796,
@@ -9992,7 +9225,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 797,
@@ -10005,7 +9237,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-08-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 798,
@@ -10018,7 +9249,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 799,
@@ -10031,7 +9261,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 800,
@@ -10044,7 +9273,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 801,
@@ -10057,7 +9285,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 802,
@@ -10070,7 +9297,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 803,
@@ -10083,7 +9309,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 804,
@@ -10096,7 +9321,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 805,
@@ -10109,7 +9333,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 806,
@@ -10122,7 +9345,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 807,
@@ -10135,7 +9357,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 808,
@@ -10148,7 +9369,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 809,
@@ -10161,7 +9381,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 810,
@@ -10174,7 +9393,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 811,
@@ -10187,7 +9405,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 812,
@@ -10200,7 +9417,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 813,
@@ -10213,7 +9429,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-09-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 814,
@@ -10226,7 +9441,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 815,
@@ -10239,7 +9453,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 816,
@@ -10252,7 +9465,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 817,
@@ -10265,7 +9477,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 818,
@@ -10278,7 +9489,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 819,
@@ -10291,7 +9501,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 820,
@@ -10304,7 +9513,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 821,
@@ -10317,7 +9525,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 822,
@@ -10330,7 +9537,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 823,
@@ -10343,7 +9549,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 824,
@@ -10356,7 +9561,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 825,
@@ -10369,7 +9573,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 826,
@@ -10382,7 +9585,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 827,
@@ -10395,7 +9597,6 @@ array (
   'discount' => '0.00',
   'created_at' => NULL,
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 828,
@@ -10408,7 +9609,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 829,
@@ -10421,7 +9621,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 830,
@@ -10434,7 +9633,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 831,
@@ -10447,7 +9645,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 832,
@@ -10460,7 +9657,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 833,
@@ -10473,7 +9669,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-10-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 834,
@@ -10486,7 +9681,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 835,
@@ -10499,7 +9693,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 836,
@@ -10512,7 +9705,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 837,
@@ -10525,7 +9717,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 838,
@@ -10538,7 +9729,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 839,
@@ -10551,7 +9741,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 840,
@@ -10564,7 +9753,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 841,
@@ -10577,7 +9765,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 842,
@@ -10590,7 +9777,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 843,
@@ -10603,7 +9789,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 844,
@@ -10616,7 +9801,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-11-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 845,
@@ -10629,7 +9813,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 846,
@@ -10642,7 +9825,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 847,
@@ -10655,7 +9837,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 848,
@@ -10668,7 +9849,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 849,
@@ -10681,7 +9861,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 850,
@@ -10694,7 +9873,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 851,
@@ -10707,7 +9885,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 852,
@@ -10720,7 +9897,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 853,
@@ -10733,7 +9909,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 854,
@@ -10746,7 +9921,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 855,
@@ -10759,7 +9933,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 856,
@@ -10772,7 +9945,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 857,
@@ -10785,7 +9957,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2022-12-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 858,
@@ -10798,7 +9969,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 859,
@@ -10811,7 +9981,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 860,
@@ -10824,7 +9993,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 861,
@@ -10837,7 +10005,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 862,
@@ -10850,7 +10017,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => '+7 928 041-55-63',
 ),
 array (
   'id' => 863,
@@ -10863,7 +10029,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 864,
@@ -10876,7 +10041,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 865,
@@ -10889,7 +10053,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 866,
@@ -10902,7 +10065,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 867,
@@ -10915,7 +10077,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 868,
@@ -10928,7 +10089,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-01-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 869,
@@ -10941,7 +10101,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-02-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 870,
@@ -10954,7 +10113,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-02-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 871,
@@ -10967,7 +10125,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-02-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 872,
@@ -10980,7 +10137,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 873,
@@ -10993,7 +10149,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 874,
@@ -11006,7 +10161,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-02-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 875,
@@ -11019,7 +10173,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-02-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 876,
@@ -11032,7 +10185,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-02-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 877,
@@ -11045,7 +10197,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 878,
@@ -11058,7 +10209,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 879,
@@ -11071,7 +10221,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 880,
@@ -11084,7 +10233,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 881,
@@ -11097,7 +10245,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 882,
@@ -11110,7 +10257,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 883,
@@ -11123,7 +10269,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 884,
@@ -11136,7 +10281,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 885,
@@ -11149,7 +10293,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 886,
@@ -11162,7 +10305,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 887,
@@ -11175,7 +10317,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 888,
@@ -11188,7 +10329,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-03-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 889,
@@ -11201,7 +10341,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 890,
@@ -11214,7 +10353,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 891,
@@ -11227,7 +10365,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 892,
@@ -11240,7 +10377,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 893,
@@ -11253,7 +10389,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 894,
@@ -11266,7 +10401,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 895,
@@ -11279,7 +10413,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 896,
@@ -11292,7 +10425,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 897,
@@ -11305,7 +10437,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 898,
@@ -11318,7 +10449,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 899,
@@ -11331,7 +10461,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 900,
@@ -11344,7 +10473,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 901,
@@ -11357,7 +10485,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 902,
@@ -11370,7 +10497,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 903,
@@ -11383,7 +10509,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-04-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 904,
@@ -11396,7 +10521,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 905,
@@ -11409,7 +10533,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 906,
@@ -11422,7 +10545,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 907,
@@ -11435,7 +10557,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 908,
@@ -11448,7 +10569,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 909,
@@ -11461,7 +10581,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 910,
@@ -11474,7 +10593,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 911,
@@ -11487,7 +10605,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 912,
@@ -11500,7 +10617,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 913,
@@ -11513,7 +10629,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 914,
@@ -11526,7 +10641,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 915,
@@ -11539,7 +10653,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 916,
@@ -11552,7 +10665,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 917,
@@ -11565,7 +10677,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 918,
@@ -11578,7 +10689,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-05-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 919,
@@ -11591,7 +10701,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 920,
@@ -11604,7 +10713,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 921,
@@ -11617,7 +10725,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 922,
@@ -11630,7 +10737,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 923,
@@ -11643,7 +10749,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 924,
@@ -11656,7 +10761,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 925,
@@ -11669,7 +10773,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 926,
@@ -11682,7 +10785,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 927,
@@ -11695,7 +10797,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 928,
@@ -11708,7 +10809,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 929,
@@ -11721,7 +10821,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 930,
@@ -11734,7 +10833,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 931,
@@ -11747,7 +10845,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 932,
@@ -11760,7 +10857,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 933,
@@ -11773,7 +10869,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-06-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 934,
@@ -11786,7 +10881,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 935,
@@ -11799,7 +10893,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 936,
@@ -11812,7 +10905,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 937,
@@ -11825,7 +10917,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 938,
@@ -11838,7 +10929,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 939,
@@ -11851,7 +10941,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 940,
@@ -11864,7 +10953,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 941,
@@ -11877,7 +10965,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 942,
@@ -11890,7 +10977,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 943,
@@ -11903,7 +10989,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 944,
@@ -11916,7 +11001,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 945,
@@ -11929,7 +11013,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 946,
@@ -11942,7 +11025,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 947,
@@ -11955,7 +11037,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 948,
@@ -11968,7 +11049,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 949,
@@ -11981,7 +11061,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 950,
@@ -11994,7 +11073,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 951,
@@ -12007,7 +11085,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-07-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 952,
@@ -12020,7 +11097,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 953,
@@ -12033,7 +11109,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 954,
@@ -12046,7 +11121,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 955,
@@ -12059,7 +11133,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 956,
@@ -12072,7 +11145,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 957,
@@ -12085,7 +11157,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 958,
@@ -12098,7 +11169,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 959,
@@ -12111,7 +11181,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 960,
@@ -12124,7 +11193,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 961,
@@ -12137,7 +11205,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 962,
@@ -12150,7 +11217,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 963,
@@ -12163,7 +11229,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 964,
@@ -12176,7 +11241,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 965,
@@ -12189,7 +11253,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 966,
@@ -12202,7 +11265,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 967,
@@ -12215,7 +11277,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 968,
@@ -12228,7 +11289,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-08-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 969,
@@ -12241,7 +11301,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 970,
@@ -12254,7 +11313,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 971,
@@ -12267,7 +11325,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 972,
@@ -12280,7 +11337,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 973,
@@ -12293,7 +11349,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 974,
@@ -12306,7 +11361,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 975,
@@ -12319,7 +11373,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 976,
@@ -12332,7 +11385,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 977,
@@ -12345,7 +11397,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 978,
@@ -12358,7 +11409,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 979,
@@ -12371,7 +11421,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 980,
@@ -12384,7 +11433,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 981,
@@ -12397,7 +11445,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 982,
@@ -12410,7 +11457,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 983,
@@ -12423,7 +11469,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 984,
@@ -12436,7 +11481,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-09-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 985,
@@ -12449,7 +11493,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 986,
@@ -12462,7 +11505,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 987,
@@ -12475,7 +11517,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 988,
@@ -12488,7 +11529,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 989,
@@ -12501,7 +11541,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 990,
@@ -12514,7 +11553,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 991,
@@ -12527,7 +11565,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 992,
@@ -12540,7 +11577,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 993,
@@ -12553,7 +11589,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 994,
@@ -12566,7 +11601,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 995,
@@ -12579,7 +11613,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 996,
@@ -12592,7 +11625,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 997,
@@ -12605,7 +11637,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-10-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 998,
@@ -12618,7 +11649,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 999,
@@ -12631,7 +11661,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1000,
@@ -12644,7 +11673,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1001,
@@ -12657,7 +11685,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1002,
@@ -12670,7 +11697,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1003,
@@ -12683,7 +11709,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1004,
@@ -12696,7 +11721,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1005,
@@ -12709,7 +11733,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1006,
@@ -12722,7 +11745,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1007,
@@ -12735,7 +11757,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1008,
@@ -12748,7 +11769,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-11-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1009,
@@ -12761,7 +11781,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-12-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1010,
@@ -12774,7 +11793,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-12-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1011,
@@ -12787,7 +11805,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-12-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1012,
@@ -12800,7 +11817,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-12-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1013,
@@ -12813,7 +11829,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-12-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1014,
@@ -12826,7 +11841,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-12-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1015,
@@ -12839,7 +11853,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-12-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1016,
@@ -12852,7 +11865,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2023-12-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1017,
@@ -12865,7 +11877,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-01-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1018,
@@ -12878,7 +11889,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-01-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1019,
@@ -12891,7 +11901,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-01-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1020,
@@ -12904,7 +11913,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-01-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1021,
@@ -12917,7 +11925,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-01-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1022,
@@ -12930,7 +11937,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-01-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1023,
@@ -12943,7 +11949,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-01-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1024,
@@ -12956,7 +11961,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-02-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1025,
@@ -12969,7 +11973,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-02-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1026,
@@ -12982,7 +11985,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-02-05 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1027,
@@ -12995,7 +11997,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1028,
@@ -13008,7 +12009,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-02-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1029,
@@ -13021,7 +12021,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-02-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1030,
@@ -13034,7 +12033,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-02-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1031,
@@ -13047,7 +12045,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-03-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1032,
@@ -13060,7 +12057,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-03-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1033,
@@ -13073,7 +12069,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-03-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1034,
@@ -13086,7 +12081,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-03-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1035,
@@ -13099,7 +12093,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-03-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1036,
@@ -13112,7 +12105,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-03-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1037,
@@ -13125,7 +12117,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-03-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1038,
@@ -13138,7 +12129,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-03-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1039,
@@ -13151,7 +12141,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-03-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1040,
@@ -13164,7 +12153,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1041,
@@ -13177,7 +12165,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1042,
@@ -13190,7 +12177,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1043,
@@ -13203,7 +12189,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1044,
@@ -13216,7 +12201,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1045,
@@ -13229,7 +12213,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1046,
@@ -13242,7 +12225,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1047,
@@ -13255,7 +12237,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1048,
@@ -13268,7 +12249,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1049,
@@ -13281,7 +12261,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1050,
@@ -13294,7 +12273,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1051,
@@ -13307,7 +12285,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-04-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1052,
@@ -13320,7 +12297,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1053,
@@ -13333,7 +12309,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1054,
@@ -13346,7 +12321,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1055,
@@ -13359,7 +12333,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1056,
@@ -13372,7 +12345,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1057,
@@ -13385,7 +12357,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1058,
@@ -13398,7 +12369,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1059,
@@ -13411,7 +12381,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1060,
@@ -13424,7 +12393,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1061,
@@ -13437,7 +12405,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1062,
@@ -13450,7 +12417,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1063,
@@ -13463,7 +12429,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-05-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1064,
@@ -13476,7 +12441,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1065,
@@ -13489,7 +12453,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1066,
@@ -13502,7 +12465,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1067,
@@ -13515,7 +12477,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1068,
@@ -13528,7 +12489,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1069,
@@ -13541,7 +12501,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1070,
@@ -13554,7 +12513,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1071,
@@ -13567,7 +12525,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1072,
@@ -13580,7 +12537,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1073,
@@ -13593,7 +12549,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1074,
@@ -13606,7 +12561,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1075,
@@ -13619,7 +12573,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-06-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1076,
@@ -13632,7 +12585,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1077,
@@ -13645,7 +12597,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1078,
@@ -13658,7 +12609,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1079,
@@ -13671,7 +12621,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1080,
@@ -13684,7 +12633,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1081,
@@ -13697,7 +12645,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1082,
@@ -13710,7 +12657,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1083,
@@ -13723,7 +12669,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1084,
@@ -13736,7 +12681,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1085,
@@ -13749,7 +12693,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1086,
@@ -13762,7 +12705,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1087,
@@ -13775,7 +12717,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1088,
@@ -13788,7 +12729,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-27 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1089,
@@ -13801,7 +12741,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1090,
@@ -13814,7 +12753,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-07-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1091,
@@ -13827,7 +12765,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-08-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1092,
@@ -13840,7 +12777,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-08-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1093,
@@ -13853,7 +12789,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-08-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1094,
@@ -13866,7 +12801,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-08-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1095,
@@ -13879,7 +12813,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-09-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1096,
@@ -13892,7 +12825,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-09-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1097,
@@ -13905,7 +12837,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-09-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1098,
@@ -13918,7 +12849,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-09-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1099,
@@ -13931,7 +12861,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-09-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1100,
@@ -13944,7 +12873,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-09-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1101,
@@ -13957,7 +12885,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-09-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1102,
@@ -13970,7 +12897,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1103,
@@ -13983,7 +12909,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1104,
@@ -13996,7 +12921,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1105,
@@ -14009,7 +12933,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1106,
@@ -14022,7 +12945,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1107,
@@ -14035,7 +12957,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1108,
@@ -14048,7 +12969,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1109,
@@ -14061,7 +12981,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1110,
@@ -14074,7 +12993,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1111,
@@ -14087,7 +13005,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1112,
@@ -14100,7 +13017,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1113,
@@ -14113,7 +13029,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1114,
@@ -14126,7 +13041,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1115,
@@ -14139,7 +13053,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1116,
@@ -14152,7 +13065,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1117,
@@ -14165,7 +13077,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1118,
@@ -14178,7 +13089,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-10-31 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1119,
@@ -14191,7 +13101,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-11-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1120,
@@ -14204,7 +13113,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-11-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1121,
@@ -14217,7 +13125,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-11-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1122,
@@ -14230,7 +13137,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-11-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1123,
@@ -14243,7 +13149,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-11-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1124,
@@ -14256,7 +13161,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-11-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1125,
@@ -14269,7 +13173,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-11-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1126,
@@ -14282,7 +13185,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-12-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1127,
@@ -14295,7 +13197,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-12-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1128,
@@ -14308,7 +13209,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-12-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1129,
@@ -14321,7 +13221,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-12-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1130,
@@ -14334,7 +13233,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2024-12-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1131,
@@ -14347,7 +13245,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-01-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1132,
@@ -14360,7 +13257,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-01-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1133,
@@ -14373,7 +13269,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-01-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1134,
@@ -14386,7 +13281,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-01-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1135,
@@ -14399,7 +13293,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-01-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1136,
@@ -14412,7 +13305,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-01-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1137,
@@ -14425,7 +13317,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-01-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1138,
@@ -14438,7 +13329,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-01-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1139,
@@ -14451,7 +13341,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-01-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1140,
@@ -14464,7 +13353,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-02-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1141,
@@ -14477,7 +13365,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-02-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1142,
@@ -14490,7 +13377,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-02-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1143,
@@ -14503,7 +13389,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-02-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1145,
@@ -14516,7 +13401,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-02-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1146,
@@ -14529,7 +13413,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-02-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1147,
@@ -14542,7 +13425,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-02-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1148,
@@ -14555,7 +13437,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1149,
@@ -14568,7 +13449,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1150,
@@ -14581,7 +13461,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1151,
@@ -14594,7 +13473,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1152,
@@ -14607,7 +13485,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1153,
@@ -14620,7 +13497,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1154,
@@ -14633,7 +13509,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1155,
@@ -14646,7 +13521,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1156,
@@ -14659,7 +13533,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1157,
@@ -14672,7 +13545,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1158,
@@ -14685,7 +13557,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-03-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1159,
@@ -14698,7 +13569,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-04-01 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1160,
@@ -14711,7 +13581,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-04-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1161,
@@ -14724,7 +13593,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-04-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1162,
@@ -14737,7 +13605,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-04-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1163,
@@ -14750,7 +13617,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-04-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1164,
@@ -14763,7 +13629,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-04-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1166,
@@ -14776,7 +13641,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-04-21 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1167,
@@ -14789,7 +13653,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-04-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1168,
@@ -14802,7 +13665,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-04-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1169,
@@ -14815,7 +13677,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-05-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1170,
@@ -14828,7 +13689,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-05-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1171,
@@ -14841,7 +13701,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-05-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1172,
@@ -14854,7 +13713,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-05-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1173,
@@ -14867,7 +13725,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-05-22 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1174,
@@ -14880,7 +13737,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-06-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1175,
@@ -14893,7 +13749,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-06-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1176,
@@ -14906,7 +13761,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-06-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1177,
@@ -14919,7 +13773,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-06-10 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1178,
@@ -14932,7 +13785,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-06-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1179,
@@ -14945,7 +13797,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-06-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1180,
@@ -14958,7 +13809,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-06-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1181,
@@ -14971,7 +13821,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1182,
@@ -14984,7 +13833,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-02 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1183,
@@ -14997,7 +13845,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1184,
@@ -15010,7 +13857,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1186,
@@ -15023,7 +13869,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1187,
@@ -15036,7 +13881,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-12 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1188,
@@ -15049,7 +13893,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1189,
@@ -15062,7 +13905,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-14 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1190,
@@ -15075,7 +13917,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-15 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1191,
@@ -15088,7 +13929,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-17 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1192,
@@ -15101,7 +13941,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-23 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1193,
@@ -15114,7 +13953,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-24 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1194,
@@ -15127,7 +13965,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-28 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1195,
@@ -15140,7 +13977,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1196,
@@ -15153,7 +13989,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-07-30 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1197,
@@ -15166,7 +14001,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-04 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1198,
@@ -15179,7 +14013,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1199,
@@ -15192,7 +14025,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-06 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1200,
@@ -15205,7 +14037,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-07 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1201,
@@ -15218,7 +14049,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1202,
@@ -15231,7 +14061,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-11 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1203,
@@ -15244,7 +14073,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-13 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1204,
@@ -15257,7 +14085,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1205,
@@ -15270,7 +14097,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-18 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1206,
@@ -15283,7 +14109,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-19 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1207,
@@ -15296,7 +14121,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-20 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1208,
@@ -15309,7 +14133,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1209,
@@ -15322,7 +14145,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-25 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1210,
@@ -15335,7 +14157,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-26 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1211,
@@ -15348,7 +14169,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-08-29 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1212,
@@ -15361,7 +14181,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-09-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1213,
@@ -15374,7 +14193,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-09-03 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1214,
@@ -15387,7 +14205,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-09-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1215,
@@ -15400,7 +14217,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-09-08 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1216,
@@ -15413,7 +14229,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-09-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1217,
@@ -15426,7 +14241,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-09-09 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1218,
@@ -15439,7 +14253,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 ),
 array (
   'id' => 1219,
@@ -15452,7 +14265,6 @@ array (
   'discount' => '0.00',
   'created_at' => '2025-09-16 00:00:00',
   'updated_at' => NULL,
-  'comment' => NULL,
 )
         ]);
     }
