@@ -28,7 +28,8 @@ class OrderController extends Controller
         $clients = Client::all();
         $vehicles = Vehicle::all();
         $managers = User::all(); // or filter by role if you have roles
-        return view('orders.create', compact('clients', 'vehicles', 'managers'));
+        $orders_count = Order::max('order_number') + 1;
+        return view('orders.create', compact('clients', 'vehicles', 'managers', 'orders_count'));
     }
 
     /**

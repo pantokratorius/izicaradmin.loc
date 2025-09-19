@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -29,8 +30,9 @@ Route::get('/orders/{order}/print2', [OrderController::class, 'print2'])
     ->name('orders.print2');
 
 
-Route::resource('clients', ClientController::class);
-Route::resource('vehicles', VehicleController::class);
+Route::resource('clients', ClientController::class)->except(['show']);
+Route::get('/clients/{client}/vehicles', [ClientController::class, 'vehicles']);
+Route::resource('vehicles', VehicleController::class)->except(['show']);
 Route::resource('orders', OrderController::class);
 Route::resource('orderitems', OrderItemController::class);
 
@@ -49,6 +51,9 @@ Route::get('/reports/data', [ReportController::class, 'data'])->name('reports.da
 
 
 Route::post('/set-session', [ClientController::class, 'setSessionAjax'])->name('set.session');
+
+Route::get('/clients/search', [SearchController::class, 'clients'])->name('clients.search');
+Route::get('/vehicles/search', [SearchController::class, 'vehicles'])->name('vehicles.search');
 
 
 

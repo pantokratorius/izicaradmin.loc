@@ -6,6 +6,7 @@ use App\Models\CarBrand;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Setting;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -71,7 +72,7 @@ public function index(Request $request)
         ->unique('id') // avoid duplicates if some order is linked twice
         ->values();
         $brands = CarBrand::orderBy('name')->get();
-        $orders_count = Order::count() + 1;
+        $orders_count = Order::max('order_number') + 1;
         $globalMargin = Setting::first()->margin ?? 0;
         
         if (!$client) {
@@ -113,6 +114,13 @@ public function setSessionAjax(Request $request){
     return response()->json([
         'success' => true,
     ]);
+}
+
+
+public function vehicles($clientId)
+{
+    $vehicles = Vehicle::where('client_id', $clientId)->get();
+    return response()->json($vehicles);
 }
 
 

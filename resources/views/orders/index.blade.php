@@ -52,7 +52,7 @@
             <td onclick="toggleItems({{ $order->id }})">{{ $order->prepayment }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? $order->vehicle->brand->name.' '.$order->vehicle->model->name : '-' }}</td>
+            <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle?->brand?->name ??  $order->vehicle?->brand_name .' '. $order->vehicle?->model?->name  ?? $order->vehicle?->model_name }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
         </tr>
