@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -24,8 +23,9 @@ class ReportController extends Controller
 
         $period = $request->get('period');
 
-        $startDate     = $request->get('start_date') ? Carbon::parse($request->start_date)->startOfDay() : null;
-        $endDate       = $request->get('end_date') ? Carbon::parse($request->end_date)->endOfDay() : null;
+        // Always define these
+        $startDate     = $request->get('start_date') ? Carbon::parse($request->start_date) : null;
+        $endDate       = $request->get('end_date') ? Carbon::parse($request->end_date) : null;
         $selectedDate  = $request->get('date') ? Carbon::parse($request->date) : Carbon::today();
         $selectedMonth = $request->get('month') ? intval($request->month) : Carbon::now()->month;
         $selectedYear  = $request->get('year') ? intval($request->year) : Carbon::now()->year;
@@ -33,42 +33,49 @@ class ReportController extends Controller
         $results = [];
 
         if ($period) {
-            $query = OrderItem::query()
-    ->select([
-        DB::raw('COALESCE(clients.id, vehicle_clients.id, 0) as client_id'),
-        DB::raw('COALESCE(MAX(clients.first_name), MAX(vehicle_clients.first_name), "") as first_name'),
-        DB::raw('COALESCE(MAX(clients.last_name), MAX(vehicle_clients.last_name), "") as last_name'),
-        DB::raw('SUM(order_items.sell_price * order_items.quantity) as total_sum'),
-        DB::raw('SUM((order_items.sell_price - order_items.purchase_price) * order_items.quantity) as profit')
-    ])
-    ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')
-    ->leftJoin('clients', 'orders.client_id', '=', 'clients.id')
-    ->leftJoin('vehicles', 'orders.vehicle_id', '=', 'vehicles.id')
-    ->leftJoin('clients as vehicle_clients', 'vehicles.client_id', '=', 'vehicle_clients.id');
+            // Load OrderItems with order and client/vehicle relationships
+            $orderItems = OrderItem::with(['order.client','order.vehicle.client'])->get();
 
-
-            // Filter by period
-            if ($period === 'range') {
-                if ($startDate) $query->where('orders.created_at', '>=', $startDate);
-                if ($endDate) $query->where('orders.created_at', '<=', $endDate);
-            } elseif ($period === 'day') {
-                $query->whereDate('orders.created_at', $selectedDate);
-            } elseif ($period === 'month') {
-                $query->whereYear('orders.created_at', $selectedYear)
-                      ->whereMonth('orders.created_at', $selectedMonth);
-            } elseif ($period === 'year') {
-                $query->whereYear('orders.created_at', $selectedYear);
+            // Filter by date range if provided
+            if ($startDate || $endDate) {
+                $orderItems = $orderItems->filter(function ($item) use ($startDate, $endDate) {
+                    $created = $item->order?->created_at;
+                    if (!$created) return false;
+                    if ($startDate && $created->lt($startDate)) return false;
+                    if ($endDate && $created->gt($endDate)) return false;
+                    return true;
+                });
             }
 
-            $results = $query->groupBy('client_id')
-                             ->orderBy('total_sum', 'desc')
-                             ->get()
-                             ->map(fn($row) => [
-                                 'client_name' => trim($row->first_name . ' ' . $row->last_name) ?: '—',
-                                 'total_sum'   => round($row->total_sum, 2),
-                                 'profit'      => round($row->profit, 2),
-                             ])
-                             ->toArray();
+            // Filter by specific period
+            $orderItems = $orderItems->filter(function ($item) use ($period, $selectedDate, $selectedMonth, $selectedYear) {
+                $created = $item->order?->created_at;
+                if (!$created) return false;
+
+                return match ($period) {
+                    'day'   => $created->isSameDay($selectedDate),
+                    'month' => $created->year === $selectedYear && $created->month === $selectedMonth,
+                    'year'  => $created->year === $selectedYear,
+                    'range' => true,
+                    default => false,
+                };
+            });
+
+            // Group by client and calculate totals
+            $results = $orderItems->groupBy(function ($i) {
+                return $i->order->client?->id
+                    ?? $i->order->vehicle?->client?->id
+                    ?? 0;
+            })->map(function ($items) {
+                $client = $items->first()->order->client
+                    ?? $items->first()->order->vehicle?->client;
+
+                return [
+                    'client_name' => $client?->first_name . ' ' . $client?->last_name ?? '—',
+                    'total_sum'   => round($items->sum(fn($i) => $i->sell_price * $i->quantity), 2),
+                    'profit'      => round($items->sum(fn($i) => ($i->sell_price - $i->purchase_price) * $i->quantity), 2),
+                ];
+            })->values()->toArray();
         }
 
         return view('reports.index', compact(
