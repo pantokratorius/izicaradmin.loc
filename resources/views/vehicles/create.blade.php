@@ -1,67 +1,181 @@
 @extends('layouts.app')
 
-@section('title', 'Добавить клиента')
+@section('title', 'Добавить транспортное средство')
 
 @section('content')
-  <div class="page-header">
-    <div>Клиенты > Добавить</div>
-  </div>
+<h1>Добавить транспортное средство</h1>
 
-  <form method="POST" action="{{ route('clients.store') }}" style="background:#fff;padding:20px;border-radius:6px;">
+<form action="{{ route('vehicles.store') }}" method="POST">
     @csrf
 
-    <div style="margin-bottom:15px;">
-      <label>Имя</label><br>
-      <input type="text" name="first_name" value="{{ old('first_name') }}" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-      @error('first_name') <small style="color:red">{{ $message }}</small> @enderror
+    <!-- Марка -->
+    <div class="form-group">
+        <label for="car_brand_id">Марка</label>
+        <select id="car_brand_id" name="car_brand_id" data-url="/cars/models/{id}">
+            <option value="">Выберите марку</option>
+            @foreach($brands as $brand)
+                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+            @endforeach
+        </select>
     </div>
 
-    <div style="margin-bottom:15px;">
-      <label>Фамилия</label><br>
-      <input type="text" name="last_name" value="{{ old('last_name') }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-      @error('last_name') <small style="color:red">{{ $message }}</small> @enderror
+    <!-- Модель -->
+    <div class="form-group">
+        <label for="car_model_id">Модель</label>
+        <select id="car_model_id" name="car_model_id" data-url="/cars/generations/{id}">
+            <option value="">Выберите модель</option>
+        </select>
     </div>
 
-    <div style="margin-bottom:15px;">
-      <label>Отчество</label><br>
-      <input type="text" name="middle_name" value="{{ old('middle_name') }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-      @error('middle_name') <small style="color:red">{{ $message }}</small> @enderror
+    <!-- Поколение -->
+    <div class="form-group">
+        <label for="car_generation_id">Поколение</label>
+        <select id="car_generation_id" name="car_generation_id" data-url="/cars/series/{id}">
+            <option value="">Выберите поколение</option>
+        </select>
     </div>
 
-    <div style="margin-bottom:15px;">
-      <label>Телефон</label><br>
-      <input type="text" name="phone" value="{{ old('phone') }}" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-      @error('phone') <small style="color:red">{{ $message }}</small> @enderror
+    <!-- Серия -->
+    <div class="form-group">
+        <label for="car_serie_id">Серия</label>
+        <select id="car_serie_id" name="car_serie_id" data-url="/cars/modifications/{id}">
+            <option value="">Выберите серию</option>
+        </select>
     </div>
 
-    <div style="margin-bottom:15px;">
-      <label>Email</label><br>
-      <input type="email" name="email" value="{{ old('email') }}" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-      @error('email') <small style="color:red">{{ $message }}</small> @enderror
+    <!-- Модификация -->
+    <div class="form-group">
+        <label for="car_modification_id">Модификация</label>
+        <select id="car_modification_id" name="car_modification_id">
+            <option value="">Выберите модификацию</option>
+        </select>
     </div>
 
-    <div style="margin-bottom:15px;">
-  <label>Сегмент</label><br><br>
-  @php
-      $segments = ['Розница', 'Сотрудники', 'СТО'];
-  @endphp
-  @foreach($segments as $seg)
-    <label style="margin-right:15px;">
-      <input type="radio" name="segment" value="{{ $seg }}" {{ old('segment') === $seg ? 'checked' : '' }}>
-      {{ $seg }}
-    </label>
-  @endforeach
-  @error('segment') <br><small style="color:red">{{ $message }}</small> @enderror
-</div>
-
-    <div style="margin-bottom:15px;">
-      <label>Скидка (%)</label><br>
-      <input type="number" step="0.01" name="discount" value="{{ old('discount', 0) }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
-      @error('discount') <small style="color:red">{{ $message }}</small> @enderror
+    <!-- Ввод вручную -->
+    <div class="accordion">
+        <button type="button" class="accordion-toggle">Показать/Скрыть для внесения вручную</button>
+        <div class="accordion-content" style="display: none; margin-top:10px;">
+            <div class="form-group"><label for="brand_name">Марка</label><input type="text" id="brand_name" name="brand_name" style="background: #dbdbdb"/></div>
+            <div class="form-group"><label for="model_name">Модель</label><input type="text" id="model_name" name="model_name" style="background: #dbdbdb"/></div>
+            <div class="form-group"><label for="generation_name">Поколение</label><input type="text" id="generation_name" name="generation_name" style="background: #dbdbdb"/></div>
+            <div class="form-group"><label for="serie_name">Серия</label><input type="text" id="serie_name" name="serie_name" style="background: #dbdbdb"/></div>
+            <div class="form-group"><label for="modification_name">Модификация</label><input type="text" id="modification_name" name="modification_name" style="background: #dbdbdb"/></div>
+        </div>
     </div>
 
-    <button type="submit" style="background:#14213d;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">
-      Сохранить
-    </button>
-  </form>
+    <!-- VIN -->
+    <div class="form-group">
+        <label for="vin">VIN</label>
+        <input type="text" id="vin" name="vin">
+    </div>
+
+    <!-- Тип транспортного средства -->
+    <div class="form-group">
+        <label for="vehicle_type">Тип транспортного средства</label>
+        <input type="text" id="vehicle_type" name="vehicle_type">
+    </div>
+
+    <!-- Кузов -->
+    <div class="form-group">
+        <label for="body_type">Кузов</label>
+        <input type="text" id="body_type" name="body_type">
+    </div>
+
+    <!-- Гос номер -->
+    <div class="form-group">
+        <label for="plate_number">Гос номер</label>
+        <input type="text" id="plate_number" name="plate_number">
+    </div>
+
+    <!-- СТС -->
+    <div class="form-group">
+        <label for="sts">СТС</label>
+        <input type="text" id="sts" name="sts">
+    </div>
+
+    <!-- ПТС -->
+    <div class="form-group">
+        <label for="pts">ПТС</label>
+        <input type="text" id="pts" name="pts">
+    </div>
+
+    <!-- Год -->
+    <div class="form-group">
+        <label for="year">Год</label>
+        <input type="number" id="year" name="year">
+    </div>
+
+    <!-- Тип двигателя -->
+    <div class="form-group">
+        <label for="engine_type">Тип двигателя</label>
+        <input type="text" id="engine_type" name="engine_type">
+    </div>
+
+    <button type="submit">Сохранить</button>
+</form>
+
+<style>
+.form-group { margin-bottom: 15px; }
+label { display: block; margin-bottom: 5px; font-weight: bold; }
+select, input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+button { padding: 10px 20px; background: #2d89ef; color: white; border: none; border-radius: 4px; cursor: pointer; }
+button:hover { background: #1b5fbd; }
+.accordion-toggle { background: #2d89ef; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 10px; }
+.accordion-toggle:hover { background: #1b5fbd; }
+.accordion-content .form-group { margin-bottom: 10px; }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.querySelector(".accordion-toggle");
+    const content = document.querySelector(".accordion-content");
+    toggleBtn.addEventListener("click", () => {
+        content.style.display = content.style.display === "none" ? "block" : "none";
+    });
+
+    const brand = document.getElementById("car_brand_id");
+    const model = document.getElementById("car_model_id");
+    const generation = document.getElementById("car_generation_id");
+    const serie = document.getElementById("car_serie_id");
+    const modification = document.getElementById("car_modification_id");
+
+    function fetchOptions(url, selectEl, placeholder = "Выберите") {
+        selectEl.innerHTML = `<option value="">Загрузка…</option>`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                selectEl.innerHTML = `<option value="">${placeholder}</option>`;
+                data.forEach(item => {
+                    const opt = document.createElement("option");
+                    opt.value = item.id;
+                    opt.textContent = item.name;
+                    selectEl.appendChild(opt);
+                });
+            })
+            .catch(() => { selectEl.innerHTML = `<option value="">Ошибка загрузки</option>`; });
+    }
+
+    brand.addEventListener("change", function () {
+        fetchOptions(`/cars/models/${this.value}`, model, "Выберите модель");
+        generation.innerHTML = "<option value=''>Выберите поколение</option>";
+        serie.innerHTML = "<option value=''>Выберите серию</option>";
+        modification.innerHTML = "<option value=''>Выберите модификацию</option>";
+    });
+
+    model.addEventListener("change", function () {
+        fetchOptions(`/cars/generations/${this.value}`, generation, "Выберите поколение");
+        serie.innerHTML = "<option value=''>Выберите серию</option>";
+        modification.innerHTML = "<option value=''>Выберите модификацию</option>";
+    });
+
+    generation.addEventListener("change", function () {
+        fetchOptions(`/cars/series/${this.value}`, serie, "Выберите серию");
+        modification.innerHTML = "<option value=''>Выберите модификацию</option>";
+    });
+
+    serie.addEventListener("change", function () {
+        fetchOptions(`/cars/modifications/${this.value}`, modification, "Выберите модификацию");
+    });
+});
+</script>
 @endsection

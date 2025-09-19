@@ -15,29 +15,31 @@ use Illuminate\Validation\Rule;
 class VehicleController extends Controller
 {
     public function index(Request $request)
-    {
+    { 
         $query = DB::table('vehicles');
-        $vehicles = Vehicle::with(['brand', 'model', 'generation', 'modification'])
-        ->orderBy('id', 'desc')
-    ->paginate(20);
+    //     $vehicles = Vehicle::with(['brand', 'model', 'generation', 'modification'])
+    //     ->orderBy('id', 'desc')
+    // ->paginate(20);
 
     if ($request->filled('search')) {
         $search = $request->input('search');
-        // $query->where(function ($q) use ($search) {
-        //     $q->where('first_name', 'like', "%{$search}%")
-        //       ->orWhere('last_name', 'like', "%{$search}%")
-        //       ->orWhere('middle_name', 'like', "%{$search}%")
-        //       ->orWhere('email', 'like', "%{$search}%")
-        //       ->orWhere('phone', 'like', "%{$search}%");
-        // });
+        $query->where(function ($q) use ($search) {
+            $q->where('brand_name', 'like', "%{$search}%")
+              ->orWhere('model_name', 'like', "%{$search}%")
+              ->orWhere('generation_name', 'like', "%{$search}%")
+              ->orWhere('serie_name', 'like', "%{$search}%")
+              ->orWhere('modification_name', 'like', "%{$search}%");
+        });
     }
+    $vehicles = $query->orderBy('id', 'desc')->paginate(20);
 
     return view('vehicles.index', compact('vehicles'));
     }
 
     public function create()
     {
-        return view('vehicles.create');
+        $brands = \App\Models\CarBrand::all(); // Fetch all car brands
+    return view('vehicles.create', compact('brands'));
     }
 
     public function store(Request $request)

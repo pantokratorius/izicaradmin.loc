@@ -38,6 +38,7 @@
           <th>Бренд</th>
         <th>Модель</th>
         <th>Поколение</th>
+        <th>Серия</th>
         <th>Кузов</th>
         <th>Модификация</th>
           <th>Гос номер</th>
@@ -51,13 +52,14 @@
         @forelse($vehicles as $vehicle)
           <tr class="vehicle-row" data-id="{{ $vehicle->id }}">
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $vehicle->client->first_name }} {{ $vehicle->client->middle_name ?? '' }} {{ $vehicle->client->last_name ?? '' }}</td>
+            <td>{{ $vehicle->client->first_name ?? '-' }} {{ $vehicle->client->middle_name ?? '' }} {{ $vehicle->client->last_name ?? '' }}</td>
             <td>{{ $vehicle->vehicle_type }}</td>
-            <td>{{ $vehicle->brand->name ?? '-' }}</td>
-            <td>{{ $vehicle->model->name ?? '-' }}</td>
-            <td>{{ $vehicle->generation->name ?? '-' }}</td>
+            <td>{{ $vehicle->brand->name ?? $vehicle->brand_name ?? '-' }}</td>
+            <td>{{ $vehicle->model->name ?? $vehicle->model_name ?? '-' }}</td>
+            <td>{{ $vehicle->generation->name ?? $vehicle->generation_name ?? '-' }}</td>
+            <td>{{ $vehicle->serie->name ?? $vehicle->serie_name ?? '-' }}</td>
             <td>{{ $vehicle->body ?? '-' }}</td>
-            <td>{{ $vehicle->modification->name ?? '-' }}</td>
+            <td>{{ $vehicle->modification->name ??  $vehicle->modification_name ?? '-' }}</td>
             <td>{{ $vehicle->registration_number ?? '-' }}</td>
             <td>{{ $vehicle->sts ?? '-' }}</td>
             <td>{{ $vehicle->pts ?? '-' }}</td>
