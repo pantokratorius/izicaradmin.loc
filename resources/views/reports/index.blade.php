@@ -15,7 +15,6 @@
     <label>Период:</label>
     <select name="period" id="period-select">
         <option value="">— выберите —</option>
-        <option value="range" {{ $period=='range' ? 'selected' : '' }}>За период</option>
         <option value="day" {{ $period=='day' ? 'selected' : '' }}>День</option>
         <option value="month" {{ $period=='month' ? 'selected' : '' }}>Месяц</option>
         <option value="year" {{ $period=='year' ? 'selected' : '' }}>Год</option>
