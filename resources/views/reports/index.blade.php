@@ -14,13 +14,14 @@
 
     <label>Период:</label>
     <select name="period" id="period-select">
+        <option value="">— выберите —</option>
         <option value="range" {{ $period=='range' ? 'selected' : '' }}>За период</option>
         <option value="day" {{ $period=='day' ? 'selected' : '' }}>День</option>
         <option value="month" {{ $period=='month' ? 'selected' : '' }}>Месяц</option>
         <option value="year" {{ $period=='year' ? 'selected' : '' }}>Год</option>
     </select>
 
-    <span id="date-controls" style="{{ $period=='range' ? 'display:none;' : '' }}">
+    <span id="date-controls" style="{{ $period=='range' || !$period ? 'display:none;' : '' }}">
         <!-- For day filter -->
         <label id="date-label" style="{{ $period=='month' || $period=='year' ? 'display:none;' : '' }}">Выбрать дату:</label>
         <input type="date" name="date" id="date-input" value="{{ $selectedDate->format('Y-m-d') }}" style="{{ $period=='month' || $period=='year' ? 'display:none;' : '' }}">
@@ -29,10 +30,8 @@
         <span id="month-year-selects" style="{{ $period=='month' ? '' : 'display:none;' }}">
             <label>Месяц:</label>
             <select name="month">
-                @foreach([
-                    1=>'Январь',2=>'Февраль',3=>'Март',4=>'Апрель',5=>'Май',6=>'Июнь',
-                    7=>'Июль',8=>'Август',9=>'Сентябрь',10=>'Октябрь',11=>'Ноябрь',12=>'Декабрь'
-                ] as $num => $name)
+                @foreach([1=>'Январь',2=>'Февраль',3=>'Март',4=>'Апрель',5=>'Май',6=>'Июнь',
+                          7=>'Июль',8=>'Август',9=>'Сентябрь',10=>'Октябрь',11=>'Ноябрь',12=>'Декабрь'] as $num => $name)
                     <option value="{{ $num }}" {{ $selectedMonth==$num ? 'selected' : '' }}>{{ $name }}</option>
                 @endforeach
             </select>
@@ -58,41 +57,71 @@
     $hasResults = !empty($results);
 @endphp
 
-<table border="1" cellpadding="5" cellspacing="0" style="margin-top:20px; width:100%; border-collapse:collapse;">
-    <thead>
-        <tr>
-            <th>Клиент</th>
-            <th>Сумма продаж</th>
-            <th>Прибыль</th>
-        </tr>
-    </thead>
-    <tbody>
-        @forelse($results as $item)
-        <tr>
-            <td>{{ $item['client_name'] }}</td>
-            <td>{{ number_format($item['total_sum'], 2) }} ₽</td>
-            <td>{{ number_format($item['profit'], 2) }} ₽</td>
-        </tr>
-        @empty
-        <tr>
-            <td colspan="3">Нет данных за выбранный период</td>
-        </tr>
-        @endforelse
-    </tbody>
+@if(!$period)
+    <div style="margin-top:20px; padding:15px; background:#fffbcc; border:1px solid #ffe58f;">
+        Пожалуйста, выберите период, чтобы сформировать отчёт.
+    </div>
+@else
+
+<div style="margin-top:15px; padding:10px; background:#e8f4ff; border:1px solid #91d5ff;">
+        <strong>Выбранный период:</strong>
+        @switch($period)
+            @case('day')
+                {{ $selectedDate->translatedFormat('d F Y') }}
+                @break
+
+            @case('month')
+                {{ \Carbon\Carbon::create($selectedYear, $selectedMonth, 1)->translatedFormat('F Y') }}
+                @break
+
+            @case('year')
+                {{ $selectedYear }} год
+                @break
+
+            @case('range')
+                {{ optional($startDate)->format('d.m.Y') ?? '—' }}
+                — {{ optional($endDate)->format('d.m.Y') ?? '—' }}
+                @break
+        @endswitch
+    </div>
+    <table border="1" cellpadding="5" cellspacing="0" style="margin-top:20px; width:100%; border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>Клиент</th>
+                <th>Сумма продаж</th>
+                <th>Прибыль</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($results as $item)
+            <tr>
+                <td>{{ $item['client_name'] }}</td>
+                <td>{{ number_format($item['total_sum'], 2) }} ₽</td>
+                <td>{{ number_format($item['profit'], 2) }} ₽</td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="3">Нет данных за выбранный период</td>
+            </tr>
+            @endforelse
+        </tbody>
+        @if($hasResults)
+        <tfoot>
+            <tr style="font-weight:bold; background:#f2f2f2;">
+                <td>Итого</td>
+                <td>{{ number_format($grandTotal, 2) }} ₽</td>
+                <td>{{ number_format($grandProfit, 2) }} ₽</td>
+            </tr>
+        </tfoot>
+        @endif
+    </table>
+
     @if($hasResults)
-    <tfoot>
-        <tr style="font-weight:bold; background:#f2f2f2;">
-            <td>Итого</td>
-            <td>{{ number_format($grandTotal, 2) }} ₽</td>
-            <td>{{ number_format($grandProfit, 2) }} ₽</td>
-        </tr>
-    </tfoot>
+        <h2 style="margin-top:30px;">График продаж по клиентам</h2>
+        <canvas id="salesChart" height="120"></canvas>
     @endif
-</table>
-@if($hasResults)
-    <h2 style="margin-top:30px;">График продаж по клиентам</h2>
-    <canvas id="salesChart" height="120"></canvas>
 @endif
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const periodSelect = document.getElementById('period-select');
@@ -103,7 +132,7 @@ const monthYearSelects = document.getElementById('month-year-selects');
 const yearSelect = document.getElementById('year-select');
 
 periodSelect.addEventListener('change', () => {
-    if(periodSelect.value==='range') {
+    if(!periodSelect.value || periodSelect.value==='range') {
         dateControls.style.display = 'none';
     } else {
         dateControls.style.display = 'inline';
@@ -115,7 +144,7 @@ periodSelect.addEventListener('change', () => {
 });
 
 @if($hasResults)
-// Prepare data from Laravel
+// Chart.js данные
 const clients = @json(array_column($results, 'client_name'));
 const sales = @json(array_column($results, 'total_sum'));
 const profit = @json(array_column($results, 'profit'));
@@ -145,13 +174,8 @@ new Chart(ctx, {
     options: {
         responsive: true,
         plugins: {
-            legend: {
-                position: 'top'
-            },
-            title: {
-                display: true,
-                text: 'Продажи и прибыль по клиентам'
-            }
+            legend: { position: 'top' },
+            title: { display: true, text: 'Продажи и прибыль по клиентам' }
         },
         scales: {
             y: {
@@ -166,28 +190,6 @@ new Chart(ctx, {
     }
 });
 @endif
-</script>
-
-
-<script>
-const periodSelect = document.getElementById('period-select');
-const dateControls = document.getElementById('date-controls');
-const dateInput = document.getElementById('date-input');
-const dateLabel = document.getElementById('date-label');
-const monthYearSelects = document.getElementById('month-year-selects');
-const yearSelect = document.getElementById('year-select');
-
-periodSelect.addEventListener('change', () => {
-    if(periodSelect.value==='range') {
-        dateControls.style.display = 'none';
-    } else {
-        dateControls.style.display = 'inline';
-        dateInput.style.display = (periodSelect.value==='day') ? 'inline-block' : 'none';
-        dateLabel.style.display = (periodSelect.value==='day') ? 'inline' : 'none';
-        monthYearSelects.style.display = (periodSelect.value==='month') ? 'inline' : 'none';
-        yearSelect.style.display = (periodSelect.value==='year') ? 'inline' : 'none';
-    }
-});
 </script>
 
 <style>
