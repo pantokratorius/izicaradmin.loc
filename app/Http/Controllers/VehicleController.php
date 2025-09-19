@@ -93,15 +93,26 @@ class VehicleController extends Controller
         'year_of_manufacture' => 'integer|nullable',
     ]);
 
-
+        $previousUrl = url()->previous();
+        $previousRoute = app('router')->getRoutes()->match(app('request')->create($previousUrl));
+        if($previousRoute->getName() == 'vehicles.edit'){
            try {
             $vehicle->update($request->all());
             return redirect()->route('vehicles.index')->with('success', 'Транспортное средство обновлено');
 
-        } catch (\Throwable $th) {
-            return redirect()->route('vehicles.index')->with('error', 'Транспортное средство не обновлено');
-        }
+            } catch (\Throwable $th) {
+                return redirect()->route('vehicles.index')->with('error', 'Транспортное средство не обновлено');
+            }
+        }else {
+            try {
+            $vehicle->update($request->all());
+            return redirect()->back()->with('success', 'Транспортное средство обновлено');
 
+            } catch (\Throwable $th) {
+                return redirect()->back()->with('error', 'Транспортное средство не обновлено');
+            }
+        }
+        
 
     }
 

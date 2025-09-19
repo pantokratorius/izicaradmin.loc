@@ -110,6 +110,7 @@
                         <th>Бренд</th>
                         <th>Модель</th>
                         <th>Поколение</th>
+                        <th>Серия</th>
                         <th>Кузов</th>
                         <th>Модификация</th>
                         <th>Гос номер</th>
@@ -126,8 +127,9 @@
                             <td onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vin }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->brand->name ?? $vehicle->brand_name }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->model->name ?? '-'}}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->generation->name ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->model->name ?? $vehicle->model_name ?? '-'}}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->generation->name ?? $vehicle->generation_name ?? '-' }}</td>
+                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->serie->name ?? $vehicle->serie_name ?? '-' }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->body ?? '-' }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->modification->name ?? '-' }}</td>
                             <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->registration_number ?? '-' }}</td>
@@ -250,8 +252,8 @@
               <input type="hidden" name="client_id" value="{{ $client->id }}">
               @php
                   $fields = [
-                      'vin'=>'VIN','vehicle_type'=>'Тип транспортного средства','brand'=>'Бренд','model'=>'Модель',
-                      'generation'=>'Поколение','body'=>'Кузов','modification'=>'Модификация',
+                      'vin'=>'VIN','vehicle_type'=>'Тип транспортного средства',
+                      'body'=>'Кузов', 
                       'registration_number'=>'Гос номер','sts'=>'СТС','pts'=>'ПТС',
                       'year_of_manufacture'=>'Год','engine_type'=>'Тип двигателя'
                   ];
@@ -297,16 +299,46 @@
     </div>
 </div>
 
+    @php
+        $accordionOpen = $vehicle->brand_name || $vehicle->model_name || $vehicle->generation_name || $vehicle->serie_name || $vehicle->modification_name;
+    @endphp
 
+  <div class="accordion">
+    <button type="button" class="accordion-toggle">Показать/Скрыть для внесения вручную</button>
+    <div class="accordion-content" style="display: {{ $accordionOpen ? 'block' : 'none' }}; margin-top:10px;">
+<div style="margin-bottom:10px;">
+    <label>Марка</label>
+    <input type="text" name="brand_name" id="vehicle_brand_name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;background: #dbdbdb;">
+</div>
 
+<div style="margin-bottom:10px;">
+    <label>Модель</label>
+    <input type="text" name="model_name" id="vehicle_model_name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;background: #dbdbdb;">
+</div>
 
+<div style="margin-bottom:10px;">
+    <label>Поколение</label>
+    <input type="text" name="generation_name" id="vehicle_generation_name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;background: #dbdbdb;">
+</div>
 
+<div style="margin-bottom:10px;">
+    <label>Серия</label>
+    <input type="text" name="serie_name" id="vehicle_serie_name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;background: #dbdbdb;">
+</div>
 
+<div style="margin-bottom:10px;">
+    <label>Модификация</label>
+    <input type="text" name="modification_name" id="vehicle_modification_name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;background: #dbdbdb;">
+</div>
+
+    </div>
+</div>
 
               @foreach($fields as $name => $label)
                   <div style="margin-bottom:10px;">
                       <label>{{ $label }}</label>
-                      <input type="text" name="{{ $name }}" id="vehicle_{{ $name }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                      <input type="text" name="{{ $name }}" id="vehicle_{{ $name }}" 
+                      style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
                   </div>
               @endforeach
               <button type="submit" class="btn" style="color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Сохранить</button>
@@ -408,7 +440,20 @@
     </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.querySelector(".accordion-toggle");
+    const content = document.querySelector(".accordion-content");
 
+    toggleBtn.addEventListener("click", () => {
+        if (content.style.display === "none") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+        }
+    });
+});
+</script>
 <script>
 function openPrint(select, orderId) {
     if (select.value) {
@@ -782,7 +827,7 @@ toggleBtn.addEventListener('click', () => {
 </script>
 
 <style>
-.accordion-content {
+/* .accordion-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s ease, padding 0.3s ease;
@@ -791,7 +836,7 @@ toggleBtn.addEventListener('click', () => {
 .accordion-content.open {
     padding: 10px 0;
     max-height: 500px; /* достаточно большое значение */
-}
+} */
 
 
 #clientFormContainer {
@@ -837,6 +882,21 @@ toggleBtn.addEventListener('click', () => {
     background-color: #5a6268;
     border-color: #545b62;
 }
+</style>
+<style>
+.accordion-toggle {
+    background: #2d89ef;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.accordion-toggle:hover {
+    background: #1b5fbd;
+}
+.accordion-content .form-group { margin-bottom: 10px; }
 </style>
 
 @endsection

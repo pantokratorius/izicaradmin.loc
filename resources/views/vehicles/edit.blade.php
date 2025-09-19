@@ -56,6 +56,36 @@
         </select>
     </div>
 
+    @php
+        $accordionOpen = $vehicle->brand_name || $vehicle->model_name || $vehicle->generation_name || $vehicle->serie_name || $vehicle->modification_name;
+    @endphp
+
+    <div class="accordion">
+    <button type="button" class="accordion-toggle">Показать/Скрыть для внесения вручную</button>
+    <div class="accordion-content" style="display: {{ $accordionOpen ? 'block' : 'none' }}; margin-top:10px;">
+        <div class="form-group">
+            <label for="brand_name">Марка</label>
+            <input type="text" id="brand_name" name="brand_name" value="{{ $vehicle->brand_name }}" style="background: #dbdbdb"/>
+        </div>
+        <div class="form-group">
+            <label for="model_name">Модель</label>
+            <input type="text" id="model_name" name="model_name" value="{{ $vehicle->model_name }}" style="background: #dbdbdb"/>
+        </div>
+        <div class="form-group">
+            <label for="generation_name">Поколение</label>
+            <input type="text" id="generation_name" name="generation_name" value="{{ $vehicle->generation_name }}" style="background: #dbdbdb"/>
+        </div>
+        <div class="form-group">
+            <label for="serie_name">Серия</label>
+            <input type="text" id="serie_name" name="serie_name" value="{{ $vehicle->serie_name }}" style="background: #dbdbdb"/>
+        </div>
+        <div class="form-group">
+            <label for="modification_name">Модификация</label>
+            <input type="text" id="modification_name" name="modification_name" value="{{ $vehicle->modification_name }}" style="background: #dbdbdb"/>
+        </div>
+    </div>
+</div>
+
     <!-- VIN -->
     <div class="form-group">
         <label for="vin">VIN</label>
@@ -115,8 +145,41 @@ select, input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius
 button { padding: 10px 20px; background: #2d89ef; color: white; border: none; border-radius: 4px; cursor: pointer; }
 button:hover { background: #1b5fbd; }
 </style>
+<style>
+.accordion-toggle {
+    background: #2d89ef;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.accordion-toggle:hover {
+    background: #1b5fbd;
+}
+.accordion-content .form-group { margin-bottom: 10px; }
+</style>
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.querySelector(".accordion-toggle");
+    const content = document.querySelector(".accordion-content");
+
+    toggleBtn.addEventListener("click", () => {
+        if (content.style.display === "none") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+        }
+    });
+});
+</script>
+
+
+<script>
+
+    
 document.addEventListener("DOMContentLoaded", function () {
 
     const brand = document.getElementById("car_brand_id");
