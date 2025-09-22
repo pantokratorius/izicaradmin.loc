@@ -70,8 +70,10 @@
         <li>
           <a href="{{route('reports.index')}}"><img src="{{asset('storage/svg/reports.svg') }}" /> Отчеты</a>  
         </li>
+        <li>
+          <a href="{{route('stocks.index')}}"><img src="{{asset('storage/svg/reports.svg') }}" /> Склад</a>  
+        </li>
         <li>Проценка</li>
-        <li>Склад</li>
         <li>Черновики</li>
         <li>Деньги</li>
         <li>Звонки</li>

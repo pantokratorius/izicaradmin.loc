@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_number')->unique();        // Номер заказа
+            $table->unsignedBigInteger('order_number')->nullable()->unique();        // Номер заказа
             // $table->decimal('amount', 10, 2)->nullable();               // Сумма заказа
             // $table->dateTime('created_at');                 // Дата создания
             $table->unsignedBigInteger('vehicle_id')->nullable(); // Автомобиль на который был заказ

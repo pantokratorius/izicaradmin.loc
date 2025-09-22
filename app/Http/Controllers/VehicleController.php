@@ -31,7 +31,7 @@ class VehicleController extends Controller
               ->orWhere('modification_name', 'like', "%{$search}%");
         });
     }
-    $vehicles = $query->orderBy('id', 'desc')->paginate(20);
+    $vehicles = $query->orderBy('id', 'desc')->paginate(20)->withQueryString();
 
     return view('vehicles.index', compact('vehicles'));
     }

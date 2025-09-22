@@ -28,7 +28,8 @@ public function index(Request $request)
         });
     }
 
-    $clients = $query->orderBy('id', 'desc')->paginate(20);
+    $clients = $query->orderBy('id', 'desc')->paginate(20)->withQueryString();
+
 
     return view('clients.index', compact('clients'));
 }
