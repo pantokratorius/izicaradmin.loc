@@ -17,30 +17,42 @@
             <th>Количество</th>
             <th>Цена продажи</th>
             <th>Склад</th>
-            <th>Действия</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach($stocks as $stock)
         <tr>
-            <td>{{ $stock->id }}</td>
-            <td>{{ $stock->name }}</td>
-            <td>{{ $stock->part_make }}</td>
-            <td>{{ $stock->part_number }}</td>
-            <td>{{ $stock->quantity }}</td>
-            <td>{{ $stock->sell_price }}</td>
-            <td>{{ $stock->warehouse }}</td>
-            <td>
-                <a href="{{ route('stocks.edit', $stock) }}">✏️</a>
+            <td class="edit">{{ $stock->id }}</td>
+            <td class="edit">{{ $stock->name }}</td>
+            <td class="edit">{{ $stock->part_make }}</td>
+            <td class="edit">{{ $stock->part_number }}</td>
+            <td class="edit">{{ $stock->quantity }}</td>
+            <td class="edit">{{ $stock->sell_price }}</td>
+            <td class="edit">{{ $stock->warehouse }}</td>
+            <td style="text-align: center">
+                <a style="display: none" href="{{ route('stocks.edit', $stock) }}">✏️</a>
                 <form action="{{ route('stocks.destroy', $stock) }}" method="POST" style="display:inline;">
                     @csrf @method('DELETE')
-                    <button type="submit" onclick="return confirm('Удалить?')">🗑</button>
+                    <button style="cursor: pointer" type="submit" onclick="return confirm('Удалить?')">🗑</button>
                 </form>
             </td>
         </tr>
+         @if($loop->last)
+        <script>
+            [...document.querySelectorAll('.edit')].forEach(i => {
+                i.addEventListener('click', function(){
+                    location='{{ route('stocks.edit', $stock) }}'
+                })
+            });
+        </script>
+        @endif
         @endforeach
     </tbody>
 </table>
 
 {{ $stocks->links() }}
+
+
+
 @endsection

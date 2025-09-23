@@ -71,7 +71,7 @@
           <a href="{{route('reports.index')}}"><img src="{{asset('storage/svg/reports.svg') }}" /> Отчеты</a>  
         </li>
         <li>
-          <a href="{{route('stocks.index')}}"><img src="{{asset('storage/svg/reports.svg') }}" /> Склад</a>  
+          <a href="{{route('stocks.index')}}"><img src="{{asset('storage/svg/stock.svg') }}" /> Склад</a>  
         </li>
         <li>Проценка</li>
         <li>Черновики</li>

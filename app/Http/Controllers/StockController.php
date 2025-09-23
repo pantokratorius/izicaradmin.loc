@@ -37,6 +37,10 @@ class StockController extends Controller
             'categories'      => 'nullable|string|max:255',
             'address_code'    => 'nullable|string|max:255',
             'address_name'    => 'nullable|string|max:255',
+        ], [
+            'name.required' => 'Поле "Название" обязательно для заполнения.',
+            'name.string'   => 'Название должно быть строкой.',
+            'name.max'      => 'Название не может превышать :max символов.',
         ]);
 
         Stock::create($data);
@@ -67,6 +71,10 @@ class StockController extends Controller
             'categories'      => 'nullable|string|max:255',
             'address_code'    => 'nullable|string|max:255',
             'address_name'    => 'nullable|string|max:255',
+        ], [
+            'name.required' => 'Поле "Название" обязательно для заполнения.',
+            'name.string'   => 'Название должно быть строкой.',
+            'name.max'      => 'Название не может превышать :max символов.',
         ]);
 
         $stock->update($data);
