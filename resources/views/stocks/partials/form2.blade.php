@@ -37,10 +37,7 @@ document.getElementById('searchButton').addEventListener('click', function(e){
                             supplierResult.data.forEach(item => {
                                 const tr = document.createElement('tr');
                                 tr.innerHTML = `
-                                    <td>${supplierResult.supplier}</td>
-                                    <td>${item.name ?? item.article}</td>
-                                    <td>${item.price ?? '-'}</td>
-                                    <td>${item.stock ?? '-'}</td>
+                                    <td>${item}</td>
                                     <td>Готово</td>
                                 `;
                                 tbody.appendChild(tr);
