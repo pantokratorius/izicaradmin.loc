@@ -1,71 +1,65 @@
 <table id="resultList"></table>
 
-<script async >
+<script>
 
     document.addEventListener('DOMContentLoaded', function(){
 
 
-
-const suppliers = [
-    { 
-        name: 'ABS', 
-        // api: 'https://abstd.ru/api-search?auth=3515fab2a59d5d51b91f297a8be3ad5f&with_cross=1&agreement_id=28415',
-        api: 'https://abstd.ru/api-brands?auth=3515fab2a59d5d51b91f297a8be3ad5f&format=json',
-        search: '&article=', 
-    },
-    // { name: 'Supplier B', api: '/api/supplier-b' },
-    // { name: 'Supplier C', api: '/api/supplier-c' },
-];
-
-function addItemRow(supplier) {
+document.getElementById('searchButton').addEventListener('click', function(e){
+    e.preventDefault();
+    const searchInput = document.getElementById('searchInput').value;
     const tbody = document.querySelector('#resultList');
-    const tr = document.createElement('tr');
-    tr.dataset.supplier = supplier.name;
+    tbody.innerHTML = '';
 
-    // Пока данные не пришли
-    tr.innerHTML = `
-        <td>${supplier.name}</td>
-        <td>–</td>
-        <td>–</td>
-        <td>–</td>
-        <td class="status">Загрузка...</td>
-    `;
+    fetch(`/api/supplier-search-stream?search=${encodeURIComponent(searchInput)}`)
+        .then(res => {
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = '';
 
-    tbody.appendChild(tr);
-    return tr;
-}
+            function read() {
+                reader.read().then(({ done, value }) => {
+                    if (done) return;
+                    buffer += decoder.decode(value, { stream: true });
 
-function updateRow(tr, data) {
-    tr.innerHTML = `
-        <td>${tr.dataset.supplier}</td>
-        <td>${data.product_name}</td>
-        <td>${data.price}</td>
-        <td>${data.stock}</td>
-        <td class="status">Готово</td>
-    `;
-}
+                    let lines = buffer.split("\n");
+                    buffer = lines.pop(); // последний кусок оставляем для следующего
 
-    document.getElementById('searchButton').addEventListener('click', function(e) {
-        e.preventDefault()
+                    lines.forEach(line => {
+                        if(!line.trim()) return;
+                        const supplierResult = JSON.parse(line);
 
-        document.querySelector('#resultList').innerHTML = ''
-        const searchInput = document.getElementById('searchInput').value;
+                        if (supplierResult.error) {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td>${supplierResult.supplier}</td><td colspan="4">Ошибка: ${supplierResult.error}</td>`;
+                            tbody.appendChild(tr);
+                        } else if (supplierResult.data && supplierResult.data.length > 0) {
+                            supplierResult.data.forEach(item => {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
+                                    <td>${supplierResult.supplier}</td>
+                                    <td>${item.name ?? item.article}</td>
+                                    <td>${item.price ?? '-'}</td>
+                                    <td>${item.stock ?? '-'}</td>
+                                    <td>Готово</td>
+                                `;
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td>${supplierResult.supplier}</td><td colspan="4">Нет результатов</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    });
 
-
-        suppliers.forEach(supplier => {
-            const row = addItemRow(supplier);
-
-            fetch(`${supplier.api}${supplier.search}${encodeURIComponent(searchInput)}`)
-                .then(res => res.json())
-                .then(data => {
-                    updateRow(row, data);
-                })
-                .catch(err => {
-                    row.querySelector('.status').textContent = 'Ошибка';
-                    console.error(`Ошибка у ${supplier.name}:`, err);
+                    read();
                 });
-        });
-    });
+            }
+
+            read();
+        })
+        .catch(err => console.error(err));
+});
 
 
 

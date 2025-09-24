@@ -12,6 +12,7 @@ use App\Http\Controllers\PartSearchController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\SupplierController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -54,8 +55,8 @@ Route::get('/reports/data', [ReportController::class, 'data'])->name('reports.da
 
 Route::post('/set-session', [ClientController::class, 'setSessionAjax'])->name('set.session');
 
-Route::get('/clients/search', [SearchController::class, 'clients'])->name('clients.search');
-Route::get('/vehicles/search', [SearchController::class, 'vehicles'])->name('vehicles.search');
+Route::get('/api/supplier-search-stream', [SupplierController::class, 'searchStream']);
+
 
 
 Route::get('/api/supplier1', [PartSearchController::class, 'supplier1']);
