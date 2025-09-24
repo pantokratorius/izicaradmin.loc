@@ -14,6 +14,11 @@ class SupplierController extends Controller
             [
                 'name' => 'ABS',
                 'api'  => 'https://abstd.ru/api-brands?auth=3515fab2a59d5d51b91f297a8be3ad5f&format=json&article=',
+                'api2'  => 'https://abstd.ru/api-search?auth=3515fab2a59d5d51b91f297a8be3ad5f&brand=knecht&with_cross=0&agreement_id=18003&show_unavailable=0&format=json&article=',
+            ],
+            [
+                'name' => 'BERG',
+                'api'  => 'https://api.berg.ru/references/brands.json?key=2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e730',
             ],
             // Добавьте других поставщиков
         ];
@@ -50,6 +55,57 @@ class SupplierController extends Controller
             curl_close($ch);
         }
     }
+
+
+
+     public function searchParts(Request $request)
+    {
+        $search = $request->query('search', '');
+        $brand = $request->query('brand', '');
+
+        $suppliers = [
+            [
+                'name' => 'ABS',
+                'api'  => 'https://abstd.ru/api-search?auth=3515fab2a59d5d51b91f297a8be3ad5f&brand=knecht&with_cross=0&agreement_id=18003&show_unavailable=0&format=json&article=',
+                'brand'  => '&brand=',
+            ],
+            // Добавьте других поставщиков
+        ];
+
+        header('Content-Type: application/json');
+
+        $results = [];
+
+        foreach ($suppliers as $supplier) {
+            $url = $supplier['api'] . urlencode($search) . $supplier['brand'] . urlencode($brand);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            $response = curl_exec($ch);
+
+            if (curl_errno($ch)) { 
+                echo json_encode([
+                    'supplier' => $supplier['name'],
+                    'error' => curl_error($ch),
+                ]) . "\n";
+            } else {
+
+                
+                $data = json_decode($response, true);
+                echo json_encode([
+                    'supplier' => $supplier['name'],
+                    'data' => $data ?? []
+                ]) . "\n";
+            }
+
+            flush(); // отправляем сразу клиенту
+            curl_close($ch);
+        }
+    }
+
+
 }
 
 
