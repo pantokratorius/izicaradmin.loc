@@ -7,6 +7,7 @@
 
 <form method="POST" action="{{ route('stocks.store') }}">
     @csrf
+    @include('stocks.partials.form2')
     @include('stocks.partials.form')
     <button type="submit" class="btn">Сохранить</button>
 </form>

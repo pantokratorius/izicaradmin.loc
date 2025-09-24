@@ -1,4 +1,10 @@
 <div class="form-group">
+    <label>Артикул</label>
+    <input type="text" id="searchInput"  style="width: 200px; margin-right: 10px" name="part_number" value="{{ old('part_number', $stock->part_number ?? '') }}">
+    <button type="submit" id="searchButton" class="btn">Поиск</button>
+</div>
+
+<div class="form-group">
     <label>Название</label>
     <input type="text" name="name" value="{{ old('name', $stock->name ?? '') }}">
 </div>
@@ -8,10 +14,6 @@
     <input type="text" name="part_make" value="{{ old('part_make', $stock->part_make ?? '') }}">
 </div>
 
-<div class="form-group">
-    <label>Артикул</label>
-    <input type="text" name="part_number" value="{{ old('part_number', $stock->part_number ?? '') }}">
-</div>
 
 <div class="form-group">
     <label>Количество</label>

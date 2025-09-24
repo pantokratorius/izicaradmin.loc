@@ -8,6 +8,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\PartSearchController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StockController;
@@ -55,6 +56,11 @@ Route::post('/set-session', [ClientController::class, 'setSessionAjax'])->name('
 
 Route::get('/clients/search', [SearchController::class, 'clients'])->name('clients.search');
 Route::get('/vehicles/search', [SearchController::class, 'vehicles'])->name('vehicles.search');
+
+
+Route::get('/api/supplier1', [PartSearchController::class, 'supplier1']);
+Route::get('/api/supplier2', [PartSearchController::class, 'supplier2']);
+
 
 
 Route::resource('stocks', StockController::class);
