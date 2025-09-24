@@ -30,7 +30,7 @@ class SupplierController extends Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_TIMEOUT, 10);
             $response = curl_exec($ch);
-var_dump($response); exit;
+
             if (curl_errno($ch)) { 
                 echo json_encode([
                     'supplier' => $supplier['name'],
