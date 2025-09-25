@@ -34,7 +34,16 @@ document.addEventListener('DOMContentLoaded', function(){
                             } else if (supplierResult.data && supplierResult.data.length > 0) {
                                 supplierResult.data.forEach(item => {
                                     const li = document.createElement('li');
-                                    li.textContent = item
+                                    li.textContent = supplierResult.supplier + ': ' + (item.name ?? item.article ?? 'Без названия');
+                                    li.dataset.api = item.api;   // сохраняем API или supplier_id
+                                    li.dataset.supplier = supplierResult.supplier;
+                                    li.style.cursor = 'pointer';
+
+                                    // клик для запроса запчастей
+                                    li.addEventListener('click', function() {
+                                        fetchPartsBySupplier(li.dataset.supplier, searchInput);
+                                    });
+
                                     ul.appendChild(li);
                                 });
                             } else {
@@ -52,6 +61,36 @@ document.addEventListener('DOMContentLoaded', function(){
             })
             .catch(err => console.error(err));
     });
+
+
+    function fetchPartsBySupplier(supplierName, article) {
+    const ul = document.querySelector('#resultList');
+    ul.innerHTML = `<li>Загрузка деталей от ${supplierName}...</li>`;
+
+    fetch(`/api/supplier-parts?supplier=${encodeURIComponent(supplierName)}&article=${encodeURIComponent(article)}`)
+        .then(res => res.json())
+        .then(data => {
+            ul.innerHTML = '';
+            if (data.length > 0) {
+                data.forEach(part => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<b>${part.name ?? part.article}</b> — ${part.price ?? '-'} ₽, наличие: ${part.stock ?? '-'}`;
+                    ul.appendChild(li);
+                });
+            } else {
+                ul.innerHTML = `<li>Нет результатов для ${supplierName}</li>`;
+            }
+        })
+        .catch(err => {
+            ul.innerHTML = `<li>Ошибка при запросе деталей у ${supplierName}: ${err}</li>`;
+        });
+}
+
+
+
+
+
+
 
 });
 </script>
