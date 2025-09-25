@@ -16,9 +16,13 @@ class SupplierController extends Controller
                 'api'  => 'https://abstd.ru/api-brands?auth=3515fab2a59d5d51b91f297a8be3ad5f&format=json&article=',
                 'api2'  => 'https://abstd.ru/api-search?auth=3515fab2a59d5d51b91f297a8be3ad5f&brand=knecht&with_cross=0&agreement_id=18003&show_unavailable=0&format=json&article=',
             ],
-            [
-                'name' => 'BERG',
-                'api'  => 'https://api.berg.ru/references/brands.json?key=a6320055ba39df841612509839e11ced99024809f1638af9ee1bfb6abd1d7fd5',
+            // [
+            //     'name' => 'BERG',
+            //     'api'  => 'https://api.berg.ru/references/brands.json?key=a6320055ba39df841612509839e11ced99024809f1638af9ee1bfb6abd1d7fd5',
+            // ],
+             [
+                'name' => 'Moskvorechje',
+                'api'  => 'http://portal.moskvorechie.ru/v1/search/brands?l=izicar&p=2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g&search_oe=1&search_ref=0&search_trade=1&search_ean=0&nsn=1&avail=18&nr=',
             ],
             // Добавьте других поставщиков
         ];
@@ -71,10 +75,7 @@ class SupplierController extends Controller
                 'name' => 'BERG',
                 'api'  => 'https://api.berg.ru/references/brands.json?key=a6320055ba39df841612509839e11ced99024809f1638af9ee1bfb6abd1d7fd5',
             ],
-            [
-                'name' => 'Moskvorechje',
-                'api'  => 'http://portal.moskvorechie.ru/v1/search/brands?l=izicar&p=2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g&search_oe=1&search_ref=0&search_trade=1&search_ean=0&nsn=1&avail=18&nr=',
-            ],
+           
             // Добавьте других поставщиков
         ];
 
