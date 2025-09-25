@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             } else if (supplierResult.data && supplierResult.data.length > 0) {
                                 supplierResult.data.forEach(item => {
                                     const li = document.createElement('li');
-                                    li.textContent = ${item}
+                                    li.textContent = item
                                     ul.appendChild(li);
                                 });
                             } else {
