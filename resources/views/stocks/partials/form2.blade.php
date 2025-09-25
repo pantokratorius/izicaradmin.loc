@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             } else if (supplierResult.data && supplierResult.data.length > 0) {
                                 supplierResult.data.forEach(item => {
                                     const li = document.createElement('li');
-                                    li.textContent = supplierResult.supplier + ': ' + (item.name ?? item.article ?? 'Без названия');
+                                    li.textContent = item;
                                     li.dataset.api = item.api;   // сохраняем API или supplier_id
                                     li.dataset.supplier = supplierResult.supplier;
                                     li.style.cursor = 'pointer';
