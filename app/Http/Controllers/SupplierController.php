@@ -30,11 +30,11 @@ class SupplierController extends Controller
             // Добавьте других поставщиков
         ];
 
-        header('Content-Type: application/json');
-
+        
         $results = [];
-
+        
         foreach ($suppliers as $supplier) {
+            header('Content-Type: application/json');
             $url = $supplier['api'] . urlencode($search);
 
             $ch = curl_init();
