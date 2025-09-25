@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function(){
                                 });
                             } else {
                                 const li = document.createElement('li');
-                                li.textContent = `${supplierResult.supplier}: Нет результатов`;
+                                li.textContent = `<b>${supplierResult.supplier}</b>: Нет результатов`;
                                 ul.appendChild(li);
                             }
                         });
