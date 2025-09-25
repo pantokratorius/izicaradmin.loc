@@ -53,7 +53,7 @@ class SupplierController extends Controller
                 $data = json_decode($response, true);
 
                 if(!empty($supplier['item'])){ 
-print_r($data);  exit;
+var_dump($data);  exit;
                     print_r($data[$supplier['item'][0]]); 
                     exit;
 
