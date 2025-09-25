@@ -18,7 +18,7 @@ class SupplierController extends Controller
             ],
             [
                 'name' => 'BERG',
-                'api'  => 'https://api.berg.ru/references/brands.json?key=2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e730',
+                'api'  => 'https://api.berg.ru/references/brands.json?key=a6320055ba39df841612509839e11ced99024809f1638af9ee1bfb6abd1d7fd5',
             ],
             // Добавьте других поставщиков
         ];
@@ -68,6 +68,10 @@ class SupplierController extends Controller
                 'name' => 'ABS',
                 'api'  => 'https://abstd.ru/api-search?auth=3515fab2a59d5d51b91f297a8be3ad5f&brand=knecht&with_cross=0&agreement_id=18003&show_unavailable=0&format=json&article=',
                 'brand'  => '&brand=',
+            ],
+            [
+                'name' => 'BERG',
+                'api'  => 'https://api.berg.ru/references/brands.json?key=a6320055ba39df841612509839e11ced99024809f1638af9ee1bfb6abd1d7fd5',
             ],
             // Добавьте других поставщиков
         ];
