@@ -51,9 +51,9 @@ class SupplierController extends Controller
             } else {
         
                 $data = json_decode($response, true);
-print_r($data);  exit;
-                if(!empty($supplier['item'])){ 
 
+                if(!empty($supplier['item'])){ 
+print_r($data);  exit;
                     print_r($data[$supplier['item'][0]]); 
                     exit;
 
