@@ -20,12 +20,13 @@ class SupplierController extends Controller
             //     'name' => 'BERG',
             //     'api'  => 'https://api.berg.ru/references/brands.json?key=a6320055ba39df841612509839e11ced99024809f1638af9ee1bfb6abd1d7fd5',
             // ],
-             [
-                'name' => 'Moskvorechje',
-                'api'  => 'http://portal.moskvorechie.ru/portal.api?l=izicar&p=2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g&act=brand_by_nr&alt&name&nr=',
-            //     'api'  => 'https://portal.moskvorechie.ru/v1/search/brands?l=izicar&p=2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g&search_oe=1&search_ref=0&search_trade=1&search_ean=0&nsn=1&avail=18&nr=',
-            //     'api'  => 'https://api.moskvorechie.ru/v1/search/brands?search_oe=1&search_ref=0&search_trade=1&search_ean=0&nsn=1&avail=1&number=RN1713&number=AMD.FL723',
-            ],
+            //  [
+            //     'name' => 'Moskvorechje',
+            //     'api'  => 'http://portal.moskvorechie.ru/portal.api?l=izicar&p=2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g&act=brand_by_nr&alt&name&nr=',
+            //     'item'  => ['result','brand'],
+            // //     'api'  => 'https://portal.moskvorechie.ru/v1/search/brands?l=izicar&p=2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g&search_oe=1&search_ref=0&search_trade=1&search_ean=0&nsn=1&avail=18&nr=',
+            // //     'api'  => 'https://api.moskvorechie.ru/v1/search/brands?search_oe=1&search_ref=0&search_trade=1&search_ean=0&nsn=1&avail=1&number=RN1713&number=AMD.FL723',
+            // ],
             // Добавьте других поставщиков
         ];
 
@@ -48,12 +49,23 @@ class SupplierController extends Controller
                     'error' => curl_error($ch),
                 ]) . "\n";
             } else {
-
-                
+        
                 $data = json_decode($response, true);
+print_r($response); 
+                    exit;
+                if(!empty($supplier['item'])){ 
+
+                    print_r($data[$supplier['item'][0]]); 
+                    exit;
+
+                    foreach($data[$supplier['item'][0]] as $v){
+                        $data2[] = $v[$supplier['item'][1]];
+                    }
+                }
+                
                 echo json_encode([
                     'supplier' => $supplier['name'],
-                    'data' => $data ?? []
+                    'data' => $data2 ?? $data ?? []
                 ]) . "\n";
             }
 
