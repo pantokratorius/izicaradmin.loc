@@ -56,6 +56,7 @@ Route::get('/reports/data', [ReportController::class, 'data'])->name('reports.da
 Route::post('/set-session', [ClientController::class, 'setSessionAjax'])->name('set.session');
 
 Route::get('/api/supplier-search-stream', [SupplierController::class, 'searchStream']);
+Route::get('/api/supplier-parts', [SupplierController::class, 'getParts']);
 
 
 
