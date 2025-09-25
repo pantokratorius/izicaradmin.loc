@@ -14,7 +14,7 @@ class SupplierController extends Controller
             [
                 'name' => 'ABS',
                 'api'  => 'https://abstd.ru/api-brands?auth=3515fab2a59d5d51b91f297a8be3ad5f&format=json&article=',
-                'api2'  => 'https://abstd.ru/api-search?auth=3515fab2a59d5d51b91f297a8be3ad5f&brand=knecht&with_cross=0&agreement_id=18003&show_unavailable=0&format=json&article=',
+                // 'api2'  => 'https://abstd.ru/api-search?auth=3515fab2a59d5d51b91f297a8be3ad5f&brand=knecht&with_cross=0&agreement_id=18003&show_unavailable=0&format=json&article=',
             ],
             // [
             //     'name' => 'BERG',
@@ -22,7 +22,9 @@ class SupplierController extends Controller
             // ],
              [
                 'name' => 'Moskvorechje',
-                'api'  => 'http://portal.moskvorechie.ru/v1/search/brands?l=izicar&p=2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g&search_oe=1&search_ref=0&search_trade=1&search_ean=0&nsn=1&avail=18&nr=',
+                'api'  => 'http://portal.moskvorechie.ru/portal.api?l=izicar&p=2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g&act=brand_by_nr&alt&name&nr=',
+            //     'api'  => 'https://portal.moskvorechie.ru/v1/search/brands?l=izicar&p=2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g&search_oe=1&search_ref=0&search_trade=1&search_ean=0&nsn=1&avail=18&nr=',
+            //     'api'  => 'https://api.moskvorechie.ru/v1/search/brands?search_oe=1&search_ref=0&search_trade=1&search_ean=0&nsn=1&avail=1&number=RN1713&number=AMD.FL723',
             ],
             // Добавьте других поставщиков
         ];
