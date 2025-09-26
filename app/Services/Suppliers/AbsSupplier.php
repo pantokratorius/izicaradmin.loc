@@ -20,10 +20,10 @@ class AbsSupplier implements SupplierInterface
             ],
         ])->then(function ($response) {
             $json = json_decode($response->getBody()->getContents(), true);
- print_r($json); exit;
-            return collect($json['results'] ?? [])->map(function ($item) {
+ 
+            return collect($json ?? [])->map(function ($item) {
                 return [
-                    'name'       => $item ?? '',
+                    'name'  => $item ?? '',
                 ];
             })->toArray();
         });
