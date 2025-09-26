@@ -8,6 +8,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\PartController;
 use App\Http\Controllers\PartSearchController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
@@ -60,8 +61,7 @@ Route::get('/api/supplier-parts', [SupplierController::class, 'getParts']);
 
 
 
-Route::get('/api/supplier1', [PartSearchController::class, 'supplier1']);
-Route::get('/api/supplier2', [PartSearchController::class, 'supplier2']);
+Route::get('/api/parts', [PartController::class, 'streamParts']);
 
 
 
