@@ -18,9 +18,9 @@ class AbsSupplier implements SupplierInterface
                 'auth'   => '3515fab2a59d5d51b91f297a8be3ad5f',
                 'article'=> $article,
             ],
-        ])->then(function ($response) { print_r($response); exit;
+        ])->then(function ($response) {
             $json = json_decode($response->getBody()->getContents(), true);
-
+ print_r($json); exit;
             return collect($json['results'] ?? [])->map(function ($item) {
                 return [
                     'name'       => $item ?? '',
