@@ -61,7 +61,9 @@ Route::get('/api/supplier-parts', [SupplierController::class, 'getParts']);
 
 
 
-Route::get('/api/parts', [PartController::class, 'streamParts']);
+Route::get('/api/brands', [PartController::class, 'streamBrands']);
+
+Route::get('/api/items', [PartController::class, 'streamItems']);
 
 
 
