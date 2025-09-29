@@ -20,7 +20,10 @@ class AbsSupplier implements SupplierInterface
             ],
         ])->then(function ($response) {
             $json = json_decode($response->getBody()->getContents(), true);
- 
+
+            if (!is_array($json)) {
+                return [];
+            }
             return collect($json ?? [])->map(function ($item) {
                 return [
                     'part_make'  => $item ?? '',
@@ -37,13 +40,17 @@ class AbsSupplier implements SupplierInterface
                 'auth'   => '3515fab2a59d5d51b91f297a8be3ad5f',
                 'article'=> $article,
                 'brand'=> $brand,
+                'with_cross'=> 1,
+                'format' => 'json',
             ],
         ])->then(function ($response) {
             $json = json_decode($response->getBody()->getContents(), true);
- 
+            if (!is_array($json)) {
+                return [];
+            }
+
             return collect($json ?? [])->map(function ($item) {
                 return [
-
                      'name'        => $item['product_name'],
                     'part_make'   => $item['brand'],
                     'part_number' => $item['article'],
