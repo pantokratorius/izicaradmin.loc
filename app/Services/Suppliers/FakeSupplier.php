@@ -12,7 +12,23 @@ class FakeSupplier implements SupplierInterface
         return 'FakeSupplier';
     }
 
-    public function asyncSearch(Client $client, string $article): PromiseInterface
+    public function asyncSearchBrands(Client $client, string $article): PromiseInterface
+    {
+        // Pretend we make an API call, but just return a static response
+        $results = [
+            [
+                'part_make'   => 'FAKE-BRAND',
+            ],
+            [
+                'part_make'   => 'FAKE-BRAND-2',
+            ],
+        ];
+
+        // Immediately resolve the promise with fake data
+        return new FulfilledPromise($results);
+    }
+
+    public function asyncSearchItems(Client $client, string $article, ?string $brand = null): PromiseInterface
     {
         // Pretend we make an API call, but just return a static response
         $results = [
@@ -37,4 +53,6 @@ class FakeSupplier implements SupplierInterface
         // Immediately resolve the promise with fake data
         return new FulfilledPromise($results);
     }
+
+
 }

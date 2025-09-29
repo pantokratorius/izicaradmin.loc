@@ -11,7 +11,26 @@ class AbsSupplier implements SupplierInterface
         return 'ABS';
     }
 
-    public function asyncSearch(Client $client, string $article): PromiseInterface
+    public function asyncSearchBrands(Client $client, string $article): PromiseInterface
+    {
+        return $client->getAsync("https://abstd.ru/api-brands", [
+            'query' => [
+                'auth'   => '3515fab2a59d5d51b91f297a8be3ad5f',
+                'article'=> $article,
+            ],
+        ])->then(function ($response) {
+            $json = json_decode($response->getBody()->getContents(), true);
+ 
+            return collect($json ?? [])->map(function ($item) {
+                return [
+                    'part_make'  => $item ?? '',
+                ];
+            })->toArray();
+        });
+    }
+
+
+    public function asyncSearchItems(Client $client, string $article, ?string $brand = null): PromiseInterface
     {
         return $client->getAsync("https://abstd.ru/api-brands", [
             'query' => [

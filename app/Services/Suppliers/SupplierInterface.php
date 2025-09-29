@@ -2,11 +2,11 @@
 namespace App\Services\Suppliers;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Promise\PromiseInterface;
 
 interface SupplierInterface
 {
-    public function asyncSearch(Client $client, string $article): PromiseInterface;
+    public function asyncSearchBrands(Client $client, string $article);
+    public function asyncSearchItems(Client $client, string $article, ?string $brand = null);
     public function getName(): string;
 }
 

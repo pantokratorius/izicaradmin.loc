@@ -18,7 +18,7 @@ class PartController extends Controller
     $promises = [];
 
     foreach ($suppliers as $supplier) {
-        $promises[] = $supplier->asyncSearch($client, $article)
+        $promises[] = $supplier->asyncSearchBrands($client, $article)
             ->then(function ($results) use ($supplier) {
                 $brands = collect($results)->pluck('part_make')->filter()->unique()->values();
                 echo "event: {$supplier->getName()}\n";
@@ -51,7 +51,7 @@ class PartController extends Controller
         $promises = [];
 
         foreach ($suppliers as $supplier) {
-            $promises[] = $supplier->asyncSearch($client, $article)
+            $promises[] = $supplier->asyncSearchItems($client, $article, $brand)
                 ->then(function ($results) use ($supplier, $brand) {
                     // filter by brand
                     $filtered = collect($results)->filter(fn($r) => $r['part_make'] === $brand)->values();
