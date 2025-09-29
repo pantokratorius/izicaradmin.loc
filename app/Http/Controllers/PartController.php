@@ -52,11 +52,10 @@ class PartController extends Controller
 
         foreach ($suppliers as $supplier) {
             $promises[] = $supplier->asyncSearchItems($client, $article, $brand)
-                ->then(function ($results) use ($supplier, $brand) {
+                ->then(function ($results) use ($supplier) {
                     // filter by brand
-                    $filtered = collect($results)->filter(fn($r) => $r['part_make'] === $brand)->values();
-                    echo "event: {$supplier->getName()}\n";
-                    echo "data: " . json_encode($filtered) . "\n\n";
+                     echo "event: {$supplier->getName()}\n";
+                    echo "data: " . json_encode($results) . "\n\n";
                     ob_flush();
                     flush();
                 });
