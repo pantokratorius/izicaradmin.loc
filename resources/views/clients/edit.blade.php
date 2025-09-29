@@ -658,7 +658,7 @@ async function fillVehicleSelects(vehicle) {
 }
 
 // Vehicle modal open for edit or add
-async function openVehicleModal(vehicle = null) { console.log(vehicle);
+async function openVehicleModal(vehicle = null) { 
 
     const form = document.getElementById('vehicleForm');
 
@@ -802,7 +802,7 @@ function openOrderModal(order = null) {
       }
   }, 2000);
 
-function toggleItems(orderId) {
+function toggleItems(orderId) { 
 
 window.location.href = "{{ route('orders.show', ':id') }}".replace(':id', orderId);
 
@@ -841,7 +841,7 @@ toggleBtn.addEventListener('click', () => {
 }
 .accordion-content.open {
     padding: 10px 0;
-    max-height: 500px; /* достаточно большое значение */
+    max-height: 500px; /* достаточно большое значение 
 } */
 
 

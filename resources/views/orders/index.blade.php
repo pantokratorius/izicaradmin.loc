@@ -42,6 +42,7 @@
         <th>Автомобиль</th>
         <th>Менеджер</th>
         <th>Пробег</th>
+        <th style="width: 50px"></th>
         </tr>
       </thead>
       <tbody>
@@ -57,6 +58,24 @@
             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle?->brand?->name ??  $order->vehicle?->brand_name .' '. $order->vehicle?->model?->name  ?? $order->vehicle?->model_name }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
+            <td style="display: flex; align-items: center; justify-content: center">
+                      <a href="{{ route('orders.copy', $order->id) }}" 
+                        class="btn btn-secondary"
+                        onclick="return confirm('Скопировать этот заказ?')">
+                        📄
+                    </a>
+                <button  onclick="openOrderModal({{ $order->id }})"
+                            style="btn btn-sm btn-warning; margin: 0 5px; cursor: pointer">
+                        ✏
+                    </button>
+            <form
+                  action="{{ route('orders.destroy', $order->id) }}"
+                  method="POST" style="">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="if(!confirm('Удалить заказ?')) return false" style="btn btn-sm btn-danger; cursor: pointer">🗑</button>
+                </form>
+            </td>
         </tr>
         @empty
           <tr>
@@ -69,18 +88,30 @@
 <x-pagination :paginator="$orders" />
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const rows = document.querySelectorAll('.order-row');
 
-        rows.forEach(row => {
-            row.addEventListener('click', function() {
-                const orderId = this.dataset.id;
-                // Open order edit page
-                window.location.href = `/orders/${orderId}/edit`;
-            });
-        });
-    });
+function toggleItems(orderId) { 
+  window.location.href = "{{ route('orders.show', ':id') }}".replace(':id', orderId);
+}
+
+function openOrderModal(orderId) {
+  window.location.href = "{{ route('orders.edit', ':id') }}".replace(':id', orderId);
+}
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const rows = document.querySelectorAll('.order-row');
+
+    //     rows.forEach(row => {
+    //         row.addEventListener('click', function() {
+    //             const orderId = this.dataset.id;
+    //             // Open order edit page
+    //             window.location.href = `/orders/${orderId}/edit`;
+    //         });
+    //     });
+    // });
 </script>
+<style>
+  .btn { padding: 5px 10px; background: #14213d; color: #fff; border-radius: 4px; text-decoration: none; margin-right: 0px; display: inline-block; }
+</style>
 
 
 @endsection

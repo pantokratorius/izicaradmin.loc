@@ -16,7 +16,7 @@ class VehicleController extends Controller
 {
     public function index(Request $request)
     { 
-        $query = DB::table('vehicles');
+        $query = Vehicle::with(['brand', 'model', 'generation', 'serie', 'modification', 'client']);
     //     $vehicles = Vehicle::with(['brand', 'model', 'generation', 'modification'])
     //     ->orderBy('id', 'desc')
     // ->paginate(20);

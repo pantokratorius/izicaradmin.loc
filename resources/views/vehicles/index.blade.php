@@ -41,11 +41,13 @@
         <th>Серия</th>
         <th>Кузов</th>
         <th>Модификация</th>
+        <th>Вин</th>
           <th>Гос номер</th>
         <th>СТС</th>
         <th>ПТС</th>
         <th>Год</th>
         <th>Тип двигателя</th>
+        <th></th>
         </tr>
       </thead>
       <tbody>
@@ -60,11 +62,19 @@
             <td>{{ $vehicle->serie->name ?? $vehicle->serie_name ?? '-' }}</td>
             <td>{{ $vehicle->body ?? '-' }}</td>
             <td>{{ $vehicle->modification->name ??  $vehicle->modification_name ?? '-' }}</td>
+            <td>{{ $vehicle->vin ??  '-' }}</td>
             <td>{{ $vehicle->registration_number ?? '-' }}</td>
             <td>{{ $vehicle->sts ?? '-' }}</td>
             <td>{{ $vehicle->pts ?? '-' }}</td>
             <td>{{ $vehicle->year_of_manufacture }}</td>
             <td>{{ $vehicle->engine_type }}</td>
+            <td><form
+                  action="{{ route('vehicles.destroy', $vehicle->id) }}"
+                  method="POST" style="">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="if(!confirm('Удалить автомобиль?')) return false" style="btn btn-sm btn-danger; cursor: pointer">🗑</button>
+                </form></td>
         </tr>
         @empty
           <tr>
