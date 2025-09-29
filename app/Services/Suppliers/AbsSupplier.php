@@ -32,10 +32,11 @@ class AbsSupplier implements SupplierInterface
 
     public function asyncSearchItems(Client $client, string $article, ?string $brand = null): PromiseInterface
     {
-        return $client->getAsync("https://abstd.ru/api-brands", [
+        return $client->getAsync("https://abstd.ru/api-search", [
             'query' => [
                 'auth'   => '3515fab2a59d5d51b91f297a8be3ad5f',
                 'article'=> $article,
+                'brand'=> $brand,
             ],
         ])->then(function ($response) {
             $json = json_decode($response->getBody()->getContents(), true);
