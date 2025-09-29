@@ -46,18 +46,19 @@ class AbsSupplier implements SupplierInterface
             ],
         ])->then(function ($response) {
             $json = json_decode($response->getBody()->getContents(), true);
-            if (!is_array($json)) {
+            
+            if (!is_array($json) || !isset($json['data']) || !is_array($json['data'])) {
                 return [];
             }
 
-            return collect($json ?? [])->map(function ($item) { 
+            return collect($json['data'] ?? [])->map(function ($item) { 
                 return [
-                     'name'        => $item['data']['product_name'] ?? null,
-                    'part_make'   => $item['data']['brand'] ?? null,
-                    'part_number' => $item['data']['article'] ?? null,
-                    'quantity'    => $item['data']['quantity'] ?? null,
-                    'price'       => $item['data']['price'] ?? null,
-                    'warehouse'   => $item['data']['warehouse_name'] ?? null,
+                     'name'        => $item['product_name'] ?? null,
+                    'part_make'   => $item['brand'] ?? null,
+                    'part_number' => $item['article'] ?? null,
+                    'quantity'    => $item['quantity'] ?? null,
+                    'price'       => $item['price'] ?? null,
+                    'warehouse'   => $item['warehouse_name'] ?? null,
                 ];
             })->toArray();
         });
