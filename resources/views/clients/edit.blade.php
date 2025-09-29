@@ -213,6 +213,12 @@
                                 <div style="display: flex; align-items: flex-start">
                       
                   @if(!$allOrders->isEmpty())
+                  <a href="{{ route('orders.copy', $order->id) }}" 
+                        class="btn btn-secondary"
+                        onclick="return confirm('Скопировать этот заказ?')">
+                        📄
+                    </a>
+
                     <button  onclick="openOrderModal({{ $order }})"
 
                             style="btn btn-sm btn-warning; margin: 0 5px; cursor: pointer">

@@ -44,6 +44,8 @@ Route::get('/clients/search', [ClientController::class, 'search'])->name('client
 Route::resource('vehicles', VehicleController::class)->except(['show']);
 Route::resource('orders', OrderController::class);
 Route::resource('orderitems', OrderItemController::class);
+Route::get('/orders/{order}/copy', [App\Http\Controllers\OrderController::class, 'copy'])->name('orders.copy');
+
 
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
 

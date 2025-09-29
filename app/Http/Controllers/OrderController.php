@@ -138,4 +138,31 @@ class OrderController extends Controller
         return view('orders.print2', compact('order'));
     }
 
+    public function copy($id)
+{
+    $order = Order::with('items')->findOrFail($id);
+
+    // Создаём новый заказ на основе старого
+    $newOrder = $order->replicate();
+    $newOrder->order_number = Order::max('order_number') + 1; // новый номер
+    $newOrder->status = 1; // сбрасываем статус
+    $newOrder->created_at = now();
+    $newOrder->updated_at = now();
+    $newOrder->save();
+
+    // Копируем позиции
+    foreach ($order->items as $item) {
+        $newItem = $item->replicate();
+        $newItem->order_id = $newOrder->id;
+        $newItem->created_at = now();
+        $newItem->updated_at = now();
+        $newItem->save();
+    }
+
+    return redirect()->back()
+        ->with('success', 'Заказ успешно скопирован!');
+}
+
+
+
 }
