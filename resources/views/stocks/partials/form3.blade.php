@@ -137,6 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleBtn.textContent = isCollapsed 
           ? "Show less"
           : `Show ${hiddenCount} more`;
+
+          return false
       });
     }
   }
