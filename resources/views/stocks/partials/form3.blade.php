@@ -126,7 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add toggle functionality
     if (results.length > 3) {
       const toggleBtn = headerRow.querySelector("button[data-toggle]");
-      toggleBtn.addEventListener("click", () => {
+      toggleBtn.addEventListener("click", (e) => {
+        e.preventDefault()
         const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
         const isCollapsed = rows[3].style.display === "none";
 
@@ -137,8 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleBtn.textContent = isCollapsed 
           ? "Show less"
           : `Show ${hiddenCount} more`;
-
-          return false
       });
     }
   }
