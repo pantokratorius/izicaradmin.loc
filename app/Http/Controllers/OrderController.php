@@ -79,6 +79,7 @@ class OrderController extends Controller
         $clients = Client::all();
         $vehicles = Vehicle::all();
         $managers = User::all();
+
         return view('orders.edit', compact('order', 'clients', 'vehicles', 'managers'));
     }
 

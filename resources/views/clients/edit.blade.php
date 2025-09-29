@@ -300,7 +300,7 @@
 </div>
 
     @php
-        $accordionOpen = $vehicle->brand_name || $vehicle->model_name || $vehicle->generation_name || $vehicle->serie_name || $vehicle->modification_name;
+        $accordionOpen = $client->vehicle?->brand_name || $client->vehicle?->model_name || $client->vehicle?->generation_name || $client->vehicle?->serie_name || $client->vehicle?->modification_name;
     @endphp
 
   <div class="accordion">

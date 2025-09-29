@@ -11,6 +11,35 @@
 
     <input type="hidden" name="client_id" value="{{ $order->client_id }}">
 
+
+    <!-- Клиент -->
+<div class="form-group">
+    <label for="client_id">Клиент</label>
+    <select id="client_id" name="client_id">
+        <option value="">-- Не указан --</option>
+        @foreach($clients as $client)
+            <option value="{{ $client->id }}"
+                    {{ $order->client_id == $client->id ? 'selected' : '' }}>
+                {{ $client->first_name }} {{ $client->last_name }} ({{ $client->phone }})
+            </option>
+        @endforeach
+    </select>
+</div>
+
+        <!-- Автомобиль -->
+    <div class="form-group">
+        <label for="vehicle_id">Автомобиль</label>
+        <select id="vehicle_id" name="vehicle_id">
+            <option value="">-- Не указан --</option>
+            @foreach($vehicles as $vehicle)
+                <option value="{{ $vehicle->id }}" 
+                        {{ $order->vehicle_id == $vehicle->id ? 'selected' : '' }}>
+                    {{ $vehicle->brand->name ?? $vehicle->brand_name ?? '' }} {{ $vehicle->model->name ?? $vehicle->model_name ?? '' }} ({{ $vehicle->vin }})
+                </option>
+            @endforeach
+        </select>
+    </div>
+
     <!-- № заказа -->
     <div class="form-group">
         <label for="order_number">№ заказа</label>
@@ -39,19 +68,7 @@
                value="{{ old('prepayment', $order->prepayment) }}">
     </div>
 
-    <!-- Автомобиль -->
-    <div class="form-group">
-        <label for="vehicle_id">Автомобиль (если есть)</label>
-        <select id="vehicle_id" name="vehicle_id">
-            <option value="">-- Не указан --</option>
-            @foreach($vehicles as $vehicle)
-                <option value="{{ $vehicle->id }}" 
-                        {{ $order->vehicle_id == $vehicle->id ? 'selected' : '' }}>
-                    {{ $vehicle->brand->name ?? '' }} {{ $vehicle->model->name ?? '' }} ({{ $vehicle->vin }})
-                </option>
-            @endforeach
-        </select>
-    </div>
+
 
     <!-- Ответственный менеджер -->
     <div class="form-group">

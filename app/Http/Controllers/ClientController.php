@@ -118,6 +118,25 @@ public function setSessionAjax(Request $request){
 }
 
 
+public function search(Request $request)
+{
+    $q = $request->get('q', '');
+    $clients = Client::where('first_name', 'like', "%$q%")
+        ->orWhere('middle_name', 'like', "%$q%")
+        ->orWhere('last_name', 'like', "%$q%")
+        ->orWhere('phone', 'like', "%$q%")
+        ->limit(20)
+        ->get();
+
+    return response()->json(
+        $clients->map(fn($c) => [
+            'id' => $c->id,
+            'text' => $c->first_name . $c->middle_name . $c->last_name . ' (' . $c->phone . ')'
+        ])
+    );
+}
+
+
 public function vehicles($clientId)
 {
     $vehicles = Vehicle::where('client_id', $clientId)->get();

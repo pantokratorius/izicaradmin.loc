@@ -118,6 +118,24 @@ class VehicleController extends Controller
 
     }
 
+
+    public function search(Request $request)
+{
+    $q = $request->get('q', '');
+    $vehicles = Vehicle::where('vin', 'like', "%$q%")
+        ->orWhere('brand_name', 'like', "%$q%")
+        ->orWhere('model_name', 'like', "%$q%")
+        ->limit(20)
+        ->get();
+
+    return response()->json(
+        $vehicles->map(fn($v) => [
+            'id' => $v->id,
+            'text' => trim(($v->brand_name ?? '') . ' ' . ($v->model_name ?? '') . ' (' . $v->vin . ')')
+        ])
+    );
+}
+
     public function destroy(Vehicle $vehicle)
     {
 

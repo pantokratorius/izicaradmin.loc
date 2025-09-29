@@ -30,13 +30,13 @@
 
     <div style="margin-bottom:15px;">
       <label>Телефон</label><br>
-      <input type="text" name="phone" value="{{ old('phone') }}" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+      <input type="text" name="phone" value="{{ old('phone') }}"  style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
       @error('phone') <small style="color:red">{{ $message }}</small> @enderror
     </div>
 
     <div style="margin-bottom:15px;">
       <label>Email</label><br>
-      <input type="email" name="email" value="{{ old('email') }}" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+      <input type="email" name="email" value="{{ old('email') }}"  style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
       @error('email') <small style="color:red">{{ $message }}</small> @enderror
     </div>
 

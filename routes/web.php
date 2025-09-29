@@ -36,6 +36,11 @@ Route::get('/orders/{order}/print2', [OrderController::class, 'print2'])
 
 Route::resource('clients', ClientController::class)->except(['show']);
 Route::get('/clients/{client}/vehicles', [ClientController::class, 'vehicles']);
+
+Route::get('/vehicles/search', [VehicleController::class, 'search'])->name('vehicles.search');
+Route::get('/clients/search', [ClientController::class, 'search'])->name('clients.search');
+
+
 Route::resource('vehicles', VehicleController::class)->except(['show']);
 Route::resource('orders', OrderController::class);
 Route::resource('orderitems', OrderItemController::class);

@@ -48,14 +48,27 @@
         <input type="text" id="prepayment" name="prepayment" value="{{ old('prepayment') }}">
     </div>
 
+        <!-- Ответственный менеджер -->
+    <div class="form-group">
+        <label for="manager_id">Ответственный менеджер</label>
+        <select id="manager_id" name="manager_id">
+            <option value="">-- Не указан --</option>
+            @foreach($managers as $manager)
+                <option value="{{ $manager->id }}">
+                    {{ $manager->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
     <!-- Статус -->
     <div class="form-group">
         <label for="status">Статус заказа</label>
         <select id="status" name="status">
-            <option value="new">Новый</option>
-            <option value="in_progress">В работе</option>
-            <option value="done">Завершен</option>
-            <option value="cancelled">Отменен</option>
+            <option value="1">Новый</option>
+            <option value="2">В работе</option>
+            <option value="3">Завершен</option>
+            <option value="4">Отменен</option>
         </select>
     </div>
 
