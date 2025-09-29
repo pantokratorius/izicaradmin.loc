@@ -52,12 +52,12 @@ class AbsSupplier implements SupplierInterface
 
             return collect($json ?? [])->map(function ($item) { 
                 return [
-                     'name'        => $item['product_name'],
-                    'part_make'   => $item['brand'],
-                    'part_number' => $item['article'],
-                    'quantity'    => $item['quantity'],
-                    'price'       => $item['price'],
-                    'warehouse'   => $item['warehouse_name'],
+                     'name'        => $item['product_name'] ?? null,
+                    'part_make'   => $item['brand'] ?? null,
+                    'part_number' => $item['article'] ?? null,
+                    'quantity'    => $item['quantity'] ?? null,
+                    'price'       => $item['price'] ?? null,
+                    'warehouse'   => $item['warehouse_name'] ?? null,
                 ];
             })->toArray();
         });
