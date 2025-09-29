@@ -42,6 +42,7 @@ class AbsSupplier implements SupplierInterface
                 'brand'=> $brand,
                 'with_cross'=> 1,
                 'format' => 'json',
+                'agreement_id' => 28415,
             ],
         ])->then(function ($response) {
             $json = json_decode($response->getBody()->getContents(), true);
