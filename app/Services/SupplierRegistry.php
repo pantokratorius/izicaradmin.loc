@@ -12,7 +12,7 @@ class SupplierRegistry
     {
         return [
             new AbsSupplier(),
-            new FakeSupplier(),
+            // new FakeSupplier(),
             new Mosvorechie(),
         ];
     }
