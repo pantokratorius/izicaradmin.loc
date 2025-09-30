@@ -93,22 +93,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let itemsData = {}; // supplier -> part_key -> items array
 
   function collectItems(supplier, items) {
-  if (!items || items.length === 0) return;
+    if (!items || items.length === 0) return;
 
-  if (!itemsData[supplier]) itemsData[supplier] = {};
+    if (!itemsData[supplier]) itemsData[supplier] = {};
 
-  items.forEach(item => {
-    const key = `${item.part_make}_${item.part_number}`;
-    if (!itemsData[supplier][key]) itemsData[supplier][key] = [];
-    // avoid duplicates
-    if (!itemsData[supplier][key].some(i => i.part_number === item.part_number && i.part_make === item.part_make)) {
+    items.forEach(item => {
+      const key = `${item.part_make}_${item.part_number}`;
+      if (!itemsData[supplier][key]) itemsData[supplier][key] = [];
       itemsData[supplier][key].push(item);
-    }
-  });
+    });
 
-  // Only re-render affected supplier group
-  renderSupplierGroups(supplier);
-}
+    renderResults();
+  }
 
   function renderResults() {
     tbody.innerHTML = "";
