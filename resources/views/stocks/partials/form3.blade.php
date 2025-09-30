@@ -27,13 +27,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const brandsList = document.getElementById("brandsList");
-  const tbody      = document.querySelector("#resultsTable tbody");
+  const tbody = document.querySelector("#resultsTable tbody");
 
   let brandSet = new Set();
   let articleGlobalNumber = "";
   let articleGlobalBrand = "";
-
-  const suppliers = ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"];
   const itemsData = {}; // supplier -> part_key -> items array
 
   // Step 1: Get brands
@@ -44,13 +42,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     articleGlobalNumber = article;
     articleGlobalBrand = "";
-    brandSet.clear();
-    tbody.innerHTML = "";
     brandsList.innerHTML = "";
-    Object.keys(itemsData).forEach(k => delete itemsData[k]);
+    tbody.innerHTML = "";
+    brandSet.clear();
+    Object.keys(itemsData).forEach(s => delete itemsData[s]);
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
-    suppliers.forEach(s => evtSource.addEventListener(s, e => collectBrands(JSON.parse(e.data))));
+    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(supplier => {
+      evtSource.addEventListener(supplier, e => collectBrands(JSON.parse(e.data)));
+    });
     evtSource.addEventListener("end", () => {
       evtSource.close();
       renderBrands();
@@ -58,7 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function collectBrands(brands) {
-    brands.forEach(b => { if(b) brandSet.add(b); });
+    brands.forEach(b => {
+      if (b) brandSet.add(b);
+    });
   }
 
   function renderBrands() {
@@ -77,16 +79,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Step 2: Load items by brand + article
   function loadItems(article, brand) {
-    tbody.innerHTML = "";
-
     const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
-    suppliers.forEach(s => evtSource.addEventListener(s, e => collectItems(s, JSON.parse(e.data))));
+    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(supplier => {
+      evtSource.addEventListener(supplier, e => collectItems(supplier, JSON.parse(e.data)));
+    });
     evtSource.addEventListener("end", () => evtSource.close());
   }
 
   function collectItems(supplier, items) {
     if (!items || items.length === 0) return;
-
     if (!itemsData[supplier]) itemsData[supplier] = {};
 
     items.forEach(item => {
@@ -95,33 +96,33 @@ document.addEventListener('DOMContentLoaded', () => {
       itemsData[supplier][key].push(item);
     });
 
-    renderResults();
+    renderResultsIncremental();
   }
 
-  function renderResults() {
-    tbody.innerHTML = "";
-
+  function renderResultsIncremental() {
     Object.keys(itemsData).forEach(supplier => {
       const supplierGroups = itemsData[supplier];
 
       Object.keys(supplierGroups).forEach(partKey => {
-        let groupItems = supplierGroups[partKey];
+        const groupItems = supplierGroups[partKey];
 
-        // Sort: OEM first, then selected brand, then price ascending
+        // Sort: selected brand first, then OEM, then price ascending
         groupItems.sort((a, b) => {
-    const aSelectedBrand = (a.part_make === articleGlobalBrand) ? 0 : 1;
-    const bSelectedBrand = (b.part_make === articleGlobalBrand) ? 0 : 1;
-    if (aSelectedBrand !== bSelectedBrand) return aSelectedBrand - bSelectedBrand;
+          const aBrand = (a.part_make === articleGlobalBrand) ? 0 : 1;
+          const bBrand = (b.part_make === articleGlobalBrand) ? 0 : 1;
+          if (aBrand !== bBrand) return aBrand - bBrand;
 
-    const aOEM = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 1;
-    const bOEM = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 1;
-    if (aOEM !== bOEM) return aOEM - bOEM;
+          const aOEM = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 1;
+          const bOEM = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 1;
+          if (aOEM !== bOEM) return aOEM - bOEM;
 
-    return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-});
+          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+        });
+
+        const toggleId = `supplier-${supplier}-${partKey}`;
+        if (tbody.querySelectorAll(`tr[data-group="${toggleId}"]`).length) return; // skip already rendered
 
         const hiddenCount = groupItems.length - 3;
-        const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
 
         // Header row
         const headerRow = document.createElement("tr");
@@ -155,6 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
           if (isOEM) {
             row.style.backgroundColor = "#fff8c6";
             row.style.fontWeight = "bold";
+            const tdNumber = row.children[2];
+            // tdNumber.innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
           }
 
           tbody.appendChild(row);
@@ -167,7 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
             const isCollapsed = rows[3].style.display === "none";
-            rows.forEach((r, idx) => { if(idx >= 3) r.style.display = isCollapsed ? "" : "none"; });
+            rows.forEach((r, idx) => {
+              if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
+            });
             toggleBtn.textContent = isCollapsed ? "Show less" : `Show ${hiddenCount} more`;
           });
         }
