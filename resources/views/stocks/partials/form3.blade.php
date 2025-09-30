@@ -104,42 +104,62 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderResults() {
-    tbody.innerHTML = "";
+  tbody.innerHTML = "";
 
-    Object.keys(itemsData).forEach(supplier => {
-      const supplierGroups = itemsData[supplier];
+  // Flatten all items with supplier info
+  let allItems = [];
+  Object.keys(itemsData).forEach(supplier => {
+    Object.keys(itemsData[supplier]).forEach(partKey => {
+      itemsData[supplier][partKey].forEach(item => {
+        item._supplier = supplier; // attach supplier for rendering
+        item._partKey = partKey;
+        allItems.push(item);
+      });
+    });
+  });
 
-      Object.keys(supplierGroups).forEach(partKey => {
-        let groupItems = supplierGroups[partKey];
+  // Sort: OEM items globally first, then by supplier -> partKey -> price
+  allItems.sort((a, b) => {
+    const aOEM = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 1;
+    const bOEM = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 1;
+    if (aOEM !== bOEM) return aOEM - bOEM;
 
-        // Sort: OEM first, then by price ascending
-        groupItems.sort((a, b) => {
-  const aSelected = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 1;
-  const bSelected = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 1;
+    // Sort by supplier, then partKey, then price
+    if (a._supplier !== b._supplier) return a._supplier.localeCompare(b._supplier);
+    if (a._partKey !== b._partKey) return a._partKey.localeCompare(b._partKey);
+    return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+  });
 
-  if (aSelected !== bSelected) return aSelected - bSelected; // selected brand first
+  // Group by supplier + partKey
+  const grouped = {};
+  allItems.forEach(item => {
+    if (!grouped[item._supplier]) grouped[item._supplier] = {};
+    if (!grouped[item._supplier][item._partKey]) grouped[item._supplier][item._partKey] = [];
+    grouped[item._supplier][item._partKey].push(item);
+  });
 
-  // fallback: sort by price ascending
-  return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-});
+  // Render grouped items
+  Object.keys(grouped).forEach(supplier => {
+    const supplierGroups = grouped[supplier];
 
-        // Show only 3 cheapest
-        const hiddenCount = groupItems.length - 3;
+    Object.keys(supplierGroups).forEach(partKey => {
+      const groupItems = supplierGroups[partKey];
+      const hiddenCount = groupItems.length - 3;
+      const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
 
-        // Header row
-        const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
-        const headerRow = document.createElement("tr");
-        headerRow.style.backgroundColor = "#f0f0f0";
-        headerRow.innerHTML = `
-          <td colspan="7">
-            <strong>${supplier}</strong> - ${groupItems[0].part_make} ${groupItems[0].part_number}
-            ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Show ${hiddenCount} more</button>` : ""}
-          </td>
-        `;
-        tbody.appendChild(headerRow);
+      // Header row
+      const headerRow = document.createElement("tr");
+      headerRow.style.backgroundColor = "#f0f0f0";
+      headerRow.innerHTML = `
+        <td colspan="7">
+          <strong>${supplier}</strong> - ${groupItems[0].part_make} ${groupItems[0].part_number}
+          ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Show ${hiddenCount} more</button>` : ""}
+        </td>
+      `;
+      tbody.appendChild(headerRow);
 
-        // Item rows
-        groupItems.forEach((item, idx) => {
+      // Item rows
+      groupItems.forEach((item, idx) => {
         const row = document.createElement("tr");
         row.dataset.group = toggleId;
         if (idx >= 3) row.style.display = "none";
@@ -149,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         row.innerHTML = `
           <td>${supplier}</td>
           <td>${item.part_make ?? "-"}</td>
-          <td>${item.part_number ?? "-"}${isOEM ? ' <span class="oem-badge" title="OEM Part">OEM</span>' : ''}</td>
+          <td>${item.part_number ?? "-"}</td>
           <td>${item.name ?? "-"}</td>
           <td>${item.quantity ?? 0}</td>
           <td>${item.price ?? "-"}</td>
@@ -157,29 +177,32 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         if (isOEM) {
-          row.style.backgroundColor = "#fff3b0"; // brighter yellow
+          row.style.backgroundColor = "#fff8c6";
           row.style.fontWeight = "bold";
+          const tdNumber = row.children[2];
+          tdNumber.innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
         }
 
         tbody.appendChild(row);
       });
 
-        // Toggle button
-        if (hiddenCount > 0) {
-          const toggleBtn = headerRow.querySelector("button[data-toggle]");
-          toggleBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
-            const isCollapsed = rows[3].style.display === "none";
-            rows.forEach((r, idx) => {
-              if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
-            });
-            toggleBtn.textContent = isCollapsed ? "Show less" : `Show ${hiddenCount} more`;
+      // Toggle button
+      if (hiddenCount > 0) {
+        const toggleBtn = headerRow.querySelector("button[data-toggle]");
+        toggleBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
+          const isCollapsed = rows[3].style.display === "none";
+          rows.forEach((r, idx) => {
+            if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
           });
-        }
-      });
+          toggleBtn.textContent = isCollapsed ? "Show less" : `Show ${hiddenCount} more`;
+        });
+      }
     });
-  }
+  });
+}
+
 });
 </script>
 
