@@ -93,96 +93,99 @@ document.addEventListener('DOMContentLoaded', () => {
   let itemsData = {}; // supplier -> part_key -> items array
 
   function collectItems(supplier, items) {
-    if (!items || items.length === 0) return;
+  if (!items || items.length === 0) return;
 
-    if (!itemsData[supplier]) itemsData[supplier] = {};
+  if (!itemsData[supplier]) itemsData[supplier] = {};
 
-    items.forEach(item => {
-      const key = `${item.part_make}_${item.part_number}`;
-      if (!itemsData[supplier][key]) itemsData[supplier][key] = [];
+  items.forEach(item => {
+    const key = `${item.part_make}_${item.part_number}`;
+    if (!itemsData[supplier][key]) itemsData[supplier][key] = [];
+    // avoid duplicates
+    if (!itemsData[supplier][key].some(i => i.part_number === item.part_number && i.part_make === item.part_make)) {
       itemsData[supplier][key].push(item);
+    }
+  });
+
+  // Only re-render affected supplier group
+  renderSupplierGroups(supplier);
+}
+
+  function renderSupplierGroups(supplier) {
+  const supplierGroups = itemsData[supplier];
+  Object.keys(supplierGroups).forEach(partKey => {
+    let groupItems = supplierGroups[partKey];
+
+    // Sort: selected brand first, OEM second, then by price ascending
+    groupItems.sort((a, b) => {
+      const aPriority = (a.part_make === articleGlobalBrand && a.part_number === articleGlobalNumber) ? 0 :
+                        (a.part_make === articleGlobalBrand) ? 1 : 2;
+      const bPriority = (b.part_make === articleGlobalBrand && b.part_number === articleGlobalNumber) ? 0 :
+                        (b.part_make === articleGlobalBrand) ? 1 : 2;
+      if (aPriority !== bPriority) return aPriority - bPriority;
+      return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
     });
 
-    renderResults();
-  }
+    // Remove old rows of this group
+    const toggleId = `supplier-${supplier}-${partKey}`;
+    const oldRows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
+    oldRows.forEach(r => r.remove());
 
-  function renderResults() {
-    tbody.innerHTML = "";
+    // Show only 3 cheapest
+    const hiddenCount = groupItems.length - 3;
 
-    Object.keys(itemsData).forEach(supplier => {
-      const supplierGroups = itemsData[supplier];
+    // Header row
+    const headerRow = document.createElement("tr");
+    headerRow.style.backgroundColor = "#f0f0f0";
+    headerRow.innerHTML = `
+      <td colspan="7">
+        <strong>${supplier}</strong> - ${groupItems[0].part_make} ${groupItems[0].part_number}
+        ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Show ${hiddenCount} more</button>` : ""}
+      </td>
+    `;
+    tbody.appendChild(headerRow);
 
-      Object.keys(supplierGroups).forEach(partKey => {
-        let groupItems = supplierGroups[partKey];
+    // Item rows
+    groupItems.forEach((item, idx) => {
+      const row = document.createElement("tr");
+      row.dataset.group = toggleId;
+      if (idx >= 3) row.style.display = "none";
 
-        // Sort: selected brand first, OEM second, then by price ascending
-        groupItems.sort((a, b) => {
-          const aPriority = (a.part_make === articleGlobalBrand && a.part_number === articleGlobalNumber) ? 0 :
-                            (a.part_make === articleGlobalBrand) ? 1 : 2;
-          const bPriority = (b.part_make === articleGlobalBrand && b.part_number === articleGlobalNumber) ? 0 :
-                            (b.part_make === articleGlobalBrand) ? 1 : 2;
+      const isOEM = (item.part_number === articleGlobalNumber && item.part_make === articleGlobalBrand);
 
-          if (aPriority !== bPriority) return aPriority - bPriority;
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+      row.innerHTML = `
+        <td>${supplier}</td>
+        <td>${item.part_make ?? "-"}</td>
+        <td>${item.part_number ?? "-"}</td>
+        <td>${item.name ?? "-"}</td>
+        <td>${item.quantity ?? 0}</td>
+        <td>${item.price ?? "-"}</td>
+        <td>${item.warehouse ?? "-"}</td>
+      `;
+
+      if (isOEM) {
+        row.style.backgroundColor = "#fff8c6";
+        row.style.fontWeight = "bold";
+        row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
+      } else if (item.part_make === articleGlobalBrand) {
+        row.style.backgroundColor = "#e0f7ff"; // highlight selected brand
+      }
+
+      tbody.appendChild(row);
+    });
+
+    // Toggle button
+    if (hiddenCount > 0) {
+      const toggleBtn = headerRow.querySelector("button[data-toggle]");
+      toggleBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
+        const isCollapsed = rows[3].style.display === "none";
+        rows.forEach((r, idx) => {
+          if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
         });
-
-        // Show only 3 cheapest
-        const hiddenCount = groupItems.length - 3;
-
-        // Header row
-        const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
-        const headerRow = document.createElement("tr");
-        headerRow.style.backgroundColor = "#f0f0f0";
-        headerRow.innerHTML = `
-          <td colspan="7">
-            <strong>${supplier}</strong> - ${groupItems[0].part_make} ${groupItems[0].part_number}
-            ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Show ${hiddenCount} more</button>` : ""}
-          </td>
-        `;
-        tbody.appendChild(headerRow);
-
-        // Item rows
-        groupItems.forEach((item, idx) => {
-          const row = document.createElement("tr");
-          row.dataset.group = toggleId;
-          if (idx >= 3) row.style.display = "none";
-
-          const isOEM = (item.part_number === articleGlobalNumber && item.part_make === articleGlobalBrand);
-
-          row.innerHTML = `
-            <td>${supplier}</td>
-            <td>${item.part_make ?? "-"}</td>
-            <td>${item.part_number ?? "-"}</td>
-            <td>${item.name ?? "-"}</td>
-            <td>${item.quantity ?? 0}</td>
-            <td>${item.price ?? "-"}</td>
-            <td>${item.warehouse ?? "-"}</td>
-          `;
-
-          if (isOEM) {
-            row.style.backgroundColor = "#fff8c6";
-            row.style.fontWeight = "bold";
-            row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
-          }
-
-          tbody.appendChild(row);
-        });
-
-        // Toggle button
-        if (hiddenCount > 0) {
-          const toggleBtn = headerRow.querySelector("button[data-toggle]");
-          toggleBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
-            const isCollapsed = rows[3].style.display === "none";
-            rows.forEach((r, idx) => {
-              if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
-            });
-            toggleBtn.textContent = isCollapsed ? "Show less" : `Show ${hiddenCount} more`;
-          });
-        }
+        toggleBtn.textContent = isCollapsed ? "Show less" : `Show ${hiddenCount} more`;
       });
-    });
-  }
-});
+    }
+  });
+}
 </script>
