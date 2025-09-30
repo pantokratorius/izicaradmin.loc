@@ -74,9 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
       li.textContent = brand;
 
       if (brand.toLowerCase() === articleGlobalBrand) {
-        li.style.fontWeight = "bold";
+        // li.style.fontWeight = "bold";
         li.style.color = "darkblue";
-        li.style.textDecoration = "underline";
+        li.style.backgroundColor = "#4dd0e1";
       } else {
         li.style.cursor = "pointer";
       }
