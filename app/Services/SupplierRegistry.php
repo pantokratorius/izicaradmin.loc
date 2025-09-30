@@ -4,7 +4,7 @@ namespace App\Services;
 use App\Services\Suppliers\SupplierInterface;
 use App\Services\Suppliers\AbsSupplier;
 use App\Services\Suppliers\FakeSupplier;
-use App\Services\Suppliers\OtherSupplier;
+use App\Services\Suppliers\Mosvorechie;
 
 class SupplierRegistry
 {
@@ -12,8 +12,8 @@ class SupplierRegistry
     {
         return [
             new AbsSupplier(),
-            // new OtherSupplier(),
             new FakeSupplier(),
+            new Mosvorechie(),
         ];
     }
 }

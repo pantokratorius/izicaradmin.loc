@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     evtSource.addEventListener("ABS", e => collectBrands(JSON.parse(e.data)));
     evtSource.addEventListener("OtherSupplier", e => collectBrands(JSON.parse(e.data)));
     evtSource.addEventListener("FakeSupplier", e => collectBrands(JSON.parse(e.data)));
+    evtSource.addEventListener("Mosvorechie", e => collectBrands(JSON.parse(e.data)));
 
     evtSource.addEventListener("end", () => {
       evtSource.close();
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     evtSource.addEventListener("ABS", e => addResults("ABS", JSON.parse(e.data)));
     evtSource.addEventListener("OtherSupplier", e => addResults("OtherSupplier", JSON.parse(e.data)));
     evtSource.addEventListener("FakeSupplier", e => addResults("FakeSupplier", JSON.parse(e.data)));
+    evtSource.addEventListener("Mosvorechie", e => addResults("Mosvorechie", JSON.parse(e.data)));
 
     evtSource.addEventListener("end", () => {
       evtSource.close();

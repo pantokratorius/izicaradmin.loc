@@ -3,30 +3,44 @@ namespace App\Services\Suppliers;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\PromiseInterface;
+use Illuminate\Support\Facades\Log;
 
-class AbsSupplier implements SupplierInterface
+class Mosvorechie implements SupplierInterface
 {
     public function getName(): string
     {
-        return 'ABS';
+        return 'Mosvorechie';
     }
 
     public function asyncSearchBrands(Client $client, string $article): PromiseInterface
     {
-        return $client->getAsync("https://abstd.ru/api-brands", [
-            'query' => [
-                'auth'   => '3515fab2a59d5d51b91f297a8be3ad5f',
-                'article'=> $article,
-            ],
-        ])->then(function ($response) {
-            $json = json_decode($response->getBody()->getContents(), true);
+
+            $baseUrl = "http://portal.moskvorechie.ru/portal.api";
+
+            // нормальные параметры
+            $query = http_build_query([
+                'l'   => 'izicar',
+                'p'   => '2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g',
+                'act' => 'brand_by_nr',
+                'nr'  => $article,
+            ]);
+
+
+         $url = $baseUrl . '?' . $query . '&alt';   
+        
+        return $client->getAsync($url)->then(function ($response) {
+            // Log::info($response->getBody()->getContents());
+
+            $body = $response->getBody()->getContents();
+            $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
+            $json = json_decode($body, true);
 
             if (!is_array($json)) {
                 return [];
             }
-            return collect($json ?? [])->map(function ($item) {
+            return collect($json['result'] ?? [])->map(function ($item) {
                 return [
-                    'part_make'  => $item ?? '',
+                    'part_make'  => $item['brand'] ?? '',
                 ];
             })->toArray();
         });
@@ -45,11 +59,6 @@ class AbsSupplier implements SupplierInterface
                 'agreement_id' => 28415,
             ],
         ])->then(function ($response) {
-
-            $body = $response->getBody()->getContents();
-            $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
-            $json = json_decode($body, true);
-
             $json = json_decode($response->getBody()->getContents(), true);
             
             if (!is_array($json) || !isset($json['data']) || !is_array($json['data'])) {
