@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         item.part_number === articleGlobalNumber &&
         (item.part_make || "").toLowerCase() === articleGlobalBrand
       );
-      const isSelectedBrand = (item.part_make || "").toLowerCase() === articleGlobalBrand;
+      const isSelectedBrand = (item.part_make || "").toLowerCase() === articleGlobalBrand; 
 
       row.innerHTML = `
         <td>${group.supplier}</td>
@@ -200,7 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isOEM) {
         row.style.backgroundColor = "#fff8c6";
         row.style.fontWeight = "bold";
-        row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
       }
 
       tbody.appendChild(row);
