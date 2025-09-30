@@ -255,9 +255,5 @@ document.addEventListener('DOMContentLoaded', () => {
     background-color: #fff8c6 !important;
     font-weight: bold;
   }
-  .oem-row td:nth-child(3)::after {
-    content: " (OEM)";
-    color: red;
-    font-weight: bold;
-  }
-</style>
+
+</style> 
