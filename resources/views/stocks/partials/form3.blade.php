@@ -4,7 +4,7 @@
 </div>
 
 <h3>Бренды</h3>
-<ul id="brandsList" class="brand-list"></ul>
+<ul id="brandsList"></ul>
 
 <hr>
 
@@ -14,7 +14,7 @@
     <tr>
       <th>Поставщик</th>
       <th>Бренд</th>
-      <th>Номер детали</th>
+      <th>Артикул</th>
       <th>Название</th>
       <th>Кол-во</th>
       <th>Цена</th>
@@ -24,43 +24,6 @@
   <tbody></tbody>
 </table>
 
-<style>
-  /* Стили брендов */
-  .brand-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .brand-list li {
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    background-color: #f9f9f9;
-    font-size: 14px;
-  }
-  .brand-list li:hover {
-    background-color: #e0f7fa;
-    border-color: #4dd0e1;
-  }
-  .brand-list li.selected {
-    background-color: #4dd0e1;
-    color: #fff;
-    font-weight: bold;
-    border-color: #00acc1;
-  }
-
-  /* OEM подсветка */
-  .oem-row {
-    background-color: #fff8c6 !important;
-    font-weight: bold;
-  }
-
-</style>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const brandsList = document.getElementById("brandsList");
@@ -68,11 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let brandSet = new Set();
   let articleGlobalNumber = "";
-  let articleGlobalBrand = "";
+  let articleGlobalBrand  = "";
 
-  const itemsData = {}; // supplier -> part_key -> items array
-
-  // === ШАГ 1: Получаем бренды ===
+  // --- шаг 1: поиск брендов
   document.getElementById("searchButton").addEventListener("click", (e) => {
     e.preventDefault();
     const article = document.getElementById("searchInput").value.trim();
@@ -106,20 +67,21 @@ document.addEventListener('DOMContentLoaded', () => {
     Array.from(brandSet).sort().forEach(brand => {
       const li = document.createElement("li");
       li.textContent = brand;
+      li.style.cursor = "pointer";
       li.addEventListener("click", () => {
-        brandsList.querySelectorAll('li').forEach(el => el.classList.remove('selected'));
-        li.classList.add('selected');
-        articleGlobalBrand = brand;
+        articleGlobalBrand = brand.toLowerCase(); // сохраняем в нижнем регистре
         loadItems(articleGlobalNumber, brand);
       });
       brandsList.appendChild(li);
     });
   }
 
-  // === ШАГ 2: Получаем позиции ===
+  // --- шаг 2: загрузка позиций
+  const itemsData = {}; // supplier -> part_key -> items[]
+
   function loadItems(article, brand) {
     tbody.innerHTML = "";
-    Object.keys(itemsData).forEach(s => delete itemsData[s]); // сброс данных
+    for (let k in itemsData) delete itemsData[k]; // очистка
 
     const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
     ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(s => {
@@ -130,10 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function collectItems(supplier, items) {
     if (!items || items.length === 0) return;
+
     if (!itemsData[supplier]) itemsData[supplier] = {};
 
     items.forEach(item => {
-      const key = `${item.part_make}_${item.part_number}`;
+      const key = `${(item.part_make || "").toLowerCase()}_${item.part_number}`;
       if (!itemsData[supplier][key]) itemsData[supplier][key] = [];
       itemsData[supplier][key].push(item);
     });
@@ -141,58 +104,74 @@ document.addEventListener('DOMContentLoaded', () => {
     renderResults();
   }
 
-  // === Отрисовка результатов ===
+  // --- рендер результатов
   function renderResults() {
     tbody.innerHTML = "";
 
     Object.keys(itemsData).forEach(supplier => {
       const supplierGroups = itemsData[supplier];
 
-      Object.keys(supplierGroups).forEach(partKey => {
+      // сортировка ключей: сначала выбранный бренд
+      const sortedKeys = Object.keys(supplierGroups).sort((a, b) => {
+        const aBrand = a.split("_")[0];
+        const bBrand = b.split("_")[0];
+        if (aBrand === articleGlobalBrand && bBrand !== articleGlobalBrand) return -1;
+        if (bBrand === articleGlobalBrand && aBrand !== articleGlobalBrand) return 1;
+        return 0;
+      });
+
+      sortedKeys.forEach(partKey => {
         let groupItems = supplierGroups[partKey];
 
-        // Сортировка:
-        // 1. Выбранный бренд (независимо от номера)
-        // 2. OEM (совпадает и бренд, и номер)
-        // 3. По цене
         groupItems.sort((a, b) => {
-          const aSelected = (a.part_make === articleGlobalBrand) ? 0 : 1;
-          const bSelected = (b.part_make === articleGlobalBrand) ? 0 : 1;
+          const aMake = (a.part_make || "").toLowerCase();
+          const bMake = (b.part_make || "").toLowerCase();
+
+          // сначала выбранный бренд
+          const aSelected = (aMake === articleGlobalBrand) ? 0 : 1;
+          const bSelected = (bMake === articleGlobalBrand) ? 0 : 1;
           if (aSelected !== bSelected) return aSelected - bSelected;
 
-          const aOEM = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 1;
-          const bOEM = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 1;
+          // потом OEM (бренд + номер совпадают)
+          const aOEM = (a.part_number === articleGlobalNumber && aMake === articleGlobalBrand) ? 0 : 1;
+          const bOEM = (b.part_number === articleGlobalNumber && bMake === articleGlobalBrand) ? 0 : 1;
           if (aOEM !== bOEM) return aOEM - bOEM;
 
+          // дальше по цене
           return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
         });
 
         const hiddenCount = groupItems.length - 3;
         const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
 
-        // Заголовок группы
+        // заголовок группы
         const headerRow = document.createElement("tr");
         headerRow.style.backgroundColor = "#f0f0f0";
         headerRow.innerHTML = `
           <td colspan="7">
-            <strong>${supplier}</strong> - ${groupItems[0].part_make} ${groupItems[0].part_number}
+            <strong>${supplier}</strong> – ${groupItems[0].part_make} ${groupItems[0].part_number}
             ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button>` : ""}
           </td>
         `;
         tbody.appendChild(headerRow);
 
-        // Строки деталей
+        // строки позиций
         groupItems.forEach((item, idx) => {
           const row = document.createElement("tr");
           row.dataset.group = toggleId;
           if (idx >= 3) row.style.display = "none";
 
-          const isOEM = (item.part_number === articleGlobalNumber && item.part_make === articleGlobalBrand);
-          if (isOEM) row.classList.add("oem-row");
+          const isOEM = (
+            item.part_number === articleGlobalNumber &&
+            (item.part_make || "").toLowerCase() === articleGlobalBrand
+          );
+          const isSelectedBrand = (item.part_make || "").toLowerCase() === articleGlobalBrand;
 
           row.innerHTML = `
             <td>${supplier}</td>
-            <td>${item.part_make ?? "-"}</td>
+            <td style="${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}">
+              ${item.part_make ?? "-"}
+            </td>
             <td>${item.part_number ?? "-"}</td>
             <td>${item.name ?? "-"}</td>
             <td>${item.quantity ?? 0}</td>
@@ -200,10 +179,16 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${item.warehouse ?? "-"}</td>
           `;
 
+          if (isOEM) {
+            row.style.backgroundColor = "#fff8c6";
+            row.style.fontWeight = "bold";
+            row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
+          }
+
           tbody.appendChild(row);
         });
 
-        // Кнопка "Показать ещё"
+        // переключатель "показать ещё"
         if (hiddenCount > 0) {
           const toggleBtn = headerRow.querySelector("button[data-toggle]");
           toggleBtn.addEventListener("click", (e) => {
@@ -213,7 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
             rows.forEach((r, idx) => {
               if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
             });
-            toggleBtn.textContent = isCollapsed ? "Скрыть" : `Показать ещё ${hiddenCount}`;
+            toggleBtn.textContent = isCollapsed
+              ? "Свернуть"
+              : `Показать ещё ${hiddenCount}`;
           });
         }
       });
