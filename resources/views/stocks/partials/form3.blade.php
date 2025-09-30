@@ -142,7 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const toggleBtn = document.createElement("button");
         toggleBtn.textContent = `Show ${items.length - 3} more`;
         toggleBtn.style.marginLeft = "10px";
-        toggleBtn.addEventListener("click", () => {
+        toggleBtn.addEventListener("click", (e) => {
+          e.preventDefault()
           const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
           const isCollapsed = rows[3].style.display === "none";
           rows.forEach((r, idx) => { if(idx >= 3) r.style.display = isCollapsed ? "" : "none"; });
