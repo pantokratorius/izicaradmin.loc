@@ -50,7 +50,7 @@ class AbsSupplier implements SupplierInterface
             $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
             $json = json_decode($body, true);
 
-            $json = json_decode($response->getBody()->getContents(), true);
+            $json = json_decode($json, true);
             
             if (!is_array($json) || !isset($json['data']) || !is_array($json['data'])) {
                 return [];
