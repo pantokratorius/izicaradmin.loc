@@ -4,7 +4,7 @@
 </div>
 
 <h3>Бренды</h3>
-<ul id="brandsList"></ul>
+<ul id="brandsList" class="brand-list"></ul>
 
 <hr>
 
