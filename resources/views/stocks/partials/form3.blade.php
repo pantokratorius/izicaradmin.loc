@@ -220,3 +220,44 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 });
 </script>
+
+<style>
+  /* Стили брендов */
+  .brand-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .brand-list li {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #f9f9f9;
+    font-size: 14px;
+  }
+  .brand-list li:hover {
+    background-color: #e0f7fa;
+    border-color: #4dd0e1;
+  }
+  .brand-list li.selected {
+    background-color: #4dd0e1;
+    color: #fff;
+    font-weight: bold;
+    border-color: #00acc1;
+  }
+
+  /* OEM подсветка */
+  .oem-row {
+    background-color: #fff8c6 !important;
+    font-weight: bold;
+  }
+  .oem-row td:nth-child(3)::after {
+    content: " (OEM)";
+    color: red;
+    font-weight: bold;
+  }
+</style>
