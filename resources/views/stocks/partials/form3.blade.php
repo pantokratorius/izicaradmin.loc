@@ -113,9 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Sort: OEM first, then by price ascending
         groupItems.sort((a, b) => {
-          const aOEM = (a.part_number === articleNumber && a.part_make === selectedBrand) ? -1 : 1;
-          const bOEM = (b.part_number === articleNumber && b.part_make === selectedBrand) ? -1 : 1;
+          // Selected brand always first
+          const aSelected = (a.part_make === selectedBrand) ? -1 : 1;
+          const bSelected = (b.part_make === selectedBrand) ? -1 : 1;
+          if (aSelected !== bSelected) return aSelected - bSelected;
+
+          // OEM (part_number matches articleNumber) comes next
+          const aOEM = (a.part_number === articleNumber) ? -1 : 1;
+          const bOEM = (b.part_number === articleNumber) ? -1 : 1;
           if (aOEM !== bOEM) return aOEM - bOEM;
+
+          // Then sort by price ascending
           return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
         });
 
