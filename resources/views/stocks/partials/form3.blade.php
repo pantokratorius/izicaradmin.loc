@@ -27,39 +27,38 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const brandsList = document.getElementById("brandsList");
-  const tbody = document.querySelector("#resultsTable tbody");
+  const tbody      = document.querySelector("#resultsTable tbody");
 
+  let brandSet = new Set();
   let articleGlobalNumber = "";
   let articleGlobalBrand = "";
-  const itemsData = {}; // supplier -> part_key -> array of items
+
+  const suppliers = ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"];
+  const itemsData = {}; // supplier -> part_key -> items array
 
   // Step 1: Get brands
-  document.getElementById("searchButton").addEventListener("click", e => {
+  document.getElementById("searchButton").addEventListener("click", (e) => {
     e.preventDefault();
     const article = document.getElementById("searchInput").value.trim();
     if (!article) return;
 
     articleGlobalNumber = article;
     articleGlobalBrand = "";
-    brandsList.innerHTML = "";
+    brandSet.clear();
     tbody.innerHTML = "";
+    brandsList.innerHTML = "";
     Object.keys(itemsData).forEach(k => delete itemsData[k]);
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
-    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(supplier => {
-      evtSource.addEventListener(supplier, e => collectBrands(JSON.parse(e.data)));
-    });
+    suppliers.forEach(s => evtSource.addEventListener(s, e => collectBrands(JSON.parse(e.data))));
     evtSource.addEventListener("end", () => {
       evtSource.close();
       renderBrands();
     });
   });
 
-  const brandSet = new Set();
   function collectBrands(brands) {
-    brands.forEach(b => {
-      if (b) brandSet.add(b);
-    });
+    brands.forEach(b => { if(b) brandSet.add(b); });
   }
 
   function renderBrands() {
@@ -76,22 +75,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Step 2: Load items by article + brand
+  // Step 2: Load items by brand + article
   function loadItems(article, brand) {
     tbody.innerHTML = "";
-    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(s => {
-      if (!itemsData[s]) itemsData[s] = {};
-    });
 
     const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
-    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(supplier => {
-      evtSource.addEventListener(supplier, e => collectItems(supplier, JSON.parse(e.data)));
-    });
+    suppliers.forEach(s => evtSource.addEventListener(s, e => collectItems(s, JSON.parse(e.data))));
     evtSource.addEventListener("end", () => evtSource.close());
   }
 
   function collectItems(supplier, items) {
     if (!items || items.length === 0) return;
+
+    if (!itemsData[supplier]) itemsData[supplier] = {};
 
     items.forEach(item => {
       const key = `${item.part_make}_${item.part_number}`;
@@ -112,18 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
         let groupItems = supplierGroups[partKey];
 
         // Sort: OEM first, then selected brand, then price ascending
-       groupItems.sort((a, b) => {
-    // Rank OEM first
-    const aOEM = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 
-                 (a.part_make === articleGlobalBrand ? 1 : 2);
-    const bOEM = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 
-                 (b.part_make === articleGlobalBrand ? 1 : 2);
+        groupItems.sort((a, b) => {
+          const aRank = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0
+                        : (a.part_make === articleGlobalBrand ? 1 : 2);
+          const bRank = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0
+                        : (b.part_make === articleGlobalBrand ? 1 : 2);
 
-    if (aOEM !== bOEM) return aOEM - bOEM;
-
-    // Then sort by price ascending
-    return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-});
+          if (aRank !== bRank) return aRank - bRank;
+          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+        });
 
         const hiddenCount = groupItems.length - 3;
         const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
@@ -168,13 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Toggle button
         if (hiddenCount > 0) {
           const toggleBtn = headerRow.querySelector("button[data-toggle]");
-          toggleBtn.addEventListener("click", e => {
+          toggleBtn.addEventListener("click", (e) => {
             e.preventDefault();
             const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
             const isCollapsed = rows[3].style.display === "none";
-            rows.forEach((r, idx) => {
-              if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
-            });
+            rows.forEach((r, idx) => { if(idx >= 3) r.style.display = isCollapsed ? "" : "none"; });
             toggleBtn.textContent = isCollapsed ? "Show less" : `Show ${hiddenCount} more`;
           });
         }
