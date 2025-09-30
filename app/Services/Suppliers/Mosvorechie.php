@@ -49,16 +49,24 @@ class Mosvorechie implements SupplierInterface
 
     public function asyncSearchItems(Client $client, string $article, ?string $brand = null): PromiseInterface
     {
-        return $client->getAsync("https://abstd.ru/api-search", [
-            'query' => [
-                'auth'   => '3515fab2a59d5d51b91f297a8be3ad5f',
-                'article'=> $article,
-                'brand'=> $brand,
-                'with_cross'=> 1,
-                'format' => 'json',
-                'agreement_id' => 28415,
-            ],
-        ])->then(function ($response) {
+
+
+        $baseUrl = "http://portal.moskvorechie.ru/portal.api";
+
+            // нормальные параметры
+            $query = http_build_query([
+                'l'   => 'izicar',
+                'p'   => '2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g',
+                'act' => 'price_by_nr_firm',
+                'nr'  => $article,
+                'f'  => $brand,
+            ]);
+
+
+         $url = $baseUrl . '?' . $query . '&avail&extstor';
+
+
+        return $client->getAsync($url)->then(function ($response) {
             $json = json_decode($response->getBody()->getContents(), true);
             
             if (!is_array($json) || !isset($json['data']) || !is_array($json['data'])) {
