@@ -119,87 +119,71 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderResults() {
-    tbody.innerHTML = "";
+  tbody.innerHTML = "";
 
-    Object.keys(itemsData).forEach(supplier => {
-      const supplierGroups = itemsData[supplier];
+  let allItems = [];
 
-      Object.keys(supplierGroups).forEach(partKey => {
-        let groupItems = supplierGroups[partKey];
-
-        // сортировка: сначала выбранный бренд, потом OEM, потом по цене
-        groupItems.sort((a, b) => {
-          const aBrand = (a.part_make || "").toLowerCase();
-          const bBrand = (b.part_make || "").toLowerCase();
-          const aSelected = aBrand === articleGlobalBrand ? 0 : 1;
-          const bSelected = bBrand === articleGlobalBrand ? 0 : 1;
-          if (aSelected !== bSelected) return aSelected - bSelected;
-
-          const aOEM = (aBrand === articleGlobalBrand && a.part_number === articleGlobalNumber) ? 0 : 1;
-          const bOEM = (bBrand === articleGlobalBrand && b.part_number === articleGlobalNumber) ? 0 : 1;
-          if (aOEM !== bOEM) return aOEM - bOEM;
-
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+  // собираем все позиции в один массив
+  Object.keys(itemsData).forEach(supplier => {
+    const supplierGroups = itemsData[supplier];
+    Object.keys(supplierGroups).forEach(partKey => {
+      supplierGroups[partKey].forEach(item => {
+        allItems.push({
+          ...item,
+          supplier,
+          partKey
         });
-
-        const hiddenCount = groupItems.length - 3;
-        const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
-
-        const headerRow = document.createElement("tr");
-        headerRow.style.backgroundColor = "#f0f0f0";
-        headerRow.innerHTML = `
-          <td colspan="7">
-            <strong>${supplier}</strong> - ${groupItems[0].part_make} ${groupItems[0].part_number}
-            ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button>` : ""}
-          </td>
-        `;
-        tbody.appendChild(headerRow);
-
-        groupItems.forEach((item, idx) => {
-          const row = document.createElement("tr");
-          row.dataset.group = toggleId;
-          if (idx >= 3) row.style.display = "none";
-
-          const itemBrand = (item.part_make || "").toLowerCase();
-          const isSelectedBrand = itemBrand === articleGlobalBrand;
-          const isOEM = isSelectedBrand && item.part_number === articleGlobalNumber;
-
-          row.innerHTML = `
-            <td></td>
-            <td>${item.part_make ?? "-"}</td>
-            <td>${item.part_number ?? "-"}</td>
-            <td>${item.name ?? "-"}</td>
-            <td>${item.quantity ?? 0}</td>
-            <td>${item.price ?? "-"}</td>
-            <td>${item.warehouse ?? "-"}</td>
-          `;
-
-          if (isSelectedBrand) {
-            row.style.backgroundColor = "#eaf3ff";
-          }
-          if (isOEM) {
-            row.style.backgroundColor = "#fff8c6";
-            row.style.fontWeight = "bold";
-          }
-
-          tbody.appendChild(row);
-        });
-
-        if (hiddenCount > 0) {
-          const toggleBtn = headerRow.querySelector("button[data-toggle]");
-          toggleBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
-            const isCollapsed = rows[3].style.display === "none";
-            rows.forEach((r, idx) => {
-              if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
-            });
-            toggleBtn.textContent = isCollapsed ? "Скрыть" : `Показать ещё ${hiddenCount}`;
-          });
-        }
       });
     });
-  }
+  });
+
+  // сортировка: сначала выбранный бренд, потом OEM, потом всё остальное, потом цена
+  allItems.sort((a, b) => {
+    const aBrand = (a.part_make || "").toLowerCase();
+    const bBrand = (b.part_make || "").toLowerCase();
+
+    const aSelected = aBrand === articleGlobalBrand ? 0 : 1;
+    const bSelected = bBrand === articleGlobalBrand ? 0 : 1;
+    if (aSelected !== bSelected) return aSelected - bSelected;
+
+    const aOEM = (aBrand === articleGlobalBrand && a.part_number === articleGlobalNumber) ? 0 : 1;
+    const bOEM = (bBrand === articleGlobalBrand && b.part_number === articleGlobalNumber) ? 0 : 1;
+    if (aOEM !== bOEM) return aOEM - bOEM;
+
+    return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+  });
+
+  // рендер таблицы
+  allItems.forEach(item => {
+    const row = document.createElement("tr");
+
+    const itemBrand = (item.part_make || "").toLowerCase();
+    const isSelectedBrand = itemBrand === articleGlobalBrand;
+    const isOEM = isSelectedBrand && item.part_number === articleGlobalNumber;
+
+    row.innerHTML = `
+      <td>${item.supplier}</td>
+      <td>${item.part_make ?? "-"}</td>
+      <td>${item.part_number ?? "-"}</td>
+      <td>${item.name ?? "-"}</td>
+      <td>${item.quantity ?? 0}</td>
+      <td>${item.price ?? "-"}</td>
+      <td>${item.warehouse ?? "-"}</td>
+    `;
+
+    if (isSelectedBrand) {
+      row.style.backgroundColor = "#eaf3ff"; // подсветка выбранного бренда
+    }
+    if (isOEM) {
+      row.style.backgroundColor = "#fff8c6"; // подсветка OEM
+      row.style.fontWeight = "bold";
+      row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
+    }
+
+    tbody.appendChild(row);
+  });
+}
+
 });
 </script>
 
