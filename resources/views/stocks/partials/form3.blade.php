@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSelectedBrand = (item.part_make || "").toLowerCase() === articleGlobalBrand;
 
       row.innerHTML = `
-        <td>${group.supplier}</td>
+        <td></td>
         <td style="${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}">
           ${item.part_make ?? "-"}
         </td>
@@ -209,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isOEM) {
         row.style.backgroundColor = "#fff8c6";
         row.style.fontWeight = "bold";
-        row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
       }
 
       tbody.appendChild(row);
