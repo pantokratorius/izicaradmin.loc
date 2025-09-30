@@ -112,17 +112,18 @@ document.addEventListener('DOMContentLoaded', () => {
         let groupItems = supplierGroups[partKey];
 
         // Sort: OEM first, then selected brand, then price ascending
-        groupItems.sort((a, b) => {
-          const aOEM = (a.part_number === articleGlobalNumber) ? 0 : 1;
-          const bOEM = (b.part_number === articleGlobalNumber) ? 0 : 1;
-          if (aOEM !== bOEM) return aOEM - bOEM;
+       groupItems.sort((a, b) => {
+    // Rank OEM first
+    const aOEM = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 
+                 (a.part_make === articleGlobalBrand ? 1 : 2);
+    const bOEM = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 
+                 (b.part_make === articleGlobalBrand ? 1 : 2);
 
-          const aBrand = (a.part_make === articleGlobalBrand) ? 0 : 1;
-          const bBrand = (b.part_make === articleGlobalBrand) ? 0 : 1;
-          if (aBrand !== bBrand) return aBrand - bBrand;
+    if (aOEM !== bOEM) return aOEM - bOEM;
 
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-        });
+    // Then sort by price ascending
+    return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+});
 
         const hiddenCount = groupItems.length - 3;
         const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
