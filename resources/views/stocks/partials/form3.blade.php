@@ -114,11 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Sort: OEM first, then by price ascending
         groupItems.sort((a, b) => {
-          const aOEM = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 1;
-          const bOEM = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 1;
-          if (aOEM !== bOEM) return aOEM - bOEM;
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-        });
+  const aSelected = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 1;
+  const bSelected = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 1;
+
+  if (aSelected !== bSelected) return aSelected - bSelected; // selected brand first
+
+  // fallback: sort by price ascending
+  return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+});
 
         // Show only 3 cheapest
         const hiddenCount = groupItems.length - 3;
