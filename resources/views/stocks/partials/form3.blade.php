@@ -163,8 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isOEM = (item.part_number===articleGlobalNumber && (item.part_make||"").toLowerCase()===articleGlobalBrand);
         const isSelectedBrand = (item.part_make||"").toLowerCase()===articleGlobalBrand;
 
-        row.innerHTML=`
-          <td>${item.supplier}</td>
+        row.innerHTML=` 
+          <td></td>
           <td style="${isSelectedBrand?'background:#e6f7ff;font-weight:bold;':''}">${item.part_make??"-"}</td>
           <td>${item.part_number??"-"}</td>
           <td>${item.name??"-"}</td>
