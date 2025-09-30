@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const brandsList = document.getElementById("brandsList");
   const tbody      = document.querySelector("#resultsTable tbody");
 
-  let brandSet = new Set();
+  let brandSet = new Map();
   let articleGlobalNumber = "";
   let articleGlobalBrand  = "";
 
@@ -57,24 +57,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function collectBrands(brands) {
-    brands.forEach(b => {
-      if (b) brandSet.add(b);
-    });
-  }
+  brands.forEach(b => {
+    if (!b) return;
+    const key = b.toLowerCase();
+    if (!brandSet.has(key)) {
+      brandSet.set(key, b); // сохраняем оригинальное написание
+    }
+  });
+}
 
   function renderBrands() {
-    brandsList.innerHTML = "";
-    Array.from(brandSet).sort().forEach(brand => {
-      const li = document.createElement("li");
-      li.textContent = brand;
-      li.style.cursor = "pointer";
-      li.addEventListener("click", () => {
-        articleGlobalBrand = brand.toLowerCase(); // сохраняем в нижнем регистре
-        loadItems(articleGlobalNumber, brand);
-      });
-      brandsList.appendChild(li);
+  brandsList.innerHTML = "";
+  Array.from(brandSet.values()).sort((a, b) => a.localeCompare(b)).forEach(brand => {
+    const li = document.createElement("li");
+    li.textContent = brand;
+    li.style.cursor = "pointer";
+    li.addEventListener("click", () => {
+      articleGlobalBrand = brand.toLowerCase(); // сравниваем в нижнем регистре
+      loadItems(articleGlobalNumber, brand);
     });
-  }
+    brandsList.appendChild(li);
+  });
+}
 
   // --- шаг 2: загрузка позиций
   const itemsData = {}; // supplier -> part_key -> items[]
