@@ -1,24 +1,24 @@
 <div>
-  <input type="text" id="searchInput" placeholder="Enter article...">
-  <button id="searchButton">Find Brands</button>
+  <input type="text" id="searchInput" placeholder="Введите артикул..." style="width: 200px">
+  <button id="searchButton">Найти</button>
 </div>
 
-<h3>Brands</h3>
-<ul id="brandsList"></ul>
+<h3>Бренды</h3>
+<ul id="brandsList" class="brand-list"></ul>
 
 <hr>
 
-<h3>Results</h3>
+<h3>Результаты</h3>
 <table id="resultsTable" border="1" cellspacing="0" cellpadding="5">
   <thead>
     <tr>
-      <th>Supplier</th>
-      <th>Brand</th>
-      <th>Part Number</th>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Warehouse</th>
+      <th>Поставщик</th>
+      <th>Бренд</th>
+      <th>Номер детали</th>
+      <th>Название</th>
+      <th>Количество</th>
+      <th>Цена</th>
+      <th>Склад</th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const brandsList = document.getElementById("brandsList");
   const tbody      = document.querySelector("#resultsTable tbody");
 
-  let brandSet = new Map(); // ключ = lowercase brand, значение = оригинал
+  let brandSet = new Map(); // ключ = в нижнем регистре, значение = оригинал
   let articleGlobalNumber = "";
   let articleGlobalBrand = ""; // хранится в lowercase
 
-  // Step 1: Get brands
+  // Шаг 1: поиск брендов
   document.getElementById("searchButton").addEventListener("click", (e) => {
     e.preventDefault();
     const article = document.getElementById("searchInput").value.trim();
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Step 2: Load items
+  // Шаг 2: загрузка товаров
   function loadItems(article, brand) {
     tbody.innerHTML = "";
     itemsData = {}; // сбрасываем данные
@@ -180,7 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
           if (isOEM) {
             row.style.backgroundColor = "#fff8c6";
             row.style.fontWeight = "bold";
-            row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
           }
 
           tbody.appendChild(row);
@@ -203,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
 
 
 <style>
