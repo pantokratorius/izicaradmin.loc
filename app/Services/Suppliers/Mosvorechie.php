@@ -26,8 +26,8 @@ class Mosvorechie implements SupplierInterface
             ]);
 
 
-         $url = $baseUrl . '?' . $query ;   
-        
+         $url = $baseUrl . '?' . $query ;
+
         return $client->getAsync($url)->then(function ($response) {
             // Log::info($response->getBody()->getContents());
 
@@ -71,19 +71,19 @@ class Mosvorechie implements SupplierInterface
             $body = $response->getBody()->getContents();
             $body = mb_convert_encoding($body, 'UTF-8', 'CP1251');
             $json = json_decode($body, true);
-            
+
             if (!is_array($json) || !isset($json['result']) || !is_array($json['result'])) {
                 return [];
             }
 
-            return collect($json['result'] ?? [])->map(function ($item) { 
+            return collect($json['result'] ?? [])->map(function ($item) {
                 return [
                      'name'        => $item['name'] ?? null,
                     'part_make'   => $item['brand'] ?? null,
                     'part_number' => $item['nr'] ?? null,
                     'quantity'    => $item['stock'] ?? null,
                     'price'       => $item['price'] ?? null,
-                    'warehouse'   => $item['warehouse_name'] ?? null,
+                    'warehouse'   => $item['sname'] ?? null,
                 ];
             })->toArray();
         });
