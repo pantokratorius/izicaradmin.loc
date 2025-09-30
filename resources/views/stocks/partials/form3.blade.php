@@ -1,24 +1,24 @@
 <div>
-  <input type="text" id="searchInput" placeholder="Enter article...">
-  <button id="searchButton">Find Brands</button>
+  <input type="text" id="searchInput" placeholder="Введите артикул...">
+  <button id="searchButton">Найти бренды</button>
 </div>
 
-<h3>Brands</h3>
+<h3>Бренды</h3>
 <ul id="brandsList"></ul>
 
 <hr>
 
-<h3>Results</h3>
+<h3>Результаты</h3>
 <table id="resultsTable" border="1" cellspacing="0" cellpadding="5">
   <thead>
     <tr>
-      <th>Supplier</th>
-      <th>Brand</th>
-      <th>Part Number</th>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Warehouse</th>
+      <th>Поставщик</th>
+      <th>Бренд</th>
+      <th>Артикул</th>
+      <th>Название</th>
+      <th>Количество</th>
+      <th>Цена</th>
+      <th>Склад</th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -34,9 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let brandGlobal = "";
 
   const suppliers = ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"];
-  const itemsData = {}; // supplier -> brand -> part_number -> items[]
+  const itemsData = {}; // поставщик -> бренд -> артикул -> массив товаров
 
-  // --- Step 1: Search Brands ---
+  // --- Шаг 1: Поиск брендов ---
   document.getElementById("searchButton").addEventListener("click", (e) => {
     e.preventDefault();
     const article = document.getElementById("searchInput").value.trim();
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     brandSet.clear();
     brandsList.innerHTML = "";
     tbody.innerHTML = "";
-    Object.keys(itemsData).forEach(s => delete itemsData[s]); // reset itemsData
+    Object.keys(itemsData).forEach(s => delete itemsData[s]); // сброс данных
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
     suppliers.forEach(s => evtSource.addEventListener(s, e => collectBrands(JSON.parse(e.data))));
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Step 2: Load Items ---
+  // --- Шаг 2: Загрузка товаров ---
   function loadItems(article, brand) {
     tbody.innerHTML = "";
     suppliers.forEach(s => {
@@ -103,14 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
     renderResults();
   }
 
-  // --- Step 3: Render Table ---
+  // --- Шаг 3: Отображение таблицы ---
   function renderResults() {
     tbody.innerHTML = "";
 
     Object.keys(itemsData).forEach(supplier => {
       const brandGroups = itemsData[supplier];
 
-      // Keep selected brand first
+      // Сначала выбранный бренд
       const sortedBrands = Object.keys(brandGroups).sort((a, b) => {
         if (a === brandGlobal) return -1;
         if (b === brandGlobal) return 1;
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Object.keys(parts).forEach(partNumber => {
           let groupItems = parts[partNumber];
 
-          // Sort OEM first, then by price ascending
+          // Сортировка: OEM в начале, затем по возрастанию цены
           groupItems.sort((a, b) => {
             const aOEM = (a.part_number === articleGlobal && a.part_make === brandGlobal) ? 0 : 1;
             const bOEM = (b.part_number === articleGlobal && b.part_make === brandGlobal) ? 0 : 1;
@@ -133,18 +133,18 @@ document.addEventListener('DOMContentLoaded', () => {
           const toggleId = `supplier-${supplier}-${brand}-${partNumber}-${Date.now()}`;
           const hiddenCount = groupItems.length - 3;
 
-          // Header row
+          // Заголовок группы
           const headerRow = document.createElement("tr");
           headerRow.style.backgroundColor = "#f0f0f0";
           headerRow.innerHTML = `
             <td colspan="7">
               <strong>${supplier}</strong> - ${brand} ${partNumber}
-              ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Show ${hiddenCount} more</button>` : ""}
+              ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Показать еще ${hiddenCount}</button>` : ""}
             </td>
           `;
           tbody.appendChild(headerRow);
 
-          // Item rows
+          // Строки товаров
           groupItems.forEach((item, idx) => {
             const row = document.createElement("tr");
             row.dataset.group = toggleId;
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tbody.appendChild(row);
           });
 
-          // Toggle button
+          // Кнопка "показать больше"
           if (hiddenCount > 0) {
             const toggleBtn = headerRow.querySelector("button[data-toggle]");
             toggleBtn.addEventListener("click", (e) => {
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
               const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
               const isCollapsed = rows[3].style.display === "none";
               rows.forEach((r, idx) => { if (idx >= 3) r.style.display = isCollapsed ? "" : "none"; });
-              toggleBtn.textContent = isCollapsed ? "Show less" : `Show ${hiddenCount} more`;
+              toggleBtn.textContent = isCollapsed ? "Свернуть" : `Показать еще ${hiddenCount}`;
             });
           }
         });
