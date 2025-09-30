@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isOemItem) {
           row.style.backgroundColor = "#fff8c6";
           row.style.fontWeight = "bold";
-          row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
+          // row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
         } else if (isSelected) {
           row.style.backgroundColor = "#e0f7fa";
         }
