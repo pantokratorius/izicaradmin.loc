@@ -63,7 +63,7 @@ class Mosvorechie implements SupplierInterface
             ]);
 
 
-         $url = $baseUrl . '?' . $query . '&avail';
+         $url = $baseUrl . '?' . $query . '&avail&extstor';
 
 // Log::info( $url);
 
