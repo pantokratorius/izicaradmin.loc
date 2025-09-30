@@ -137,31 +137,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Item rows
         groupItems.forEach((item, idx) => {
-          const row = document.createElement("tr");
-          row.dataset.group = toggleId;
-          if (idx >= 3) row.style.display = "none";
+        const row = document.createElement("tr");
+        row.dataset.group = toggleId;
+        if (idx >= 3) row.style.display = "none";
 
-          const isOEM = (item.part_number === articleGlobalNumber && item.part_make === articleGlobalBrand);
+        const isOEM = (item.part_number === articleGlobalNumber && item.part_make === articleGlobalBrand);
 
-          row.innerHTML = `
-            <td>${supplier}</td>
-            <td>${item.part_make ?? "-"}</td>
-            <td>${item.part_number ?? "-"}</td>
-            <td>${item.name ?? "-"}</td>
-            <td>${item.quantity ?? 0}</td>
-            <td>${item.price ?? "-"}</td>
-            <td>${item.warehouse ?? "-"}</td>
-          `;
+        row.innerHTML = `
+          <td>${supplier}</td>
+          <td>${item.part_make ?? "-"}</td>
+          <td>${item.part_number ?? "-"}${isOEM ? ' <span class="oem-badge" title="OEM Part">OEM</span>' : ''}</td>
+          <td>${item.name ?? "-"}</td>
+          <td>${item.quantity ?? 0}</td>
+          <td>${item.price ?? "-"}</td>
+          <td>${item.warehouse ?? "-"}</td>
+        `;
 
-          if (isOEM) {
-            row.style.backgroundColor = "#fff8c6";
-            row.style.fontWeight = "bold";
-            const tdNumber = row.children[2];
-            tdNumber.innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
-          }
+        if (isOEM) {
+          row.style.backgroundColor = "#fff3b0"; // brighter yellow
+          row.style.fontWeight = "bold";
+        }
 
-          tbody.appendChild(row);
-        });
+        tbody.appendChild(row);
+      });
 
         // Toggle button
         if (hiddenCount > 0) {
@@ -181,3 +179,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
+
+<style>
+  .oem-badge {
+    background-color: #ff6b6b;
+    color: white;
+    font-weight: bold;
+    padding: 2px 4px;
+    margin-left: 4px;
+    border-radius: 3px;
+    font-size: 0.75em;
+  }
+</style>
