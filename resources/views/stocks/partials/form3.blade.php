@@ -32,9 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let brandSet = new Set();
   let articleGlobalNumber = "";
   let articleGlobalBrand = "";
-  const itemsData = {}; // supplier -> part_key -> items array
+  const itemsData = {}; // supplier -> partKey -> items array
 
-  // Step 1: Get brands
   document.getElementById("searchButton").addEventListener("click", (e) => {
     e.preventDefault();
     const article = document.getElementById("searchInput").value.trim();
@@ -45,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     brandsList.innerHTML = "";
     tbody.innerHTML = "";
     brandSet.clear();
-    Object.keys(itemsData).forEach(s => delete itemsData[s]);
+    Object.keys(itemsData).forEach(k => delete itemsData[k]);
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
     ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(supplier => {
@@ -77,8 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Step 2: Load items by brand + article
   function loadItems(article, brand) {
+    tbody.innerHTML = "";
+    Object.keys(itemsData).forEach(k => delete itemsData[k]);
+
     const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
     ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(supplier => {
       evtSource.addEventListener(supplier, e => collectItems(supplier, JSON.parse(e.data)));
@@ -88,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function collectItems(supplier, items) {
     if (!items || items.length === 0) return;
+
     if (!itemsData[supplier]) itemsData[supplier] = {};
 
     items.forEach(item => {
@@ -96,21 +98,23 @@ document.addEventListener('DOMContentLoaded', () => {
       itemsData[supplier][key].push(item);
     });
 
-    renderResultsIncremental();
+    renderResults();
   }
 
-  function renderResultsIncremental() {
+  function renderResults() {
+    tbody.innerHTML = "";
+
     Object.keys(itemsData).forEach(supplier => {
       const supplierGroups = itemsData[supplier];
 
       Object.keys(supplierGroups).forEach(partKey => {
-        const groupItems = supplierGroups[partKey];
+        let groupItems = supplierGroups[partKey];
 
         // Sort: selected brand first, then OEM, then price ascending
         groupItems.sort((a, b) => {
-          const aBrand = (a.part_make === articleGlobalBrand) ? 0 : 1;
-          const bBrand = (b.part_make === articleGlobalBrand) ? 0 : 1;
-          if (aBrand !== bBrand) return aBrand - bBrand;
+          const aSelected = (a.part_make === articleGlobalBrand) ? 0 : 1;
+          const bSelected = (b.part_make === articleGlobalBrand) ? 0 : 1;
+          if (aSelected !== bSelected) return aSelected - bSelected;
 
           const aOEM = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 1;
           const bOEM = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 1;
@@ -119,10 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
           return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
         });
 
-        const toggleId = `supplier-${supplier}-${partKey}`;
-        if (tbody.querySelectorAll(`tr[data-group="${toggleId}"]`).length) return; // skip already rendered
-
         const hiddenCount = groupItems.length - 3;
+        const toggleId = `supplier-${supplier}-${partKey}`;
 
         // Header row
         const headerRow = document.createElement("tr");
@@ -141,7 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
           row.dataset.group = toggleId;
           if (idx >= 3) row.style.display = "none";
 
-          const isOEM = (item.part_number === articleGlobalNumber && item.part_make === articleGlobalBrand);
+          const isSelectedBrand = (item.part_make === articleGlobalBrand);
+          const isOEM = (item.part_number === articleGlobalNumber && isSelectedBrand);
 
           row.innerHTML = `
             <td>${supplier}</td>
@@ -157,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
             row.style.backgroundColor = "#fff8c6";
             row.style.fontWeight = "bold";
             const tdNumber = row.children[2];
-            // tdNumber.innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
           }
 
           tbody.appendChild(row);
