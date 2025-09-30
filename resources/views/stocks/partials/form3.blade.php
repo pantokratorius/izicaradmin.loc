@@ -1,6 +1,6 @@
 <div>
-  <input type="text" id="searchInput" placeholder="Введите артикул...">
-  <button id="searchButton">Найти бренды</button>
+  <input type="text" id="searchInput" placeholder="Введите артикул..." style="width: 200px">
+  <button id="searchButton">Найти</button>
 </div>
 
 <h3>Бренды</h3>

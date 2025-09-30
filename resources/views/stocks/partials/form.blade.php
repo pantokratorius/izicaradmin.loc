@@ -1,9 +1,9 @@
-<div class="form-group">
+{{-- <div class="form-group">
     <label>Артикул</label>
     <input type="text" id="searchInput"  style="width: 200px; margin-right: 10px" name="part_number" value="{{ old('part_number', $stock->part_number ?? '') }}">
     <button type="submit" id="searchButton" class="btn">Поиск</button>
-</div>
-
+</div> --}}
+<br><br>
 <div class="form-group">
     <label>Название</label>
     <input type="text" name="name" value="{{ old('name', $stock->name ?? '') }}">
