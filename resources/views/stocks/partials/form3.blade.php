@@ -195,6 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
 .brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .brand-list li{padding:6px 12px;border:1px solid #ccc;border-radius:6px;cursor:pointer;transition:all 0.2s;background:#f9f9f9;font-size:14px}
 .brand-list li:hover{background:#e0f7fa;border-color:#4dd0e1}
-.brand-list li.selected{background:#4dd0e1;color:#fff;font-weight:bold;border-color:#00acc1}
+.brand-list li.selected{background:#4dd0e1;color:#fff;}
 .oem-row{background:#fff8c6 !important;font-weight:bold}
 </style>
