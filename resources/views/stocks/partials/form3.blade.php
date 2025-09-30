@@ -73,19 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const allSelected = selectedSuppliers.size === suppliers.length;
     selectedSuppliers.clear();
     suppliersButtonsDiv.querySelectorAll(".supplier-btn").forEach(b=>{
-      if(!allSelected){
-        selectedSuppliers.add(b.dataset.supplier);
-        b.classList.add("active");
-      } else {
+
         b.classList.remove("active");
-      }
     });
     updateSelectAllText();
     renderResults();
   });
 
   function updateSelectAllText(){
-    selectAllBtn.textContent = selectedSuppliers.size === suppliers.length ? "Снять все" : "Все";
+    selectAllBtn.textContent = "Снять все";
   }
 
   // поиск брендов
