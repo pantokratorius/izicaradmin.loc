@@ -27,13 +27,14 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const brandsList = document.getElementById("brandsList");
-  const tbody      = document.querySelector("#resultsTable tbody");
+  const tbody = document.querySelector("#resultsTable tbody");
 
   let brandSet = new Set();
   let articleGlobalNumber = "";
   let articleGlobalBrand = "";
+  const itemsData = {}; // supplier -> part_key -> items array
 
-  // Step 1: Get brands
+  // Step 1: Search brands
   document.getElementById("searchButton").addEventListener("click", (e) => {
     e.preventDefault();
     const article = document.getElementById("searchInput").value.trim();
@@ -41,15 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     articleGlobalNumber = article;
     articleGlobalBrand = "";
-    brandsList.innerHTML = "";
-    tbody.innerHTML = "";
     brandSet.clear();
+    tbody.innerHTML = "";
+    brandsList.innerHTML = "";
+
+    Object.keys(itemsData).forEach(k => delete itemsData[k]);
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
     ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(s => {
       evtSource.addEventListener(s, e => collectBrands(JSON.parse(e.data)));
     });
-
     evtSource.addEventListener("end", () => {
       evtSource.close();
       renderBrands();
@@ -87,8 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
     evtSource.addEventListener("end", () => evtSource.close());
   }
 
-  const itemsData = {}; // supplier -> part_key -> items array
-
   function collectItems(supplier, items) {
     if (!items || items.length === 0) return;
 
@@ -104,70 +104,58 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderResults() {
-  tbody.innerHTML = "";
+    tbody.innerHTML = "";
 
-  // Flatten all items with supplier info
-  let allItems = [];
-  Object.keys(itemsData).forEach(supplier => {
-    Object.keys(itemsData[supplier]).forEach(partKey => {
-      itemsData[supplier][partKey].forEach(item => {
-        item._supplier = supplier; // attach supplier for rendering
-        item._partKey = partKey;
-        allItems.push(item);
+    // Merge items across suppliers by part_make + part_number
+    const mergedItems = {};
+    Object.keys(itemsData).forEach(supplier => {
+      const groups = itemsData[supplier];
+      Object.keys(groups).forEach(partKey => {
+        groups[partKey].forEach(item => {
+          const key = `${item.part_make}_${item.part_number}`;
+          if (!mergedItems[key]) mergedItems[key] = [];
+          mergedItems[key].push({ ...item, supplier });
+        });
       });
     });
-  });
 
-  // Sort: OEM items globally first, then by supplier -> partKey -> price
-  allItems.sort((a, b) => {
-    const aOEM = (a.part_number === articleGlobalNumber && a.part_make === articleGlobalBrand) ? 0 : 1;
-    const bOEM = (b.part_number === articleGlobalNumber && b.part_make === articleGlobalBrand) ? 0 : 1;
-    if (aOEM !== bOEM) return aOEM - bOEM;
+    Object.keys(mergedItems).sort().forEach(partKey => {
+      let items = mergedItems[partKey];
 
-    // Sort by supplier, then partKey, then price
-    if (a._supplier !== b._supplier) return a._supplier.localeCompare(b._supplier);
-    if (a._partKey !== b._partKey) return a._partKey.localeCompare(b._partKey);
-    return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-  });
+      // Sort OEM first, selected brand next, then price ascending
+      items.sort((a, b) => {
+        const aOEM = isOEM(a) ? 0 : isSelectedBrand(a) ? 1 : 2;
+        const bOEM = isOEM(b) ? 0 : isSelectedBrand(b) ? 1 : 2;
+        if (aOEM !== bOEM) return aOEM - bOEM;
+        return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+      });
 
-  // Group by supplier + partKey
-  const grouped = {};
-  allItems.forEach(item => {
-    if (!grouped[item._supplier]) grouped[item._supplier] = {};
-    if (!grouped[item._supplier][item._partKey]) grouped[item._supplier][item._partKey] = [];
-    grouped[item._supplier][item._partKey].push(item);
-  });
-
-  // Render grouped items
-  Object.keys(grouped).forEach(supplier => {
-    const supplierGroups = grouped[supplier];
-
-    Object.keys(supplierGroups).forEach(partKey => {
-      const groupItems = supplierGroups[partKey];
-      const hiddenCount = groupItems.length - 3;
-      const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
+      const visibleItems = items.slice(0, 3);
+      const hiddenCount = items.length - 3;
+      const toggleId = `part-${partKey}-${Date.now()}`;
 
       // Header row
       const headerRow = document.createElement("tr");
       headerRow.style.backgroundColor = "#f0f0f0";
       headerRow.innerHTML = `
         <td colspan="7">
-          <strong>${supplier}</strong> - ${groupItems[0].part_make} ${groupItems[0].part_number}
+          <strong>${visibleItems[0].part_make} ${visibleItems[0].part_number}</strong>
           ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Show ${hiddenCount} more</button>` : ""}
         </td>
       `;
       tbody.appendChild(headerRow);
 
-      // Item rows
-      groupItems.forEach((item, idx) => {
+      // Items rows
+      items.forEach((item, idx) => {
         const row = document.createElement("tr");
         row.dataset.group = toggleId;
         if (idx >= 3) row.style.display = "none";
 
-        const isOEM = (item.part_number === articleGlobalNumber && item.part_make === articleGlobalBrand);
+        const isOemItem = isOEM(item);
+        const isSelected = isSelectedBrand(item);
 
         row.innerHTML = `
-          <td>${supplier}</td>
+          <td>${item.supplier}</td>
           <td>${item.part_make ?? "-"}</td>
           <td>${item.part_number ?? "-"}</td>
           <td>${item.name ?? "-"}</td>
@@ -176,11 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${item.warehouse ?? "-"}</td>
         `;
 
-        if (isOEM) {
+        if (isOemItem) {
           row.style.backgroundColor = "#fff8c6";
           row.style.fontWeight = "bold";
-          const tdNumber = row.children[2];
-          tdNumber.innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
+          row.children[2].innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
+        } else if (isSelected) {
+          row.style.backgroundColor = "#e0f7fa";
         }
 
         tbody.appendChild(row);
@@ -200,21 +189,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     });
-  });
-}
+  }
 
+  function isOEM(item) {
+    return item.part_number === articleGlobalNumber && item.part_make === articleGlobalBrand;
+  }
+
+  function isSelectedBrand(item) {
+    return articleGlobalBrand && item.part_make === articleGlobalBrand && !isOEM(item);
+  }
 });
 </script>
-
-
-<style>
-  .oem-badge {
-    background-color: #ff6b6b;
-    color: white;
-    font-weight: bold;
-    padding: 2px 4px;
-    margin-left: 4px;
-    border-radius: 3px;
-    font-size: 0.75em;
-  }
-</style>
