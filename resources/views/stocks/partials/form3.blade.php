@@ -115,14 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Sort: OEM first, selected brand next, then price ascending
       groupItems.sort((a, b) => {
-  const aOEM = (a.part_make === articleGlobalBrand && a.part_number === articleGlobalNumber) ? 0 :
-               (a.part_make === articleGlobalBrand) ? 1 : 2;
-  const bOEM = (b.part_make === articleGlobalBrand && b.part_number === articleGlobalNumber) ? 0 :
-               (b.part_make === articleGlobalBrand) ? 1 : 2;
+  const aPriority = (a.part_make === articleGlobalBrand) ? 0 :
+                    (a.part_make === articleGlobalBrand && a.part_number === articleGlobalNumber) ? 1 : 2;
+  const bPriority = (b.part_make === articleGlobalBrand) ? 0 :
+                    (b.part_make === articleGlobalBrand && b.part_number === articleGlobalNumber) ? 1 : 2;
 
-  if (aOEM !== bOEM) return aOEM - bOEM;
+  if (aPriority !== bPriority) return aPriority - bPriority;
 
-  // Finally, sort by price ascending
+  // finally, sort by price ascending
   return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
 });
 
