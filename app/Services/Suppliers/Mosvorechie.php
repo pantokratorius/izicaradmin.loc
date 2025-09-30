@@ -60,6 +60,7 @@ class Mosvorechie implements SupplierInterface
                 'act' => 'price_by_nr_firm',
                 'nr'  => $article,
                 'f'  => $brand,
+                'v' => 1,
             ]);
 
 
