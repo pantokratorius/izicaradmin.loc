@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const brandsList = document.getElementById("brandsList");
   const tbody = document.querySelector("#resultsTable tbody");
 
-  let articleNumber = "";
-  let selectedBrand = "";
-  const itemsData = {}; // supplier -> part_make_part_number -> items array
+  let articleGlobalNumber = "";
+  let articleGlobalBrand = "";
+  const itemsData = {}; // supplier -> part_key -> array of items
 
   // Step 1: Get brands
   document.getElementById("searchButton").addEventListener("click", e => {
@@ -39,17 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const article = document.getElementById("searchInput").value.trim();
     if (!article) return;
 
-    articleNumber = article;
-    selectedBrand = "";
+    articleGlobalNumber = article;
+    articleGlobalBrand = "";
     brandsList.innerHTML = "";
     tbody.innerHTML = "";
     Object.keys(itemsData).forEach(k => delete itemsData[k]);
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
-    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(s => {
-      evtSource.addEventListener(s, e => collectBrands(JSON.parse(e.data)));
+    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(supplier => {
+      evtSource.addEventListener(supplier, e => collectBrands(JSON.parse(e.data)));
     });
-
     evtSource.addEventListener("end", () => {
       evtSource.close();
       renderBrands();
@@ -70,28 +69,29 @@ document.addEventListener('DOMContentLoaded', () => {
       li.textContent = brand;
       li.style.cursor = "pointer";
       li.addEventListener("click", () => {
-        selectedBrand = brand;
-        loadItems(articleNumber, brand);
+        articleGlobalBrand = brand;
+        loadItems(articleGlobalNumber, brand);
       });
       brandsList.appendChild(li);
     });
   }
 
-  // Step 2: Load items
+  // Step 2: Load items by article + brand
   function loadItems(article, brand) {
     tbody.innerHTML = "";
+    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(s => {
+      if (!itemsData[s]) itemsData[s] = {};
+    });
 
     const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
-    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(s => {
-      evtSource.addEventListener(s, e => collectItems(s, JSON.parse(e.data)));
+    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(supplier => {
+      evtSource.addEventListener(supplier, e => collectItems(supplier, JSON.parse(e.data)));
     });
     evtSource.addEventListener("end", () => evtSource.close());
   }
 
   function collectItems(supplier, items) {
     if (!items || items.length === 0) return;
-
-    if (!itemsData[supplier]) itemsData[supplier] = {};
 
     items.forEach(item => {
       const key = `${item.part_make}_${item.part_number}`;
@@ -106,26 +106,23 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.innerHTML = "";
 
     Object.keys(itemsData).forEach(supplier => {
-      const groups = itemsData[supplier];
+      const supplierGroups = itemsData[supplier];
 
-      Object.keys(groups).forEach(partKey => {
-        let groupItems = groups[partKey];
+      Object.keys(supplierGroups).forEach(partKey => {
+        let groupItems = supplierGroups[partKey];
 
-        // Sort: OEM first, then by price ascending
+        // Sort: OEM first, then selected brand, then price ascending
         groupItems.sort((a, b) => {
-  // Selected brand always on top
-  const aBrand = (a.part_make === articleGlobalBrand) ? 0 : 1;
-  const bBrand = (b.part_make === articleGlobalBrand) ? 0 : 1;
-  if (aBrand !== bBrand) return aBrand - bBrand;
+          const aOEM = (a.part_number === articleGlobalNumber) ? 0 : 1;
+          const bOEM = (b.part_number === articleGlobalNumber) ? 0 : 1;
+          if (aOEM !== bOEM) return aOEM - bOEM;
 
-  // OEM (part number matches) next
-  const aOEM = (a.part_number === articleGlobalNumber) ? 0 : 1;
-  const bOEM = (b.part_number === articleGlobalNumber) ? 0 : 1;
-  if (aOEM !== bOEM) return aOEM - bOEM;
+          const aBrand = (a.part_make === articleGlobalBrand) ? 0 : 1;
+          const bBrand = (b.part_make === articleGlobalBrand) ? 0 : 1;
+          if (aBrand !== bBrand) return aBrand - bBrand;
 
-  // Then by price ascending
-  return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-});
+          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+        });
 
         const hiddenCount = groupItems.length - 3;
         const toggleId = `supplier-${supplier}-${partKey}-${Date.now()}`;
@@ -147,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
           row.dataset.group = toggleId;
           if (idx >= 3) row.style.display = "none";
 
-          const isOEM = (item.part_number === articleNumber && item.part_make === selectedBrand);
+          const isOEM = (item.part_number === articleGlobalNumber && item.part_make === articleGlobalBrand);
 
           row.innerHTML = `
             <td>${supplier}</td>
@@ -162,21 +159,21 @@ document.addEventListener('DOMContentLoaded', () => {
           if (isOEM) {
             row.style.backgroundColor = "#fff8c6";
             row.style.fontWeight = "bold";
-            const tdNumber = row.children[2];
-            // tdNumber.innerHTML += ' <span style="color:red;font-weight:bold;">OEM</span>';
           }
 
           tbody.appendChild(row);
         });
 
-        // Toggle
+        // Toggle button
         if (hiddenCount > 0) {
           const toggleBtn = headerRow.querySelector("button[data-toggle]");
           toggleBtn.addEventListener("click", e => {
             e.preventDefault();
             const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
             const isCollapsed = rows[3].style.display === "none";
-            rows.forEach((r, idx) => { if(idx>=3) r.style.display = isCollapsed ? "" : "none"; });
+            rows.forEach((r, idx) => {
+              if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
+            });
             toggleBtn.textContent = isCollapsed ? "Show less" : `Show ${hiddenCount} more`;
           });
         }
