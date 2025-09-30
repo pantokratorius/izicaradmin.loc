@@ -26,7 +26,7 @@ class Mosvorechie implements SupplierInterface
             ]);
 
 
-         $url = $baseUrl . '?' . $query . '&alt';   
+         $url = $baseUrl . '?' . $query ;   
         
         return $client->getAsync($url)->then(function ($response) {
             // Log::info($response->getBody()->getContents());
