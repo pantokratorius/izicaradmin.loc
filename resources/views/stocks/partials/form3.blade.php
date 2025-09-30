@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tbody.innerHTML = "";
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
-    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(s => {
+    ["ABS","OtherSupplier","FakeSupplier","Москворечье"].forEach(s => {
       evtSource.addEventListener(s, e => collectBrands(JSON.parse(e.data)));
     });
 
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     itemsData = {}; // сбрасываем данные
 
     const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
-    ["ABS","OtherSupplier","FakeSupplier","Mosvorechie"].forEach(s => {
+    ["ABS","OtherSupplier","FakeSupplier","Москворечье"].forEach(s => {
       evtSource.addEventListener(s, e => collectItems(s, JSON.parse(e.data)));
     });
     evtSource.addEventListener("end", () => evtSource.close());
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const isOEM = isSelectedBrand && item.part_number === articleGlobalNumber;
 
           row.innerHTML = `
-            <td>${supplier}</td>
+            <td></td>
             <td>${item.part_make ?? "-"}</td>
             <td>${item.part_number ?? "-"}</td>
             <td>${item.name ?? "-"}</td>

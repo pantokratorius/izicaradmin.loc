@@ -9,7 +9,7 @@ class Mosvorechie implements SupplierInterface
 {
     public function getName(): string
     {
-        return 'Mosvorechie';
+        return 'Москворечье';
     }
 
     public function asyncSearchBrands(Client $client, string $article): PromiseInterface
@@ -63,7 +63,7 @@ class Mosvorechie implements SupplierInterface
             ]);
 
 
-         $url = $baseUrl . '?' . $query . '&avail&extstor';
+         $url = $baseUrl . '?' . $query . '&avail&extstor&oe';
 
 // Log::info( $url);
 
