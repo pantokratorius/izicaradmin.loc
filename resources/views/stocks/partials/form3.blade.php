@@ -12,6 +12,12 @@
 
 <hr>
 
+<h3>Сортировка</h3>
+<div id="sortButtons" style="margin-bottom:10px;">
+  <button data-sort="price" class="sort-btn active">По цене</button>
+  <button data-sort="delivery" class="sort-btn">По сроку</button>
+</div>
+
 <h3>Результаты</h3>
 <table id="resultsTable" border="1" cellspacing="0" cellpadding="5">
   <thead>
@@ -35,12 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const tbody = document.querySelector("#resultsTable tbody");
   const suppliersButtonsDiv = document.getElementById("suppliersButtons");
   const selectAllBtn = document.getElementById("selectAllSuppliers");
+  const sortButtonsDiv = document.getElementById("sortButtons");
 
   let brandSet = new Map(); 
   let articleGlobalNumber = "";
   let articleGlobalBrand = "";
   let itemsData = {};
   let selectedSuppliers = new Set();
+  let sortMode = "price"; // сортировка по умолчанию
 
   const suppliers = ["ABS","Москворечье", "Берг"];
 
@@ -71,12 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // кнопка "Все / Снять все"
   selectAllBtn.addEventListener("click", (e)=>{
     e.preventDefault()
-    const allSelected = selectedSuppliers.size === suppliers.length;
     selectedSuppliers.clear();
-    suppliersButtonsDiv.querySelectorAll(".supplier-btn").forEach(b=>{
-
-        b.classList.remove("active");
-    });
+    suppliersButtonsDiv.querySelectorAll(".supplier-btn").forEach(b=> b.classList.remove("active"));
     updateSelectAllText();
     renderResults();
   });
@@ -84,6 +88,22 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateSelectAllText(){
     selectAllBtn.textContent = "Снять все";
   }
+
+ // кнопки сортировки
+sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
+  btn.addEventListener("click", (e)=>{
+
+    e.preventDefault()
+    // снять подсветку у всех
+    sortButtonsDiv.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+    // подсветить текущую
+    btn.classList.add("active");
+
+    sortMode = btn.dataset.sort;
+    renderResults();
+  });
+});
+
 
   // поиск брендов
   document.getElementById("searchButton").addEventListener("click", (e)=>{
@@ -165,18 +185,28 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // сортировка
     allItems.sort((a,b)=>{
       const aMake = (a.part_make||"").toLowerCase();
       const bMake = (b.part_make||"").toLowerCase();
+
+      // выбранный бренд всегда наверху
       const aSelected = aMake===articleGlobalBrand?0:1;
       const bSelected = bMake===articleGlobalBrand?0:1;
       if(aSelected!==bSelected) return aSelected-bSelected;
 
+      // OEM идёт вторым
       const aOEM = (a.part_number===articleGlobalNumber && aMake===articleGlobalBrand)?0:1;
       const bOEM = (b.part_number===articleGlobalNumber && bMake===articleGlobalBrand)?0:1;
       if(aOEM!==bOEM) return aOEM-bOEM;
 
-      return (parseFloat(a.price)||0)-(parseFloat(b.price)||0);
+      // потом по цене или сроку
+      if(sortMode==="price"){
+        return (parseFloat(a.price)||0)-(parseFloat(b.price)||0);
+      } else if(sortMode==="delivery"){
+        return (parseInt(a.delivery)||0)-(parseInt(b.delivery)||0);
+      }
+      return 0;
     });
 
     const grouped = {};
@@ -248,4 +278,25 @@ document.addEventListener('DOMContentLoaded', () => {
 .supplier-btn.active{background:#4dd0e1;color:#fff;border-color:#00acc1}
 #selectAllSuppliers{padding:5px 12px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;cursor:pointer;background:#d9edf7;transition:all 0.2s; color: #000}
 #selectAllSuppliers:hover{background:#bce8f1}
+
+.sort-btn {
+  padding: 5px 12px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #f0f0f0;
+  transition: all 0.2s;
+  color: #000;
+}
+.sort-btn:hover {
+  background: #e0f7fa;
+  border-color: #4dd0e1;
+}
+.sort-btn.active {
+  background: #4dd0e1;
+  color: #fff;
+  border-color: #00acc1;
+}
+
 </style>
