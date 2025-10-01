@@ -22,6 +22,7 @@
       <th>Название</th>
       <th>Количество</th>
       <th>Цена</th>
+      <th>Срок</th>
       <th>Склад</th>
     </tr>
   </thead>
@@ -193,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const headerRow = document.createElement("tr");
       headerRow.style.backgroundColor="#f0f0f0";
       headerRow.innerHTML=`
-        <td colspan="7">
+        <td colspan="8">
           <strong>${group.supplier}</strong> – ${groupItems[0].part_make} ${groupItems[0].part_number}
           ${hiddenCount>0?`<button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button>`:""}
         </td>
@@ -214,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${item.name??"-"}</td>
           <td>${item.quantity??0}</td>
           <td>${item.price??"-"}</td>
+          <td>${item.delivery??"-"}</td>
           <td>${item.warehouse??"-"}</td>
         `;
         if(isOEM) row.classList.add("oem-row");

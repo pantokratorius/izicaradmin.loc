@@ -61,6 +61,7 @@ class AbsSupplier implements SupplierInterface
                     'part_number' => $item['article'] ?? null,
                     'quantity'    => $item['quantity'] ?? null,
                     'price'       => $item['price'] ?? null,
+                    'delivery'   => $item['delivery_duration'] ?? null,
                     'warehouse'   => $item['warehouse_name'] ?? null,
                 ];
             })->toArray();

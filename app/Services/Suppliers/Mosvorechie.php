@@ -22,7 +22,7 @@ class Mosvorechie implements SupplierInterface
                 'l'   => 'izicar',
                 'p'   => '2FXkfTgXdWU8vXTdxbLuH1Kj9NCWjFgTNQaPW4tnCsyoFReOZWmSBcJmUD9XiF6g',
                 'act' => 'brand_by_nr',
-                'nr'  => $article,
+                 'nr'  => $article,
             ]);
 
 
@@ -85,6 +85,8 @@ class Mosvorechie implements SupplierInterface
                     'quantity'    => $item['stock'] ?? null,
                     'price'       => $item['price'] ?? null,
                     'warehouse'   => $item['sname'] ?? null,
+                    'warehouse'   => $item['warehouse_name'] ?? null,
+      'warehouse'   => $item['warehouse_name'] ?? null,
                 ];
             })->toArray();
         });
