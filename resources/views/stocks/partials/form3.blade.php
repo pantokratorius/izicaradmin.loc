@@ -41,7 +41,32 @@
   <tbody></tbody>
 </table>
 
+<button id="scrollTopBtn" title="Наверх">▲</button>
+
 <style>
+
+#scrollTopBtn {
+  display: none; /* скрыта по умолчанию */
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: #00acc1;
+  color: white;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+#scrollTopBtn:hover {
+  background-color: #007c91;
+  transform: scale(1.1);
+}
+
 /* Спиннер */
 .spinner {
   border: 4px solid #f3f3f3;
@@ -66,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const suppliersButtonsDiv = document.getElementById("suppliersButtons");
   const selectAllBtn = document.getElementById("selectAllSuppliers");
   const sortButtonsDiv = document.getElementById("sortButtons");
+  const scrollTopBtn = document.getElementById("scrollTopBtn");
 
   let brandSet = new Map(); 
   let articleGlobalNumber = "";
@@ -80,6 +106,24 @@ document.addEventListener('DOMContentLoaded', () => {
   function showLoader(){ loader.style.display = "block"; }
   // 🔹 скрыть лоадер
   function hideLoader(){ loader.style.display = "none"; }
+
+
+  // показать кнопку при прокрутке
+  window.addEventListener("scroll", () => {
+    if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+      scrollTopBtn.style.display = "block";
+    } else {
+      scrollTopBtn.style.display = "none";
+    }
+  });
+
+  // плавный скролл наверх
+  scrollTopBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+
+
 
   // создаем кнопки поставщиков
   suppliers.forEach(s => {
