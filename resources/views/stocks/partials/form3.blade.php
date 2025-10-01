@@ -33,7 +33,7 @@
       <th>Номер детали</th>
       <th>Название</th>
       <th>Количество</th>
-      <th>Цена</th> 
+      <th>Цена</th>
       <th>Срок</th>
       <th>Склад</th>
     </tr>
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sortButtonsDiv = document.getElementById("sortButtons");
   const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-  let brandSet = new Map(); 
+  let brandSet = new Map();
   let articleGlobalNumber = "";
   let articleGlobalBrand = "";
   let itemsData = {};
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let sortMode = "price";
 
   const suppliers = ["ABS","Москворечье", "Берг", "Фаворит"];
-  let supplierLoading = {}; 
+  let supplierLoading = {};
 
   // 🔹 показать лоадер
   function showLoader(){ loader.style.display = "block"; }
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // плавный скролл наверх
   scrollTopBtn.addEventListener("click", (e) => {
     e.preventDefault()
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({top: 0, behavior: 'instant'});
   });
 
 
@@ -215,10 +215,10 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
     suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectBrands(JSON.parse(e.data))));
-    evtSource.addEventListener("end", ()=> { 
-      evtSource.close(); 
+    evtSource.addEventListener("end", ()=> {
+      evtSource.close();
       hideLoader();
-      renderBrands(); 
+      renderBrands();
     });
   });
 
@@ -270,8 +270,8 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     setSupplierLoading(s, false); // получены данные
   }));
 
-  evtSource.addEventListener("end", ()=> { 
-    evtSource.close(); 
+  evtSource.addEventListener("end", ()=> {
+    evtSource.close();
     hideLoader();
   });
 }
