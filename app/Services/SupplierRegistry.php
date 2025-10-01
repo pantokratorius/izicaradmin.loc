@@ -5,6 +5,7 @@ use App\Services\Suppliers\SupplierInterface;
 use App\Services\Suppliers\AbsSupplier;
 use App\Services\Suppliers\Berg;
 use App\Services\Suppliers\FakeSupplier;
+use App\Services\Suppliers\Favorit;
 use App\Services\Suppliers\Mosvorechie;
 
 class SupplierRegistry
@@ -16,6 +17,7 @@ class SupplierRegistry
             // new FakeSupplier(),
             new Mosvorechie(),
             new Berg(),
+            new Favorit(),
         ];
     }
 }

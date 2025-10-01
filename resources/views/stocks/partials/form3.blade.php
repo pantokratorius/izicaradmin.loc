@@ -44,7 +44,17 @@
 <button id="scrollTopBtn" title="Наверх">▲</button>
 
 <style>
-
+.mini-loader {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #00acc1;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: 6px;
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  vertical-align: middle;
+}
 #scrollTopBtn {
   display: none; /* скрыта по умолчанию */
   position: fixed;
@@ -100,7 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedSuppliers = new Set();
   let sortMode = "price";
 
-  const suppliers = ["ABS","Москворечье", "Берг"];
+  const suppliers = ["ABS","Москворечье", "Берг", "Фаворит"];
+  let supplierLoading = {}; 
 
   // 🔹 показать лоадер
   function showLoader(){ loader.style.display = "block"; }
@@ -127,27 +138,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // создаем кнопки поставщиков
   suppliers.forEach(s => {
-    const btn = document.createElement("button");
-    btn.textContent = s;
-    btn.style.marginRight = "5px";
-    btn.classList.add("supplier-btn");
-    btn.dataset.supplier = s;
+  const btn = document.createElement("button");
+  btn.textContent = s;
+  btn.style.marginRight = "5px";
+  btn.classList.add("supplier-btn");
+  btn.dataset.supplier = s;
 
-    btn.addEventListener("click", (e)=>{
-      e.preventDefault()
-      if(selectedSuppliers.has(s)){
-        selectedSuppliers.delete(s);
-        btn.classList.remove("active");
-      } else {
-        selectedSuppliers.add(s);
-        btn.classList.add("active");
-      }
-      updateSelectAllText();
-      renderResults();
-    });
+  // маленький спиннер внутри кнопки
+  const loaderSpan = document.createElement("span");
+  loaderSpan.classList.add("mini-loader");
+  loaderSpan.style.display = "none";
+  btn.appendChild(loaderSpan);
 
-    suppliersButtonsDiv.appendChild(btn);
+  btn.addEventListener("click", (e)=>{
+    e.preventDefault()
+    if(selectedSuppliers.has(s)){
+      selectedSuppliers.delete(s);
+      btn.classList.remove("active");
+    } else {
+      selectedSuppliers.add(s);
+      btn.classList.add("active");
+    }
+    updateSelectAllText();
+    renderResults();
   });
+
+  suppliersButtonsDiv.appendChild(btn);
+  supplierLoading[s] = false;
+});
 
   // кнопка "Все / Снять все"
   selectAllBtn.addEventListener("click", (e)=>{
@@ -204,6 +222,15 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     });
   });
 
+  function setSupplierLoading(supplier, state){
+    supplierLoading[supplier] = state;
+    const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${supplier}"]`);
+    if(btn){
+      const loader = btn.querySelector(".mini-loader");
+      loader.style.display = state ? "inline-block" : "none";
+    }
+  }
+
   function collectBrands(brands){
     brands.forEach(b=>{
       if(b){
@@ -231,16 +258,23 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
   }
 
  function loadItems(article, brand){
-    tbody.innerHTML = "";
-    itemsData = {};
-    showLoader();
-    const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
-    suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectItems(s, JSON.parse(e.data))));
-    evtSource.addEventListener("end", ()=> { 
-      evtSource.close(); 
-      hideLoader();
-    });
-  }
+  tbody.innerHTML = "";
+  itemsData = {};
+  showLoader();
+
+  suppliers.forEach(s => setSupplierLoading(s, true)); // все в ожидании
+
+  const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
+  suppliers.forEach(s=> evtSource.addEventListener(s, e=> {
+    collectItems(s, JSON.parse(e.data));
+    setSupplierLoading(s, false); // получены данные
+  }));
+
+  evtSource.addEventListener("end", ()=> { 
+    evtSource.close(); 
+    hideLoader();
+  });
+}
 
 
   function collectItems(supplier, items){
