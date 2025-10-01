@@ -4,7 +4,7 @@
 </div>
 
 <!-- Лоадер -->
-<div id="loader" style="display:none; margin:15px 0; text-align:center; position: absolute; left: 50%;">
+<div id="loader" style="display:none; margin:30px 0; text-align:center; position: absolute; left: 50%; top: 200px">
   <div class="spinner"></div>
   <div style="margin-top:8px; color:#00acc1; font-weight:bold;">Загружаем данные...</div>
 </div>
@@ -44,6 +44,14 @@
 <button id="scrollTopBtn" title="Наверх">▲</button>
 
 <style>
+
+.supplier-btn.empty {
+  background: #eee !important;
+  color: #888 !important;
+  border-color: #ccc !important;
+  cursor: default ;
+  opacity: 0.7;
+}
 .mini-loader {
   border: 2px solid #f3f3f3;
   border-top: 2px solid #00acc1;
@@ -110,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedSuppliers = new Set();
   let sortMode = "price";
 
-  const suppliers = ["ABS","Москворечье", "Берг", "Фаворит"];
+  const suppliers = ["ABS","Москворечье", "Берг", "Фаворит", "Форум-Авто"];
   let supplierLoading = {};
 
   // 🔹 показать лоадер
@@ -273,20 +281,34 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
   evtSource.addEventListener("end", ()=> {
     evtSource.close();
     hideLoader();
+
+    // ✅ отмечаем пустые кнопки только после загрузки запчастей
+    suppliers.forEach(s=>{
+      const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
+      if(!itemsData[s] || Object.keys(itemsData[s]).length===0){
+        btn.classList.add("empty");
+        btn.disabled = true;   // делаем неактивной
+      } else {
+        btn.classList.remove("empty");
+        btn.disabled = false;  // снова активна
+      }
+    });
   });
 }
 
 
-  function collectItems(supplier, items){
-    if(!items || !items.length) return;
-    if(!itemsData[supplier]) itemsData[supplier] = {};
-    items.forEach(item=>{
-      const key = `${item.part_make}_${item.part_number}`;
-      if(!itemsData[supplier][key]) itemsData[supplier][key]=[];
-      itemsData[supplier][key].push(item);
-    });
-    renderResults();
-  }
+
+function collectItems(supplier, items){
+  if(!items || !items.length) return;
+
+  if(!itemsData[supplier]) itemsData[supplier] = {};
+  items.forEach(item=>{
+    const key = `${item.part_make}_${item.part_number}`;
+    if(!itemsData[supplier][key]) itemsData[supplier][key]=[];
+    itemsData[supplier][key].push(item);
+  });
+  renderResults();
+}
 
   function renderResults(){
     tbody.innerHTML = "";
