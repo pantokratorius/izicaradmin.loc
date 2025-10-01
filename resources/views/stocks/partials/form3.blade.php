@@ -4,8 +4,9 @@
 </div>
 
 <!-- Лоадер -->
-<div id="loader" style="display:none; margin:10px 0; font-weight:bold; color:#00acc1;">
-  ⏳ Загружаем данные...
+<div id="loader" style="display:none; margin:15px 0; text-align:center; position: absolute; left: 50%;">
+  <div class="spinner"></div>
+  <div style="margin-top:8px; color:#00acc1; font-weight:bold;">Загружаем данные...</div>
 </div>
 
 <h3>Поставщики</h3>
@@ -40,14 +41,31 @@
   <tbody></tbody>
 </table>
 
+<style>
+/* Спиннер */
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #00acc1;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  const loader = document.getElementById("loader");
   const brandsList = document.getElementById("brandsList");
   const tbody = document.querySelector("#resultsTable tbody");
   const suppliersButtonsDiv = document.getElementById("suppliersButtons");
   const selectAllBtn = document.getElementById("selectAllSuppliers");
   const sortButtonsDiv = document.getElementById("sortButtons");
-  const loader = document.getElementById("loader");
 
   let brandSet = new Map(); 
   let articleGlobalNumber = "";
@@ -57,6 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let sortMode = "price";
 
   const suppliers = ["ABS","Москворечье", "Берг"];
+
+  // 🔹 показать лоадер
+  function showLoader(){ loader.style.display = "block"; }
+  // 🔹 скрыть лоадер
+  function hideLoader(){ loader.style.display = "none"; }
 
   // создаем кнопки поставщиков
   suppliers.forEach(s => {
@@ -117,7 +140,7 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     const article = document.getElementById("searchInput").value.trim();
     if(!article) return;
 
-    loader.style.display = "block"; // показать лоадер
+    showLoader();
 
     articleGlobalNumber = article;
     articleGlobalBrand = "";
@@ -126,14 +149,13 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     tbody.innerHTML = "";
     itemsData = {};
     selectedSuppliers.clear();
-    updateSelectAllText();
     suppliersButtonsDiv.querySelectorAll(".supplier-btn").forEach(b=>b.classList.remove("active"));
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
     suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectBrands(JSON.parse(e.data))));
     evtSource.addEventListener("end", ()=> { 
       evtSource.close(); 
-      loader.style.display = "none"; // скрыть лоадер
+      hideLoader();
       renderBrands(); 
     });
   });
@@ -164,15 +186,15 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     });
   }
 
-  function loadItems(article, brand){
+ function loadItems(article, brand){
     tbody.innerHTML = "";
     itemsData = {};
-    loader.style.display = "block"; // показать лоадер
+    showLoader();
     const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
     suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectItems(s, JSON.parse(e.data))));
     evtSource.addEventListener("end", ()=> { 
       evtSource.close(); 
-      loader.style.display = "none"; // скрыть лоадер
+      hideLoader();
     });
   }
 
