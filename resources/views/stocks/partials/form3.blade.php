@@ -54,7 +54,7 @@
   font-size: 18px;
   border: none;
   outline: none;
-  background-color: #00acc1;
+  background-color: #00abc193;
   color: white;
   cursor: pointer;
   padding: 12px 16px;
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // показать кнопку при прокрутке
   window.addEventListener("scroll", () => {
-    if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+    if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
       scrollTopBtn.style.display = "block";
     } else {
       scrollTopBtn.style.display = "none";
