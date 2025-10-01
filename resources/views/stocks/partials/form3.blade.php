@@ -3,6 +3,11 @@
   <button id="searchButton">Найти</button>
 </div>
 
+<!-- Лоадер -->
+<div id="loader" style="display:none; margin:10px 0; font-weight:bold; color:#00acc1;">
+  ⏳ Загружаем данные...
+</div>
+
 <h3>Поставщики</h3>
 <div id="suppliersButtons" style="margin-bottom:10px;"></div>
 <button id="selectAllSuppliers" style="margin-bottom:10px;">Все</button>
@@ -42,13 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const suppliersButtonsDiv = document.getElementById("suppliersButtons");
   const selectAllBtn = document.getElementById("selectAllSuppliers");
   const sortButtonsDiv = document.getElementById("sortButtons");
+  const loader = document.getElementById("loader");
 
   let brandSet = new Map(); 
   let articleGlobalNumber = "";
   let articleGlobalBrand = "";
   let itemsData = {};
   let selectedSuppliers = new Set();
-  let sortMode = "price"; // сортировка по умолчанию
+  let sortMode = "price";
 
   const suppliers = ["ABS","Москворечье", "Берг"];
 
@@ -111,6 +117,8 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     const article = document.getElementById("searchInput").value.trim();
     if(!article) return;
 
+    loader.style.display = "block"; // показать лоадер
+
     articleGlobalNumber = article;
     articleGlobalBrand = "";
     brandSet.clear();
@@ -123,7 +131,11 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
     suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectBrands(JSON.parse(e.data))));
-    evtSource.addEventListener("end", ()=> { evtSource.close(); renderBrands(); });
+    evtSource.addEventListener("end", ()=> { 
+      evtSource.close(); 
+      loader.style.display = "none"; // скрыть лоадер
+      renderBrands(); 
+    });
   });
 
   function collectBrands(brands){
@@ -155,10 +167,15 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
   function loadItems(article, brand){
     tbody.innerHTML = "";
     itemsData = {};
+    loader.style.display = "block"; // показать лоадер
     const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
     suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectItems(s, JSON.parse(e.data))));
-    evtSource.addEventListener("end", ()=> evtSource.close());
+    evtSource.addEventListener("end", ()=> { 
+      evtSource.close(); 
+      loader.style.display = "none"; // скрыть лоадер
+    });
   }
+
 
   function collectItems(supplier, items){
     if(!items || !items.length) return;
