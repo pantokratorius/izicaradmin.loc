@@ -84,9 +84,8 @@ class Mosvorechie implements SupplierInterface
                     'part_number' => $item['nr'] ?? null,
                     'quantity'    => $item['stock'] ?? null,
                     'price'       => $item['price'] ?? null,
-                    'warehouse'   => $item['sname'] ?? null,
+                    'delivery'   => $item['sname'] ?? null,
                     'warehouse'   => $item['warehouse_name'] ?? null,
-      'warehouse'   => $item['warehouse_name'] ?? null,
                 ];
             })->toArray();
         });
