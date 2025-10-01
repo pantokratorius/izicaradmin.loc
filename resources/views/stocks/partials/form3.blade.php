@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let itemsData = {};
   let selectedSuppliers = new Set();
 
-  const suppliers = ["ABS","Москворечье"];
+  const suppliers = ["ABS","Москворечье", "Берг"];
 
   // создаем кнопки поставщиков
   suppliers.forEach(s => {
