@@ -40,17 +40,19 @@ class Berg implements SupplierInterface
                 return [];
             }
 
-            return collect($json['resources'] ?? [])->map(function ($item) { 
-                return [
-                     'name'        => $item['name'] ?? null,
-                    'part_make'   => $item['brand']['name'] ?? null,
-                    'part_number' => $item['article'] ?? null,
-                    'quantity'    => $item['offers']['quantity'] ?? null,
-                    'price'       => $item['offers']['price'] ?? null,
-                    'delivery'   => $item['offers']['assured_period'] ?? null,
-                    'warehouse'   => $item['warehouse']['name'] ?? null,
-                ];
-            })->toArray();
+            return collect($json['resources'] ?? [])->map(function ($item) {
+                return collect($item['offers'] ?? [])->map(function ($offer) use ($item) {
+                    return [
+                        'name'        => $item['name'] ?? null,
+                        'part_make'   => $item['brand']['name'] ?? null,
+                        'part_number' => $item['article'] ?? null,
+                        'quantity'    => $offer['quantity'] ?? null,
+                        'price'       => $offer['price'] ?? null,
+                        'delivery'    => $offer['assured_period'] ?? null,
+                        'warehouse'   => $offer['warehouse']['name'] ?? null,
+                    ];
+                });
+            })->flatten(1)->toArray();
         });
     }
 }
