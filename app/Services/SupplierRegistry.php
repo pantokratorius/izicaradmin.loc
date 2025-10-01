@@ -8,6 +8,7 @@ use App\Services\Suppliers\FakeSupplier;
 use App\Services\Suppliers\Favorit;
 use App\Services\Suppliers\ForumAvto;
 use App\Services\Suppliers\Mosvorechie;
+use App\Services\Suppliers\ProfitLiga;
 
 class SupplierRegistry
 {
@@ -20,6 +21,7 @@ class SupplierRegistry
             new Berg(),
             new Favorit(),
             new ForumAvto(),
+            new ProfitLiga(),
         ];
     }
 }
