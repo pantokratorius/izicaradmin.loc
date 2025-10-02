@@ -7,6 +7,7 @@ use App\Services\Suppliers\Berg;
 use App\Services\Suppliers\FakeSupplier;
 use App\Services\Suppliers\Favorit;
 use App\Services\Suppliers\ForumAvto;
+use App\Services\Suppliers\Mikado;
 use App\Services\Suppliers\Mosvorechie;
 use App\Services\Suppliers\ProfitLiga;
 
@@ -22,6 +23,7 @@ class SupplierRegistry
             new Favorit(),
             new ForumAvto(),
             new ProfitLiga(),
+            new Mikado(),
         ];
     }
 }
