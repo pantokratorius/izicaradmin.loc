@@ -10,6 +10,7 @@ use App\Services\Suppliers\ForumAvto;
 use App\Services\Suppliers\Mikado;
 use App\Services\Suppliers\Mosvorechie;
 use App\Services\Suppliers\ProfitLiga;
+use App\Services\Suppliers\Rossko;
 
 class SupplierRegistry
 {
@@ -24,6 +25,7 @@ class SupplierRegistry
             new ForumAvto(),
             new ProfitLiga(),
             new Mikado(),
+            new Rossko(),
         ];
     }
 }
