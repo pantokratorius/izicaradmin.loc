@@ -25,7 +25,7 @@ class SupplierRegistry
             new ForumAvto(),
             new ProfitLiga(),
             new Mikado(),
-            new Rossko(),
+            // new Rossko(),
         ];
     }
 }
