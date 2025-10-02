@@ -27,90 +27,88 @@ class Rossko implements SupplierInterface
     }
 
 
-
 public function asyncSearchItems(Client $client, string $article, ?string $brand = null): PromiseInterface
 {
-    $xmlBody = <<<XML
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetSearch xmlns="http://api.rossko.ru/">
-      <KEY1>3289f946550041e90fbb5f8a3c9a3abd</KEY1>
-      <KEY2>6e988b07e0e96dd3713051dca14f81ec</KEY2>
-      <text>{$article}</text>
-      <delivery_id>000000002</delivery_id>
-      <address_id>63987</address_id>
-    </GetSearch>
-  </soap:Body>
-</soap:Envelope>
-XML;
+    try {
+        $connect = [
+            'wsdl' => 'http://api.rossko.ru/service/v2.1/GetSearch',
+            'options' => [
+                'connection_timeout' => 1,
+                'trace' => true
+            ]
+        ];
 
-    return $client->postAsync('http://api.rossko.ru/service/v2.1/GetSearch', [
-        'headers' => [
-            'Content-Type' => 'text/xml; charset=utf-8',
-            'SOAPAction'   => 'http://api.rossko.ru/GetSearch'
-        ],
-        'body' => $xmlBody,
-        'timeout' => 5
-    ])->then(function ($response) {
-        $xml = simplexml_load_string((string)$response->getBody());
-Log::info($xml);
-        // SOAP → массив (как было у тебя)
-        $result = $xml->xpath('//SearchResult')[0] ?? null;
+        $param = [
+            'KEY1'        => '3289f946550041e90fbb5f8a3c9a3abd',
+            'KEY2'        => '6e988b07e0e96dd3713051dca14f81ec',
+            'text'        => $article,
+            'delivery_id' => '000000002',
+            'address_id'  => '63987'
+        ];
+
+        $soap = new SoapClient($connect['wsdl'], $connect['options']);
+        $result = $soap->GetSearch($param);
 
         $items = [];
-        if ($result && (string)$result->success === "1") {
-            $parts = $result->PartsList->Part ?? [];
-            if (!is_array($parts)) {
-                $parts = [$parts];
-            }
+
+        if ($result->SearchResult && $result->SearchResult->success == 1) {
+            $parts = $this->toArray($result->SearchResult->PartsList->Part ?? []);
 
             foreach ($parts as $part) {
-                // stocks
-                if (!empty($part->stocks->stock)) {
-                    $stocks = is_array($part->stocks->stock) ? $part->stocks->stock : [$part->stocks->stock];
-                    foreach ($stocks as $stock) {
-                        $items[] = [
-                            'art'     => (string)$part->partnumber,
-                            'brand'   => (string)$part->brand,
-                            'name'    => (string)$part->name,
-                            'price'   => (float)$stock->price,
-                            'num'     => (int)$stock->count,
-                            'd_deliv' => (string)$stock->delivery,
-                            'whs'     => (string)$stock->description
-                        ];
-                    }
+                foreach ($this->toArray($part->stocks->stock ?? []) as $stock) {
+                    $items[] = $this->mapItem($part, $stock);
                 }
 
-                // crosses
-                if (!empty($part->crosses->Part)) {
-                    $crossParts = is_array($part->crosses->Part) ? $part->crosses->Part : [$part->crosses->Part];
-                    foreach ($crossParts as $cross) {
-                        if (!empty($cross->stocks->stock)) {
-                            $stocks = is_array($cross->stocks->stock) ? $cross->stocks->stock : [$cross->stocks->stock];
-                            foreach ($stocks as $stock) {
-                                $items[] = [
-                                    'art'     => (string)$cross->partnumber,
-                                    'brand'   => (string)$cross->brand,
-                                    'name'    => (string)$cross->name,
-                                    'price'   => (float)$stock->price,
-                                    'num'     => (int)$stock->count,
-                                    'd_deliv' => (string)$stock->delivery,
-                                    'whs'     => (string)$stock->description
-                                ];
-                            }
-                        }
+                foreach ($this->toArray($part->crosses->Part ?? []) as $cross) {
+                    foreach ($this->toArray($cross->stocks->stock ?? []) as $stock) {
+                        $items[] = $this->mapItem($cross, $stock);
                     }
                 }
             }
         }
 
-        // сортировка (по количеству например)
-        usort($items, function ($a, $b) {
-            return $b['num'] <=> $a['num'];
-        });
+          // ✅ применяем два правила фильтрации
+            $items = array_filter($items, function ($p) {
+                return $p['quantity'] > 0
+                    && (stripos($p['warehouse'] ?? '', 'партнерский') === false);
+            });
 
-        return $items;
-    });
+        // сортировка
+        usort($items, fn($a, $b) => $b['quantity'] <=> $a['quantity']);
+
+        // Возвращаем уже FulfilledPromise
+        return new FulfilledPromise($items);
+
+    } catch (\Throwable $e) {
+        // если ошибка → возвращаем rejected promise
+            error_log($e->getMessage());
+    if (isset($soap)) {
+        error_log($soap->__getLastRequestHeaders());
+        error_log($soap->__getLastRequest());
+        error_log($soap->__getLastResponseHeaders());
+        error_log($soap->__getLastResponse());
+    }
+    throw $e;
+    }
+}
+
+private function toArray($value): array
+{
+    if (empty($value)) return [];
+    return is_array($value) ? $value : [$value];
+}
+
+private function mapItem($part, $stock): array
+{
+    return [
+        'part_number'     => (string)$part->partnumber,
+        'part_make'   => (string)$part->brand,
+        'name'    => (string)$part->name,
+        'price'   => (float)$stock->price,
+        'quantity'     => (int)$stock->count,
+        'delivery' => (string)$stock->delivery,
+        'warehouse'     => (string)$stock->description,
+    ];
 }
 
 // Adjusted extractPartStocks for SoapClient response
