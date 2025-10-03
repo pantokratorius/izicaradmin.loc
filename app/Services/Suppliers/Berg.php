@@ -29,6 +29,8 @@ class Berg implements SupplierInterface
                 'items[0][resource_article]'=> $article,
                 'items[0][brand_name]'=> $brand,
                 'analogs'=> 1,
+                'warehouse_types[]' => 1,
+                'warehouse_types[]' => 2,
             ],
         ])->then(function ($response) {
 
