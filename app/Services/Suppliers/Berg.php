@@ -28,7 +28,7 @@ class Berg implements SupplierInterface
                 'key'   => 'a6320055ba39df841612509839e11ced99024809f1638af9ee1bfb6abd1d7fd5',
                 'items[0][resource_article]'=> $article,
                 'items[0][brand_name]'=> $brand,
-                'analogs'=> 1,
+                'analogs'=> 0,
             ],
         ])->then(function ($response) {
 
