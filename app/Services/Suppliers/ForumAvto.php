@@ -3,6 +3,7 @@ namespace App\Services\Suppliers;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\PromiseInterface;
+use Illuminate\Support\Facades\Log;
 
 class ForumAvto implements SupplierInterface
 {
@@ -50,11 +51,17 @@ class ForumAvto implements SupplierInterface
             $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
             $json = json_decode($body, true);
 
-            if (!is_array($json) || !isset($json['data']) || !is_array($json['data'])) {
+            if (!is_array($json)) {
                 return [];
             }
 
-            return collect($json['data'] ?? [])->map(function ($item) {
+            
+            return collect($json ?? [])
+            ->filter(function ($item) {
+                $whse = $item['whse'] ?? '';
+                return in_array($whse, ['MSK', 'KRD', 'RST'], true);
+            })
+            ->map(function ($item) {
                 return [
                      'name'        => $item['name'] ?? null,
                     'part_make'   => $item['brand'] ?? null,
@@ -64,7 +71,7 @@ class ForumAvto implements SupplierInterface
                     'delivery'   => $item['d_deliv'] ?? null,
                     'warehouse'   => $item['whse'] ?? null,
                 ];
-            })->toArray();
+            })->values()->toArray();
         });
     }
 }
