@@ -11,6 +11,7 @@ use App\Services\Suppliers\Mikado;
 use App\Services\Suppliers\Mosvorechie;
 use App\Services\Suppliers\ProfitLiga;
 use App\Services\Suppliers\Rossko;
+use App\Services\Suppliers\Stparts;
 
 class SupplierRegistry
 {
@@ -26,6 +27,7 @@ class SupplierRegistry
             new ProfitLiga(),
             new Mikado(),
             new Rossko(),
+            new Stparts(),
         ];
     }
 }
