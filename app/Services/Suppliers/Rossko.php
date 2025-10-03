@@ -70,7 +70,7 @@ public function asyncSearchItems(Client $client, string $article, ?string $brand
           // ✅ применяем два правила фильтрации
             $items = array_filter($items, function ($p) {
                 return $p['quantity'] > 0
-                    && (stripos($p['warehouse'] ?? '', 'партнерский') === false);
+                    && (mb_stripos($p['warehouse'] , 'Партнерский') === false);
             });
 
         // сортировка
