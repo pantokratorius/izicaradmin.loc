@@ -54,7 +54,11 @@ class AbsSupplier implements SupplierInterface
                 return [];
             }
 
-            return collect($json['data'] ?? [])->map(function ($item) { 
+            return collect($json['data'] ?? [])
+             ->filter(function ($item) {
+                return isset($item['warehouse_name']) && stripos($item['warehouse_name'], 'ABS') !== false;
+            })
+            ->map(function ($item) { 
                 return [
                      'name'        => $item['product_name'] ?? null,
                     'part_make'   => $item['brand'] ?? null,
