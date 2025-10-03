@@ -42,7 +42,13 @@ class Favorit implements SupplierInterface
             }
 
             return collect($json['goods'] ?? [])->map(function ($item) {
-                return collect($item['warehouses'] ?? [])->map(function ($offer) use ($item) {
+                return collect($item['warehouses'] ?? [])
+
+                ->filter(function ($offer) {
+                    // keep only warehouses where own === true
+                    return isset($offer['own']) && $offer['own'] === true;
+                })
+                ->map(function ($offer) use ($item) {
 
                     $date = Carbon::parse($offer['shipmentDate']);
                     $now  = Carbon::now("+03:00");
