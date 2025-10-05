@@ -28,7 +28,6 @@
 <table id="resultsTable" border="1" cellspacing="0" cellpadding="5">
   <thead>
     <tr>
-      <th>Поставщик</th>
       <th>Бренд</th>
       <th>Номер детали</th>
       <th>Название</th>
@@ -36,6 +35,7 @@
       <th>Цена</th>
       <th>Срок</th>
       <th>Склад</th>
+      <th>Поставщик</th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -66,7 +66,7 @@
 #scrollTopBtn {
   display: none; /* скрыта по умолчанию */
   position: fixed;
-  bottom: 30px;
+  bottom: 90px;
   right: 30px;
   z-index: 1000;
   font-size: 18px;
@@ -310,99 +310,215 @@ function collectItems(supplier, items){
   renderResults();
 }
 
-  function renderResults(){
-    tbody.innerHTML = "";
-    let allItems = [];
+  function renderResults() {
+  tbody.innerHTML = "";
+  let allItems = [];
 
-    Object.keys(itemsData).forEach(supplier=>{
-      if(selectedSuppliers.size && !selectedSuppliers.has(supplier)) return;
-      const supplierGroups = itemsData[supplier];
-      Object.keys(supplierGroups).forEach(partKey=>{
-        supplierGroups[partKey].forEach(item=>{
-          allItems.push({...item, supplier});
-        });
+  // 🔹 Collect all items (optionally filter by selected suppliers)
+  Object.keys(itemsData).forEach(supplier => {
+    if (selectedSuppliers.size && !selectedSuppliers.has(supplier)) return;
+    const supplierGroups = itemsData[supplier];
+    Object.keys(supplierGroups).forEach(partKey => {
+      supplierGroups[partKey].forEach(item => {
+        allItems.push({ ...item, supplier });
       });
     });
+  });
 
-    // сортировка
-    allItems.sort((a,b)=>{
-      const aMake = (a.part_make||"").toLowerCase();
-      const bMake = (b.part_make||"").toLowerCase();
+  // 🔹 Sort globally with priority: selected brand + OEM first, then by mode
+  allItems.sort((a, b) => {
+    const aBrand = (a.part_make || "").toLowerCase();
+    const bBrand = (b.part_make || "").toLowerCase();
 
-      // выбранный бренд всегда наверху
-      const aSelected = aMake===articleGlobalBrand?0:1;
-      const bSelected = bMake===articleGlobalBrand?0:1;
-      if(aSelected!==bSelected) return aSelected-bSelected;
+    const aIsSelectedBrand = aBrand === articleGlobalBrand;
+    const bIsSelectedBrand = bBrand === articleGlobalBrand;
+    if (aIsSelectedBrand !== bIsSelectedBrand) return bIsSelectedBrand - aIsSelectedBrand;
 
-      // OEM идёт вторым
-      const aOEM = (a.part_number===articleGlobalNumber && aMake===articleGlobalBrand)?0:1;
-      const bOEM = (b.part_number===articleGlobalNumber && bMake===articleGlobalBrand)?0:1;
-      if(aOEM!==bOEM) return aOEM-bOEM;
+    const aIsOEM = aIsSelectedBrand && a.part_number === articleGlobalNumber;
+    const bIsOEM = bIsSelectedBrand && b.part_number === articleGlobalNumber;
+    if (aIsOEM !== bIsOEM) return bIsOEM - aIsOEM;
 
-      // потом по цене или сроку
-      if(sortMode==="price"){
-        return (parseFloat(a.price)||0)-(parseFloat(b.price)||0);
-      } else if(sortMode==="delivery"){
-        return (parseInt(a.delivery)||0)-(parseInt(b.delivery)||0);
-      }
-      return 0;
-    });
+    if (sortMode === "price") {
+      return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+    } else if (sortMode === "delivery") {
+      return (parseInt(a.delivery) || 0) - (parseInt(b.delivery) || 0);
+    }
+    return 0;
+  });
 
-    const grouped = {};
-    allItems.forEach(item=>{
-      const key = `${item.supplier}_${item.part_make}_${item.part_number}`;
-      if(!grouped[key]) grouped[key]={supplier:item.supplier, items:[]};
-      grouped[key].items.push(item);
-    });
+  // 🔹 Group by brand → part_number
+  const grouped = {};
+  allItems.forEach(item => {
+    const brandKey = (item.part_make || "-").toLowerCase();
+    const numberKey = (item.part_number || "-").toLowerCase();
+    if (!grouped[brandKey]) grouped[brandKey] = { brand: item.part_make, parts: {} };
+    if (!grouped[brandKey].parts[numberKey]) {
+      grouped[brandKey].parts[numberKey] = { number: item.part_number, items: [] };
+    }
+    grouped[brandKey].parts[numberKey].items.push(item);
+  });
 
-    Object.values(grouped).forEach(group=>{
-      const groupItems = group.items;
-      const hiddenCount = groupItems.length-3;
-      const toggleId = `supplier-${group.supplier}-${groupItems[0].part_make}-${groupItems[0].part_number}-${Date.now()}`;
+  // 🔹 Sort brands: selected brand first
+  const brandEntries = Object.values(grouped).sort((a, b) => {
+    const aSel = (a.brand || "").toLowerCase() === articleGlobalBrand;
+    const bSel = (b.brand || "").toLowerCase() === articleGlobalBrand;
+    if (aSel !== bSel) return bSel - aSel;
+    return a.brand.localeCompare(b.brand);
+  });
 
-      const headerRow = document.createElement("tr");
-      headerRow.style.backgroundColor="#f0f0f0";
-      headerRow.innerHTML=`
+  // 🔹 Render grouped structure
+  brandEntries.forEach(brandGroup => {
+    const { brand, parts } = brandGroup;
+
+    // Brand header
+    const brandHeader = document.createElement("tr");
+    brandHeader.style.backgroundColor = "#d9edf7";
+    brandHeader.innerHTML = `<td colspan="8" style="font-weight:bold;">${brand}</td>`;
+    brandHeader.id = `brand-${brand.toLowerCase()}`;
+    tbody.appendChild(brandHeader);
+
+    // Render each part_number group
+    Object.values(parts).forEach(partGroup => {
+      const { number, items } = partGroup;
+
+      // Sort by current mode
+      items.sort((a, b) => {
+        if (sortMode === "price") {
+          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+        } else if (sortMode === "delivery") {
+          return (parseInt(a.delivery) || 0) - (parseInt(b.delivery) || 0);
+        }
+        return 0;
+      });
+
+      const hiddenCount = items.length - 3;
+      const toggleId = `group-${brand}-${number}-${Date.now()}`;
+
+      // Part header
+      const partHeader = document.createElement("tr");
+      partHeader.style.backgroundColor = "#f0f0f0";
+      partHeader.innerHTML = `
         <td colspan="8">
-          <strong>${group.supplier}</strong> – ${groupItems[0].part_make} ${groupItems[0].part_number}
-          ${hiddenCount>0?`<button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button>`:""}
+          <strong>${number}</strong>
+          ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button>` : ""}
         </td>
       `;
-      tbody.appendChild(headerRow);
+      tbody.appendChild(partHeader);
 
-      groupItems.forEach((item,idx)=>{
+      // Item rows
+      items.forEach((item, idx) => {
         const row = document.createElement("tr");
-        row.dataset.group=toggleId;
-        if(idx>=3) row.style.display="none";
-        const isOEM = (item.part_number===articleGlobalNumber && (item.part_make||"").toLowerCase()===articleGlobalBrand);
-        const isSelectedBrand = (item.part_make||"").toLowerCase()===articleGlobalBrand;
+        row.dataset.group = toggleId;
+        if (idx >= 3) row.style.display = "none";
 
-        row.innerHTML=`
-          <td></td>
-          <td style="${isSelectedBrand?'background:#e6f7ff;font-weight:bold;':''}">${item.part_make??"-"}</td>
-          <td>${item.part_number??"-"}</td>
-          <td>${item.name??"-"}</td>
-          <td>${item.quantity??0}</td>
-          <td>${item.price??"-"}</td>
-          <td>${item.delivery??"-"}</td>
-          <td>${item.warehouse??"-"}</td>
+        const isOEM =
+          (item.part_number === articleGlobalNumber &&
+           (item.part_make || "").toLowerCase() === articleGlobalBrand);
+        const isSelectedBrand =
+          (item.part_make || "").toLowerCase() === articleGlobalBrand;
+
+        row.innerHTML = `
+          <td style="${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}"></td>
+          <td>${item.part_number ?? "-"}</td>
+          <td>${item.name ?? "-"}</td>
+          <td>${item.quantity ?? 0}</td>
+          <td>${item.price ?? "-"}</td>
+          <td>${item.delivery ?? "-"}</td>
+          <td>${item.warehouse ?? "-"}</td>
+          <td>${item.supplier ?? "-"}</td>
         `;
-        if(isOEM) row.classList.add("oem-row");
+        if (isOEM) row.classList.add("oem-row");
         tbody.appendChild(row);
       });
 
-      if(hiddenCount>0){
-        const toggleBtn = headerRow.querySelector("button[data-toggle]");
-        toggleBtn.addEventListener("click",(e)=>{
+      // Expand / collapse button
+      if (hiddenCount > 0) {
+        const toggleBtn = partHeader.querySelector("button[data-toggle]");
+        toggleBtn.addEventListener("click", (e) => {
           e.preventDefault();
-          const rows=tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
-          const isCollapsed=rows[3].style.display==="none";
-          rows.forEach((r,idx)=>{if(idx>=3) r.style.display=isCollapsed?"":"none";});
-          toggleBtn.textContent=isCollapsed?"Свернуть":`Показать ещё ${hiddenCount}`;
+          const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
+          const isCollapsed = rows[3].style.display === "none";
+          rows.forEach((r, idx) => { if (idx >= 3) r.style.display = isCollapsed ? "" : "none"; });
+          toggleBtn.textContent = isCollapsed ? "Свернуть" : `Показать ещё ${hiddenCount}`;
         });
       }
     });
+
+    // Separator between brands
+    const separator = document.createElement("tr");
+    separator.innerHTML = `<td colspan="8" style="height:8px;background:#fff;"></td>`;
+    tbody.appendChild(separator);
+  });
+
+
+  // 🔹 Создать кнопки для перехода к брендам
+const brandNavDiv = document.getElementById("brandNav");
+if (brandNavDiv) brandNavDiv.remove(); // удалить старую панель, если была
+
+const navDiv = document.createElement("div");
+navDiv.id = "brandNav";
+navDiv.style.margin = "15px 0 0 220px";
+navDiv.style.display = "flex";
+navDiv.style.flexWrap = "wrap";
+navDiv.style.gap = "8px";
+
+// создаем кнопки навигации
+brandEntries.forEach(bg => {
+  const btn = document.createElement("button");
+  btn.textContent = bg.brand;
+  btn.className = "brand-nav-btn";
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const target = document.getElementById(`brand-${bg.brand.toLowerCase()}`);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+  navDiv.appendChild(btn);
+});
+
+// вставляем панель над таблицей
+const table = document.getElementById("resultsTable");
+table.parentNode.insertBefore(navDiv, table);
+
+
+
+// 🔹 Подсветка активного бренда при прокрутке
+const brandSections = brandEntries.map(bg => ({
+  id: `brand-${bg.brand.toLowerCase()}`,
+  name: bg.brand
+}));
+
+window.removeEventListener("scroll", highlightActiveBrand);
+window.addEventListener("scroll", highlightActiveBrand);
+
+function highlightActiveBrand() {
+  let current = "";
+  const scrollY = window.scrollY - 400; // небольшой отступ сверху
+  for (let section of brandSections) {
+    const el = document.getElementById(section.id);
+    if (el && el.offsetTop <= scrollY) current = section.name;
   }
+  document.querySelectorAll(".brand-nav-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.textContent === current);
+  });
+}
+
+// 🔹 Уменьшение панели при прокрутке
+window.addEventListener("scroll", () => {
+  const nav = document.getElementById("brandNav");
+  if (!nav) return;
+  if (window.scrollY > 150) {
+    nav.classList.add("shrink");
+  } else {
+    nav.classList.remove("shrink");
+  }
+});
+
+
+
+
+}
 
 });
 </script>
@@ -437,5 +553,81 @@ function collectItems(supplier, items){
   color: #fff;
   border-color: #00acc1;
 }
+
+
+
+
+.brand-nav-btn {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f0f0f0;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #000;
+}
+.brand-nav-btn:hover {
+  background: #e0f7fa;
+  border-color: #4dd0e1;
+}
+
+
+.brand-nav-btn.active {
+  background: #4dd0e1;
+  color: #fff;
+  border-color: #00acc1;
+  font-weight: bold;
+}
+
+
+
+
+#brandNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  padding: 12px 10px;
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  transition: padding 0.3s ease, font-size 0.3s ease;
+}
+
+#brandNav.shrink {
+  padding: 6px 10px;
+}
+
+.brand-nav-btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f0f0f0;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+#brandNav.shrink .brand-nav-btn {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.brand-nav-btn:hover {
+  background: #e0f7fa;
+  border-color: #4dd0e1;
+}
+
+.brand-nav-btn.active {
+  background: #4dd0e1;
+  color: #fff;
+  border-color: #00acc1;
+  font-weight: bold;
+}
+
 
 </style>
