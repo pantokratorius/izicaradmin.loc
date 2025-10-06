@@ -3,6 +3,8 @@ namespace App\Services;
 
 use App\Services\Suppliers\SupplierInterface;
 use App\Services\Suppliers\AbsSupplier;
+use App\Services\Suppliers\Autorus;
+use App\Services\Suppliers\Autosputnik;
 use App\Services\Suppliers\Berg;
 use App\Services\Suppliers\FakeSupplier;
 use App\Services\Suppliers\Favorit;
@@ -28,6 +30,8 @@ class SupplierRegistry
             new Mikado(),
             new Rossko(),
             new Stparts(),
+            new Autorus(),
+            new Autosputnik(),
         ];
     }
 }
