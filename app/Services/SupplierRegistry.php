@@ -3,7 +3,9 @@ namespace App\Services;
 
 use App\Services\Suppliers\SupplierInterface;
 use App\Services\Suppliers\AbsSupplier;
+use App\Services\Suppliers\Autoeuro;
 use App\Services\Suppliers\Autorus;
+use App\Services\Suppliers\Autosojuz;
 use App\Services\Suppliers\Autosputnik;
 use App\Services\Suppliers\Berg;
 use App\Services\Suppliers\FakeSupplier;
@@ -32,6 +34,8 @@ class SupplierRegistry
             new Stparts(),
             new Autorus(),
             new Autosputnik(),
+            new Autoeuro(),
+            new Autosojuz(),
         ];
     }
 }

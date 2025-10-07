@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedSuppliers = new Set();
   let sortMode = "price";
 
-  const suppliers = ["ABS","Москворечье", "Берг", "Фаворит", "Форум-Авто", "Профит Лига", "Микадо", "Росско", "STparts", "Авторусь", "Автоспутник"];
+  const suppliers = ["ABS","Москворечье", "Берг", "Фаворит", "Форум-Авто", "Профит Лига", "Микадо", "Росско", "STparts", "Авторусь", "Автоспутник", "Авто-Евро", "Авто Союз"];
   let supplierLoading = {};
 
   // 🔹 показать лоадер
@@ -461,6 +461,7 @@ navDiv.style.margin = "15px 0 0 220px";
 navDiv.style.display = "flex";
 navDiv.style.flexWrap = "wrap";
 navDiv.style.gap = "8px";
+navDiv.style.width = "calc(100% - 220px)";
 
 // создаем кнопки навигации
 brandEntries.forEach(bg => {
