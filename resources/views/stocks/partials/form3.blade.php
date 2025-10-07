@@ -457,6 +457,7 @@ if (brandNavDiv) brandNavDiv.remove(); // удалить старую панел
 
 const navDiv = document.createElement("div");
 navDiv.id = "brandNav";
+navDiv.className = "shrink";
 navDiv.style.margin = "15px 0 0 220px";
 navDiv.style.display = "flex";
 navDiv.style.flexWrap = "wrap";
@@ -506,15 +507,15 @@ function highlightActiveBrand() {
 }
 
 // 🔹 Уменьшение панели при прокрутке
-window.addEventListener("scroll", () => {
-  const nav = document.getElementById("brandNav");
-  if (!nav) return;
-  if (window.scrollY > 150) {
-    nav.classList.add("shrink");
-  } else {
-    nav.classList.remove("shrink");
-  }
-});
+// window.addEventListener("scroll", () => {
+//   const nav = document.getElementById("brandNav");
+//   if (!nav) return;
+//   if (window.scrollY > 150) {
+//     nav.classList.add("shrink");
+//   } else {
+//     nav.classList.remove("shrink");
+//   }
+// });
 
 
 
