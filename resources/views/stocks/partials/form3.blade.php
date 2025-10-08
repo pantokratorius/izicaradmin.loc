@@ -316,7 +316,7 @@ function collectItems(supplier, items){
   tbody.innerHTML = "";
   let allItems = [];
 
-  // 🔹 Collect all items (optionally filter by selected suppliers)
+  // 🔹 Collect all items
   Object.keys(itemsData).forEach(supplier => {
     if (selectedSuppliers.size && !selectedSuppliers.has(supplier)) return;
     const supplierGroups = itemsData[supplier];
@@ -327,30 +327,17 @@ function collectItems(supplier, items){
     });
   });
 
-  // 🔹 Sort globally with priority: selected brand + OEM first, then by mode
-  allItems.sort((a, b) => {
-  const aBrand = (a.part_make || "").toLowerCase();
-  const bBrand = (b.part_make || "").toLowerCase();
-
-  const aIsSelectedBrand = aBrand === articleGlobalBrand;
-  const bIsSelectedBrand = bBrand === articleGlobalBrand;
-
-  const aIsOEM = aIsSelectedBrand && a.part_number === articleGlobalNumber;
-  const bIsOEM = bIsSelectedBrand && b.part_number === articleGlobalNumber;
-
-  // 1️⃣ OEM first
-  if (aIsOEM !== bIsOEM) return bIsOEM - aIsOEM;
-  // 2️⃣ Selected brand second
-  if (aIsSelectedBrand !== bIsSelectedBrand) return bIsSelectedBrand - aIsSelectedBrand;
-  // 3️⃣ For others, compare by price of first row within group
-  return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-});
+  // Normalize for comparison
+  const cleanBrand = (b) => (b || "").toLowerCase().trim();
+  const cleanNumber = (n) => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
+  const selectedBrand = cleanBrand(articleGlobalBrand);
+  const selectedNumber = cleanNumber(articleGlobalNumber);
 
   // 🔹 Group by brand → part_number
   const grouped = {};
   allItems.forEach(item => {
-    const brandKey = (item.part_make || "-").toLowerCase();
-    const numberKey = (item.part_number || "-").toLowerCase();
+    const brandKey = cleanBrand(item.part_make);
+    const numberKey = cleanNumber(item.part_number);
     if (!grouped[brandKey]) grouped[brandKey] = { brand: item.part_make, parts: {} };
     if (!grouped[brandKey].parts[numberKey]) {
       grouped[brandKey].parts[numberKey] = { number: item.part_number, items: [] };
@@ -358,15 +345,37 @@ function collectItems(supplier, items){
     grouped[brandKey].parts[numberKey].items.push(item);
   });
 
-  // 🔹 Sort brands: selected brand first
-  const brandEntries = Object.values(grouped).sort((a, b) => {
-    const aSel = (a.brand || "").toLowerCase() === articleGlobalBrand;
-    const bSel = (b.brand || "").toLowerCase() === articleGlobalBrand;
-    if (aSel !== bSel) return bSel - aSel;
+  // 🔹 Sort items inside each part_number by price
+  Object.values(grouped).forEach(brandGroup => {
+    Object.values(brandGroup.parts).forEach(partGroup => {
+      partGroup.items.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+    });
+  });
+
+  // 🔹 Compute cheapest price per brand (for sorting brands)
+  const brandEntries = Object.values(grouped).map(bg => {
+    const cheapest = Math.min(
+      ...Object.values(bg.parts).flatMap(pg => pg.items.map(i => parseFloat(i.price) || Infinity))
+    );
+    return { ...bg, cheapest };
+  });
+
+  // 🔹 Sort brands with priorities:
+  brandEntries.sort((a, b) => {
+    const aBrand = cleanBrand(a.brand);
+    const bBrand = cleanBrand(b.brand);
+
+    const aSelected = aBrand === selectedBrand;
+    const bSelected = bBrand === selectedBrand;
+    if (aSelected !== bSelected) return bSelected - aSelected;
+
+    if (!aSelected && !bSelected) {
+      return a.cheapest - b.cheapest; // non-selected brands by cheapest offer
+    }
     return a.brand.localeCompare(b.brand);
   });
 
-  // 🔹 Render grouped structure
+  // 🔹 Render
   brandEntries.forEach(brandGroup => {
     const { brand, parts } = brandGroup;
 
@@ -374,22 +383,25 @@ function collectItems(supplier, items){
     const brandHeader = document.createElement("tr");
     brandHeader.style.backgroundColor = "#d9edf7";
     brandHeader.innerHTML = `<td colspan="8" style="font-weight:bold;">${brand}</td>`;
-    brandHeader.id = `brand-${brand.toLowerCase()}`;
+    brandHeader.id = `brand-${cleanBrand(brand)}`;
     tbody.appendChild(brandHeader);
 
-    // Render each part_number group
-    Object.values(parts).forEach(partGroup => {
-      const { number, items } = partGroup;
+    // Sort part groups: OEM first, then by cheapest price
+    const partGroups = Object.values(parts).sort((a, b) => {
+      const aNum = cleanNumber(a.number);
+      const bNum = cleanNumber(b.number);
+      const aIsOEM = aNum === selectedNumber && cleanBrand(brand) === selectedBrand;
+      const bIsOEM = bNum === selectedNumber && cleanBrand(brand) === selectedBrand;
+      if (aIsOEM !== bIsOEM) return bIsOEM - aIsOEM;
 
-      // Sort by current mode
-      items.sort((a, b) => {
-        if (sortMode === "price") {
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-        } else if (sortMode === "delivery") {
-          return (parseInt(a.delivery) || 0) - (parseInt(b.delivery) || 0);
-        }
-        return 0;
-      });
+      const aPrice = Math.min(...a.items.map(i => parseFloat(i.price) || Infinity));
+      const bPrice = Math.min(...b.items.map(i => parseFloat(i.price) || Infinity));
+      return aPrice - bPrice;
+    });
+
+    // Render each part group
+    partGroups.forEach(partGroup => {
+      const { number, items } = partGroup;
 
       const hiddenCount = items.length - 3;
       const toggleId = `group-${brand}-${number}-${Date.now()}`;
@@ -405,17 +417,14 @@ function collectItems(supplier, items){
       `;
       tbody.appendChild(partHeader);
 
-      // Item rows
+      // Items
       items.forEach((item, idx) => {
         const row = document.createElement("tr");
         row.dataset.group = toggleId;
         if (idx >= 3) row.style.display = "none";
 
-        const isOEM =
-          (item.part_number === articleGlobalNumber &&
-           (item.part_make || "").toLowerCase() === articleGlobalBrand);
-        const isSelectedBrand =
-          (item.part_make || "").toLowerCase() === articleGlobalBrand;
+        const isOEM = cleanBrand(item.part_make) === selectedBrand && cleanNumber(item.part_number) === selectedNumber;
+        const isSelectedBrand = cleanBrand(item.part_make) === selectedBrand;
 
         row.innerHTML = `
           <td style="${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}"></td>
@@ -431,7 +440,7 @@ function collectItems(supplier, items){
         tbody.appendChild(row);
       });
 
-      // Expand / collapse button
+      // Expand/collapse
       if (hiddenCount > 0) {
         const toggleBtn = partHeader.querySelector("button[data-toggle]");
         toggleBtn.addEventListener("click", (e) => {
@@ -444,85 +453,63 @@ function collectItems(supplier, items){
       }
     });
 
-    // Separator between brands
+    // Separator
     const separator = document.createElement("tr");
     separator.innerHTML = `<td colspan="8" style="height:8px;background:#fff;"></td>`;
     tbody.appendChild(separator);
   });
 
+  // 🔹 Navigation panel
+  const oldNav = document.getElementById("brandNav");
+  if (oldNav) oldNav.remove();
 
-  // 🔹 Создать кнопки для перехода к брендам
-const brandNavDiv = document.getElementById("brandNav");
-if (brandNavDiv) brandNavDiv.remove(); // удалить старую панель, если была
+  const navDiv = document.createElement("div");
+  navDiv.id = "brandNav";
+  navDiv.className = "shrink";
+  navDiv.style.margin = "15px 0 0 220px";
+  navDiv.style.display = "flex";
+  navDiv.style.flexWrap = "wrap";
+  navDiv.style.gap = "8px";
+  navDiv.style.width = "calc(100% - 220px)";
 
-const navDiv = document.createElement("div");
-navDiv.id = "brandNav";
-navDiv.className = "shrink";
-navDiv.style.margin = "15px 0 0 220px";
-navDiv.style.display = "flex";
-navDiv.style.flexWrap = "wrap";
-navDiv.style.gap = "8px";
-navDiv.style.width = "calc(100% - 220px)";
+  brandEntries.forEach(bg => {
+    const btn = document.createElement("button");
+    btn.textContent = bg.brand;
+    btn.className = "brand-nav-btn";
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = document.getElementById(`brand-${cleanBrand(bg.brand)}`);
+      if (target) {
+        target.scrollIntoView({ behavior: "instant", block: "start" });
+      }
+    });
+    navDiv.appendChild(btn);
+  });
 
-// создаем кнопки навигации
-brandEntries.forEach(bg => {
-  const btn = document.createElement("button");
-  btn.textContent = bg.brand;
-  btn.className = "brand-nav-btn";
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const target = document.getElementById(`brand-${bg.brand.toLowerCase()}`);
-    if (target) {
-      target.scrollIntoView({ behavior: "instant", block: "start" });
+  const table = document.getElementById("resultsTable");
+  table.parentNode.insertBefore(navDiv, table);
+  document.querySelector('#scrollTopBtn').style.bottom = parseInt(getComputedStyle(document.querySelector('#brandNav')).height) + 30 + 'px';
+
+  // 🔹 Highlight active brand
+  const brandSections = brandEntries.map(bg => ({ id: `brand-${cleanBrand(bg.brand)}`, name: bg.brand }));
+
+  window.removeEventListener("scroll", highlightActiveBrand);
+  window.addEventListener("scroll", highlightActiveBrand);
+
+  function highlightActiveBrand() {
+    let current = "";
+    const scrollY = window.scrollY - 400;
+    for (let section of brandSections) {
+      const el = document.getElementById(section.id);
+      if (el && el.offsetTop <= scrollY) current = section.name;
     }
-  });
-  navDiv.appendChild(btn);
-  
-});
-
-// вставляем панель над таблицей
-const table = document.getElementById("resultsTable");
-table.parentNode.insertBefore(navDiv, table);
-document.querySelector('#scrollTopBtn').style.bottom = parseInt( getComputedStyle(document.querySelector('#brandNav')).height ) + 30 + 'px'
-
-
-
-// 🔹 Подсветка активного бренда при прокрутке
-const brandSections = brandEntries.map(bg => ({
-  id: `brand-${bg.brand.toLowerCase()}`,
-  name: bg.brand
-}));
-
-window.removeEventListener("scroll", highlightActiveBrand);
-window.addEventListener("scroll", highlightActiveBrand);
-
-function highlightActiveBrand() {
-  let current = "";
-  const scrollY = window.scrollY - 400; // небольшой отступ сверху
-  for (let section of brandSections) {
-    const el = document.getElementById(section.id);
-    if (el && el.offsetTop <= scrollY) current = section.name;
+    document.querySelectorAll(".brand-nav-btn").forEach(btn => {
+      btn.classList.toggle("active", btn.textContent === current);
+    });
   }
-  document.querySelectorAll(".brand-nav-btn").forEach(btn => {
-    btn.classList.toggle("active", btn.textContent === current);
-  });
 }
 
-// 🔹 Уменьшение панели при прокрутке
-// window.addEventListener("scroll", () => {
-//   const nav = document.getElementById("brandNav");
-//   if (!nav) return;
-//   if (window.scrollY > 150) {
-//     nav.classList.add("shrink");
-//   } else {
-//     nav.classList.remove("shrink");
-//   }
-// });
 
-
-
-
-}
 
 });
 </script>
