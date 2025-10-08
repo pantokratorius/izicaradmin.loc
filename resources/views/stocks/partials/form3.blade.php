@@ -477,11 +477,13 @@ brandEntries.forEach(bg => {
     }
   });
   navDiv.appendChild(btn);
+  
 });
 
 // вставляем панель над таблицей
 const table = document.getElementById("resultsTable");
 table.parentNode.insertBefore(navDiv, table);
+document.querySelector('#scrollTopBtn').style.bottom = parseInt( getComputedStyle(document.querySelector('#brandNav')).height ) + 30 + 'px'
 
 
 
@@ -559,27 +561,6 @@ function highlightActiveBrand() {
 
 
 
-.brand-nav-btn {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: #f0f0f0;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: #000;
-}
-.brand-nav-btn:hover {
-  background: #e0f7fa;
-  border-color: #4dd0e1;
-}
-
-
-.brand-nav-btn.active {
-  background: #4dd0e1;
-  color: #fff;
-  border-color: #00acc1;
-  font-weight: bold;
-}
 
 
 
@@ -612,6 +593,7 @@ function highlightActiveBrand() {
   cursor: pointer;
   transition: all 0.2s;
   font-size: 14px;
+  color: #000;
 }
 
 #brandNav.shrink .brand-nav-btn {
@@ -628,7 +610,7 @@ function highlightActiveBrand() {
   background: #4dd0e1;
   color: #fff;
   border-color: #00acc1;
-  font-weight: bold;
+  
 }
 
 
