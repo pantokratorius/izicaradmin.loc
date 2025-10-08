@@ -19,4 +19,10 @@ class PartsImport implements ToModel, WithHeadingRow
             'quantity'    => $row['kolicestvo'],
         ]);
     }
+
+     public function chunkSize(): int
+    {
+        return 500; // import 500 rows at a time
+    }
+
 }
