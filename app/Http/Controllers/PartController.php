@@ -92,7 +92,7 @@ class PartController extends Controller
 
     Excel::import(new PartsImport, $request->file('file'));
 
-    return redirect()->back()->with('success', 'Parts imported successfully!');
+    return redirect()->back()->with('success', 'Запчасти импортированы успешно!');
 }
 
 }
