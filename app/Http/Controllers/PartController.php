@@ -79,6 +79,10 @@ class PartController extends Controller
 
     public function import(Request $request)
 {
+
+    set_time_limit(120);
+
+    
     $request->validate([
         'file' => 'required|mimes:xls,xlsx'
     ]);
