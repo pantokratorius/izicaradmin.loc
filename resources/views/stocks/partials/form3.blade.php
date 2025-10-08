@@ -329,24 +329,22 @@ function collectItems(supplier, items){
 
   // 🔹 Sort globally with priority: selected brand + OEM first, then by mode
   allItems.sort((a, b) => {
-    const aBrand = (a.part_make || "").toLowerCase();
-    const bBrand = (b.part_make || "").toLowerCase();
+  const aBrand = (a.part_make || "").toLowerCase();
+  const bBrand = (b.part_make || "").toLowerCase();
 
-    const aIsSelectedBrand = aBrand === articleGlobalBrand;
-    const bIsSelectedBrand = bBrand === articleGlobalBrand;
-    if (aIsSelectedBrand !== bIsSelectedBrand) return bIsSelectedBrand - aIsSelectedBrand;
+  const aIsSelectedBrand = aBrand === articleGlobalBrand;
+  const bIsSelectedBrand = bBrand === articleGlobalBrand;
 
-    const aIsOEM = aIsSelectedBrand && a.part_number === articleGlobalNumber;
-    const bIsOEM = bIsSelectedBrand && b.part_number === articleGlobalNumber;
-    if (aIsOEM !== bIsOEM) return bIsOEM - aIsOEM;
+  const aIsOEM = aIsSelectedBrand && a.part_number === articleGlobalNumber;
+  const bIsOEM = bIsSelectedBrand && b.part_number === articleGlobalNumber;
 
-    if (sortMode === "price") {
-      return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-    } else if (sortMode === "delivery") {
-      return (parseInt(a.delivery) || 0) - (parseInt(b.delivery) || 0);
-    }
-    return 0;
-  });
+  // 1️⃣ OEM first
+  if (aIsOEM !== bIsOEM) return bIsOEM - aIsOEM;
+  // 2️⃣ Selected brand second
+  if (aIsSelectedBrand !== bIsSelectedBrand) return bIsSelectedBrand - aIsSelectedBrand;
+  // 3️⃣ For others, compare by price of first row within group
+  return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+});
 
   // 🔹 Group by brand → part_number
   const grouped = {};
