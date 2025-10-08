@@ -457,7 +457,7 @@ if (brandNavDiv) brandNavDiv.remove(); // удалить старую панел
 
 const navDiv = document.createElement("div");
 navDiv.id = "brandNav";
-navDiv.class = "shrink";
+navDiv.className = "shrink";
 navDiv.style.margin = "15px 0 0 220px";
 navDiv.style.display = "flex";
 navDiv.style.flexWrap = "wrap";
