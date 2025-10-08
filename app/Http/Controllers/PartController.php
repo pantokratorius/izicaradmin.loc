@@ -1,11 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Imports\PartsImport;
+use App\Models\Part;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\Utils;
 use App\Services\SupplierRegistry;
 use GuzzleHttp\Promise\Promise as PromisePromise;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PartController extends Controller
 {
@@ -73,5 +76,19 @@ class PartController extends Controller
             'Connection'    => 'keep-alive',
         ]);
     }
+
+    public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xls,xlsx'
+    ]);
+
+    Part::truncate();
+
+
+    Excel::import(new PartsImport, $request->file('file'));
+
+    return redirect()->back()->with('success', 'Parts imported successfully!');
+}
 
 }

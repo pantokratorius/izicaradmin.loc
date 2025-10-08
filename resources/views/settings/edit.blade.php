@@ -16,6 +16,8 @@
                value="{{ old('margin', $setting->margin) }}"
                style="padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
 
+
+
         @error('margin')
             <div style="color: red; font-size: 14px;">{{ $message }}</div>
         @enderror
@@ -24,6 +26,13 @@
                 style="padding: 10px 15px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; width: 140px">
             💾 Сохранить
         </button>
+    </form>
+    <br><hr><br>
+    <form action="{{ route('parts.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="file" accept=".xls,.xlsx">
+        <br><br>
+        <button type="submit" style="padding: 10px 15px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; width: 140px">Сохранить</button>
     </form>
 </div>
 @endsection

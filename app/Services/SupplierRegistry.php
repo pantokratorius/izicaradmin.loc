@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Services\Suppliers\SupplierInterface;
 use App\Services\Suppliers\AbsSupplier;
+use App\Services\Suppliers\ATS;
 use App\Services\Suppliers\Autoeuro;
 use App\Services\Suppliers\Autorus;
 use App\Services\Suppliers\Autosojuz;
@@ -36,6 +37,7 @@ class SupplierRegistry
             new Autosputnik(),
             new Autoeuro(),
             new Autosojuz(),
+            new ATS(),
         ];
     }
 }

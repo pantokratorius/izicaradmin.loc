@@ -72,6 +72,8 @@ Route::get('/api/brands', [PartController::class, 'streamBrands']);
 
 Route::get('/api/items', [PartController::class, 'streamItems']);
 
+Route::post('/parts/import', [PartController::class, 'import'])->name('parts.import');
+
 
 
 Route::resource('stocks', StockController::class);
