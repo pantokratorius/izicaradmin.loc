@@ -23,7 +23,7 @@ class ATS implements SupplierInterface
         $cleanArticle = $this->cleanArticle($article); 
 
         $brands = Part::query()
-            ->whereRaw("REGEXP_REPLACE(article, '[^A-Za-z0-9]', '') = ?", [$cleanArticle])
+            ->whereRaw("REPLACE(REPLACE(REPLACE(part_number, '-', ''), ' ', ''), '_', '') = ?", [$cleanArticle])
             ->pluck('brand')
             ->unique()
             ->toArray();
@@ -41,7 +41,7 @@ class ATS implements SupplierInterface
         $cleanArticle = $this->cleanArticle($article);
 
         $query = Part::query()
-            ->whereRaw("REGEXP_REPLACE(article, '[^A-Za-z0-9]', '') = ?", [$cleanArticle]);
+            ->whereRaw("REPLACE(REPLACE(REPLACE(part_number, '-', ''), ' ', ''), '_', '') = ?", [$cleanArticle]);
 
         if ($brand) {
             $query->where('brand', $brand);
