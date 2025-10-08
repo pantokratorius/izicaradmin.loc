@@ -20,7 +20,7 @@ class ATS implements SupplierInterface
      */
     public function asyncSearchBrands(Client $client, string $article): PromiseInterface
     {
-        $cleanArticle = $this->cleanArticle($article);
+        $cleanArticle = $this->cleanArticle($article); 
 
         $brands = Part::query()
             ->whereRaw("REGEXP_REPLACE(article, '[^A-Za-z0-9]', '') = ?", [$cleanArticle])
