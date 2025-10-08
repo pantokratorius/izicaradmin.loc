@@ -15,19 +15,39 @@ class ProfitLiga implements SupplierInterface
 
     public function asyncSearchBrands(Client $client, string $article): PromiseInterface
     {
-        $results = [];
+           return $client->getAsync("https://api.pr-lg.ru/search/items", [
 
+            'query' => [
+                'article'   => $article,
+                'secret'   => 'XCzalwqZVmpsDTSCBqbiwpYLjztMDGhP',
+            ],
+           
+        ])->then(function ($response) {
 
-        return new FulfilledPromise($results);
+            $body = $response->getBody()->getContents();
+            $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
+            $json = json_decode($body, true);
+
+            if (!is_array($json)) {
+                return [];
+            }
+            return collect($json  ?? [])->map(function ($item) {
+                return [
+                    'part_make'  => $item['brand'] ?? '',
+                ];
+            })->toArray();
+        });
     }
 
 
     public function asyncSearchItems(Client $client, string $article, ?string $brand = null): PromiseInterface
     {
-        return $client->getAsync("https://api.pr-lg.ru/search/items", [
+        return $client->getAsync("https://api.pr-lg.ru/search/crosses", [
             'query' => [
                 'secret'   => 'XCzalwqZVmpsDTSCBqbiwpYLjztMDGhP',
+                'replaces'   => 1,
                 'article'=> $article,
+                'brand'=> $brand,
             ],
         ])->then(function ($response) {
 
@@ -44,7 +64,6 @@ class ProfitLiga implements SupplierInterface
 
                     $date = Carbon::parse($offer['delivery_date']);
                     $now  = Carbon::now("+03:00");
-
                     $days = $date->diffInDays($now);
 
 

@@ -78,10 +78,6 @@ class Autosojuz implements SupplierInterface
 
             return collect($json ?? [])->map(function ($item) {
 
-                    $date = Carbon::parse($item['SupplierTimeMax']);
-                    $now  = Carbon::now("+03:00");
-                    $days = $date->diffInDays($now); 
-
 
                     return [
                         'name'        => $item['Description'] ?? null,
@@ -89,7 +85,7 @@ class Autosojuz implements SupplierInterface
                         'part_number' => $item['Article'] ?? null,
                         'quantity'    => $item['Count'] ?? null,
                         'price'       => $item['CostSale'] ?? null,
-                        'delivery'    => ceil( abs($days) ) ?? null,
+                        'delivery'    => ceil($item['SupplierTimeMax'] / 24) ?? null,
                         'warehouse'   => $item['SupplierName'] ?? null,
                     ];
             })->toArray();
