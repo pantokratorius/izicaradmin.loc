@@ -5,17 +5,25 @@ use App\Models\Part;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\Create;
+use Illuminate\Support\Facades\Log;
+
 
 class ATS implements SupplierInterface
 {
     public function getName(): string
     {
-        return 'ATS-AUTO';
+        return 'Ats-Auto';
     }
 
+    /**
+     * Search brands in the DB for a given article
+     */
     public function asyncSearchBrands(Client $client, string $article): PromiseInterface
     {
-        $brands = Part::where('article', $article)
+        $cleanArticle = $this->cleanArticle($article);
+
+        $brands = Part::query()
+            ->whereRaw("REGEXP_REPLACE(article, '[^A-Za-z0-9]', '') = ?", [$cleanArticle])
             ->pluck('brand')
             ->unique()
             ->toArray();
@@ -25,10 +33,15 @@ class ATS implements SupplierInterface
         );
     }
 
-    // Items from DB
+    /**
+     * Search items in the DB for a given article and optional brand
+     */
     public function asyncSearchItems(Client $client, string $article, ?string $brand = null): PromiseInterface
     {
-        $query = Part::query()->where('article', $article);
+        $cleanArticle = $this->cleanArticle($article);
+
+        $query = Part::query()
+            ->whereRaw("REGEXP_REPLACE(article, '[^A-Za-z0-9]', '') = ?", [$cleanArticle]);
 
         if ($brand) {
             $query->where('brand', $brand);
@@ -42,10 +55,18 @@ class ATS implements SupplierInterface
                 'quantity'    => $part->quantity,
                 'price'       => $part->price,
                 'delivery'    => 0,
-                'warehouse'   => 'ATS-AUTO',
+                'warehouse'   => 'ATC',
             ];
         })->toArray();
 
         return Create::promiseFor($items);
+    }
+
+    /**
+     * Clean an article: keep only letters and numbers
+     */
+    private function cleanArticle(string $article): string
+    {
+        return preg_replace('/[^A-Za-z0-9]/', '', $article);
     }
 }

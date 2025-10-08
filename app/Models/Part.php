@@ -16,4 +16,5 @@ class Part extends Model
         'price',
         'quantity',
     ];
+
 }
