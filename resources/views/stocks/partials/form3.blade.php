@@ -1,6 +1,11 @@
-<div>
-  <input type="text" id="searchInput" placeholder="Введите артикул..." style="width: 200px">
-  <button id="searchButton">Найти</button>
+<div style="display: flex;">
+  <div>
+    <input type="text" id="searchInput" placeholder="Введите артикул..." style="width: 200px">
+    <button id="searchButton">Найти</button>
+  </div>
+  <div>
+    <input type="number" id="percent" placeholder="Проценты" style="width: 80px; margin-right: 10px; margin-left: 100px"><span id="percent_value">{{round($settings['percent'] > 0 ? $settings['percent'] : $settings['margin'] ),0}}</span> %
+  </div>
 </div>
 
 <!-- Лоадер -->
@@ -33,6 +38,7 @@
       <th>Название</th>
       <th>Количество</th>
       <th>Цена</th>
+      <th>Продажа</th>
       <th>Срок</th>
       <th>Склад</th>
       <th>Поставщик</th>
@@ -376,7 +382,7 @@ function collectItems(supplier, items){
         // Brand header
         const brandHeader = document.createElement("tr");
         brandHeader.style.backgroundColor = "#d9edf7";
-        brandHeader.innerHTML = `<td colspan="8" style="font-weight:bold;">${brand}</td>`;
+        brandHeader.innerHTML = `<td colspan="9" style="font-weight:bold;">${brand}</td>`;
         brandHeader.id = `brand-${cleanBrand(brand)}`;
         tbody.appendChild(brandHeader);
 
@@ -400,7 +406,7 @@ function collectItems(supplier, items){
     partHeader.style.backgroundColor = "#f0f0f0";
     partHeader.innerHTML = `
         
-        ${hiddenCount > 0 ? `<td colspan="8"><button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button></td>` : ""}
+        ${hiddenCount > 0 ? `<td colspan="9"><button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button></td>` : ""}
     `;
     tbody.appendChild(partHeader);
 
@@ -413,6 +419,8 @@ function collectItems(supplier, items){
     const isOEM = cleanBrand(item.part_make) === selectedBrand && cleanNumber(item.part_number) === selectedNumber;
     const isSelectedBrand = cleanBrand(item.part_make) === selectedBrand;
 
+      const percent = document.querySelector('#percent_value').textContent
+
     // Only first row gets article & name; remove borders for subsequent rows
     const borderStyle = idx === 0 ? "" : "border-top:0;border-bottom:0;";
     
@@ -422,6 +430,7 @@ function collectItems(supplier, items){
         <td style="${borderStyle}">${idx === 0 ? item.name ?? "-" : ""}</td>
         <td>${item.quantity ?? 0}</td>
         <td>${item.price ?? "-"}</td>
+        <td>${item.price ? (item.price * (1 + percent / 100)).toFixed(2) : "-"}</td>
         <td>${item.delivery ?? "-"}</td>
         <td>${item.warehouse ?? "-"}</td>
         <td>${item.supplier ?? "-"}</td>
@@ -459,7 +468,54 @@ function collectItems(supplier, items){
 
 });
 </script>
+<script>
+const percentInput = document.getElementById('percent');
 
+percentInput.addEventListener('blur', function() {
+    const element = this
+    let percent = this.value;
+
+    fetch('{{ route("settings.updatePercent") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ percent: percent })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            // Remove old success message if exists
+            document.querySelectorAll('.successMessage').forEach(el => el.remove());
+
+            // Create success div
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'successMessage';
+            msgDiv.style.cssText = `
+                float: right;
+                background: #d4edda;
+                color: #155724;
+                padding: 10px 15px;
+                border: 1px solid #c3e6cb;
+                border-radius: 4px;
+                margin-bottom: 15px;
+            `;
+            msgDiv.textContent = data.message;
+
+            // Insert into .main
+            document.querySelector('.main').prepend(msgDiv);
+            element.value=''
+            document.querySelector('#percent_value').textContent = data.value
+            // Remove after 3 seconds
+            setTimeout(() => msgDiv.remove(), 3000);
+        } else {
+            console.error('Update failed');
+        }
+    })
+    .catch(err => console.error(err));
+});
+</script>
 <style>
 .brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .brand-list li{padding:6px 12px;border:1px solid #ccc;border-radius:6px;cursor:pointer;transition:all 0.2s;background:#f9f9f9;font-size:14px}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class StockController extends Controller
 
     public function create()
     { 
-        return view('stocks.create');
+        $settings = Setting::first();
+        return view('stocks.create', compact('settings'));
     }
 
     public function store(Request $request)

@@ -56,6 +56,8 @@ Route::get('/cars/modifications/{serie}', [CarController::class, 'modifications'
 
 Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
 Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+Route::post('/settings/update-percent', [SettingController::class, 'updatePercent'])
+    ->name('settings.updatePercent');
 
 Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 Route::get('/reports/data', [ReportController::class, 'data'])->name('reports.data');
