@@ -54,7 +54,7 @@
 }
 .mini-loader {
   border: 2px solid #f3f3f3;
-  border-top: 2px solid #00acc1;
+  border-top: 2px solid #00acc1;border-top: 2px solid #00acc1;
   border-radius: 50%;
   width: 12px;
   height: 12px;
@@ -400,58 +400,88 @@ function collectItems(supplier, items){
     });
 
     // Render each part group
-    partGroups.forEach(partGroup => {
-      const { number, items } = partGroup;
+    // Render each part group (merged cells)
+partGroups.forEach(partGroup => {
+  const { number, items } = partGroup;
+  const groupId = `group-${brand}-${number}-${Date.now()}`;
+  const rowCount = items.length;
 
-      const hiddenCount = items.length - 3;
-      const toggleId = `group-${brand}-${number}-${Date.now()}`;
+  // Border above group
+  
 
-      // Part header
-      const partHeader = document.createElement("tr");
-      partHeader.style.backgroundColor = "#f0f0f0";
-      partHeader.innerHTML = `
-        <td colspan="8">
-          <strong>${number}</strong>
-          ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button>` : ""}
-        </td>
-      `;
-      tbody.appendChild(partHeader);
+  items.forEach((item, idx) => {
+    const row = document.createElement("tr");
+    row.dataset.group = groupId;
 
-      // Items
-      items.forEach((item, idx) => {
-        const row = document.createElement("tr");
-        row.dataset.group = toggleId;
-        if (idx >= 3) row.style.display = "none";
+    const isOEM = cleanBrand(item.part_make) === selectedBrand && cleanNumber(item.part_number) === selectedNumber;
+    const isSelectedBrand = cleanBrand(item.part_make) === selectedBrand;
 
-        const isOEM = cleanBrand(item.part_make) === selectedBrand && cleanNumber(item.part_number) === selectedNumber;
-        const isSelectedBrand = cleanBrand(item.part_make) === selectedBrand;
+    // Create row cells
+    const cells = [];
 
-        row.innerHTML = `
-          <td style="${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}"></td>
-          <td>${item.part_number ?? "-"}</td>
-          <td>${item.name ?? "-"}</td>
-          <td>${item.quantity ?? 0}</td>
-          <td>${item.price ?? "-"}</td>
-          <td>${item.delivery ?? "-"}</td>
-          <td>${item.warehouse ?? "-"}</td>
-          <td>${item.supplier ?? "-"}</td>
-        `;
-        if (isOEM) row.classList.add("oem-row");
-        tbody.appendChild(row);
-      });
+    if (idx === 0) {
 
-      // Expand/collapse
-      if (hiddenCount > 0) {
-        const toggleBtn = partHeader.querySelector("button[data-toggle]");
-        toggleBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
-          const isCollapsed = rows[3].style.display === "none";
-          rows.forEach((r, idx) => { if (idx >= 3) r.style.display = isCollapsed ? "" : "none"; });
-          toggleBtn.textContent = isCollapsed ? "Свернуть" : `Показать ещё ${hiddenCount}`;
-        });
-      }
-    });
+      // ✅ Brand cell — now merged with rowspan
+      const brandTd = document.createElement("td");
+      brandTd.rowSpan = rowCount;
+      brandTd.textContent = "";
+      brandTd.style.borderLeft = "2px solid #00acc1";
+      brandTd.style.borderRight = "1px solid #ccc";
+      brandTd.style.verticalAlign = "top";
+      brandTd.style.fontWeight = "bold";
+      brandTd.style.background = isSelectedBrand ? "#e6f7ff" : "";
+      row.appendChild(brandTd);
+
+      // ✅ Article cell (merged)
+      const articleTd = document.createElement("td");
+      articleTd.rowSpan = rowCount;
+      articleTd.textContent = item.part_number ?? "-";
+      articleTd.style.borderRight = "1px solid #ccc";
+      articleTd.style.verticalAlign = "top";
+      articleTd.style.fontWeight = "bold";
+      row.appendChild(articleTd);
+
+      // ✅ Name cell (merged)
+      const nameTd = document.createElement("td");
+      nameTd.rowSpan = rowCount;
+      nameTd.textContent = item.name ?? "-";
+      nameTd.style.borderRight = "2px solid #00acc1";
+      nameTd.style.verticalAlign = "top";
+      nameTd.style.fontWeight = "bold";
+      row.appendChild(nameTd);
+    }
+
+    // Remaining row cells (these repeat)
+    const tdQty = document.createElement("td");
+    tdQty.textContent = item.quantity ?? 0;
+
+    const tdPrice = document.createElement("td");
+    tdPrice.textContent = item.price ?? "-";
+
+    const tdDel = document.createElement("td");
+    tdDel.textContent = item.delivery ?? "-";
+
+    const tdWh = document.createElement("td");
+    tdWh.textContent = item.warehouse ?? "-";
+
+    const tdSup = document.createElement("td");
+    tdSup.textContent = item.supplier ?? "-";
+
+    row.appendChild(tdQty);
+    row.appendChild(tdPrice);
+    row.appendChild(tdDel);
+    row.appendChild(tdWh);
+    row.appendChild(tdSup);
+
+    if (isOEM) row.classList.add("oem-row");
+
+    tbody.appendChild(row);
+  });
+
+  // Bottom border
+
+});
+
 
     // Separator
     const separator = document.createElement("tr");
@@ -599,6 +629,19 @@ function collectItems(supplier, items){
   border-color: #00acc1;
   
 }
+
+/* #resultsTable td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  vertical-align: middle;
+}
+tr[data-group]:first-of-type td {
+  border-top: 2px solid #00acc1;
+}
+tr[data-group]:last-of-type td {
+  border-bottom: 2px solid #00acc1;
+} */
+
 
 
 </style>
