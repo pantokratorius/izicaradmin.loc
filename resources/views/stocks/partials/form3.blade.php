@@ -54,7 +54,7 @@
 }
 .mini-loader {
   border: 2px solid #f3f3f3;
-  border-top: 2px solid #00acc1;border-top: 2px solid #00acc1;
+  border-top: 2px solid #00acc1;
   border-radius: 50%;
   width: 12px;
   height: 12px;
@@ -313,231 +313,146 @@ function collectItems(supplier, items){
 }
 
   function renderResults() {
-  tbody.innerHTML = "";
-  let allItems = [];
+    tbody.innerHTML = "";
+    let allItems = [];
 
-  // 🔹 Collect all items
-  Object.keys(itemsData).forEach(supplier => {
-    if (selectedSuppliers.size && !selectedSuppliers.has(supplier)) return;
-    const supplierGroups = itemsData[supplier];
-    Object.keys(supplierGroups).forEach(partKey => {
-      supplierGroups[partKey].forEach(item => {
-        allItems.push({ ...item, supplier });
-      });
-    });
-  });
-
-  // Normalize for comparison
-  const cleanBrand = (b) => (b || "").toLowerCase().trim();
-  const cleanNumber = (n) => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
-  const selectedBrand = cleanBrand(articleGlobalBrand);
-  const selectedNumber = cleanNumber(articleGlobalNumber);
-
-  // 🔹 Group by brand → part_number
-  const grouped = {};
-  allItems.forEach(item => {
-    const brandKey = cleanBrand(item.part_make);
-    const numberKey = cleanNumber(item.part_number);
-    if (!grouped[brandKey]) grouped[brandKey] = { brand: item.part_make, parts: {} };
-    if (!grouped[brandKey].parts[numberKey]) {
-      grouped[brandKey].parts[numberKey] = { number: item.part_number, items: [] };
-    }
-    grouped[brandKey].parts[numberKey].items.push(item);
-  });
-
-  // 🔹 Sort items inside each part_number by price
-  Object.values(grouped).forEach(brandGroup => {
-    Object.values(brandGroup.parts).forEach(partGroup => {
-      partGroup.items.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
-    });
-  });
-
-  // 🔹 Compute cheapest price per brand (for sorting brands)
-  const brandEntries = Object.values(grouped).map(bg => {
-    const cheapest = Math.min(
-      ...Object.values(bg.parts).flatMap(pg => pg.items.map(i => parseFloat(i.price) || Infinity))
-    );
-    return { ...bg, cheapest };
-  });
-
-  // 🔹 Sort brands with priorities:
-  brandEntries.sort((a, b) => {
-    const aBrand = cleanBrand(a.brand);
-    const bBrand = cleanBrand(b.brand);
-
-    const aSelected = aBrand === selectedBrand;
-    const bSelected = bBrand === selectedBrand;
-    if (aSelected !== bSelected) return bSelected - aSelected;
-
-    if (!aSelected && !bSelected) {
-      return a.cheapest - b.cheapest; // non-selected brands by cheapest offer
-    }
-    return a.brand.localeCompare(b.brand);
-  });
-
-  // 🔹 Render
-  brandEntries.forEach(brandGroup => {
-    const { brand, parts } = brandGroup;
-
-    // Brand header
-    const brandHeader = document.createElement("tr");
-    brandHeader.style.backgroundColor = "#d9edf7";
-    brandHeader.innerHTML = `<td colspan="8" style="font-weight:bold;">${brand}</td>`;
-    brandHeader.id = `brand-${cleanBrand(brand)}`;
-    tbody.appendChild(brandHeader);
-
-    // Sort part groups: OEM first, then by cheapest price
-    const partGroups = Object.values(parts).sort((a, b) => {
-      const aNum = cleanNumber(a.number);
-      const bNum = cleanNumber(b.number);
-      const aIsOEM = aNum === selectedNumber && cleanBrand(brand) === selectedBrand;
-      const bIsOEM = bNum === selectedNumber && cleanBrand(brand) === selectedBrand;
-      if (aIsOEM !== bIsOEM) return bIsOEM - aIsOEM;
-
-      const aPrice = Math.min(...a.items.map(i => parseFloat(i.price) || Infinity));
-      const bPrice = Math.min(...b.items.map(i => parseFloat(i.price) || Infinity));
-      return aPrice - bPrice;
+    // 🔹 Collect all items
+    Object.keys(itemsData).forEach(supplier => {
+        if (selectedSuppliers.size && !selectedSuppliers.has(supplier)) return;
+        const supplierGroups = itemsData[supplier];
+        Object.keys(supplierGroups).forEach(partKey => {
+            supplierGroups[partKey].forEach(item => {
+                allItems.push({ ...item, supplier });
+            });
+        });
     });
 
-    // Render each part group
-    // Render each part group (merged cells)
-partGroups.forEach(partGroup => {
-  const { number, items } = partGroup;
-  const groupId = `group-${brand}-${number}-${Date.now()}`;
-  const rowCount = items.length;
+    const cleanBrand = b => (b || "").toLowerCase().trim();
+    const cleanNumber = n => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
+    const selectedBrand = cleanBrand(articleGlobalBrand);
+    const selectedNumber = cleanNumber(articleGlobalNumber);
 
-  // Border above group
-  
+    // 🔹 Group by brand → part_number
+    const grouped = {};
+    allItems.forEach(item => {
+        const brandKey = cleanBrand(item.part_make);
+        const numberKey = cleanNumber(item.part_number);
 
-  items.forEach((item, idx) => {
+        if (!grouped[brandKey]) grouped[brandKey] = { brand: item.part_make, parts: {} };
+        if (!grouped[brandKey].parts[numberKey]) {
+            grouped[brandKey].parts[numberKey] = { number: item.part_number, items: [] };
+        }
+        grouped[brandKey].parts[numberKey].items.push(item);
+    });
+
+    // 🔹 Sort items inside each part_number by price
+    Object.values(grouped).forEach(brandGroup => {
+        Object.values(brandGroup.parts).forEach(partGroup => {
+            partGroup.items.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+        });
+    });
+
+    // 🔹 Compute cheapest price per brand
+    const brandEntries = Object.values(grouped).map(bg => {
+        const cheapest = Math.min(...Object.values(bg.parts).flatMap(pg => pg.items.map(i => parseFloat(i.price) || Infinity)));
+        return { ...bg, cheapest };
+    });
+
+    // 🔹 Sort brands
+    brandEntries.sort((a, b) => {
+        const aBrand = cleanBrand(a.brand);
+        const bBrand = cleanBrand(b.brand);
+        const aSelected = aBrand === selectedBrand;
+        const bSelected = bBrand === selectedBrand;
+        if (aSelected !== bSelected) return bSelected - aSelected;
+        if (!aSelected && !bSelected) return a.cheapest - b.cheapest;
+        return a.brand.localeCompare(b.brand);
+    });
+
+    // 🔹 Render
+        brandEntries.forEach(brandGroup => {
+        const { brand, parts } = brandGroup;
+
+        // Brand header
+        const brandHeader = document.createElement("tr");
+        brandHeader.style.backgroundColor = "#d9edf7";
+        brandHeader.innerHTML = `<td colspan="8" style="font-weight:bold;">${brand}</td>`;
+        brandHeader.id = `brand-${cleanBrand(brand)}`;
+        tbody.appendChild(brandHeader);
+
+        // Part groups sorted by OEM + price
+        const partGroups = Object.values(parts).sort((a, b) => {
+            const aIsOEM = cleanNumber(a.number) === selectedNumber && cleanBrand(brand) === selectedBrand;
+            const bIsOEM = cleanNumber(b.number) === selectedNumber && cleanBrand(brand) === selectedBrand;
+            if (aIsOEM !== bIsOEM) return bIsOEM - aIsOEM;
+            const aPrice = Math.min(...a.items.map(i => parseFloat(i.price) || Infinity));
+            const bPrice = Math.min(...b.items.map(i => parseFloat(i.price) || Infinity));
+            return aPrice - bPrice;
+        });
+
+        partGroups.forEach(partGroup => {
+    const { number, items } = partGroup;
+    const hiddenCount = items.length - 3;
+    const toggleId = `group-${brand}-${number}-${Date.now()}`;
+
+    // Part header
+    const partHeader = document.createElement("tr");
+    partHeader.style.backgroundColor = "#f0f0f0";
+    partHeader.innerHTML = `<td colspan="8">
+        <strong>${number}</strong>
+        ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button>` : ""}
+    </td>`;
+    tbody.appendChild(partHeader);
+
+    // Items
+    items.forEach((item, idx) => {
     const row = document.createElement("tr");
-    row.dataset.group = groupId;
+    row.dataset.group = toggleId;
+    if (idx >= 3) row.style.display = "none"; // hide extra rows
 
     const isOEM = cleanBrand(item.part_make) === selectedBrand && cleanNumber(item.part_number) === selectedNumber;
     const isSelectedBrand = cleanBrand(item.part_make) === selectedBrand;
 
-    // Create row cells
-    const cells = [];
-
-    if (idx === 0) {
-
-      // ✅ Brand cell — now merged with rowspan
-      const brandTd = document.createElement("td");
-      brandTd.rowSpan = rowCount;
-      brandTd.textContent = "";
-      brandTd.style.borderLeft = "2px solid #00acc1";
-      brandTd.style.borderRight = "1px solid #ccc";
-      brandTd.style.verticalAlign = "top";
-      brandTd.style.fontWeight = "bold";
-      brandTd.style.background = isSelectedBrand ? "#e6f7ff" : "";
-      row.appendChild(brandTd);
-
-      // ✅ Article cell (merged)
-      const articleTd = document.createElement("td");
-      articleTd.rowSpan = rowCount;
-      articleTd.textContent = item.part_number ?? "-";
-      articleTd.style.borderRight = "1px solid #ccc";
-      articleTd.style.verticalAlign = "top";
-      articleTd.style.fontWeight = "bold";
-      row.appendChild(articleTd);
-
-      // ✅ Name cell (merged)
-      const nameTd = document.createElement("td");
-      nameTd.rowSpan = rowCount;
-      nameTd.textContent = item.name ?? "-";
-      nameTd.style.borderRight = "2px solid #00acc1";
-      nameTd.style.verticalAlign = "top";
-      nameTd.style.fontWeight = "bold";
-      row.appendChild(nameTd);
-    }
-
-    // Remaining row cells (these repeat)
-    const tdQty = document.createElement("td");
-    tdQty.textContent = item.quantity ?? 0;
-
-    const tdPrice = document.createElement("td");
-    tdPrice.textContent = item.price ?? "-";
-
-    const tdDel = document.createElement("td");
-    tdDel.textContent = item.delivery ?? "-";
-
-    const tdWh = document.createElement("td");
-    tdWh.textContent = item.warehouse ?? "-";
-
-    const tdSup = document.createElement("td");
-    tdSup.textContent = item.supplier ?? "-";
-
-    row.appendChild(tdQty);
-    row.appendChild(tdPrice);
-    row.appendChild(tdDel);
-    row.appendChild(tdWh);
-    row.appendChild(tdSup);
+    // Only first row gets article & name; remove borders for subsequent rows
+    const borderStyle = idx === 0 ? "" : "border-top:0;border-bottom:0;";
+    
+    row.innerHTML = `
+        <td style="${borderStyle}${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}"></td>
+        <td style="${borderStyle}">${idx === 0 ? item.part_number ?? "-" : ""}</td>
+        <td style="${borderStyle}">${idx === 0 ? item.name ?? "-" : ""}</td>
+        <td>${item.quantity ?? 0}</td>
+        <td>${item.price ?? "-"}</td>
+        <td>${item.delivery ?? "-"}</td>
+        <td>${item.warehouse ?? "-"}</td>
+        <td>${item.supplier ?? "-"}</td>
+    `;
 
     if (isOEM) row.classList.add("oem-row");
-
     tbody.appendChild(row);
-  });
-
-  // Bottom border
-
 });
 
-
-    // Separator
-    const separator = document.createElement("tr");
-    separator.innerHTML = `<td colspan="8" style="height:8px;background:#fff;"></td>`;
-    tbody.appendChild(separator);
-  });
-
-  // 🔹 Navigation panel
-  const oldNav = document.getElementById("brandNav");
-  if (oldNav) oldNav.remove();
-
-  const navDiv = document.createElement("div");
-  navDiv.id = "brandNav";
-  navDiv.className = "shrink";
-  navDiv.style.margin = "15px 0 0 220px";
-  navDiv.style.display = "flex";
-  navDiv.style.flexWrap = "wrap";
-  navDiv.style.gap = "8px";
-  navDiv.style.width = "calc(100% - 220px)";
-
-  brandEntries.forEach(bg => {
-    const btn = document.createElement("button");
-    btn.textContent = bg.brand;
-    btn.className = "brand-nav-btn";
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const target = document.getElementById(`brand-${cleanBrand(bg.brand)}`);
-      if (target) {
-        target.scrollIntoView({ behavior: "instant", block: "start" });
-      }
-    });
-    navDiv.appendChild(btn);
-  });
-
-  const table = document.getElementById("resultsTable");
-  table.parentNode.insertBefore(navDiv, table);
-  document.querySelector('#scrollTopBtn').style.bottom = parseInt(getComputedStyle(document.querySelector('#brandNav')).height) + 30 + 'px';
-
-  // 🔹 Highlight active brand
-  const brandSections = brandEntries.map(bg => ({ id: `brand-${cleanBrand(bg.brand)}`, name: bg.brand }));
-
-  window.removeEventListener("scroll", highlightActiveBrand);
-  window.addEventListener("scroll", highlightActiveBrand);
-
-  function highlightActiveBrand() {
-    let current = "";
-    const scrollY = window.scrollY - 400;
-    for (let section of brandSections) {
-      const el = document.getElementById(section.id);
-      if (el && el.offsetTop <= scrollY) current = section.name;
+    // Expand/collapse
+    if (hiddenCount > 0) {
+        const toggleBtn = partHeader.querySelector("button[data-toggle]");
+        toggleBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const rows = tbody.querySelectorAll(`tr[data-group="${toggleId}"]`);
+            const isCollapsed = rows[3].style.display === "none";
+            rows.forEach((r, idx) => {
+                if (idx >= 3) r.style.display = isCollapsed ? "" : "none";
+            });
+            toggleBtn.textContent = isCollapsed ? "Свернуть" : `Показать ещё ${hiddenCount}`;
+        });
     }
-    document.querySelectorAll(".brand-nav-btn").forEach(btn => {
-      btn.classList.toggle("active", btn.textContent === current);
+});
+
+        // Separator
+        const separator = document.createElement("tr");
+        separator.innerHTML = `<td colspan="8" style="height:8px;background:#fff;"></td>`;
+        tbody.appendChild(separator);
     });
-  }
 }
+
 
 
 
@@ -577,7 +492,10 @@ partGroups.forEach(partGroup => {
 
 
 
-
+td > button { 
+  padding: 6px 10px !important ;
+  background: #03a9f4 !important;
+}
 
 
 
@@ -629,19 +547,6 @@ partGroups.forEach(partGroup => {
   border-color: #00acc1;
   
 }
-
-/* #resultsTable td {
-  border: 1px solid #ccc;
-  padding: 6px;
-  vertical-align: middle;
-}
-tr[data-group]:first-of-type td {
-  border-top: 2px solid #00acc1;
-}
-tr[data-group]:last-of-type td {
-  border-bottom: 2px solid #00acc1;
-} */
-
 
 
 </style>
