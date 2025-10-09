@@ -398,10 +398,10 @@ function collectItems(supplier, items){
     // Part header
     const partHeader = document.createElement("tr");
     partHeader.style.backgroundColor = "#f0f0f0";
-    partHeader.innerHTML = `<td colspan="8">
+    partHeader.innerHTML = `
         
-        ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button>` : ""}
-    </td>`;
+        ${hiddenCount > 0 ? `<td colspan="8"><button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button></td>` : ""}
+    `;
     tbody.appendChild(partHeader);
 
     // Items
@@ -448,9 +448,9 @@ function collectItems(supplier, items){
 });
 
         // Separator
-        const separator = document.createElement("tr");
-        separator.innerHTML = `<td colspan="8" style="height:8px;background:#fff;"></td>`;
-        tbody.appendChild(separator);
+        // const separator = document.createElement("tr");
+        // separator.innerHTML = `<td colspan="8" style="height:8px;background:#fff;"></td>`;
+        // tbody.appendChild(separator);
     });
 }
 
