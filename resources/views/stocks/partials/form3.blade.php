@@ -399,7 +399,7 @@ function collectItems(supplier, items){
     const partHeader = document.createElement("tr");
     partHeader.style.backgroundColor = "#f0f0f0";
     partHeader.innerHTML = `<td colspan="8">
-        <strong>${number}</strong>
+        
         ${hiddenCount > 0 ? `<button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button>` : ""}
     </td>`;
     tbody.appendChild(partHeader);
