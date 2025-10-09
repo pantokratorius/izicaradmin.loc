@@ -48,7 +48,7 @@ class Stparts implements SupplierInterface
                         'quantity'    => $item['availability'] ?? null,
                         'price'       => $item['price'] ?? null,
                         'delivery'    => ceil($item['deliveryPeriod'] / 24)  ?? null,
-                        'warehouse'   => $item['distributorCode'] ?? null,
+                        'warehouse'   => $item['supplierDescription'] ?? null,
                     ];
             })->toArray();
         });
