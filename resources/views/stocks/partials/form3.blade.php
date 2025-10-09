@@ -461,6 +461,52 @@ function collectItems(supplier, items){
         // separator.innerHTML = `<td colspan="8" style="height:8px;background:#fff;"></td>`;
         // tbody.appendChild(separator);
     });
+
+// 🔹 Создать кнопки для перехода к брендам 
+    const brandNavDiv = document.getElementById("brandNav"); 
+    if (brandNavDiv) brandNavDiv.remove(); // удалить старую панель, если была 
+      const navDiv = document.createElement("div"); 
+      navDiv.id = "brandNav"; navDiv.className = "shrink"; 
+      navDiv.style.margin = "15px 0 0 220px"; 
+      navDiv.style.display = "flex"; 
+      navDiv.style.flexWrap = "wrap"; 
+      navDiv.style.gap = "8px"; 
+      navDiv.style.width = "calc(100% - 220px)"; // создаем кнопки навигации 
+      brandEntries.forEach(bg => { 
+        const btn = document.createElement("button"); 
+        btn.textContent = bg.brand; 
+        btn.className = "brand-nav-btn"; 
+        btn.addEventListener("click", (e) => { 
+          e.preventDefault(); 
+          const target = document.getElementById(`brand-${bg.brand.toLowerCase()}`); 
+          if (target) { target.scrollIntoView({ behavior: "instant", block: "start" }); 
+        } 
+      }); 
+        navDiv.appendChild(btn); 
+      }); // вставляем панель над таблицей 
+      const table = document.getElementById("resultsTable"); 
+      table.parentNode.insertBefore(navDiv, table); 
+      document.querySelector('#scrollTopBtn').style.bottom = parseInt( getComputedStyle(document.querySelector('#brandNav')).height ) + 30 + 'px' 
+      // 🔹 Подсветка активного бренда при прокрутке 
+      const brandSections = brandEntries.map(bg => ({ 
+        id: `brand-${bg.brand.toLowerCase()}`, 
+        name: bg.brand 
+      }
+      )); 
+      window.removeEventListener("scroll", highlightActiveBrand); 
+      window.addEventListener("scroll", highlightActiveBrand); 
+      function highlightActiveBrand() { 
+        let current = ""; const scrollY = window.scrollY - 400; // небольшой отступ сверху 
+        for (let section of brandSections) { 
+          const el = document.getElementById(section.id); 
+          if (el && el.offsetTop <= scrollY) current = section.name; 
+        } 
+        document.querySelectorAll(".brand-nav-btn").forEach(btn => { 
+          btn.classList.toggle("active", btn.textContent === current); 
+        }); 
+      }
+
+
 }
 
 
