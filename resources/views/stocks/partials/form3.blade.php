@@ -466,7 +466,7 @@ function collectItems(supplier, items){
 .brand-list li:hover{background:#e0f7fa;border-color:#4dd0e1}
 .brand-list li.selected{background:#4dd0e1;color:#fff;border-color:#00acc1}
 .oem-row{background:#fff8c6 !important;font-weight:bold}
-.brand-row{background:#e9fffc !important;font-weight:bold}
+.brand-row{background:#fffce9 !important;font-weight:bold}
 .supplier-btn{padding:5px 12px;margin-bottom:5px;border:1px solid #ccc;border-radius:5px;cursor:pointer;background:#f0f0f0;transition:all 0.2s; color: #000}
 .supplier-btn.active{background:#4dd0e1;color:#fff;border-color:#00acc1}
 #selectAllSuppliers{padding:5px 12px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;cursor:pointer;background:#d9edf7;transition:all 0.2s; color: #000}
