@@ -518,7 +518,7 @@ function collectItems(supplier, items){
 const percentInput = document.getElementById('percent');
 
 percentInput.addEventListener('blur', function() {
-    const element = this
+    const element = this;
     let percent = this.value;
 
     fetch('{{ route("settings.updatePercent") }}', {
@@ -551,8 +551,28 @@ percentInput.addEventListener('blur', function() {
 
             // Insert into .main
             document.querySelector('.main').prepend(msgDiv);
-            element.value=''
-            document.querySelector('#percent_value').textContent = data.value
+
+            // Clear input
+            element.value = '';
+
+            // Update displayed percent value
+            document.querySelector('#percent_value').textContent = data.value;
+
+            // 🔹 Recalculate "Продажа" dynamically
+            const newPercent = parseFloat(data.value) || 0;
+            document.querySelectorAll('#resultsTable tbody tr').forEach(row => {
+                const priceCell = row.children[4];   // column with original price
+                const saleCell  = row.children[5];   // column with selling price ("Продажа")
+
+                if (priceCell && saleCell) {
+                    const basePrice = parseFloat(priceCell.textContent);
+                    if (!isNaN(basePrice)) {
+                        const newSale = (basePrice * (1 + newPercent / 100)).toFixed(2);
+                        saleCell.textContent = newSale;
+                    }
+                }
+            });
+
             // Remove after 3 seconds
             setTimeout(() => msgDiv.remove(), 3000);
         } else {
@@ -561,6 +581,7 @@ percentInput.addEventListener('blur', function() {
     })
     .catch(err => console.error(err));
 });
+
 </script>
 <style>
 .brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
