@@ -648,11 +648,11 @@ td > button {
 .brand-nav-btn {
   padding: 6px 12px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 0px;
   background: #f0f0f0;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 14px;
+  font-size: 10px;
   color: #000;
 }
 
