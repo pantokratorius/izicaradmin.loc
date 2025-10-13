@@ -352,11 +352,36 @@ function collectItems(supplier, items){
     });
 
     // 🔹 Sort items inside each part_number by price
-    Object.values(grouped).forEach(brandGroup => {
-        Object.values(brandGroup.parts).forEach(partGroup => {
-            partGroup.items.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+    // 🔹 Sort items inside each part_number according to sortMode
+   Object.values(grouped).forEach(brandGroup => {
+      Object.values(brandGroup.parts).forEach(partGroup => {
+        partGroup.items.sort((a, b) => {
+          if (sortMode === "delivery") {
+            // convert delivery text (like "в наличии", "2 дн.", "1-3") to number
+            const parseDays = v => {
+              if (v === null || v === undefined) return Infinity;
+              v = String(v).toLowerCase().trim();
+
+              // "в наличии" or "наличие" -> 0
+              if (v.includes("налич")) return 0;
+
+              // explicit zero (e.g. "0", "0 дн.", "0дн") -> 0
+              if (/\b0\b/.test(v)) return 0;
+
+              // extract numeric tokens; use smallest (e.g. "1-3" -> 1)
+              const numbers = v.match(/\d+/g);
+              return numbers ? Math.min(...numbers.map(Number)) : Infinity;
+            };
+
+            return parseDays(a.delivery) - parseDays(b.delivery);
+          } else {
+            // default: sort by price (ascending)
+            return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          }
         });
+      });
     });
+
 
     // 🔹 Compute cheapest price per brand
     const brandEntries = Object.values(grouped).map(bg => {
@@ -388,13 +413,37 @@ function collectItems(supplier, items){
 
         // Part groups sorted by OEM + price
         const partGroups = Object.values(parts).sort((a, b) => {
-            const aIsOEM = cleanNumber(a.number) === selectedNumber && cleanBrand(brand) === selectedBrand;
-            const bIsOEM = cleanNumber(b.number) === selectedNumber && cleanBrand(brand) === selectedBrand;
-            if (aIsOEM !== bIsOEM) return bIsOEM - aIsOEM;
-            const aPrice = Math.min(...a.items.map(i => parseFloat(i.price) || Infinity));
-            const bPrice = Math.min(...b.items.map(i => parseFloat(i.price) || Infinity));
-            return aPrice - bPrice;
-        });
+  // OEM group stays prioritized
+  const aIsOEM = cleanNumber(a.number) === selectedNumber && cleanBrand(brand) === selectedBrand;
+  const bIsOEM = cleanNumber(b.number) === selectedNumber && cleanBrand(brand) === selectedBrand;
+  if (aIsOEM !== bIsOEM) return bIsOEM - aIsOEM;
+
+  if (sortMode === "delivery") {
+    const parseDays = v => {
+      if (v === null || v === undefined) return Infinity;
+      v = String(v).toLowerCase().trim();
+      if (v.includes("налич")) return 0;
+      if (/\b0\b/.test(v)) return 0;
+      const numbers = v.match(/\d+/g);
+      return numbers ? Math.min(...numbers.map(Number)) : Infinity;
+    };
+
+    const aMinDelivery = Math.min(...a.items.map(i => parseDays(i.delivery)));
+    const bMinDelivery = Math.min(...b.items.map(i => parseDays(i.delivery)));
+    // If both infinite / equal, fallback to price for stable sort
+    if (aMinDelivery === bMinDelivery) {
+      const aPrice = Math.min(...a.items.map(i => parseFloat(i.price) || Infinity));
+      const bPrice = Math.min(...b.items.map(i => parseFloat(i.price) || Infinity));
+      return aPrice - bPrice;
+    }
+    return aMinDelivery - bMinDelivery;
+  } else {
+    // default: sort by cheapest price in group
+    const aPrice = Math.min(...a.items.map(i => parseFloat(i.price) || Infinity));
+    const bPrice = Math.min(...b.items.map(i => parseFloat(i.price) || Infinity));
+    return aPrice - bPrice;
+  }
+});
 
         partGroups.forEach(partGroup => {
     const { number, items } = partGroup;
