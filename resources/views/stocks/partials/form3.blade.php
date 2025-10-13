@@ -256,48 +256,22 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     });
   }
 
-  function renderBrands() {
-  brandsList.innerHTML = "";
+  function renderBrands(){
+    brandsList.innerHTML = "";
+    Array.from(brandSet.values()).sort((a,b)=>a.localeCompare(b)).forEach(brand=>{
+      const li = document.createElement("li");
+      li.textContent = brand;
+      li.classList.toggle('selected', brand.toLowerCase()===articleGlobalBrand);
 
-  // Convert brandSet to a sorted array
-  const sortedBrands = Array.from(brandSet.values()).sort((a, b) => a.localeCompare(b, 'ru'));
-
-  // Group by first letter
-  const groups = {};
-  sortedBrands.forEach(brand => {
-    const firstLetter = brand.charAt(0).toUpperCase();
-    if (!groups[firstLetter]) groups[firstLetter] = [];
-    groups[firstLetter].push(brand);
-  });
-
-  // Render grouped list
-  Object.keys(groups)
-    .sort((a, b) => a.localeCompare(b, 'ru'))
-    .forEach(letter => {
-      // Group header
-      const header = document.createElement("li");
-      header.textContent = letter;
-      header.className = "brand-letter-header";
-      brandsList.appendChild(header);
-
-      // Brand items
-      groups[letter].forEach(brand => {
-        const li = document.createElement("li");
-        li.textContent = brand;
-        li.classList.toggle("selected", brand.toLowerCase() === articleGlobalBrand);
-        li.classList.add("brand-item");
-
-        li.addEventListener("click", () => {
-          articleGlobalBrand = brand.toLowerCase();
-          renderBrands();
-          loadItems(articleGlobalNumber, brand);
-        });
-
-        brandsList.appendChild(li);
+      li.addEventListener("click", ()=>{
+        articleGlobalBrand = brand.toLowerCase();
+        renderBrands();
+        loadItems(articleGlobalNumber, brand);
       });
-    });
-}
 
+      brandsList.appendChild(li);
+    });
+  }
 
  function loadItems(article, brand){
   tbody.innerHTML = "";
@@ -610,7 +584,6 @@ percentInput.addEventListener('blur', function() {
 
 </script>
 <style>
-.brand-letter-header {border: none !important; color:#ed0000; font-weight: bold; width: 100%}
 .brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .brand-list li{padding:6px 12px;border:1px solid #ccc;border-radius:6px;cursor:pointer;transition:all 0.2s;background:#f9f9f9;font-size:14px}
 .brand-list li:hover{background:#e0f7fa;border-color:#4dd0e1}
