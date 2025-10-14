@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="page-header">
-  <div>Клиенты</div>
+  <div>Автомобили</div>
   <div style="display: flex; gap: 10px; align-items: center;">
     <form method="GET" action="{{ route('vehicles.index') }}">
       <input type="text" name="search" class="search-box"

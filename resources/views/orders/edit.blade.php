@@ -91,8 +91,9 @@
         <select id="status" name="status">
             <option value="1" {{ old('status', $order->status) === 1 ? 'selected' : '' }}>Новый</option>
             <option value="2" {{ old('status', $order->status) === 2 ? 'selected' : '' }}>В работе</option>
-            <option value="3" {{ old('status', $order->status) === 3 ? 'selected' : '' }}>Завершен</option>
-            <option value="4" {{ old('status', $order->status) === 4 ? 'selected' : '' }}>Отменен</option>
+            <option value="3" {{ old('status', $order->status) === 3 ? 'selected' : '' }}>Пришел</option>
+            <option value="4" {{ old('status', $order->status) === 4 ? 'selected' : '' }}>Выдан</option>
+            <option value="5" {{ old('status', $order->status) === 5 ? 'selected' : '' }}>Отменен</option>
         </select>
     </div>
     

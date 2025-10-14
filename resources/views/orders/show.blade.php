@@ -9,22 +9,22 @@
     {{-- Информация о клиенте --}}
     <div class="card mb-4">
         <div class="card-header">Клиент</div>
-        <div class="card-body">
-            <p><strong>Имя:</strong> {{ $order->client->first_name ?? '—' }} {{ $order->client?->middle_name ?? '' }} {{ $order->client?->last_name ?? '' }}</p>
-            <p><strong>Email:</strong> {{ $order->client->email ?? '—' }}</p>
-            <p><strong>Телефон:</strong> {{ $order->client->phone ?? '—' }}</p>
+        <div class="card-body" style="margin-left: 10px">
+            <p><strong>Имя:</strong> {{ $order->client->first_name ?? $order->vehicle->client->first_name ??'—' }} {{ $order->client?->middle_name ?? $order->vehicle->client->middle_name ?? '' }} {{ $order->client?->last_name ?? $order->vehicle->client->last_name ?? '' }}</p>
+            <p><strong>Email:</strong> {{ $order->client->email ?? $order->vehicle->client->email ?? '—' }}</p>
+            <p><strong>Телефон:</strong> {{ $order->client->phone ?? $order->vehicle->client->phone ?? '—' }}</p>
         </div>
     </div>
-
+<br>
     {{-- Информация о заказе --}}
     <div class="card mb-4">
         <div class="card-header">Информация о заказе</div>
-        <div class="card-body">
+        <div class="card-body" style="margin-left: 10px">
             <p><strong>Статус:</strong> {{ $order->status ?? '—' }}</p>
             <p><strong>Дата создания:</strong> {{ $order->created_at->format('d.m.Y H:i') }}</p>
         </div>
     </div>
-
+<br>
     {{-- Позиции заказа --}}
     <div class="card" style="margin-bottom: 10px">
       <div class="card-header d-flex justify-content-between align-items-center">

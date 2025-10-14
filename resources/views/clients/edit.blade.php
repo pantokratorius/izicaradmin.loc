@@ -2,6 +2,15 @@
 
 @section('title', 'Редактировать клиента')
 
+@php
+    $status = [
+       1 => 'Новый',
+            'В работе',
+            'Пришел',
+            'Выдан',
+            'Отменен'
+    ];
+@endphp
 
 @section('content')
 <style>
@@ -186,7 +195,7 @@
                         <th>Пробег</th>
                         <th>Наценка %</th>
                         <th>Прибыль</th>
-                        <th>Комментарий</th>
+                        <th>Коммент</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -200,7 +209,13 @@
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->prepayment, 2, ',', ' ') ?? '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->prepayment, 2, ',', ' ') ?? '-' }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->status }}</td>
+                            <td>
+                                <select class="status_select"  data-id="{{ $order->id }}" style="padding: 3px 0">
+                                    @foreach ($status as $key => $st)
+                                        <option value="{{$key}}" {{ $order->status == $key ? 'selected' : '' }}>{{$st}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? ($order->vehicle->brand->name ?? $order->vehicle->brand_name).' '.($order->vehicle->model->name ?? $order->vehicle->model_name) : '-' }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
@@ -447,6 +462,39 @@
 </div>
 
 <script>
+
+document.addEventListener('change', function (e) {
+    if (e.target.classList.contains('status_select')) {
+        const select = e.target;
+        const orderId = select.dataset.id;
+        const newStatus = select.value;
+
+        fetch(`/orders/${orderId}/status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify({ status: newStatus })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                select.style.backgroundColor = '#d4edda';
+                setTimeout(() => select.style.backgroundColor = '', 800);
+            } else {
+                alert('Ошибка при обновлении статуса');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Ошибка сети');
+        });
+    }
+});
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const toggleBtn = document.querySelector(".accordion-toggle");
     const content = document.querySelector(".accordion-content");

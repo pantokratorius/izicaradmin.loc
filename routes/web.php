@@ -33,6 +33,8 @@ Route::get('/orders/{order}/print', [OrderController::class, 'print'])
 Route::get('/orders/{order}/print2', [OrderController::class, 'print2'])
     ->name('orders.print2');
 
+Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
 
 Route::resource('clients', ClientController::class)->except(['show']);
 Route::get('/clients/{client}/vehicles', [ClientController::class, 'vehicles']);

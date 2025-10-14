@@ -15,7 +15,7 @@ class OrderController extends Controller
      * Display a listing of the orders.
      */
     public function index()
-    {
+    { 
         $orders = Order::with(['client', 'vehicle', 'manager'])->latest()->paginate(15);
         return view('orders.index', compact('orders'));
     }
@@ -161,6 +161,22 @@ class OrderController extends Controller
 
     return redirect()->back()
         ->with('success', 'Заказ успешно скопирован!');
+}
+
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'status' => 'required|string|max:50',
+    ]);
+
+    $order = Order::findOrFail($id);
+    $order->status = $request->status;
+    $order->save();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Статус успешно обновлён!',
+    ]);
 }
 
 

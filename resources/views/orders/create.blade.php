@@ -67,8 +67,9 @@
         <select id="status" name="status">
             <option value="1">Новый</option>
             <option value="2">В работе</option>
-            <option value="3">Завершен</option>
-            <option value="4">Отменен</option>
+            <option value="3">Пришел</option>
+            <option value="4">Выдан</option>
+            <option value="5">Отменен</option>
         </select>
     </div>
 
