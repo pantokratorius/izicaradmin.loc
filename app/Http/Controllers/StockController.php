@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class StockController extends Controller
 {
     public function index()
-    {  var_dump(function_exists('imap_open'));
+    {  dd(function_exists('imap_open'));
         $stocks = Stock::orderBy('id', 'desc')->paginate(20); 
         return view('stocks.index', compact('stocks')); 
     }
