@@ -9,16 +9,16 @@ use Illuminate\Http\Request;
 class StockController extends Controller
 {
     public function index()
-    {
-        $stocks = Stock::orderBy('id', 'desc')->paginate(20);
-        return view('stocks.index', compact('stocks'));
+    {  var_dump(function_exists('imap_open'));
+        $stocks = Stock::orderBy('id', 'desc')->paginate(20); 
+        return view('stocks.index', compact('stocks')); 
     }
 
     public function create()
     { 
         $settings = Setting::first();
         return view('stocks.create', compact('settings'));
-    }
+    } 
 
     public function store(Request $request)
     {
