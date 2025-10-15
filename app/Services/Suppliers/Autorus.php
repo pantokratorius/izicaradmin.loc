@@ -18,7 +18,7 @@ class Autorus implements SupplierInterface
             'query' => [
                 'number'=> $article,
                 'userlogin'=> 'sales@izicar.ru',
-                'userpsw'=> '614d6aff2d75d59d509aadf976ab2188',
+                'userpsw'=> '999db4204bb29f7f1c2e679c9a0bac3d',
             ],
         ])->then(function ($response) {
             $json = json_decode($response->getBody()->getContents(), true);
