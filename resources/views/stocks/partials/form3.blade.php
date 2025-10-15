@@ -304,7 +304,7 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
   });
 }
 
-
+const cleanNumber = n => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
 
 function collectItems(supplier, items){
   if(!items || !items.length) return;
@@ -334,7 +334,7 @@ function collectItems(supplier, items){
     });
 
     const cleanBrand = b => (b || "").toLowerCase().trim();
-    const cleanNumber = n => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
+    
     const selectedBrand = cleanBrand(articleGlobalBrand);
     const selectedNumber = cleanNumber(articleGlobalNumber);
 
