@@ -14,10 +14,24 @@ class Autorus implements SupplierInterface
 
     public function asyncSearchBrands(Client $client, string $article): PromiseInterface
     {
-        $results = [];
+          return $client->getAsync("https://autorus.ru.public.api.abcp.ru/search/brands", [
+            'query' => [
+                'number'=> $article,
+                'userlogin'=> 'sales@izicar.ru',
+                'userpsw'=> '614d6aff2d75d59d509aadf976ab2188',
+            ],
+        ])->then(function ($response) {
+            $json = json_decode($response->getBody()->getContents(), true);
 
-
-        return new FulfilledPromise($results);
+            if (!is_array($json)) {
+                return [];
+            }
+            return collect($json ?? [])->map(function ($item) {
+                return [
+                    'part_make'  => $item['brand'] ?? '',
+                ];
+            })->toArray();
+        });
     }
 
 
