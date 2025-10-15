@@ -304,14 +304,14 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
   });
 }
 
-const cleanNumber = n => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
+
 
 function collectItems(supplier, items){
   if(!items || !items.length) return;
 
   if(!itemsData[supplier]) itemsData[supplier] = {};
   items.forEach(item=>{
-    const key = `${item.part_make}_${cleanNumber(item.part_number)}`;
+    const key = `${item.part_make}_${item.part_number}`;
     if(!itemsData[supplier][key]) itemsData[supplier][key]=[];
     itemsData[supplier][key].push(item);
   });
@@ -334,7 +334,7 @@ function collectItems(supplier, items){
     });
 
     const cleanBrand = b => (b || "").toLowerCase().trim();
-    
+    const cleanNumber = n => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
     const selectedBrand = cleanBrand(articleGlobalBrand);
     const selectedNumber = cleanNumber(articleGlobalNumber);
 
@@ -346,7 +346,7 @@ function collectItems(supplier, items){
 
         if (!grouped[brandKey]) grouped[brandKey] = { brand: item.part_make, parts: {} };
         if (!grouped[brandKey].parts[numberKey]) {
-            grouped[brandKey].parts[numberKey] = { number: cleanNumber(item.part_number), items: [] };
+            grouped[brandKey].parts[numberKey] = { number: item.part_number, items: [] };
         }
         grouped[brandKey].parts[numberKey].items.push(item);
     });
@@ -475,7 +475,7 @@ function collectItems(supplier, items){
     
     row.innerHTML = `
         <td style="${borderStyle}${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}"></td>
-        <td style="${borderStyle}">${idx === 0 ? cleanNumber(item.part_number) ?? "-" : ""}</td>
+        <td style="${borderStyle}">${idx === 0 ? item.part_number ?? "-" : ""}</td>
         <td style="${borderStyle}">${idx === 0 ? item.name ?? "-" : ""}</td>
         <td>${item.quantity ?? 0}</td>
         <td>${item.price ?? "-"}</td>
