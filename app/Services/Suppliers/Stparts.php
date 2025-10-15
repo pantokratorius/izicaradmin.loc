@@ -44,7 +44,7 @@ class Stparts implements SupplierInterface
                     return [
                         'name'        => $item['description'] ?? null,
                         'part_make'   => $item['brand'] ?? null,
-                        'part_number' => $article ?? null,
+                        'part_number' => $item['number'] ?? null,
                         'quantity'    => $item['availability'] ?? null,
                         'price'       => $item['price'] ?? null,
                         'delivery'    => ceil($item['deliveryPeriod'] / 24)  ?? null,
