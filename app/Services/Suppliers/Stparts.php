@@ -14,7 +14,7 @@ class Stparts implements SupplierInterface
 
     public function asyncSearchBrands(Client $client, string $article): PromiseInterface
     {
-        return $client->getAsync("https://abstd.ru/api-brands", [
+        return $client->getAsync("https://stparts.ru.public.api.abcp.ru/search/brands", [
             'query' => [
                 'number'=> $article,
                 'userlogin'=> 'sales@izicar.ru',
