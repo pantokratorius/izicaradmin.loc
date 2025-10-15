@@ -27,10 +27,7 @@ class ImportAtsFromMail extends Command
             return;
         }
 
-        // Get today’s date in correct IMAP format
-        $today = date('d-M-Y'); // e.g. 13-Oct-2025
-
-        // 🔹 Search for emails from specific sender received today
+        $today = date('d-M-Y'); // e.g. 15-Oct-2025
         $searchQuery = 'FROM "optprice@ats-auto.ru" SINCE "' . $today . '"';
         $emails = imap_search($inbox, $searchQuery);
 
@@ -46,7 +43,6 @@ class ImportAtsFromMail extends Command
 
             $date = date('Y-m-d H:i:s', strtotime($overview->date ?? ''));
             $subject = isset($overview->subject) ? imap_utf8($overview->subject) : '(no subject)';
-            $from = imap_utf8($overview->from ?? '');
 
             $this->info("📧 Checking: {$subject} — {$date}");
 
@@ -56,27 +52,21 @@ class ImportAtsFromMail extends Command
                 $isAttachment = false;
                 $filename = '';
 
-                // Check attachment name
                 if ($part->ifdparameters) {
                     foreach ($part->dparameters as $object) {
-                        if (strtolower($object->attribute) == 'filename') {
+                        if (strtolower($object->attribute) === 'filename') {
                             $isAttachment = true;
                             $filename = imap_utf8($object->value);
                         }
                     }
                 }
 
-                // Skip if not attachment
                 if (!$isAttachment) continue;
+                if (!preg_match('/\.(xls|xlsx)$/i', $filename)) continue;
 
-                // Check file name conditions
-                $isXls = preg_match('/\.(xls|xlsx)$/i', $filename);
-                // $hasPrice = mb_stripos($filename, 'прайс') !== false;
-                if (!$isXls) continue;
-                
                 $this->info("📎 Found valid attachment: {$filename}");
 
-                // Decode the attachment
+                // Decode
                 $attachment = imap_fetchbody($inbox, $email_number, $i + 1);
                 switch ($part->encoding) {
                     case 3:
@@ -87,17 +77,21 @@ class ImportAtsFromMail extends Command
                         break;
                 }
 
-                // Write to temp file
+                // Write to PHP temporary file
                 $temp = tmpfile();
                 fwrite($temp, $attachment);
                 $meta = stream_get_meta_data($temp);
                 $path = $meta['uri'];
 
-                // ✅ Import directly
+                // Determine reader type
+                $readerType = str_ends_with(strtolower($filename), '.xls')
+                    ? \Maatwebsite\Excel\Excel::XLS
+                    : \Maatwebsite\Excel\Excel::XLSX;
+
                 try {
                     Part::truncate();
-                    Excel::import(new PartsImport, $path);
-                    $this->info("✅ Imported: {$filename}");
+                    Excel::import(new PartsImport, $path, null, $readerType);
+                    $this->info("✅ Imported successfully: {$filename}");
                 } catch (\Throwable $e) {
                     $this->error("❌ Import failed: " . $e->getMessage());
                 }
@@ -105,18 +99,11 @@ class ImportAtsFromMail extends Command
                 fclose($temp);
             }
 
-            // Mark as read
             imap_setflag_full($inbox, $email_number, "\\Seen");
         }
 
         imap_close($inbox);
         $this->info('All done!');
-
-
-
-
-
-
     }
 }
 // php artisan mail:import-ats
