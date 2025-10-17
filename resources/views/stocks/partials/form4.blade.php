@@ -124,9 +124,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedSuppliers = new Set();
   let sortMode = "price";
 
+  fetch("/js/brandGroups.json")
+  .then(r => r.json())
+  .then(data => { brandGroups = data; })
+  .catch(err => console.error("❌ Failed to load brandGroups.json:", err));
+
   const suppliers = ["ABS","Москворечье", "Берг", "Фаворит", "Форум-Авто", 
                         "Профит Лига", "Микадо", "Росско", "STparts", "Авторусь", 
-                        "Автоспутник", "Авто-Евро", "Авто Союз", "Ats-Auto", "АвтоТрейд"];
+                        "Автоспутник", "Авто-Евро", "Авто Союз", "Ats-Auto"];
   let supplierLoading = {};
 
   // 🔹 показать лоадер
@@ -226,11 +231,13 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     brandsList.innerHTML = "";
     tbody.innerHTML = "";
     itemsData = {};
+    supplierBrandsMap = {};
+    let brandGroups = {};
     selectedSuppliers.clear();
     suppliersButtonsDiv.querySelectorAll(".supplier-btn").forEach(b=>b.classList.remove("active"));
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
-    suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectBrands(JSON.parse(e.data))));
+    suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectBrands(s, JSON.parse(e.data))));
     evtSource.addEventListener("end", ()=> {
       evtSource.close();
       hideLoader();
@@ -238,7 +245,8 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     });
   });
 
-  function setSupplierLoading(supplier, state){
+  function setSupplierLoading(supplier, state){ 
+  
     supplierLoading[supplier] = state;
     const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${supplier}"]`);
     if(btn){
@@ -247,14 +255,29 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     }
   }
 
-  function collectBrands(brands){
-    brands.forEach(b=>{
-      if(b){
-        const key = b.toLowerCase();
-        if(!brandSet.has(key)) brandSet.set(key,b);
-      }
-    });
+   function findGroupedBrand(raw) {
+    if (!raw) return "";
+    raw = raw.toUpperCase().trim();
+    for (const [group, variants] of Object.entries(brandGroups)) {
+      if (variants.some(v => v.toUpperCase() === raw)) return group;
+    }
+    return raw; // fallback if not found
   }
+
+  function collectBrands(supplier, brands) {
+  if (!supplierBrandsMap[supplier]) supplierBrandsMap[supplier] = new Set();
+
+  brands.forEach(b => {
+    if (!b) return;
+    const clean = b.trim();
+    supplierBrandsMap[supplier].add(clean); // save per-supplier brand
+
+    const groupedName = findGroupedBrand(clean);
+    if (!brandSet.has(groupedName.toLowerCase())) {
+      brandSet.set(groupedName.toLowerCase(), groupedName); // save for UI
+    }
+  });
+}
 
   function renderBrands(){
     brandsList.innerHTML = "";
@@ -273,33 +296,82 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     });
   }
 
- function loadItems(article, brand){
+//  function loadItems(article, brand){
+//   tbody.innerHTML = "";
+//   itemsData = {};
+//   showLoader();
+
+//   suppliers.forEach(s => setSupplierLoading(s, true)); // все в ожидании
+
+//   const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
+
+  
+//   suppliers.forEach(s=> evtSource.addEventListener(s, e=> { 
+  
+//     collectItems(s, JSON.parse(e.data));
+//     setSupplierLoading(s, false); // получены данные
+//   }));
+
+//   evtSource.addEventListener("end", ()=> {
+//     evtSource.close();
+//     hideLoader();
+
+//     // ✅ отмечаем пустые кнопки только после загрузки запчастей
+//     suppliers.forEach(s=>{
+//       const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
+//       if(!itemsData[s] || Object.keys(itemsData[s]).length===0){
+//         btn.classList.add("empty");
+//         btn.disabled = true;   // делаем неактивной
+//       } else {
+//         btn.classList.remove("empty");
+//         btn.disabled = false;  // снова активна
+//       }
+//     });
+//   });
+// }
+
+
+function loadItems(article, brand) {
   tbody.innerHTML = "";
   itemsData = {};
   showLoader();
 
-  suppliers.forEach(s => setSupplierLoading(s, true)); // все в ожидании
+  suppliers.forEach(s => setSupplierLoading(s, true)); // set all loading
 
-  const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
-  suppliers.forEach(s=> evtSource.addEventListener(s, e=> {
-    collectItems(s, JSON.parse(e.data));
-    setSupplierLoading(s, false); // получены данные
-  }));
+  // loop through each supplier and create its own EventSource
+  suppliers.forEach(supplier => {
+    const supplierBrands = supplierBrandsMap[supplier]; // your object of sets
 
-  evtSource.addEventListener("end", ()=> {
-    evtSource.close();
-    hideLoader();
+    // check if supplierBrands is a Set and has the brand (case-insensitive)
+    const hasBrand = supplierBrands instanceof Set &&
+      [...supplierBrands].some(b => b.toLowerCase() === brand.toLowerCase());
 
-    // ✅ отмечаем пустые кнопки только после загрузки запчастей
-    suppliers.forEach(s=>{
-      const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
-      if(!itemsData[s] || Object.keys(itemsData[s]).length===0){
-        btn.classList.add("empty");
-        btn.disabled = true;   // делаем неактивной
-      } else {
-        btn.classList.remove("empty");
-        btn.disabled = false;  // снова активна
-      }
+    const brandParam = hasBrand ? brand : "";
+
+    const evtSource = new EventSource(
+      `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brandParam)}`
+    );
+
+    evtSource.addEventListener(supplier, e => {
+      collectItems(supplier, JSON.parse(e.data));
+      setSupplierLoading(supplier, false);
+    });
+
+    evtSource.addEventListener("end", () => {
+      evtSource.close();
+      hideLoader();
+
+      // disable or enable buttons
+      suppliers.forEach(s => {
+        const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
+        if (!itemsData[s] || Object.keys(itemsData[s]).length === 0) {
+          btn.classList.add("empty");
+          btn.disabled = true;
+        } else {
+          btn.classList.remove("empty");
+          btn.disabled = false;
+        }
+      });
     });
   });
 }

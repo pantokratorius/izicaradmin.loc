@@ -8,6 +8,7 @@ use App\Services\Suppliers\Autoeuro;
 use App\Services\Suppliers\Autorus;
 use App\Services\Suppliers\Autosojuz;
 use App\Services\Suppliers\Autosputnik;
+use App\Services\Suppliers\Avtotrade;
 use App\Services\Suppliers\Berg;
 use App\Services\Suppliers\FakeSupplier;
 use App\Services\Suppliers\Favorit;
@@ -38,6 +39,7 @@ class SupplierRegistry
             new Autoeuro(),
             new Autosojuz(),
             new ATS(),
+            new Avtotrade(),
         ];
     }
 }

@@ -3,7 +3,6 @@
   "Mercedes-Benz": ["Mercedes-Benz", "Mercedes", "MERCEDES BENZ AG", "MERCEDES"],
   "Toyota": ["Toyota", "TOYOTA MOTOR", "TOYOTA COMPANY"],
   "VAG": ["VAG", "Volkswagen", "VW", "Volkswagen AG", "Audi"],
-  "Hyundai": ["Hyundai", "HYUNDAI MOTOR", "HYUNDAI COMPANY", "Hyundai / Kia", "Hyundai-KIA", "HYUNDAI/KIA/MOBIS"],
-  "Mobis": ["Mobis", "MOBIS (HYUNDAI/KIA)"],
+  "Hyundai/Kia": ["Hyundai", "HYUNDAI MOTOR", "HYUNDAI COMPANY", "Hyundai / Kia", "Hyundai-KIA", "HYUNDAI/KIA/MOBIS", "MOBIS (HYUNDAI/KIA)"],
   "KAYABA": ["KYB", "KAYABA", "KYB (KAYABA)"]
 }
