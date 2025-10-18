@@ -82,15 +82,14 @@ class Avtotrade implements SupplierInterface
         "method"   => "getItemsByQuery",
         "params"   => [
             "q" => [$article],
-            "strict" => 1,
+            "strict" => 0,
             "page" => 1,
-            "limit" => 50,
+            "limit" => 100,
             "cross" => 1,
             "replace" => 1,
-            "discount" => 1,
             "related" => 0,
             "component" => 0,
-            "with_stocks_and_prices" => 1,
+            "with_stocks_and_prices" => 1,  
             "with_delivery" => 1,
         ],
     ];
