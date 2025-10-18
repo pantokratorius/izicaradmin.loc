@@ -4,6 +4,7 @@ namespace App\Services\Suppliers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\PromiseInterface;
+use Illuminate\Support\Facades\Log;
 
 class Autosputnik implements SupplierInterface
 {
@@ -43,39 +44,51 @@ class Autosputnik implements SupplierInterface
 
 
     public function asyncSearchItems(Client $client, string $article, ?string $brand = null): PromiseInterface
-    {
-        return $client->getAsync("https://api.auto-sputnik.ru/search_result.php", [
-            'query' => [
-                'options[login]'   => 'izicar2',
-                'options[pass]'   => '123456',
-                'options[datatyp]'   => 'json',
-                'options[storage]'   => 'as',
-                'data[articul]'   => $article,
-                'data[brand]'   => $brand,
-            ],
-        ])->then(function ($response) {
+{
+    $formParams = [
+        'options' => [
+            'login'   => 'izicar2',
+            'pass'    => '123456',
+            'datatyp' => 'JSON',
+            'storage' => 'as',
+        ],
+        'data' => [
+            'articul' => $article,
+        ],
+    ];
 
-            $body = $response->getBody()->getContents();
-            $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
-            $json = json_decode($body, true);
-            
-            if (!is_array($json) || !isset($json['requestAnswer']) || !is_array($json['requestAnswer'])) {
-                return [];
-            }
-
-            return collect($json['requestAnswer'] ?? [])->map(function ($item) {
-                    return [
-                        'name'        => $item['NAME_TOVAR'] ?? null,
-                        'part_make'   => $item['BRA_BRAND'] ?? null,
-                        'part_number' => $item['ARTICUL'] ?? null,
-                        'quantity'    => $item['STOCK'] ?? null,
-                        'price'       => $item['NEW_COST'] ?? null,
-                        'delivery'    => $item['DAYOFF'] ?? null,
-                        'warehouse'   => $item['PRICE_NAME'] ?? null,
-                    ];
-            })->toArray();
-        });
+    if (!empty($brand)) {
+        $formParams['data']['brand'] = $brand;
     }
+
+    return $client->postAsync('https://api.auto-sputnik.ru/search_result.php', [
+        'form_params' => $formParams,
+    ])->then(function ($response) use ($formParams) {
+        $body = $response->getBody()->getContents();
+        $body = mb_convert_encoding($body, 'UTF-8', 'Windows-1251');
+
+        $json = json_decode($body, true);
+        Log::info("aaaaaaaaaaaaaaaa:\n" .  json_encode($formParams, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)  . "\n" . json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n\n" 
+            
+        );
+
+        if (empty($json['requestAnswer']) || !is_array($json['requestAnswer'])) {
+            return [];
+        }
+
+        return collect($json['requestAnswer'])->map(function ($item) {
+            return [
+                'name'        => $item['NAME_TOVAR'] ?? null,
+                'part_make'   => $item['BRA_BRAND'] ?? null,
+                'part_number' => $item['ARTICUL'] ?? null,
+                'quantity'    => $item['STOCK'] ?? null,
+                'price'       => $item['NEW_COST'] ?? null,
+                'delivery'    => $item['DAYOFF'] ?? null,
+                'warehouse'   => $item['PRICE_NAME'] ?? null,
+            ];
+        })->toArray();
+    });
+}
 }
 
 

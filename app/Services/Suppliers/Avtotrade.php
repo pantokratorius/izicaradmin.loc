@@ -56,8 +56,8 @@ class Avtotrade implements SupplierInterface
         $json = json_decode($raw, true);
 
         // Debug log (optional)
-        Log::info("REQUEST:\n" . json_encode($request_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n\n" .
-            "RESPONSE:\n" . $raw . "\n\n" );
+        // Log::info("REQUEST:\n" . json_encode($request_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n\n" .
+        //     "RESPONSE:\n" . $raw . "\n\n" );
 
         if (!isset($json['brands']) || !is_array($json['brands'])) {
             return [];
@@ -101,9 +101,9 @@ class Avtotrade implements SupplierInterface
         $json = json_decode($raw, true);
 
         // optional: debug logging
-        Log::info("REQUEST:\n" . json_encode($request_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n\n" .
-            "RESPONSE:\n" . $raw . "\n\n"
-        );
+        // Log::info("REQUEST:\n" . json_encode($request_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n\n" .
+        //     "RESPONSE:\n" . $raw . "\n\n"
+        // );
 
         if (!isset($json['items']) || empty($json['items'])) {
             return [];
