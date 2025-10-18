@@ -68,9 +68,9 @@ class Autosputnik implements SupplierInterface
         $body = mb_convert_encoding($body, 'UTF-8', 'Windows-1251');
 
         $json = json_decode($body, true);
-        Log::info("aaaaaaaaaaaaaaaa:\n" .  json_encode($formParams, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)  . "\n" . json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n\n" 
+        // Log::info("aaaaaaaaaaaaaaaa:\n" .  json_encode($formParams, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)  . "\n" . json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n\n" 
             
-        );
+        // );
 
         if (empty($json['requestAnswer']) || !is_array($json['requestAnswer'])) {
             return [];

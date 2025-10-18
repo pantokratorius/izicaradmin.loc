@@ -75,19 +75,32 @@ class Avtotrade implements SupplierInterface
 
     public function asyncSearchItems(Client $client, string $article, ?string $brand = null): PromiseInterface
 {
-    $url = "https://api2.autotrade.su/?json";
+    $url = "https://api2.autotrade.su/?json"; // assuming same base API URL
 
     $request_data = [
         "auth_key" => "c152cde499c6fbfaaac9e62776b7b0a7",
-        "method"   => "getStocksAndPrices",
+        "method"   => "getItemsByQuery",
         "params"   => [
-            "storages" => [],
-            "items"    => [
-                $article => $brand ? [$brand => "1"] : 1,
-            ],
+            "q" => [$article],
+            "strict" => 1,
+            "page" => 1,
+            "limit" => 50,
+            "cross" => 1,
+            "replace" => 1,
+            "discount" => 1,
+            "related" => 0,
+            "component" => 0,
+            "with_stocks_and_prices" => 1,
+            "with_delivery" => 1,
         ],
     ];
 
+    // if (!empty($brand)) {
+    //     // The API expects an array of brand IDs, not names
+    //     $request_data["params"]["filter_brands"] = [$brand];
+    // }
+
+    // Encode request body
     $body = http_build_query(['data' => json_encode($request_data, JSON_UNESCAPED_UNICODE)]);
 
     return $client->postAsync($url, [
@@ -95,41 +108,37 @@ class Avtotrade implements SupplierInterface
             'Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8',
         ],
         'body' => $body,
-    ])->then(function ($response) use ($article, $request_data) {
+    ])->then(function ($response) use ($request_data) {
         $raw = $response->getBody()->getContents();
         $raw = mb_convert_encoding($raw, 'UTF-8', 'UTF-8');
         $json = json_decode($raw, true);
 
-        // optional: debug logging
-        // Log::info("REQUEST:\n" . json_encode($request_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n\n" .
-        //     "RESPONSE:\n" . $raw . "\n\n"
-        // );
+        // optional debug:
+        // Log::info('AUTOTRADE REQUEST: ' . json_encode($request_data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+        Log::info('AUTOTRADE RESPONSE: ' . $raw);
 
-        if (!isset($json['items']) || empty($json['items'])) {
+        // Validate JSON structure
+        if (empty($json['items']) || !is_array($json['items'])) {
             return [];
         }
 
         $results = [];
 
-        foreach ($json['items'] as $key => $item) {
-            $articleCode = $item['article'] ?? $key;
-            $brandName   = $item['brand'] ?? null;
-            $itemName    = $item['name'] ?? null;
-            $price       = $item['price'] ?? null;
-
+        foreach ($json['items'] as $item) {
+            // There can be no stocks block, handle both cases
             if (!empty($item['stocks'])) {
                 foreach ($item['stocks'] as $stock) {
                     $results[] = [
-                        'name'        => $itemName,
-                        'part_make'   => $brandName,
-                        'part_number' => $articleCode,
+                        'name'        => $item['name'] ?? null,
+                        'part_make'   => $item['brand_name'] ?? null,
+                        'part_number' => $item['article'] ?? null,
                         'quantity'    => $stock['quantity_unpacked'] ?? 0,
-                        'price'       => $price,
-                        'delivery'    => $stock['delivery_period'] ?? 0,
+                        'price'       => $item['price'] ?? null,
+                        'delivery'    => $stock['delivery_period'] ?? null,
                         'warehouse'   => $stock['name'] ?? null,
                     ];
                 }
-            }
+            } 
         }
 
         return $results;
