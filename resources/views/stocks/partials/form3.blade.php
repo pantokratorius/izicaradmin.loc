@@ -325,73 +325,91 @@ function renderBrands() {
 
 
 function loadItems(article, supplierBrandMap) {
-    tbody.innerHTML = "";
-    itemsData = {};
-    showLoader();
+  tbody.innerHTML = "";
+  itemsData = {};
+  showLoader();
 
-    const brandToSuppliers = {}; // brand -> array of suppliers
-    const suppliersWithoutBrand = [];
+  const brandGroups = {};
+  const suppliersWithoutBrand = [];
+  let activeConnections = 0;
 
-    suppliers.forEach(supplier => {
-        const rawBrand = supplierBrandMap[supplier];
-
-        if (!rawBrand) {
-            suppliersWithoutBrand.push(supplier);
-        } else {
-            // If rawBrand equals clicked brand, treat it as "without brand" to share EventSource
-            if (rawBrand === articleGlobalBrand) {
-                suppliersWithoutBrand.push(supplier);
-            } else {
-                if (!brandToSuppliers[rawBrand]) brandToSuppliers[rawBrand] = [];
-                brandToSuppliers[rawBrand].push(supplier);
-            }
-        }
-
-        setSupplierLoading(supplier, true);
-    });
-
-    // Open one EventSource per raw brand (for suppliers sharing same raw brand)
-    Object.keys(brandToSuppliers).forEach(brand => {
-        const suppliersForBrand = brandToSuppliers[brand];
-        const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`;
-        const evt = new EventSource(url);
-
-        suppliersForBrand.forEach(supplier => {
-            evt.addEventListener(supplier, e => {
-                const data = JSON.parse(e.data);
-                collectItems(supplier, data);
-                setSupplierLoading(supplier, false);
-            });
-        });
-
-        evt.addEventListener("end", () => evt.close());
-    });
-
-    // One common EventSource for all suppliers without raw brand (or raw brand equals clicked brand)
-    if (suppliersWithoutBrand.length > 0) {
-        const brandParam = articleGlobalBrand || "";
-        const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brandParam)}`;
-        const evt = new EventSource(url);
-
-        suppliersWithoutBrand.forEach(supplier => {
-            evt.addEventListener(supplier, e => {
-                const data = JSON.parse(e.data);
-                collectItems(supplier, data);
-                setSupplierLoading(supplier, false);
-            });
-        });
-
-        evt.addEventListener("end", () => evt.close());
+  suppliers.forEach(supplier => {
+    const rawBrand = supplierBrandMap[supplier];
+    if (rawBrand) {
+      if (!brandGroups[rawBrand]) brandGroups[rawBrand] = [];
+      brandGroups[rawBrand].push(supplier);
+    } else {
+      suppliersWithoutBrand.push(supplier);
     }
+    setSupplierLoading(supplier, true);
+  });
 
-    // Hide loader when all suppliers finish
-    const interval = setInterval(() => {
-        const stillLoading = Object.values(supplierLoading).some(l => l);
-        if (!stillLoading) {
-            hideLoader();
-            clearInterval(interval);
+  // 🔹 Function to close loader + update buttons after all done
+  function checkAllDone() {
+    if (activeConnections === 0) {
+      hideLoader();
+
+      // ✅ Apply "empty" class & disable empty suppliers
+      suppliers.forEach(s => {
+        const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
+        if (!itemsData[s] || Object.keys(itemsData[s]).length === 0) {
+          btn.classList.add("empty");
+          btn.disabled = true;
+        } else {
+          btn.classList.remove("empty");
+          btn.disabled = false;
         }
-    }, 100);
+      });
+    }
+  }
+
+  // 🔹 Open grouped EventSources for suppliers with same raw brand
+  Object.entries(brandGroups).forEach(([brand, suppliersList]) => {
+    const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`;
+    const evt = new EventSource(url);
+    activeConnections++;
+
+    suppliersList.forEach(supplier => {
+      evt.addEventListener(supplier, e => {
+        const data = JSON.parse(e.data);
+        collectItems(supplier, data);
+        setSupplierLoading(supplier, false);
+      });
+    });
+
+    evt.addEventListener("end", () => {
+      evt.close();
+      activeConnections--;
+      checkAllDone();
+    });
+  });
+
+  // 🔹 One common EventSource for suppliers without raw brand (use clicked brand)
+  if (suppliersWithoutBrand.length > 0) {
+    const brandParam = articleGlobalBrand || "";
+    const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brandParam)}`;
+    const evt = new EventSource(url);
+    activeConnections++;
+
+    suppliersWithoutBrand.forEach(supplier => {
+      evt.addEventListener(supplier, e => {
+        const data = JSON.parse(e.data);
+        collectItems(supplier, data);
+        setSupplierLoading(supplier, false);
+      });
+    });
+
+    evt.addEventListener("end", () => {
+      evt.close();
+      activeConnections--;
+      checkAllDone();
+    });
+  }
+
+  // 🔹 If no EventSources were opened
+  if (activeConnections === 0) {
+    hideLoader();
+  }
 }
 
 

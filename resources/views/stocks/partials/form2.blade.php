@@ -249,14 +249,17 @@ document.getElementById("searchButton").addEventListener("click", (e) => {
 });
 
 
-  function setSupplierLoading(supplier, state){
-    supplierLoading[supplier] = state;
-    const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${supplier}"]`);
-    if(btn){
-      const loader = btn.querySelector(".mini-loader");
-      loader.style.display = state ? "inline-block" : "none";
-    }
+function setSupplierLoading(supplier, state) {
+  supplierLoading[supplier] = !!state;
+  const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${supplier}"]`);
+  if (btn) {
+    const loader = btn.querySelector(".mini-loader");
+    if (loader) loader.style.display = state ? "inline-block" : "none";
+    // visual hint for debugging
+    btn.dataset.loading = state ? "1" : "0";
   }
+  console.debug(`[loader] ${supplier} => ${state}`);
+}
 
   const brandGroupsRaw = {
     @foreach($brandGroups as $group)
@@ -335,72 +338,48 @@ function renderBrands() {
 
 
 function loadItems(article, supplierBrandMap) {
+  console.log("🔥 loadItems started", { article, supplierBrandMap });
+
   tbody.innerHTML = "";
   itemsData = {};
   showLoader();
 
-  const brandGroups = {};
+  const suppliersWithBrand = [];
   const suppliersWithoutBrand = [];
-  let activeConnections = 0;
 
+  // Split suppliers into groups
   suppliers.forEach(supplier => {
     const rawBrand = supplierBrandMap[supplier];
     if (rawBrand) {
-      if (!brandGroups[rawBrand]) brandGroups[rawBrand] = [];
-      brandGroups[rawBrand].push(supplier);
+      suppliersWithBrand.push({ supplier, brand: rawBrand });
     } else {
       suppliersWithoutBrand.push(supplier);
     }
     setSupplierLoading(supplier, true);
   });
 
-  // 🔹 Function to close loader + update buttons after all done
-  function checkAllDone() {
-    if (activeConnections === 0) {
-      hideLoader();
-
-      // ✅ Apply "empty" class & disable empty suppliers
-      suppliers.forEach(s => {
-        const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
-        if (!itemsData[s] || Object.keys(itemsData[s]).length === 0) {
-          btn.classList.add("empty");
-          btn.disabled = true;
-        } else {
-          btn.classList.remove("empty");
-          btn.disabled = false;
-        }
-      });
-    }
-  }
-
-  // 🔹 Open grouped EventSources for suppliers with same raw brand
-  Object.entries(brandGroups).forEach(([brand, suppliersList]) => {
+  // Individual connections for suppliers with brand
+  suppliersWithBrand.forEach(({ supplier, brand }) => {
     const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`;
+    console.log(`[EventSource] supplier=${supplier}, brand=${brand}`);
+
     const evt = new EventSource(url);
-    activeConnections++;
-
-    suppliersList.forEach(supplier => {
-      evt.addEventListener(supplier, e => {
-        const data = JSON.parse(e.data);
-        collectItems(supplier, data);
-        setSupplierLoading(supplier, false);
-      });
+    evt.addEventListener(supplier, e => {
+      const data = JSON.parse(e.data);
+      collectItems(supplier, data);
+      setSupplierLoading(supplier, false);
     });
 
-    evt.addEventListener("end", () => {
-      evt.close();
-      activeConnections--;
-      checkAllDone();
-    });
+    evt.addEventListener("end", () => evt.close());
   });
 
-  // 🔹 One common EventSource for suppliers without raw brand (use clicked brand)
+  // Common connection for suppliers without brand (use clicked brand)
   if (suppliersWithoutBrand.length > 0) {
     const brandParam = articleGlobalBrand || "";
     const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brandParam)}`;
-    const evt = new EventSource(url);
-    activeConnections++;
+    console.log(`[Common EventSource] for suppliers without brand → ${suppliersWithoutBrand.join(", ")}, brand=${brandParam}`);
 
+    const evt = new EventSource(url);
     suppliersWithoutBrand.forEach(supplier => {
       evt.addEventListener(supplier, e => {
         const data = JSON.parse(e.data);
@@ -408,33 +387,81 @@ function loadItems(article, supplierBrandMap) {
         setSupplierLoading(supplier, false);
       });
     });
+    evt.addEventListener("end", () => evt.close());
+  }
 
-    evt.addEventListener("end", () => {
-      evt.close();
-      activeConnections--;
-      checkAllDone();
+  // 🟢 Check and update "empty" supplier buttons
+  const checkEmptySuppliers = () => {
+    console.log("[loadItems] Checking for empty suppliers...");
+
+    suppliers.forEach(s => {
+      const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
+      const hasData = itemsData[s] && Object.keys(itemsData[s]).length > 0;
+
+      if (!btn) return;
+
+      if (!hasData) {
+        btn.classList.add("empty");
+        btn.disabled = true;
+        console.log(`[empty] supplier=${s} → marked empty`);
+      } else {
+        btn.classList.remove("empty");
+        btn.disabled = false;
+        console.log(`[not empty] supplier=${s} → active`);
+      }
     });
-  }
+  };
 
-  // 🔹 If no EventSources were opened
-  if (activeConnections === 0) {
-    hideLoader();
-  }
+  // Watch until all suppliers finish
+  const interval = setInterval(() => {
+    const stillLoading = Object.values(supplierLoading).some(l => l);
+    if (!stillLoading) {
+      hideLoader();
+      clearInterval(interval);
+      checkEmptySuppliers();
+    }
+  }, 300);
 }
 
 
 
-function collectItems(supplier, items){
-  if(!items || !items.length) return;
 
-  if(!itemsData[supplier]) itemsData[supplier] = {};
-  items.forEach(item=>{
-    const key = `${item.part_make}_${item.part_number}`;
-    if(!itemsData[supplier][key]) itemsData[supplier][key]=[];
+function collectItems(supplier, items) {
+  console.debug(`[collectItems] supplier=${supplier}`, items);
+
+  if (!items) {
+    // ensure supplier key exists (may be empty)
+    if (!itemsData[supplier]) itemsData[supplier] = {};
+    return;
+  }
+
+  // sometimes API might return an object; normalize to array
+  if (!Array.isArray(items)) {
+    // if it's an object keyed by something, try to convert
+    if (typeof items === 'object') {
+      items = Object.values(items);
+    } else {
+      items = [items];
+    }
+  }
+
+  if (!itemsData[supplier]) itemsData[supplier] = {};
+
+  items.forEach(item => {
+    // create grouping key - keep it stable and stringified
+    const make = item.part_make ?? item.brand ?? "UNKNOWN";
+    const num = item.part_number ?? item.article ?? "UNKNOWN";
+    const key = `${String(make)}_${String(num)}`;
+
+    if (!itemsData[supplier][key]) itemsData[supplier][key] = [];
     itemsData[supplier][key].push(item);
   });
+
+  console.debug(`[collectItems] itemsData[${supplier}] keys:`, Object.keys(itemsData[supplier] || {}));
+  // call renderResults if you want immediate UI updates
   renderResults();
 }
+
 
   function renderResults() {
     tbody.innerHTML = "";
