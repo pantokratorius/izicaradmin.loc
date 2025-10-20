@@ -334,28 +334,32 @@ function renderBrands() {
 }
 
 
-function loadItems(article) {
+function loadItems(article, supplierBrandMap) {
   tbody.innerHTML = "";
   itemsData = {};
   showLoader();
 
-  const suppliersWithBrand = [];
+  const brandGroups = {};
   const suppliersWithoutBrand = [];
+  let activeConnections = 0;
 
-  suppliers.forEach(s => {
-    const rawBrand = supplierBrandMap[s] || null; // supplierBrandMap stores raw brand per supplier
-    if (rawBrand) suppliersWithBrand.push({ supplier: s, brand: rawBrand });
-    else suppliersWithoutBrand.push(s);
+  suppliers.forEach(supplier => {
+    const rawBrand = supplierBrandMap[supplier];
+    if (rawBrand) {
+      if (!brandGroups[rawBrand]) brandGroups[rawBrand] = [];
+      brandGroups[rawBrand].push(supplier);
+    } else {
+      suppliersWithoutBrand.push(supplier);
+    }
+    setSupplierLoading(supplier, true);
   });
 
-  let openConnections = 0;
-
-  function connectionEnded() {
-    openConnections--;
-    if (openConnections === 0) {
+  // 🔹 Function to close loader + update buttons after all done
+  function checkAllDone() {
+    if (activeConnections === 0) {
       hideLoader();
 
-      // Mark empty suppliers
+      // ✅ Apply "empty" class & disable empty suppliers
       suppliers.forEach(s => {
         const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
         if (!itemsData[s] || Object.keys(itemsData[s]).length === 0) {
@@ -366,51 +370,56 @@ function loadItems(article) {
           btn.disabled = false;
         }
       });
-
-      renderResults();
     }
   }
 
-  // 1️⃣ SSE per supplier with brand
-  suppliersWithBrand.forEach(({ supplier, brand }) => {
-    openConnections++;
-    setSupplierLoading(supplier, true);
-    const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}&supplier=${encodeURIComponent(supplier)}`);
+  // 🔹 Open grouped EventSources for suppliers with same raw brand
+  Object.entries(brandGroups).forEach(([brand, suppliersList]) => {
+    const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`;
+    const evt = new EventSource(url);
+    activeConnections++;
 
-    evtSource.addEventListener(supplier, e => {
-      collectItems(supplier, JSON.parse(e.data));
-      setSupplierLoading(supplier, false);
-    });
-
-    evtSource.addEventListener("end", () => {
-      evtSource.close();
-      connectionEnded();
-    });
-  });
-
-  // 2️⃣ One SSE for suppliers without brand
-  if (suppliersWithoutBrand.length) {
-    openConnections++;
-    suppliersWithoutBrand.forEach(s => setSupplierLoading(s, true));
-
-    const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=`); // empty brand
-    evtSource.addEventListener("common", e => {
-      const data = JSON.parse(e.data);
-      suppliersWithoutBrand.forEach(supplier => {
-        if (!itemsData[supplier]) itemsData[supplier] = {};
+    suppliersList.forEach(supplier => {
+      evt.addEventListener(supplier, e => {
+        const data = JSON.parse(e.data);
         collectItems(supplier, data);
         setSupplierLoading(supplier, false);
       });
     });
 
-    evtSource.addEventListener("end", () => {
-      evtSource.close();
-      connectionEnded();
+    evt.addEventListener("end", () => {
+      evt.close();
+      activeConnections--;
+      checkAllDone();
+    });
+  });
+
+  // 🔹 One common EventSource for suppliers without raw brand (use clicked brand)
+  if (suppliersWithoutBrand.length > 0) {
+    const brandParam = articleGlobalBrand || "";
+    const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brandParam)}`;
+    const evt = new EventSource(url);
+    activeConnections++;
+
+    suppliersWithoutBrand.forEach(supplier => {
+      evt.addEventListener(supplier, e => {
+        const data = JSON.parse(e.data);
+        collectItems(supplier, data);
+        setSupplierLoading(supplier, false);
+      });
+    });
+
+    evt.addEventListener("end", () => {
+      evt.close();
+      activeConnections--;
+      checkAllDone();
     });
   }
 
-  // Edge case: if no suppliers triggered SSE
-  if (openConnections === 0) connectionEnded();
+  // 🔹 If no EventSources were opened
+  if (activeConnections === 0) {
+    hideLoader();
+  }
 }
 
 
