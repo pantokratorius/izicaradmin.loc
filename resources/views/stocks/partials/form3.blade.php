@@ -333,6 +333,7 @@ function loadItems(article, supplierBrandMap) {
   const suppliersWithoutBrand = [];
   let activeConnections = 0;
 
+  // 🔹 Group suppliers by brand & track those without brand
   suppliers.forEach(supplier => {
     const rawBrand = supplierBrandMap[supplier];
     if (rawBrand) {
@@ -344,12 +345,15 @@ function loadItems(article, supplierBrandMap) {
     setSupplierLoading(supplier, true);
   });
 
+  console.log("📌 Brand groups:", brandGroups);
+  console.log("📌 Suppliers without brand:", suppliersWithoutBrand);
+
   // 🔹 Function to close loader + update buttons after all done
   function checkAllDone() {
     if (activeConnections === 0) {
       hideLoader();
 
-      // ✅ Apply "empty" class & disable empty suppliers
+      // Apply "empty" class & disable empty suppliers
       suppliers.forEach(s => {
         const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
         if (!itemsData[s] || Object.keys(itemsData[s]).length === 0) {
@@ -363,15 +367,18 @@ function loadItems(article, supplierBrandMap) {
     }
   }
 
-  // 🔹 Open grouped EventSources for suppliers with same raw brand
+  // 🔹 Open EventSources per brand group
   Object.entries(brandGroups).forEach(([brand, suppliersList]) => {
     const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`;
+    console.log(`[REQUEST] Brand: "${brand}", Suppliers: ${suppliersList.join(", ")}, URL: ${url}`);
+    
     const evt = new EventSource(url);
     activeConnections++;
 
     suppliersList.forEach(supplier => {
       evt.addEventListener(supplier, e => {
         const data = JSON.parse(e.data);
+        console.log(`[RESPONSE] Supplier: "${supplier}", Brand: "${brand}"`, data);
         collectItems(supplier, data);
         setSupplierLoading(supplier, false);
       });
@@ -384,16 +391,19 @@ function loadItems(article, supplierBrandMap) {
     });
   });
 
-  // 🔹 One common EventSource for suppliers without raw brand (use clicked brand)
+  // 🔹 Common EventSource for suppliers without brand (use clicked brand)
   if (suppliersWithoutBrand.length > 0) {
     const brandParam = articleGlobalBrand || "";
     const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brandParam)}`;
+    console.log(`[COMMON REQUEST] Brand: "${brandParam}", Suppliers: ${suppliersWithoutBrand.join(", ")}, URL: ${url}`);
+
     const evt = new EventSource(url);
     activeConnections++;
 
     suppliersWithoutBrand.forEach(supplier => {
       evt.addEventListener(supplier, e => {
         const data = JSON.parse(e.data);
+        console.log(`[COMMON RESPONSE] Supplier: "${supplier}", Brand: "${brandParam}"`, data);
         collectItems(supplier, data);
         setSupplierLoading(supplier, false);
       });
@@ -411,6 +421,7 @@ function loadItems(article, supplierBrandMap) {
     hideLoader();
   }
 }
+
 
 
 
@@ -444,53 +455,50 @@ function collectItems(supplier, items){
     });
 
     const cleanBrand = b => (b || "").toLowerCase().trim();
-    const cleanNumber = n => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
-    const selectedBrand = cleanBrand(articleGlobalBrand);
-    const selectedNumber = cleanNumber(articleGlobalNumber);
+const cleanNumber = n => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
+const selectedBrand = cleanBrand(articleGlobalBrand);
+const selectedNumber = cleanNumber(articleGlobalNumber);
 
-    // 🔹 Group by brand → part_number
-    const grouped = {};
-    allItems.forEach(item => {
-        const brandKey = cleanBrand(item.part_make);
-        const numberKey = cleanNumber(item.part_number);
+// 🔹 Build reverse mapping: alias -> displayName
+const aliasToDisplay = {};
+Object.entries(brandGroups).forEach(([display, aliases]) => {
+  aliases.forEach(a => aliasToDisplay[a.toLowerCase()] = display);
+});
 
-        if (!grouped[brandKey]) grouped[brandKey] = { brand: item.part_make, parts: {} };
-        if (!grouped[brandKey].parts[numberKey]) {
-            grouped[brandKey].parts[numberKey] = { number: item.part_number, items: [] };
-        }
-        grouped[brandKey].parts[numberKey].items.push(item);
+// 🔹 Group by normalized brand → part_number
+const grouped = {};
+allItems.forEach(item => {
+  const rawBrand = item.part_make || "";
+  const normalizedBrand = aliasToDisplay[rawBrand.toLowerCase()] || rawBrand; // fallback to raw if not in brandGroups
+  const brandKey = cleanBrand(normalizedBrand);
+  const numberKey = cleanNumber(item.part_number);
+
+  if (!grouped[brandKey]) grouped[brandKey] = { brand: normalizedBrand, parts: {} };
+  if (!grouped[brandKey].parts[numberKey]) {
+    grouped[brandKey].parts[numberKey] = { number: item.part_number, items: [] };
+  }
+  grouped[brandKey].parts[numberKey].items.push(item);
+});
+
+// 🔹 Sort items inside each part_number by price or delivery
+Object.values(grouped).forEach(brandGroup => {
+  Object.values(brandGroup.parts).forEach(partGroup => {
+    partGroup.items.sort((a, b) => {
+      if (sortMode === "delivery") {
+        const parseDays = v => {
+          if (!v) return Infinity;
+          v = String(v).toLowerCase().trim();
+          if (v.includes("налич")) return 0;
+          const numbers = v.match(/\d+/g);
+          return numbers ? Math.min(...numbers.map(Number)) : Infinity;
+        };
+        return parseDays(a.delivery) - parseDays(b.delivery);
+      } else {
+        return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+      }
     });
-
-    // 🔹 Sort items inside each part_number by price
-    // 🔹 Sort items inside each part_number according to sortMode
-   Object.values(grouped).forEach(brandGroup => {
-      Object.values(brandGroup.parts).forEach(partGroup => {
-        partGroup.items.sort((a, b) => {
-          if (sortMode === "delivery") {
-            // convert delivery text (like "в наличии", "2 дн.", "1-3") to number
-            const parseDays = v => {
-              if (v === null || v === undefined) return Infinity;
-              v = String(v).toLowerCase().trim();
-
-              // "в наличии" or "наличие" -> 0
-              if (v.includes("налич")) return 0;
-
-              // explicit zero (e.g. "0", "0 дн.", "0дн") -> 0
-              if (/\b0\b/.test(v)) return 0;
-
-              // extract numeric tokens; use smallest (e.g. "1-3" -> 1)
-              const numbers = v.match(/\d+/g);
-              return numbers ? Math.min(...numbers.map(Number)) : Infinity;
-            };
-
-            return parseDays(a.delivery) - parseDays(b.delivery);
-          } else {
-            // default: sort by price (ascending)
-            return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-          }
-        });
-      });
-    });
+  });
+});
 
 
     // 🔹 Compute cheapest price per brand
