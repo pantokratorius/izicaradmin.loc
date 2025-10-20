@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandGroupController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ProfileController;
@@ -78,7 +79,9 @@ Route::get('/api/items', [PartController::class, 'streamItems']);
 
 Route::post('/parts/import', [PartController::class, 'import'])->name('parts.import');
 
-
+Route::resource('brand-groups', BrandGroupController::class)->except(['show', 'create', 'edit']);
+Route::post('/brand-groups/update-ajax', [BrandGroupController::class, 'updateAjax'])
+     ->name('brand-groups.update-ajax');
 
 Route::resource('stocks', StockController::class);
 

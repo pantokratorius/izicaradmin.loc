@@ -120,18 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let brandSet = new Map();
   let articleGlobalNumber = "";
   let articleGlobalBrand = "";
+  let suppliersRawBrands = {};
   let itemsData = {};
   let selectedSuppliers = new Set();
   let sortMode = "price";
 
-  fetch("/js/brandGroups.json")
-  .then(r => r.json())
-  .then(data => { brandGroups = data; })
-  .catch(err => console.error("❌ Failed to load brandGroups.json:", err));
-
   const suppliers = ["ABS","Москворечье", "Берг", "Фаворит", "Форум-Авто", 
                         "Профит Лига", "Микадо", "Росско", "STparts", "Авторусь", 
-                        "Автоспутник", "Авто-Евро", "Авто Союз", "Ats-Auto"];
+                        "Автоспутник", "Авто-Евро", "Авто Союз", "Ats-Auto", "АвтоТрейд"];
   let supplierLoading = {};
 
   // 🔹 показать лоадер
@@ -217,11 +213,11 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
 });
 
 
-  // поиск брендов
-  document.getElementById("searchButton").addEventListener("click", (e)=>{
+ // 🔹 поиск брендов
+document.getElementById("searchButton").addEventListener("click", (e) => {
     e.preventDefault();
     const article = document.getElementById("searchInput").value.trim();
-    if(!article) return;
+    if (!article) return;
 
     showLoader();
 
@@ -229,30 +225,29 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     articleGlobalBrand = "";
     brandSet.clear();
     brandsList.innerHTML = "";
-    tbody.innerHTML = "";
-    supplierBrandsMap = {};
-    let brandGroups = {};
     itemsData = {};
     selectedSuppliers.clear();
-    suppliersButtonsDiv.querySelectorAll(".supplier-btn").forEach(b=>b.classList.remove("active"));
+    suppliersButtonsDiv.querySelectorAll(".supplier-btn").forEach(b => b.classList.remove("active"));
+    suppliersRawBrands = {}; // reset per-supplier raw brands
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
-    suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectBrands(s, JSON.parse(e.data))));
-    evtSource.addEventListener("end", ()=> {
-      evtSource.close();
-      hideLoader();
-      renderBrands();
-    });
-  });
 
-  function findGroupedBrand(raw) {
-  if (!raw) return "";
-  raw = raw.toUpperCase().trim();
-  for (const [group, variants] of Object.entries(brandGroups)) {
-    if (variants.some(v => v.toUpperCase() === raw)) return group;
-  }
-  return raw; // fallback if not found
-}
+    // Automatically listen for each supplier event
+    suppliers.forEach(supplier => {
+        evtSource.addEventListener(supplier, e => {
+            const rawBrands = JSON.parse(e.data);
+            collectBrands(supplier, rawBrands); // pass supplier
+        });
+    });
+
+    // Finish event
+    evtSource.addEventListener("end", () => {
+        evtSource.close();
+        hideLoader();
+        renderBrands();
+    });
+});
+
 
   function setSupplierLoading(supplier, state){
     supplierLoading[supplier] = state;
@@ -263,108 +258,160 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     }
   }
 
-  function collectBrands(supplier, brands) {
-  if (!supplierBrandsMap[supplier]) supplierBrandsMap[supplier] = new Set();
+  const brandGroupsRaw = {
+    @foreach($brandGroups as $group)
+      "{{ $group->display_name }}": "{{ implode(',', $group->aliases) }}",
+    @endforeach
+  };
 
-  brands.forEach(b => {
-    if (!b) return;
-    const clean = b.trim();
-    supplierBrandsMap[supplier].add(clean); // save per-supplier brand
-
-    const groupedName = findGroupedBrand(clean);
-    if (!brandSet.has(groupedName.toLowerCase())) {
-      brandSet.set(groupedName.toLowerCase(), groupedName); // save for UI
-    }
+  const brandGroups = {};
+  Object.keys(brandGroupsRaw).forEach(key => {
+      brandGroups[key] = brandGroupsRaw[key]
+        .split(',')
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
   });
-}
 
-function renderBrands() {
-  brandsList.innerHTML = "";
+  // Collect brands from API per supplier
+function collectBrands(supplier, brands) {
+    if (!suppliersRawBrands[supplier]) suppliersRawBrands[supplier] = [];
 
-  const sortedBrands = Array.from(brandSet.values())
-    .sort((a, b) => a.localeCompare(b));
+    brands.forEach(rawName => {
+        if (!rawName) return;
 
-  sortedBrands.forEach(groupedBrand => {
-    const div = document.createElement("div");
-    div.className = "brand-item";
-    div.textContent = groupedBrand.toUpperCase(); // ✅ Display in uppercase
-
-    div.addEventListener("click", (e) => {
-      e.preventDefault()
-      console.log("🟢 Clicked brand:", groupedBrand);
-      loadItems(articleGlobalNumber, groupedBrand); // ✅ Calls new EventSource-based loader
-    });
-
-    brandsList.appendChild(div);
-  });
-}
-
-
-function loadItems(article, groupedBrand) {
-  showLoader();
-  tbody.innerHTML = "";
-  itemsData = {};
-  selectedSuppliers.clear();
-  suppliersButtonsDiv.querySelectorAll(".supplier-btn").forEach(b => b.classList.remove("active"));
-
-  console.log("🔍 Loading parts for:", { article, groupedBrand });
-
-  // Open a streaming connection for items
-  const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
-
-  suppliers.forEach(supplier => {
-    evtSource.addEventListener(supplier, e => {
-      try {
-        const data = JSON.parse(e.data);
-
-        // 🔹 Find supplier-specific raw brand variant
-        let rawBrand = null;
-        if (groupedBrand && supplierBrandsMap[supplier]) {
-          for (const b of supplierBrandsMap[supplier]) {
-            const group = findGroupedBrand(b);
-            if (group.toUpperCase() === groupedBrand.toUpperCase()) {
-              rawBrand = b;
-              break;
-            }
-          }
+        // Track raw brand for this supplier
+        if (!suppliersRawBrands[supplier].includes(rawName)) {
+            suppliersRawBrands[supplier].push(rawName);
         }
 
-        // 🔹 Build backend request parameters
-        const params = new URLSearchParams({ 
-          supplier, 
-          article 
+        // Check if this rawName matches any group alias
+        let matched = false;
+        for (const displayName in brandGroups) {
+            const aliases = brandGroups[displayName];
+            if (aliases.some(a => a.toLowerCase() === rawName.toLowerCase())) {
+                // Use normalized/display_name as key
+                if (!brandSet.has(displayName)) brandSet.set(displayName, []);
+                if (!brandSet.get(displayName).includes(rawName)) brandSet.get(displayName).push(rawName);
+                matched = true;
+                break;
+            }
+        }
+
+        // If no group matched, just use rawName as its own display
+        if (!matched) {
+            if (!brandSet.has(rawName)) brandSet.set(rawName, [rawName]);
+        }
+    });
+}
+
+
+function renderBrands() {
+    brandsList.innerHTML = "";
+
+    Array.from(brandSet.keys()).sort((a,b)=>a.localeCompare(b)).forEach(displayName => {
+        const li = document.createElement("li");
+        li.textContent = displayName;
+        li.classList.toggle('selected', displayName === articleGlobalBrand);
+
+        li.addEventListener("click", () => {
+            articleGlobalBrand = displayName;
+            renderBrands();
+
+            // Build supplier → raw brand map
+            const supplierBrandMap = {};
+            suppliers.forEach(supplier => {
+                const rawBrands = suppliersRawBrands[supplier] || [];
+                const aliases = brandGroups[displayName] || [];
+                const match = rawBrands.find(r => aliases.some(a => a.toLowerCase() === r.toLowerCase()));
+                supplierBrandMap[supplier] = match || null;
+            });
+
+            loadItems(articleGlobalNumber, supplierBrandMap);
         });
-        if (rawBrand) params.append("brand", rawBrand);
 
-        console.log(`➡️ ${supplier}: requesting parts`, Object.fromEntries(params));
+        brandsList.appendChild(li);
+    });
+}
 
-        // 🔹 Request items stream for this supplier+brand
-        const supplierEvt = new EventSource(`/api/items?${params.toString()}`);
 
-        supplierEvt.addEventListener("data", ev => {
-          const parsed = JSON.parse(ev.data);
-          if (!itemsData[supplier]) itemsData[supplier] = {};
-          itemsData[supplier][article] = parsed;
-          renderResults();
-        });
+function loadItems(article) {
+  tbody.innerHTML = "";
+  itemsData = {};
+  showLoader();
 
-        supplierEvt.addEventListener("end", () => {
-          supplierEvt.close();
-          hideLoader();
-        });
+  const suppliersWithBrand = [];
+  const suppliersWithoutBrand = [];
 
-      } catch (err) {
-        console.error(`❌ Error handling ${supplier} event:`, err);
-      }
+  suppliers.forEach(s => {
+    const rawBrand = supplierBrandMap[s] || null; // supplierBrandMap stores raw brand per supplier
+    if (rawBrand) suppliersWithBrand.push({ supplier: s, brand: rawBrand });
+    else suppliersWithoutBrand.push(s);
+  });
+
+  let openConnections = 0;
+
+  function connectionEnded() {
+    openConnections--;
+    if (openConnections === 0) {
+      hideLoader();
+
+      // Mark empty suppliers
+      suppliers.forEach(s => {
+        const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
+        if (!itemsData[s] || Object.keys(itemsData[s]).length === 0) {
+          btn.classList.add("empty");
+          btn.disabled = true;
+        } else {
+          btn.classList.remove("empty");
+          btn.disabled = false;
+        }
+      });
+
+      renderResults();
+    }
+  }
+
+  // 1️⃣ SSE per supplier with brand
+  suppliersWithBrand.forEach(({ supplier, brand }) => {
+    openConnections++;
+    setSupplierLoading(supplier, true);
+    const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}&supplier=${encodeURIComponent(supplier)}`);
+
+    evtSource.addEventListener(supplier, e => {
+      collectItems(supplier, JSON.parse(e.data));
+      setSupplierLoading(supplier, false);
+    });
+
+    evtSource.addEventListener("end", () => {
+      evtSource.close();
+      connectionEnded();
     });
   });
 
-  evtSource.addEventListener("end", () => {
-    evtSource.close();
-    hideLoader();
-  });
-}
+  // 2️⃣ One SSE for suppliers without brand
+  if (suppliersWithoutBrand.length) {
+    openConnections++;
+    suppliersWithoutBrand.forEach(s => setSupplierLoading(s, true));
 
+    const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=`); // empty brand
+    evtSource.addEventListener("common", e => {
+      const data = JSON.parse(e.data);
+      suppliersWithoutBrand.forEach(supplier => {
+        if (!itemsData[supplier]) itemsData[supplier] = {};
+        collectItems(supplier, data);
+        setSupplierLoading(supplier, false);
+      });
+    });
+
+    evtSource.addEventListener("end", () => {
+      evtSource.close();
+      connectionEnded();
+    });
+  }
+
+  // Edge case: if no suppliers triggered SSE
+  if (openConnections === 0) connectionEnded();
+}
 
 
 
@@ -694,6 +741,54 @@ percentInput.addEventListener('blur', function() {
 });
 
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const brandsList = document.getElementById("brandsList");
+
+    // Create tooltip element
+    const tooltip = document.createElement("div");
+    tooltip.className = "copy-tooltip";
+    document.body.appendChild(tooltip);
+
+    brandsList.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+        const li = e.target.closest("li");
+        if (!li) return;
+
+        const brandName = li.textContent;
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(brandName)
+            .then(() => {
+                // Show tooltip near cursor
+                tooltip.textContent = `Скопировано: ${brandName}`;
+                tooltip.style.left = e.pageX + 10 + "px";
+                tooltip.style.top = e.pageY + 10 + "px";
+                tooltip.style.opacity = 1;
+
+                // Hide after 1.5s
+                setTimeout(() => tooltip.style.opacity = 0, 1500);
+            })
+            .catch(err => console.error("Ошибка копирования: ", err));
+    });
+});
+</script>
+<style>
+/* Tooltip style */
+.copy-tooltip {
+    position: absolute;
+    background: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+</style>
+
 <style>
 .brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .brand-list li{padding:6px 12px;border:1px solid #ccc;border-radius:6px;cursor:pointer;transition:all 0.2s;background:#f9f9f9;font-size:14px}

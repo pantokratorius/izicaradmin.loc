@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let brandSet = new Map();
   let articleGlobalNumber = "";
   let articleGlobalBrand = "";
+  let suppliersRawBrands = {};
   let itemsData = {};
   let selectedSuppliers = new Set();
   let sortMode = "price";
@@ -230,7 +231,7 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     suppliersButtonsDiv.querySelectorAll(".supplier-btn").forEach(b=>b.classList.remove("active"));
 
     const evtSource = new EventSource(`/api/brands?article=${encodeURIComponent(article)}`);
-    suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectBrands(JSON.parse(e.data))));
+    suppliers.forEach(s=> evtSource.addEventListener(s, e=> collectBrands(s, JSON.parse(e.data))));
     evtSource.addEventListener("end", ()=> {
       evtSource.close();
       hideLoader();
@@ -247,62 +248,153 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     }
   }
 
-  function collectBrands(brands){
-    brands.forEach(b=>{
-      if(b){
-        const key = b.toLowerCase();
-        if(!brandSet.has(key)) brandSet.set(key,b);
-      }
-    });
-  }
+  const brandGroupsRaw = {
+    @foreach($brandGroups as $group)
+      "{{ $group->display_name }}": "{{ implode(',', $group->aliases) }}",
+    @endforeach
+  };
 
-  function renderBrands(){
-    brandsList.innerHTML = "";
-    Array.from(brandSet.values()).sort((a,b)=>a.localeCompare(b)).forEach(brand=>{
-      const li = document.createElement("li");
-      li.textContent = brand;
-      li.classList.toggle('selected', brand.toLowerCase()===articleGlobalBrand);
-
-      li.addEventListener("click", ()=>{
-        articleGlobalBrand = brand.toLowerCase();
-        renderBrands();
-        loadItems(articleGlobalNumber, brand);
-      });
-
-      brandsList.appendChild(li);
-    });
-  }
-
- function loadItems(article, brand){
-  tbody.innerHTML = "";
-  itemsData = {};
-  showLoader();
-
-  suppliers.forEach(s => setSupplierLoading(s, true)); // все в ожидании
-
-  const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
-  suppliers.forEach(s=> evtSource.addEventListener(s, e=> {
-    collectItems(s, JSON.parse(e.data));
-    setSupplierLoading(s, false); // получены данные
-  }));
-
-  evtSource.addEventListener("end", ()=> {
-    evtSource.close();
-    hideLoader();
-
-    // ✅ отмечаем пустые кнопки только после загрузки запчастей
-    suppliers.forEach(s=>{
-      const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${s}"]`);
-      if(!itemsData[s] || Object.keys(itemsData[s]).length===0){
-        btn.classList.add("empty");
-        btn.disabled = true;   // делаем неактивной
-      } else {
-        btn.classList.remove("empty");
-        btn.disabled = false;  // снова активна
-      }
-    });
+  const brandGroups = {};
+  Object.keys(brandGroupsRaw).forEach(key => {
+      brandGroups[key] = brandGroupsRaw[key]
+        .split(',')
+        .map(s => s.trim())
+        .filter(s => s.length > 0);
   });
+
+  // Collect brands from API per supplier
+  function collectBrands(supplier, brands) {
+    if (!suppliersRawBrands[supplier]) suppliersRawBrands[supplier] = [];
+
+    brands.forEach(rawName => {
+        if (!rawName) return;
+
+        // Track raw brand for this supplier
+        if (!suppliersRawBrands[supplier].includes(rawName)) {
+            suppliersRawBrands[supplier].push(rawName);
+        }
+
+        // Check if this rawName matches any group alias
+        let matched = false;
+        for (const displayName in brandGroups) {
+            const aliases = brandGroups[displayName];
+            if (aliases.some(a => a.toLowerCase() === rawName.toLowerCase())) {
+                // Use normalized/display_name as key
+                if (!brandSet.has(displayName)) brandSet.set(displayName, []);
+                if (!brandSet.get(displayName).includes(rawName)) brandSet.get(displayName).push(rawName);
+                matched = true;
+                break;
+            }
+        }
+
+        // If no group matched, just use rawName as its own display
+        if (!matched) {
+            if (!brandSet.has(rawName.toUpperCase())) brandSet.set(rawName.toUpperCase(), [rawName.toUpperCase()]);
+        }
+    });
 }
+
+
+function renderBrands() {
+    brandsList.innerHTML = "";
+    Array.from(brandSet.keys()).sort((a,b)=>a.localeCompare(b)).forEach(displayName => {
+        const li = document.createElement("li");
+        li.textContent = displayName;
+        li.classList.toggle('selected', displayName === articleGlobalBrand);
+
+        li.addEventListener("click", () => {
+            articleGlobalBrand = displayName;
+            renderBrands();
+
+            // Build a supplier → raw brand map
+            const supplierBrandMap = {};
+            suppliers.forEach(supplier => {
+                const rawBrands = suppliersRawBrands[supplier] || [];
+                const aliases = brandGroups[displayName] || [];
+                const match = rawBrands.find(r => aliases.some(a => a.toLowerCase() === r.toLowerCase()));
+                supplierBrandMap[supplier] = match || null; // null if no match
+            });
+
+            // Pass supplierBrandMap to loadItems
+            loadItems(articleGlobalNumber, supplierBrandMap);
+        });
+
+        brandsList.appendChild(li);
+    });
+}
+
+
+function loadItems(article, supplierBrandMap) {
+    tbody.innerHTML = "";
+    itemsData = {};
+    showLoader();
+
+    const brandToSuppliers = {}; // brand -> array of suppliers
+    const suppliersWithoutBrand = [];
+
+    suppliers.forEach(supplier => {
+        const rawBrand = supplierBrandMap[supplier];
+
+        if (!rawBrand) {
+            suppliersWithoutBrand.push(supplier);
+        } else {
+            // If rawBrand equals clicked brand, treat it as "without brand" to share EventSource
+            if (rawBrand === articleGlobalBrand) {
+                suppliersWithoutBrand.push(supplier);
+            } else {
+                if (!brandToSuppliers[rawBrand]) brandToSuppliers[rawBrand] = [];
+                brandToSuppliers[rawBrand].push(supplier);
+            }
+        }
+
+        setSupplierLoading(supplier, true);
+    });
+
+    // Open one EventSource per raw brand (for suppliers sharing same raw brand)
+    Object.keys(brandToSuppliers).forEach(brand => {
+        const suppliersForBrand = brandToSuppliers[brand];
+        const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`;
+        const evt = new EventSource(url);
+
+        suppliersForBrand.forEach(supplier => {
+            evt.addEventListener(supplier, e => {
+                const data = JSON.parse(e.data);
+                collectItems(supplier, data);
+                setSupplierLoading(supplier, false);
+            });
+        });
+
+        evt.addEventListener("end", () => evt.close());
+    });
+
+    // One common EventSource for all suppliers without raw brand (or raw brand equals clicked brand)
+    if (suppliersWithoutBrand.length > 0) {
+        const brandParam = articleGlobalBrand || "";
+        const url = `/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brandParam)}`;
+        const evt = new EventSource(url);
+
+        suppliersWithoutBrand.forEach(supplier => {
+            evt.addEventListener(supplier, e => {
+                const data = JSON.parse(e.data);
+                collectItems(supplier, data);
+                setSupplierLoading(supplier, false);
+            });
+        });
+
+        evt.addEventListener("end", () => evt.close());
+    }
+
+    // Hide loader when all suppliers finish
+    const interval = setInterval(() => {
+        const stillLoading = Object.values(supplierLoading).some(l => l);
+        if (!stillLoading) {
+            hideLoader();
+            clearInterval(interval);
+        }
+    }, 100);
+}
+
+
 
 
 
@@ -632,6 +724,54 @@ percentInput.addEventListener('blur', function() {
 });
 
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const brandsList = document.getElementById("brandsList");
+
+    // Create tooltip element
+    const tooltip = document.createElement("div");
+    tooltip.className = "copy-tooltip";
+    document.body.appendChild(tooltip);
+
+    brandsList.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+        const li = e.target.closest("li");
+        if (!li) return;
+
+        const brandName = li.textContent;
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(brandName)
+            .then(() => {
+                // Show tooltip near cursor
+                tooltip.textContent = `Скопировано: ${brandName}`;
+                tooltip.style.left = e.pageX + 10 + "px";
+                tooltip.style.top = e.pageY + 10 + "px";
+                tooltip.style.opacity = 1;
+
+                // Hide after 1.5s
+                setTimeout(() => tooltip.style.opacity = 0, 1500);
+            })
+            .catch(err => console.error("Ошибка копирования: ", err));
+    });
+});
+</script>
+<style>
+/* Tooltip style */
+.copy-tooltip {
+    position: absolute;
+    background: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+</style>
+
 <style>
 .brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .brand-list li{padding:6px 12px;border:1px solid #ccc;border-radius:6px;cursor:pointer;transition:all 0.2s;background:#f9f9f9;font-size:14px}
