@@ -728,7 +728,7 @@ percentInput.addEventListener('blur', function() {
 document.addEventListener('DOMContentLoaded', () => {
     const brandsList = document.getElementById("brandsList");
 
-    // Create tooltip element
+    // Tooltip element
     const tooltip = document.createElement("div");
     tooltip.className = "copy-tooltip";
     document.body.appendChild(tooltip);
@@ -738,23 +738,57 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = e.target.closest("li");
         if (!li) return;
 
-        const brandName = li.textContent;
+        const brandName = li.textContent.trim();
 
-        // Copy to clipboard
-        navigator.clipboard.writeText(brandName)
-            .then(() => {
-                // Show tooltip near cursor
+        // ✅ Safe clipboard copy (with fallback)
+        const copyText = async (text) => {
+            if (navigator.clipboard && window.isSecureContext) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    return true;
+                } catch (err) {
+                    console.error("Clipboard write failed:", err);
+                    return false;
+                }
+            } else {
+                // fallback for HTTP/non-secure context
+                const textarea = document.createElement("textarea");
+                textarea.value = text;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                try {
+                    document.execCommand("copy");
+                    document.body.removeChild(textarea);
+                    return true;
+                } catch (err) {
+                    console.error("Fallback copy failed:", err);
+                    document.body.removeChild(textarea);
+                    return false;
+                }
+            }
+        };
+
+        copyText(brandName).then(success => {
+            if (success) {
                 tooltip.textContent = `Скопировано: ${brandName}`;
                 tooltip.style.left = e.pageX + 10 + "px";
                 tooltip.style.top = e.pageY + 10 + "px";
                 tooltip.style.opacity = 1;
-
-                // Hide after 1.5s
                 setTimeout(() => tooltip.style.opacity = 0, 1500);
-            })
-            .catch(err => console.error("Ошибка копирования: ", err));
+            } else {
+                tooltip.textContent = "Ошибка копирования";
+                tooltip.style.left = e.pageX + 10 + "px";
+                tooltip.style.top = e.pageY + 10 + "px";
+                tooltip.style.opacity = 1;
+                setTimeout(() => tooltip.style.opacity = 0, 1500);
+            }
+        });
     });
 });
+
 </script>
 <style>
 /* Tooltip style */
