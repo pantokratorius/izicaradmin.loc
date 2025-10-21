@@ -18,6 +18,7 @@
             <th>Цена покупки</th>
             <th>Цена продажи</th>
             <th>Склад</th>
+            <th>Поставщик</th>
             <th></th>
         </tr>
     </thead>
@@ -32,6 +33,7 @@
     <td class="edit">{{ $stock->purchase_price }}</td>
     <td class="edit">{{ $stock->sell_price }}</td>
     <td class="edit">{{ $stock->warehouse }}</td>
+    <td class="edit">{{ $stock->supplier }}</td>
     <td style="text-align: center">
         <a style="display: none" href="{{ route('stocks.edit', $stock) }}">✏️</a>
         <form action="{{ route('stocks.destroy', $stock) }}" method="POST" style="display:inline;">

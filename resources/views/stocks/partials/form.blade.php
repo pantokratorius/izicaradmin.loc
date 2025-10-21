@@ -47,7 +47,7 @@
     <select name="supplier">
         <option value="">Выберите поставщика</option>
         @foreach($suppliers as $v)
-            <option value="{{$v}}">{{$v}}</option>
+            <option value="{{$v}}" @if($v == $stock?->supplier) selected @endif>{{$v}}</option>
         @endforeach
     </select>
 </div>

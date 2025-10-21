@@ -23,5 +23,6 @@ class Stock extends Model
         'categories',
         'address_code',
         'address_name',
+        'supplier',
     ];
 }
