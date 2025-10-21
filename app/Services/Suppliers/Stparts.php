@@ -62,9 +62,24 @@ class Stparts implements SupplierInterface
                         'quantity'    => $item['availability'] ?? null,
                         'price'       => $item['price'] ?? null,
                         'delivery'    => ceil($item['deliveryPeriod'] / 24)  ?? null,
-                        'warehouse'   => $item['supplierDescription'] ?? null,
+                        'warehouse'   => $this->cleanHtmlText( $item['supplierDescription'] ) ?? null,
                     ];
             })->toArray();
         });
     }
+
+    private function cleanHtmlText(?string $text): string
+    {
+        if (!$text) {
+            return '';
+        }
+
+        // Remove HTML tags and decode entities
+        $text = strip_tags($text);
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return trim($text);
+    }
+
+
 }
