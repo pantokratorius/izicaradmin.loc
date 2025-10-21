@@ -765,7 +765,7 @@ function showToast(message, type = "success") {
     container.id = "toastContainer";
     Object.assign(container.style, {
       position: "fixed",
-      bottom: "30px",
+      top: "30px",
       right: "30px",
       zIndex: 9999,
       display: "flex",
