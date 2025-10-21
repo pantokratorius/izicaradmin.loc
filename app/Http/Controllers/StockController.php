@@ -59,20 +59,35 @@ class StockController extends Controller
             'name' => 'nullable|string|max:255',
             'quantity' => 'nullable|integer|min:0',
             'purchase_price' => 'nullable|numeric|min:0',
-            'sell_price' => 'nullable|string|max:255',
+            'sell_price' => 'nullable|numeric|min:0',
             'warehouse' => 'nullable|string|max:255',
             'supplier' => 'nullable|string|max:255',
         ]);
 
 
+// Use a raw query to compare normalized values
+$existing = Stock::where('part_number', $data['part_number'])
+    ->where('part_make', $data['part_make'])
+    ->first();
+
+        if ($existing) {
+            $existing->increment('quantity',  1);
+
+            return response()->json([
+                'message' => 'Quantity increased successfully',
+                'data' => $existing->fresh(),
+            ]);
+        }
 
         $stock = Stock::create($data);
 
         return response()->json([
-            'message' => 'Added to stocks successfully',
+            'message' => 'Added new stock entry successfully',
             'data' => $stock,
         ]);
     }
+
+
 
     public function edit(Stock $stock)
     {

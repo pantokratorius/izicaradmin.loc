@@ -703,34 +703,32 @@ Object.values(grouped).forEach(brandGroup => {
 let selectedStocks = [];
 
 function addToStocks(item, row) { 
-
   const percent = parseFloat(document.querySelector('#percent_value').textContent) || 0;
-
-  const supplier = row.querySelector('.supplier_name').textContent
+  const supplier = row.querySelector('.supplier_name')?.textContent?.trim() || "";
 
   const stockData = {
     part_number: item.part_number ?? "",
     part_make: item.part_make ?? "",
     name: item.name ?? "", 
-    quantity: item.quantity ?? 0,
+    quantity: 1,
     purchase_price: parseFloat(item.price) || 0,
     sell_price: item.price ? (item.price * (1 + percent / 100)).toFixed(2) : 0,
     warehouse: item.warehouse ?? "",
-    supplier: supplier ?? "",
+    supplier,
   };
 
   const key = `${stockData.part_make}_${stockData.part_number}_${stockData.supplier}`;
-  if (selectedStocks.some(s => `${s.part_make}_${s.part_number}_${s.supplier}` === key)) {
-    showToast("❗ Уже есть на складе", "error");
-    rowFlash(row, "#ffe6e6");
-    return;
+  const existing = selectedStocks.find(s => `${s.part_make}_${s.part_number}_${s.supplier}` === key);
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    selectedStocks.push(stockData);
   }
 
-  selectedStocks.push(stockData);
-
-  fetch("{{route('store_ajax')}}", {
+  fetch("{{ route('store_ajax') }}", {
     method: "POST",
-     headers: {
+    headers: {
       "Content-Type": "application/json",
       "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
     },
@@ -740,9 +738,16 @@ function addToStocks(item, row) {
       if (!r.ok) throw new Error("HTTP " + r.status);
       return r.json();
     })
-    .then(() => {
+    .then(response => {
       rowFlash(row, "#d4edda");
-      showToast("✅ Добапвлено на склад");
+
+      const qty = response?.data?.quantity ?? 1;
+
+      if (response.message?.includes("increased")) {
+        showToast(`➕ Кол-во увеличено (теперь ${qty} шт.)`);
+      } else {
+        showToast(`✅ Добавлено на склад (теперь ${qty} шт.)`);
+      }
     })
     .catch(err => {
       console.error("Ошибка при добавлении на склад:", err);
@@ -750,6 +755,7 @@ function addToStocks(item, row) {
       showToast("❌ Ошибка при добавлении на склад", "error");
     });
 }
+
 
 // 🔹 Row flash helper
 function rowFlash(row, color) {
