@@ -35,12 +35,21 @@
     <input type="text" name="warehouse" value="{{ old('warehouse', $stock->warehouse ?? '') }}">
 </div>
 
+@php
+    $suppliers = ["ABS","Москворечье", "Берг", "Фаворит", "Форум-Авто", 
+                        "Профит Лига", "Микадо", "Росско", "STparts", "Авторусь", 
+                        "Автоспутник", "Авто-Евро", "Авто Союз", "Ats-Auto", "АвтоТрейд"];
+@endphp
+
+
 <div class="form-group">
     <label>Поставщик</label>
-    <select>
+    <select name="supplier">
         <option value="">Выберите поставщика</option>
+        @foreach($suppliers as $v)
+            <option value="{{$v}}">{{$v}}</option>
+        @endforeach
     </select>
-    <input type="text" name="supplier" value="{{ old('supplier', $stock->supplier ?? '') }}">
 </div>
 
 
