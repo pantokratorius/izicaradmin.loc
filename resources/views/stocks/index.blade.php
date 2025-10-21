@@ -15,6 +15,7 @@
             <th>Бренд</th>
             <th>Артикул</th>
             <th>Количество</th>
+            <th>Цена покупки</th>
             <th>Цена продажи</th>
             <th>Склад</th>
             <th></th>
@@ -28,6 +29,7 @@
             <td class="edit">{{ $stock->part_make }}</td>
             <td class="edit">{{ $stock->part_number }}</td>
             <td class="edit">{{ $stock->quantity }}</td>
+            <td class="edit">{{ $stock->purchase_price	 }}</td>
             <td class="edit">{{ $stock->sell_price }}</td>
             <td class="edit">{{ $stock->warehouse }}</td>
             <td style="text-align: center">
