@@ -721,7 +721,7 @@ function addToStocks(item, row) {
 
   const key = `${stockData.part_make}_${stockData.part_number}_${stockData.supplier}`;
   if (selectedStocks.some(s => `${s.part_make}_${s.part_number}_${s.supplier}` === key)) {
-    showToast("❗ Already added", "error");
+    showToast("❗ Уже есть на складе", "error");
     rowFlash(row, "#ffe6e6");
     return;
   }
