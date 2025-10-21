@@ -81,7 +81,7 @@ class Autosputnik implements SupplierInterface
                 'name'        => $item['NAME_TOVAR'] ?? null,
                 'part_make'   => $item['BRA_BRAND'] ?? null,
                 'part_number' => $item['ARTICUL'] ?? null,
-                'quantity'    => $item['STOCK'] ?? null,
+                'quantity'    => round($item['STOCK'], 0) ?? null,
                 'price'       => $item['NEW_COST'] ?? null,
                 'delivery'    => $item['DAYOFF'] ?? null,
                 'warehouse'   => $item['PRICE_NAME'] ?? null,
