@@ -4,25 +4,20 @@
     <button type="submit" id="searchButton" class="btn">Поиск</button>
 </div> --}}
 <br><br>
-<div class="form-group">
-    <label>Название</label>
-    <input type="text" name="name" value="{{ old('name', $stock->name ?? '') }}">
-</div>
 
 <div class="form-group">
     <label>Бренд</label>
     <input type="text" name="part_make" value="{{ old('part_make', $stock->part_make ?? '') }}">
 </div>
 
+<div class="form-group">
+    <label>Название</label>
+    <input type="text" name="name" value="{{ old('name', $stock->name ?? '') }}">
+</div>
 
 <div class="form-group">
     <label>Количество</label>
     <input type="number" name="quantity" value="{{ old('quantity', $stock->quantity ?? 0) }}">
-</div>
-
-<div class="form-group">
-    <label>Цена продажи</label>
-    <input type="number" step="0.01" name="sell_price" value="{{ old('sell_price', $stock->sell_price ?? '') }}">
 </div>
 
 <div class="form-group">
@@ -31,34 +26,23 @@
 </div>
 
 <div class="form-group">
+    <label>Цена продажи</label>
+    <input type="number" step="0.01" name="sell_price" value="{{ old('sell_price', $stock->sell_price ?? '') }}">
+</div>
+
+<div class="form-group">
     <label>Склад</label>
     <input type="text" name="warehouse" value="{{ old('warehouse', $stock->warehouse ?? '') }}">
 </div>
 
 <div class="form-group">
-    <label>Адрес склада</label>
-    <input type="text" name="warehouse_address" value="{{ old('warehouse_address', $stock->warehouse_address ?? '') }}">
+    <label>Поставщик</label>
+    <select>
+        <option value="">Выберите поставщика</option>
+    </select>
+    <input type="text" name="supplier" value="{{ old('supplier', $stock->supplier ?? '') }}">
 </div>
 
-<div class="form-group">
-    <label>Теги</label>
-    <input type="text" name="tags" value="{{ old('tags', $stock->tags ?? '') }}">
-</div>
-
-<div class="form-group">
-    <label>Категории</label>
-    <input type="text" name="categories" value="{{ old('categories', $stock->categories ?? '') }}">
-</div>
-
-<div class="form-group">
-    <label>Адрес - код</label>
-    <input type="text" name="address_code" value="{{ old('address_code', $stock->address_code ?? '') }}">
-</div>
-
-<div class="form-group">
-    <label>Адрес - название</label>
-    <input type="text" name="address_name" value="{{ old('address_name', $stock->address_name ?? '') }}">
-</div>
 
 
 <style>

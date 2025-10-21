@@ -75,15 +75,15 @@
             <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
             <td style="display: flex; align-items: center; justify-content: center">
+              <button  onclick="openOrderModal({{ $order->id }})"
+                          style="btn btn-sm btn-warning;  cursor: pointer">
+                      ✏
+                  </button>
                       <a href="{{ route('orders.copy', $order->id) }}" 
-                        class="btn btn-secondary"
+                        class="btn btn-secondary" style="margin: 0 5px;"
                         onclick="return confirm('Скопировать этот заказ?')">
                         📄
                     </a>
-                <button  onclick="openOrderModal({{ $order->id }})"
-                            style="btn btn-sm btn-warning; margin: 0 5px; cursor: pointer">
-                        ✏
-                    </button>
             <form
                   action="{{ route('orders.destroy', $order->id) }}"
                   method="POST" style="">

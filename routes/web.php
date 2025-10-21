@@ -85,6 +85,9 @@ Route::post('/brand-groups/update-ajax', [BrandGroupController::class, 'updateAj
 
 Route::resource('stocks', StockController::class);
 
+Route::post('/stocks/store_ajax', [StockController::class, 'store_ajax'])->name('store_ajax');
+
+
 
 
 

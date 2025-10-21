@@ -51,6 +51,29 @@ class StockController extends Controller
         return redirect()->route('stocks.index')->with('success', 'Товар добавлен');
     }
 
+    public function store_ajax(Request $request)
+    {
+        $data = $request->validate([
+            'part_number' => 'required|string|max:255',
+            'part_make' => 'nullable|string|max:255',
+            'name' => 'nullable|string|max:255',
+            'quantity' => 'nullable|integer|min:0',
+            'purchase_price' => 'nullable|numeric|min:0',
+            'sell_price' => 'nullable|string|max:255',
+            'warehouse' => 'nullable|string|max:255',
+            'supplier' => 'nullable|string|max:255',
+        ]);
+
+
+
+        $stock = Stock::create($data);
+
+        return response()->json([
+            'message' => 'Added to stocks successfully',
+            'data' => $stock,
+        ]);
+    }
+
     public function edit(Stock $stock)
     {
         return view('stocks.edit', compact('stock'));

@@ -459,6 +459,18 @@ const cleanNumber = n => (n || "").replace(/[^a-z0-9]/gi, "").toLowerCase();
 const selectedBrand = cleanBrand(articleGlobalBrand);
 const selectedNumber = cleanNumber(articleGlobalNumber);
 
+
+function getBrandGroupKey(brand) {
+  const cleaned = cleanBrand(brand);
+  for (const [groupKey, variants] of Object.entries(brandGroups)) {
+    if (variants.map(cleanBrand).includes(cleaned)) {
+      return groupKey;
+    }
+  }
+  return cleaned; // fallback to itself if not found in groups
+}
+
+
 // 🔹 Build reverse mapping: alias -> displayName
 const aliasToDisplay = {};
 Object.entries(brandGroups).forEach(([display, aliases]) => {
@@ -583,8 +595,14 @@ Object.values(grouped).forEach(brandGroup => {
     row.dataset.group = toggleId;
     if (idx >= 3) row.style.display = "none"; // hide extra rows
 
-    const isOEM = cleanBrand(item.part_make) === selectedBrand && cleanNumber(item.part_number) === selectedNumber;
-    const isSelectedBrand = cleanBrand(item.part_make) === selectedBrand;
+    const itemBrandGroup = getBrandGroupKey(item.part_make);
+    const selectedBrandGroup = getBrandGroupKey(selectedBrand);
+
+    const isOEM =
+      itemBrandGroup === selectedBrandGroup &&
+      cleanNumber(item.part_number) === selectedNumber;
+
+    const isSelectedBrand = itemBrandGroup === selectedBrandGroup;
 
       const percent = document.querySelector('#percent_value').textContent
 
@@ -600,11 +618,16 @@ Object.values(grouped).forEach(brandGroup => {
         <td>${item.price ? (item.price * (1 + percent / 100)).toFixed(2) : "-"}</td>
         <td>${item.delivery ?? "-"}</td>
         <td>${item.warehouse ?? "-"}</td>
-        <td>${item.supplier ?? "-"}</td>
+        <td class="supplier_name">${item.supplier ?? "-"}</td>
     `;
 
     if (isOEM) row.classList.add("oem-row");
     else if(isSelectedBrand) row.classList.add("brand-row");
+
+     row.addEventListener("dblclick", () => {
+      addToStocks(item, row);
+    });
+
     tbody.appendChild(row);
 });
 
@@ -674,6 +697,102 @@ Object.values(grouped).forEach(brandGroup => {
       }
 
 
+}
+
+
+let selectedStocks = [];
+
+function addToStocks(item, row) { 
+
+  const percent = parseFloat(document.querySelector('#percent_value').textContent) || 0;
+
+  const supplier = row.querySelector('.supplier_name').textContent
+
+  const stockData = {
+    part_number: item.part_number ?? "",
+    part_make: item.part_make ?? "",
+    name: item.name ?? "", 
+    quantity: item.quantity ?? 0,
+    purchase_price: parseFloat(item.price) || 0,
+    sell_price: item.price ? (item.price * (1 + percent / 100)).toFixed(2) : 0,
+    warehouse: item.warehouse ?? "",
+    supplier: supplier ?? "",
+  };
+
+  const key = `${stockData.part_make}_${stockData.part_number}_${stockData.supplier}`;
+  if (selectedStocks.some(s => `${s.part_make}_${s.part_number}_${s.supplier}` === key)) {
+    showToast("❗ Already added", "error");
+    rowFlash(row, "#ffe6e6");
+    return;
+  }
+
+  selectedStocks.push(stockData);
+
+  fetch("{{route('store_ajax')}}", {
+    method: "POST",
+     headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+    },
+    body: JSON.stringify(stockData),
+  })
+    .then(r => {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(() => {
+      rowFlash(row, "#d4edda");
+      showToast("✅ Добапвлено на склад");
+    })
+    .catch(err => {
+      console.error("Ошибка при добавлении на склад:", err);
+      rowFlash(row, "#ffe6e6");
+      showToast("❌ Ошибка при добавлении на склад", "error");
+    });
+}
+
+// 🔹 Row flash helper
+function rowFlash(row, color) {
+  row.style.backgroundColor = color;
+  setTimeout(() => (row.style.backgroundColor = ""), 700);
+}
+
+// 🔹 Toast popup helper
+function showToast(message, type = "success") {
+  let container = document.getElementById("toastContainer");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toastContainer";
+    Object.assign(container.style, {
+      position: "fixed",
+      bottom: "30px",
+      right: "30px",
+      zIndex: 9999,
+      display: "flex",
+      flexDirection: "column",
+      gap: "8px",
+    });
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement("div");
+  Object.assign(toast.style, {
+    background: type === "error" ? "#f8d7da" : "#d4edda",
+    color: type === "error" ? "#721c24" : "#155724",
+    padding: "10px 15px",
+    borderRadius: "6px",
+    boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+    fontSize: "14px",
+    transition: "opacity 0.5s",
+  });
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    setTimeout(() => toast.remove(), 500);
+  }, 2500);
 }
 
 
