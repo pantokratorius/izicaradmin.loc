@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Заказ №{{ $order->id }}</title>
+    <title>Заказ №{{ $order->order_number }}</title>
     <style>
         body { font-family: DejaVu Sans, sans-serif; font-size: 13px; margin: 30px; line-height: 1.5; }
         h3 { text-align: center; margin: 15px 0; }

@@ -2,9 +2,19 @@
 
 @section('title', 'Детали заказа №' . $order->id)
 
+@php
+    $status = [
+       1 => 'Новый',
+            'В работе',
+            'Пришел',
+            'Выдан',
+            'Отменен'
+    ];
+@endphp
+
 @section('content')
 <div class="container py-4">
-    <h1 class="mb-4">Заказ №{{ $order->id }}</h1>
+    <h1 class="mb-4">Заказ № {{ $order->order_number }}</h1>
 
     {{-- Информация о клиенте --}}
     <div class="card mb-4">
@@ -20,7 +30,7 @@
     <div class="card mb-4">
         <div class="card-header">Информация о заказе</div>
         <div class="card-body" style="margin-left: 10px">
-            <p><strong>Статус:</strong> {{ $order->status ?? '—' }}</p>
+            <p><strong>Статус:</strong> {{ $status[$order->status] ?? '—' }}</p>
             <p><strong>Дата создания:</strong> {{ $order->created_at->format('d.m.Y H:i') }}</p>
         </div>
     </div>
@@ -29,7 +39,7 @@
     <div class="card" style="margin-bottom: 10px">
       <div class="card-header d-flex justify-content-between align-items-center">
     <span>Позиции</span>
-    <button class="btn" style="background: #d7d7d7" onclick="openItemModal({{ $order->id }})">
+    <button class="btn" style="background: #d7d7d7" onclick="location='{{route('orderitems.create',$order->id)}}'">
         ➕ Добавить позицию
     </button>
 </div>
@@ -67,16 +77,20 @@
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->quantity }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->summ, 2, ',', ' ') }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->supplier }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->status }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->comment }}</td>
+                        <td> <select class="status_select"  data-id="{{ $item->id }}" style="padding: 3px 0">
+                                    @foreach ($status as $key => $st)
+                                        <option value="{{$key}}" {{ $item->status == $key ? 'selected' : '' }}>{{$st}}</option>
+                                    @endforeach
+                                </select></td>
                         <td 
                         @if($item->margin)
-                            style="background-color: #dfffdc"
-                            @endif
+                        style="background-color: #dfffdc"
+                        @endif
                         onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->margin ?? $globalMargin }}</td>
                         <td class="text-end">
                             <button class="btn btn-sm btn-danger" onclick="deleteItem({{ $item->id }})">🗑</button>
                         </td>
+                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->comment }}</td>
                     </tr>
                     @empty
 
@@ -134,7 +148,7 @@
             <label>Наценка %</label>
             <input type="text" name="margin" id="margin">
 
-            <label>Наценка %</label>
+            <label>Комментарий</label>
             <input type="text" name="comment" id="comment">
 
             <div class="modal-actions">
@@ -197,6 +211,38 @@
 
 
 <script>
+
+document.addEventListener('change', function (e) {
+    if (e.target.classList.contains('status_select')) {
+        const select = e.target;
+        const orderId = select.dataset.id;
+        const newStatus = select.value;
+
+        fetch(`/orderitem/${orderId}/status` , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify({ status: newStatus })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                select.style.backgroundColor = '#d4edda';
+                setTimeout(() => select.style.backgroundColor = '', 800);
+            } else {
+                alert('Ошибка при обновлении статуса');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Ошибка сети');
+        });
+    }
+});
+
+
 function openItemModal(orderId, item = null) {
     document.getElementById('itemForm').reset();
     document.getElementById('order_id').value = orderId;

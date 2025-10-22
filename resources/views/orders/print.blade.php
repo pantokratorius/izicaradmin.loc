@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Заказ №{{ $order->id }}</title>
+    <title>Заказ №{{ $order->order_number }}</title>
     <style>
         body { font-family: DejaVu Sans, sans-serif; font-size: 14px; margin: 40px; }
         h3 { text-align: center; margin: 15px 0; }
@@ -24,7 +24,7 @@
     <img src="{{ asset('logo.png') }}" alt="Логотип">
 </div>
 
-<h3>ДИСТАНЦИОННЫЙ ЗАКАЗ ТОВАРА №{{ $order->id }} от {{ $order->created_at->format('d.m.Y') }}</h3>
+<h3>ДИСТАНЦИОННЫЙ ЗАКАЗ ТОВАРА №{{ $order->order_number }} от {{ $order->created_at->format('d.m.Y') }}</h3>
 
 <p>
     Марка автомобиля: {{  $order->vehicle->brand->name ?? '-'}}<br>

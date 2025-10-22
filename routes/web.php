@@ -47,7 +47,8 @@ Route::get('/clients/search', [ClientController::class, 'search'])->name('client
 Route::resource('vehicles', VehicleController::class)->except(['show']);
 Route::resource('orders', OrderController::class);
 Route::resource('orderitems', OrderItemController::class);
-Route::get('/orders/{order}/copy', [App\Http\Controllers\OrderController::class, 'copy'])->name('orders.copy');
+Route::get('/orderitems/create/{order}', [OrderItemController::class, 'create'])->name('orderitems.create');
+Route::get('/orders/{order}/copy', [OrderController::class, 'copy'])->name('orders.copy');
 
 
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
@@ -86,6 +87,9 @@ Route::post('/brand-groups/update-ajax', [BrandGroupController::class, 'updateAj
 Route::resource('stocks', StockController::class);
 
 Route::post('/stocks/store_ajax', [StockController::class, 'store_ajax'])->name('store_ajax');
+
+Route::post('/orderitems/orderitem_store_ajax', [OrderItemController::class, 'store_ajax'])->name('orderitem_store_ajax');
+Route::post('/orderitem/{id}/status', [OrderItemController::class, 'updateStatus'])->name('orderitems.updateStatus');
 
 
 
