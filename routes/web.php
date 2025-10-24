@@ -15,6 +15,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TempPartsController;
+use App\Models\TempParts;
 
 Route::get('/', function () {
     return view('welcome');
@@ -91,7 +93,10 @@ Route::post('/stocks/store_ajax', [StockController::class, 'store_ajax'])->name(
 Route::post('/orderitems/orderitem_store_ajax', [OrderItemController::class, 'store_ajax'])->name('orderitem_store_ajax');
 Route::post('/orderitem/{id}/status', [OrderItemController::class, 'updateStatus'])->name('orderitems.updateStatus');
 
-
+Route::post('/', [TempPartsController::class, 'store'])->name('temp_parts.store');
+Route::post('/{part}/move-to-stock', [TempPartsController::class, 'moveToStock'])->name('temp_parts.moveToStock');
+Route::post('/{part}/move-to-order', [TempPartsController::class, 'moveToOrder'])->name('temp_parts.moveToOrder');
+Route::delete('/{part}', [TempPartsController::class, 'destroy'])->name('temp_parts.destroy');
 
 
 
