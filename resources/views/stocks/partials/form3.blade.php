@@ -624,8 +624,8 @@ Object.values(grouped).forEach(brandGroup => {
     if (isOEM) row.classList.add("oem-row");
     else if(isSelectedBrand) row.classList.add("brand-row");
 
-     row.addEventListener("dblclick", () => {
-      addToStocks(item, row);
+      row.addEventListener("dblclick", () => {
+      showQuantityPopup(item, row);
     });
 
     tbody.appendChild(row);
@@ -700,9 +700,118 @@ Object.values(grouped).forEach(brandGroup => {
 }
 
 
+
+function showQuantityPopup(item, row) {
+  // If popup already exists, remove it first
+  const existing = document.getElementById("quantityPopup");
+  if (existing) existing.remove();
+
+  // Create overlay
+  const overlay = document.createElement("div");
+  overlay.id = "quantityPopup";
+  overlay.style.position = "fixed";
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = "100%";
+  overlay.style.height = "100%";
+  overlay.style.background = "rgba(0,0,0,0.4)";
+  overlay.style.display = "flex";
+  overlay.style.justifyContent = "center";
+  overlay.style.alignItems = "center";
+  overlay.style.zIndex = 9999;
+
+  // Create popup content
+  const box = document.createElement("div");
+  box.style.background = "#fff";
+  box.style.padding = "20px";
+  box.style.borderRadius = "10px";
+  box.style.boxShadow = "0 4px 15px rgba(0,0,0,0.3)";
+  box.style.textAlign = "center";
+  box.style.minWidth = "280px";
+  box.innerHTML = `
+    <h3>Добавить товар</h3>
+    <p><strong>${item.part_make}</strong> — ${item.part_number}</p>
+    <p>${item.name}</p>
+    <label>Количество:</label><br>
+    <input type="number" id="popupQtyInput" value="1" min="1" style="margin:10px 0;padding:5px;width:80px;text-align:center;">
+    <br>
+    <button id="popupConfirm" style="margin-right:10px;padding:5px 12px;">✅ Добавить</button>
+    <button id="popupCancel" style="padding:5px 12px;">❌ Отмена</button>
+  `;
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+
+  // Focus input immediately
+  const qtyInput = box.querySelector("#popupQtyInput");
+  qtyInput.focus();
+
+  // Cancel action
+  box.querySelector("#popupCancel").addEventListener("click", () => overlay.remove());
+
+  // Confirm action
+  box.querySelector("#popupConfirm").addEventListener("click", () => {
+    const qty = parseInt(qtyInput.value);
+    if (isNaN(qty) || qty <= 0) {
+      alert("Введите корректное количество");
+      return;
+    }
+    overlay.remove();
+    addToStocks(item, row, qty); // 👈 function to send data to backend
+  });
+}
+
+
+
+// 🔹 Row flash helper
+function rowFlash(row, color) {
+  row.style.backgroundColor = color;
+  setTimeout(() => (row.style.backgroundColor = ""), 700);
+}
+
+// 🔹 Toast popup helper
+function showToast(message, type = "success") {
+  let container = document.getElementById("toastContainer");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toastContainer";
+    Object.assign(container.style, {
+      position: "fixed",
+      top: "30px",
+      right: "30px",
+      zIndex: 9999,
+      display: "flex",
+      flexDirection: "column",
+      gap: "8px",
+    });
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement("div");
+  Object.assign(toast.style, {
+    background: type === "error" ? "#f8d7da" : "#d4edda",
+    color: type === "error" ? "#721c24" : "#155724",
+    padding: "10px 15px",
+    borderRadius: "6px",
+    boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+    fontSize: "14px",
+    transition: "opacity 0.5s",
+  });
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    setTimeout(() => toast.remove(), 500);
+  }, 2500);
+}
+
+
+
 let selectedStocks = [];
 
-function addToStocks(item, row) { 
+function addToStocks(item, row, quantity) { 
   const percent = parseFloat(document.querySelector('#percent_value').textContent) || 0;
   const supplier = row.querySelector('.supplier_name')?.textContent?.trim() || "";
 
@@ -710,7 +819,7 @@ function addToStocks(item, row) {
     part_number: item.part_number ?? "",
     part_make: item.part_make ?? "",
     name: item.name ?? "", 
-    quantity: 1,
+    quantity,
     purchase_price: parseFloat(item.price) || 0,
     sell_price: item.price ? (item.price * (1 + percent / 100)).toFixed(2) : 0,
     warehouse: item.warehouse ?? "",

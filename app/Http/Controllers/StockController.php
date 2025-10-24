@@ -72,7 +72,7 @@ $existing = Stock::where('part_number', $data['part_number'])
     ->first();
 
         if ($existing) {
-            $existing->increment('quantity',  1);
+            $existing->increment('quantity',  $request->quantity);
 
             return response()->json([
                 'message' => 'Quantity increased successfully',
