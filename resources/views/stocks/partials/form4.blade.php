@@ -4,7 +4,7 @@
     <button id="searchButton">Найти</button>
   </div>
   <div>
-    <input type="number" id="percent" placeholder="Проценты" style="width: 80px; margin-right: 10px; margin-left: 100px"><span id="percent_value">{{round($settings['percent'] > 0 ? $settings['percent'] : $settings['margin'] ),0}}</span> %
+    <input type="number" id="percent" placeholder="Проценты" style="width: 80px; margin-right: 10px; margin-left: 100px"><span id="percent_value">{{round($settings['percent'] > 0 ? $settings['percent'] : $settings['margin'] ,0)}}</span> %
   </div>
 </div>
 
@@ -129,8 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
   .then(data => { brandGroups = data; })
   .catch(err => console.error("❌ Failed to load brandGroups.json:", err));
 
-  const suppliers = ["ABS","Москворечье", "Берг", "Фаворит", "Форум-Авто", 
-                        "Профит Лига", "Микадо", "Росско", "STparts", "Авторусь", 
+  const suppliers = ["ABS","Москворечье", "Берг", "Фаворит", "Форум-Авто",
+                        "Профит Лига", "Микадо", "Росско", "STparts", "Авторусь",
                         "Автоспутник", "Авто-Евро", "Авто Союз", "Ats-Auto"];
   let supplierLoading = {};
 
@@ -245,8 +245,8 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
     });
   });
 
-  function setSupplierLoading(supplier, state){ 
-  
+  function setSupplierLoading(supplier, state){
+
     supplierLoading[supplier] = state;
     const btn = suppliersButtonsDiv.querySelector(`[data-supplier="${supplier}"]`);
     if(btn){
@@ -305,9 +305,9 @@ sortButtonsDiv.querySelectorAll("button").forEach(btn=>{
 
 //   const evtSource = new EventSource(`/api/items?article=${encodeURIComponent(article)}&brand=${encodeURIComponent(brand)}`);
 
-  
-//   suppliers.forEach(s=> evtSource.addEventListener(s, e=> { 
-  
+
+//   suppliers.forEach(s=> evtSource.addEventListener(s, e=> {
+
 //     collectItems(s, JSON.parse(e.data));
 //     setSupplierLoading(s, false); // получены данные
 //   }));
@@ -526,7 +526,7 @@ function collectItems(supplier, items){
     const partHeader = document.createElement("tr");
     partHeader.style.backgroundColor = "#f0f0f0";
     partHeader.innerHTML = `
-        
+
         ${hiddenCount > 0 ? `<td colspan="9"><button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button></td>` : ""}
     `;
     tbody.appendChild(partHeader);
@@ -544,7 +544,7 @@ function collectItems(supplier, items){
 
     // Only first row gets article & name; remove borders for subsequent rows
     const borderStyle = idx === 0 ? "" : "border-top:0;border-bottom:0;";
-    
+
     row.innerHTML = `
         <td style="${borderStyle}${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}"></td>
         <td style="${borderStyle}">${idx === 0 ? item.part_number ?? "-" : ""}</td>
@@ -583,48 +583,48 @@ function collectItems(supplier, items){
         // tbody.appendChild(separator);
     });
 
-// 🔹 Создать кнопки для перехода к брендам 
-    const brandNavDiv = document.getElementById("brandNav"); 
-    if (brandNavDiv) brandNavDiv.remove(); // удалить старую панель, если была 
-      const navDiv = document.createElement("div"); 
-      navDiv.id = "brandNav"; navDiv.className = "shrink"; 
-      navDiv.style.margin = "15px 0 0 220px"; 
-      navDiv.style.display = "flex"; 
-      navDiv.style.flexWrap = "wrap"; 
-      navDiv.style.gap = "8px"; 
-      navDiv.style.width = "calc(100% - 220px)"; // создаем кнопки навигации 
-      brandEntries.forEach(bg => { 
-        const btn = document.createElement("button"); 
-        btn.textContent = bg.brand; 
-        btn.className = "brand-nav-btn"; 
-        btn.addEventListener("click", (e) => { 
-          e.preventDefault(); 
-          const target = document.getElementById(`brand-${bg.brand.toLowerCase()}`); 
-          if (target) { target.scrollIntoView({ behavior: "instant", block: "start" }); 
-        } 
-      }); 
-        navDiv.appendChild(btn); 
-      }); // вставляем панель над таблицей 
-      const table = document.getElementById("resultsTable"); 
-      table.parentNode.insertBefore(navDiv, table); 
-      document.querySelector('#scrollTopBtn').style.bottom = parseInt( getComputedStyle(document.querySelector('#brandNav')).height ) + 30 + 'px' 
-      // 🔹 Подсветка активного бренда при прокрутке 
-      const brandSections = brandEntries.map(bg => ({ 
-        id: `brand-${bg.brand.toLowerCase()}`, 
-        name: bg.brand 
+// 🔹 Создать кнопки для перехода к брендам
+    const brandNavDiv = document.getElementById("brandNav");
+    if (brandNavDiv) brandNavDiv.remove(); // удалить старую панель, если была
+      const navDiv = document.createElement("div");
+      navDiv.id = "brandNav"; navDiv.className = "shrink";
+      navDiv.style.margin = "15px 0 0 220px";
+      navDiv.style.display = "flex";
+      navDiv.style.flexWrap = "wrap";
+      navDiv.style.gap = "8px";
+      navDiv.style.width = "calc(100% - 220px)"; // создаем кнопки навигации
+      brandEntries.forEach(bg => {
+        const btn = document.createElement("button");
+        btn.textContent = bg.brand;
+        btn.className = "brand-nav-btn";
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const target = document.getElementById(`brand-${bg.brand.toLowerCase()}`);
+          if (target) { target.scrollIntoView({ behavior: "instant", block: "start" });
+        }
+      });
+        navDiv.appendChild(btn);
+      }); // вставляем панель над таблицей
+      const table = document.getElementById("resultsTable");
+      table.parentNode.insertBefore(navDiv, table);
+      document.querySelector('#scrollTopBtn').style.bottom = parseInt( getComputedStyle(document.querySelector('#brandNav')).height ) + 30 + 'px'
+      // 🔹 Подсветка активного бренда при прокрутке
+      const brandSections = brandEntries.map(bg => ({
+        id: `brand-${bg.brand.toLowerCase()}`,
+        name: bg.brand
       }
-      )); 
-      window.removeEventListener("scroll", highlightActiveBrand); 
-      window.addEventListener("scroll", highlightActiveBrand); 
-      function highlightActiveBrand() { 
-        let current = ""; const scrollY = window.scrollY - 400; // небольшой отступ сверху 
-        for (let section of brandSections) { 
-          const el = document.getElementById(section.id); 
-          if (el && el.offsetTop <= scrollY) current = section.name; 
-        } 
-        document.querySelectorAll(".brand-nav-btn").forEach(btn => { 
-          btn.classList.toggle("active", btn.textContent === current); 
-        }); 
+      ));
+      window.removeEventListener("scroll", highlightActiveBrand);
+      window.addEventListener("scroll", highlightActiveBrand);
+      function highlightActiveBrand() {
+        let current = ""; const scrollY = window.scrollY - 400; // небольшой отступ сверху
+        for (let section of brandSections) {
+          const el = document.getElementById(section.id);
+          if (el && el.offsetTop <= scrollY) current = section.name;
+        }
+        document.querySelectorAll(".brand-nav-btn").forEach(btn => {
+          btn.classList.toggle("active", btn.textContent === current);
+        });
       }
 
 
@@ -738,7 +738,7 @@ percentInput.addEventListener('blur', function() {
 
 
 
-td > button { 
+td > button {
   padding: 6px 10px !important ;
   background: #03a9f4 !important;
 }
@@ -791,7 +791,7 @@ td > button {
   background: #4dd0e1;
   color: #fff;
   border-color: #00acc1;
-  
+
 }
 
 
