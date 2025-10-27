@@ -1,6 +1,6 @@
 <div style="display: flex;">
   <div>
-    <input type="text" id="searchInput" placeholder="Введите артикул..." style="width: 200px">
+    <input type="text" id="searchInput" name="part_number" placeholder="Введите артикул..." style="width: 200px">
     <button id="searchButton">Найти</button>
   </div>
   <div>
@@ -27,6 +27,9 @@
 <div id="sortButtons" style="margin-bottom:10px;">
   <button data-sort="price" class="sort-btn active">По цене</button>
   <button data-sort="delivery" class="sort-btn">По сроку</button>
+  <button id="togglePurchasePrice" class="btn btn-sm btn-secondary mb-2">
+    👁 Не показывать закупку
+</button>
 </div>
 
 <h3>Результаты</h3>
@@ -37,7 +40,7 @@
       <th>Номер детали</th>
       <th>Название</th>
       <th>Количество</th>
-      <th>Цена</th>
+      <th class="purchase-price-col">Цена</th>
       <th>Продажа</th>
       <th>Срок</th>
       <th>Склад</th>
@@ -107,6 +110,32 @@
 }
 </style>
 
+<script>
+ document.addEventListener("DOMContentLoaded", () => {
+  const button = document.getElementById("togglePurchasePrice");
+  let hidden = localStorage.getItem("hidePurchasePrice") === "true";
+
+  const updateState = () => {
+    document.body.classList.toggle("hide-purchase-price", hidden);
+    button.textContent = hidden ? "👁 Показать закупку" : "👁 Не показать закупку";
+  };
+
+  button.addEventListener("click", () => {
+    hidden = !hidden;
+    localStorage.setItem("hidePurchasePrice", hidden);
+    updateState();
+  });
+
+  updateState();
+});
+</script>
+
+<style>
+  .hide-purchase-price .purchase-price-col {
+    display: none !important;
+    white-space: nowrap;
+  }
+</style>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById("loader");
@@ -614,8 +643,8 @@ Object.values(grouped).forEach(brandGroup => {
         <td style="${borderStyle}">${idx === 0 ? item.part_number ?? "-" : ""}</td>
         <td style="${borderStyle}">${idx === 0 ? item.name ?? "-" : ""}</td>
         <td>${item.quantity ?? 0}</td>
-        <td>${item.price ?? "-"}</td>
-        <td>${item.price ? (item.price * (1 + percent / 100)).toFixed(2) : "-"}</td>
+        <td class="purchase-price-col" title="${item.price ? item.price.toFixed(2) : "-"}">${numberFormat(item.price) ?? "-"}</td>
+        <td style="white-space: nowrap;" title="${item.price ? (item.price * (1 + percent / 100)).toFixed(2) : "-"}"><b>${item.price ? (numberFormat(item.price * (1 + percent / 100))) : "-"}</b></td>
         <td>${item.delivery ?? "-"}</td>
         <td>${item.warehouse ?? "-"}</td>
         <td class="supplier_name">${item.supplier ?? "-"}</td>

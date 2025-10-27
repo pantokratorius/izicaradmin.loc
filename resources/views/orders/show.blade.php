@@ -87,10 +87,10 @@
                         style="background-color: #dfffdc"
                         @endif
                         onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->margin ?? $globalMargin }}</td>
-                        <td class="text-end">
-                            <button class="btn btn-sm btn-danger" onclick="deleteItem({{ $item->id }})">🗑</button>
+                        <td class="text-end" onclick='openItemModal({{ $order->id }}, @json($item))'>
+                            {{ $item->comment }}
                         </td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->comment }}</td>
+                        <td ><button class="btn btn-sm btn-danger" onclick="deleteItem({{ $item->id }})">🗑</button></td>
                     </tr>
                     @empty
 
@@ -99,6 +99,14 @@
                         </tr>
                     @endforelse
                 </tbody>
+                <tfoot>
+        <tr>
+            <th colspan="3"></th>
+            <th>{{ number_format($totalPurchasePrice, 2, ',', ' ') }}</th>
+            <th>{{ number_format($totalSellPrice, 2, ',', ' ') }}</th>
+            <th colspan="7"></th>
+        </tr>
+    </tfoot>
             </table>
         </div>
     </div>

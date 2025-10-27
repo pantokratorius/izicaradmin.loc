@@ -38,10 +38,14 @@ class OrderItemController extends Controller
                 
                 'quantity'       => 'nullable|integer|min:1',
             ]);
-$data['status'] = 1;
+
+        $data['status'] = 1;
             $item = OrderItem::create($data);
 
-            return response()->json(['success' => true, 'item' => $item]);
+            $order = Order::find($data['order_id']);
+
+           return redirect()->route('orders.show', $order);
+            // return view('order_items.index', compact('item'));
         }
 
 public function store_ajax(Request $request)

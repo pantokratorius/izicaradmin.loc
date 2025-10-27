@@ -114,6 +114,24 @@
 @endif
     @yield('content')
   </div>
+    <script>
+    // === Global Number Formatter (like PHP number_format) ===
+    window.numberFormat = function (value) {
+  const num = parseFloat(value);
+  if (isNaN(num)) return '-';
+
+  // 🔹 Round to nearest 50, but .5 goes DOWN (like 125 → 100)
+  const divided = num / 50;
+  const rounded = (divided % 1 === 0.5) 
+    ? Math.floor(divided) * 50 
+    : Math.round(divided) * 50;
+
+  return rounded
+    .toFixed(2)                       // two decimals
+    .replace('.', ',')                // comma as decimal separator
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // spaces for thousands
+};
+  </script>
 </body>
 </html>
 

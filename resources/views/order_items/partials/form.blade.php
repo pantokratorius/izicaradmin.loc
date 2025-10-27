@@ -1,8 +1,5 @@
-<form id="orderForm" action="{{ route('orders.store') }}" method="POST">
-    @csrf
 
-
-<input type="hidden" name="order_id" id="order_id">
+<input type="hidden" name="order_id" id="order_id" value={{$order->id}}>
 <input type="hidden" name="item_id" id="item_id">
 
 
@@ -28,19 +25,19 @@
 
     <!-- Предоплата -->
     <div class="form-group">
-        <label for="prepayment">Продажа</label>
+        <label for="sell_price">Продажа</label>
         <input type="text" id="sell_price" name="sell_price" value="{{ old('sell_price') }}">
     </div>
 
 
     <div class="form-group">
-        <label for="prepayment">Поставщик</label>
+        <label for="supplier">Поставщик</label>
         <input type="text" id="supplier" name="supplier" value="{{ old('supplier') }}">
     </div>
 
 
     <div class="form-group">
-        <label for="prepayment">Количество</label>
+        <label for="quantity">Количество</label>
         <input type="text" id="quantity" name="quantity" value="{{ old('quantity') }}">
     </div>
 
@@ -79,7 +76,6 @@
         <input type="text" id="comment" name="comment" value="{{ old('comment') }}">
     </div>
 
-</form>
 
 <style>
 .form-group { margin-bottom: 15px; }

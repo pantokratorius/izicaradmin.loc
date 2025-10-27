@@ -1,6 +1,6 @@
 <div style="display: flex;">
   <div>
-    <input type="text" id="searchInput" placeholder="Введите артикул..." style="width: 200px">
+    <input type="text" id="searchInput" name="part_number" placeholder="Введите артикул..." style="width: 200px">
     <button id="searchButton">Найти</button>
   </div>
   <div>
