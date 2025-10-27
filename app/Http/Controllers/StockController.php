@@ -67,18 +67,18 @@ class StockController extends Controller
 
 
 // Use a raw query to compare normalized values
-$existing = Stock::where('part_number', $data['part_number'])
-    ->where('part_make', $data['part_make'])
-    ->first();
+// $existing = Stock::where('part_number', $data['part_number'])
+//     ->where('part_make', $data['part_make'])
+//     ->first();
 
-        if ($existing) {
-            $existing->increment('quantity',  $request->quantity);
+//         if ($existing) {
+//             $existing->increment('quantity',  $request->quantity);
 
-            return response()->json([
-                'message' => 'Quantity increased successfully',
-                'data' => $existing->fresh(),
-            ]);
-        }
+//             return response()->json([
+//                 'message' => 'Quantity increased successfully',
+//                 'data' => $existing->fresh(),
+//             ]);
+//         }
 
         $stock = Stock::create($data);
 

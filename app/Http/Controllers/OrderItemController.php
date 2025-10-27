@@ -68,21 +68,21 @@ public function store_ajax(Request $request)
         $data['part_number'] = trim($data['part_number']);
 
         // Find existing item for this order
-        $existing = OrderItem::where('order_id', $data['order_id'])
-            ->where('part_number', $data['part_number'])
-            ->where('part_make', $data['part_make'])
-            ->first();
+        // $existing = OrderItem::where('order_id', $data['order_id'])
+        //     ->where('part_number', $data['part_number'])
+        //     ->where('part_make', $data['part_make'])
+        //     ->first();
 
-        if ($existing) {
-            $existing->quantity += $data['quantity'];
-            $existing->save();
+        // if ($existing) {
+        //     $existing->quantity += $data['quantity'];
+        //     $existing->save();
 
-            return response()->json([
-                'status' => 'updated',
-                'message' => 'Количество увеличено',
-                'item' => $existing,
-            ]);
-        }
+        //     return response()->json([
+        //         'status' => 'updated',
+        //         'message' => 'Количество увеличено',
+        //         'item' => $existing,
+        //     ]);
+        // }
 
         $item = OrderItem::create($data);
 
