@@ -7,19 +7,19 @@
 
     <!-- № заказа -->
     <div class="form-group">
-        <label for="order_number">Бренд</label>
+        <label for="part_make">Бренд</label>
         <input type="text" id="part_make" name="part_make" value="{{ old('part_make') }}">
     </div>
 
     <!-- Дата -->
     <div class="form-group">
-        <label for="created_at">Название</label>
+        <label for="part_name">Название</label>
         <input type="text" id="part_name" name="part_name" value="{{ old('part_name') }}">
     </div>
 
     <!-- Пробег -->
     <div class="form-group">
-        <label for="mileage">Закупка</label>
+        <label for="purchase_price">Закупка</label>
         <input type="text" id="purchase_price" name="purchase_price" value="{{ old('purchase_price') }}">
     </div>
 

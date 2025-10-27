@@ -120,16 +120,26 @@
   const num = parseFloat(value);
   if (isNaN(num)) return '-';
 
-  // 🔹 Round to nearest 50, but .5 goes DOWN (like 125 → 100)
-  const divided = num / 50;
-  const rounded = (divided % 1 === 0.5) 
-    ? Math.floor(divided) * 50 
-    : Math.round(divided) * 50;
+  let rounded;
+
+  if (num > 1000) {
+    const step = 50;
+    const divided = num / step;
+    const fraction = divided - Math.floor(divided);
+
+    // Round down if exactly .5, otherwise normal rounding
+    rounded =
+      Math.abs(fraction - 0.5) < 1e-9
+        ? Math.floor(divided) * step
+        : Math.round(divided) * step;
+  } else {
+    rounded = num; // just format normally
+  }
 
   return rounded
-    .toFixed(2)                       // two decimals
-    .replace('.', ',')                // comma as decimal separator
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // spaces for thousands
+    .toFixed(2)
+    .replace('.', ',')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 };
   </script>
 </body>
