@@ -53,6 +53,9 @@
 
 <style>
 
+table { 
+  width: calc(100% - 110px);
+}
 .supplier-btn.empty {
   background: #eee !important;
   color: #888 !important;
@@ -75,7 +78,7 @@
   display: none; /* скрыта по умолчанию */
   position: fixed;
   bottom: 90px;
-  right: 30px;
+  right: 140px;
   z-index: 1000;
   font-size: 18px;
   border: none;
@@ -132,6 +135,8 @@
 <style>
   .hide-purchase-price .purchase-price-col {
     display: none !important;
+  }
+  .purchase-price-col {
     white-space: nowrap;
   }
 </style>
@@ -692,8 +697,6 @@ Object.values(grouped).forEach(brandGroup => {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
           const target = document.getElementById(`brand-${bg.brand.toLowerCase()}`);
-          console.log('asdasdasdsad', target);
-          
           if (target) { target.scrollIntoView({ behavior: "instant", block: "start" });
         }
       });
@@ -1092,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </style>
 
 <style>
-.brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px; width: calc(100% - 110px);}
 .brand-list li{padding:6px 12px;border:1px solid #ccc;border-radius:6px;cursor:pointer;transition:all 0.2s;background:#f9f9f9;font-size:14px}
 .brand-list li:hover{background:#e0f7fa;border-color:#4dd0e1}
 .brand-list li.selected{background:#4dd0e1;color:#fff;border-color:#00acc1}
@@ -1134,13 +1137,13 @@ td > button {
 
 #brandNav {
   position: fixed;
-  top: 100px; /* adjust to your layout */
+  bottom: 0px; /* adjust to your layout */
   right: 0;
-  width: 20px; /* collapsed width */
-  max-height: 80vh;
+  width: 110px; /* collapsed width */
+  max-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  background: #rgba(255,255,255, 0.5);
+  background: #fff; /* #rgba(255,255,255, 0.5); */
   border-radius: 10px 0 0 10px;
   box-shadow: -2px 0 6px rgba(0,0,0,0.1);
   transition: width 0.3s ease;
@@ -1149,10 +1152,10 @@ td > button {
 }
 
 /* expand on hover */
-#brandNav:hover {
-  width: auto; /* full width when open */
+/* #brandNav:hover {
+  width: auto; /* full width when open 
   background: #f8f9fb;
-}
+} */
 
 /* content inside */
 #brandNav.shrink {
