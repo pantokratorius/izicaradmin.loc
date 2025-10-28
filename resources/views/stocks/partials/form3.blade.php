@@ -1139,7 +1139,7 @@ td > button {
   position: fixed;
   bottom: 0px; /* adjust to your layout */
   right: 0;
-  width: 110px; /* collapsed width */
+  width: 125px; /* collapsed width */
   max-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -1149,6 +1149,7 @@ td > button {
   transition: width 0.3s ease;
   padding: 10px 5px;
   z-index: 1000;
+  box-sizing: border-box;
 }
 
 /* expand on hover */
