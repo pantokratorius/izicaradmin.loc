@@ -1136,11 +1136,11 @@ td > button {
   position: fixed;
   top: 100px; /* adjust to your layout */
   right: 0;
-  width: 40px; /* collapsed width */
+  width: 30px; /* collapsed width */
   max-height: 80vh;
   overflow-y: auto;
   overflow-x: hidden;
-  background: #f8f9fb;
+  background: #rgba(255,255,255, 0.5);
   border-radius: 10px 0 0 10px;
   box-shadow: -2px 0 6px rgba(0,0,0,0.1);
   transition: width 0.3s ease;
@@ -1151,6 +1151,7 @@ td > button {
 /* expand on hover */
 #brandNav:hover {
   width: auto; /* full width when open */
+  background: #f8f9fb;
 }
 
 /* content inside */
