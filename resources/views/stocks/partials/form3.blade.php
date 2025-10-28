@@ -605,6 +605,7 @@ Object.values(grouped).forEach(brandGroup => {
     // Part header
     const partHeader = document.createElement("tr");
     partHeader.style.backgroundColor = "#f0f0f0";
+    partHeader.id = `brand-${cleanBrand(brand)}`;
     partHeader.innerHTML = `
 
         ${hiddenCount > 0 ? `<td colspan="8"><button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button></td>` : ""}
@@ -691,6 +692,8 @@ Object.values(grouped).forEach(brandGroup => {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
           const target = document.getElementById(`brand-${bg.brand.toLowerCase()}`);
+          console.log('asdasdasdsad', target);
+          
           if (target) { target.scrollIntoView({ behavior: "instant", block: "start" });
         }
       });
