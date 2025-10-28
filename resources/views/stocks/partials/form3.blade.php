@@ -1171,10 +1171,10 @@ td > button {
   background: none;
   border: none;
   color: #333;
-  padding: 6px 10px;
+  padding: 3px 5px;
   text-align: left;
   width: 100%;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, transform 0.2s;
