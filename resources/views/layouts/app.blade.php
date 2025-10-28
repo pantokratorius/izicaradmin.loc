@@ -33,8 +33,40 @@
     .search-box { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 250px; }
 
     table { width: 100%; border-collapse: collapse; background: #fff; }
-    th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: left; font-size: 14px; }
-    th { background: #f1f3f5; }
+    th, td { 
+      padding: 10px; 
+      text-align: left; 
+      font-size: 14px; 
+    }
+    
+    th{
+      border: 1px solid  #e9e9e9; /* #e0e0e0; */
+    }
+    td {
+      border: none;
+      border-bottom: 1px solid #efefef;
+      border-top: 1px solid #efefef;
+    }
+
+
+    #resultsTable tr:nth-child(2n){
+        /* background: grey; */
+    }
+
+    /* #resultsTable td:not(:first-child){
+      border-left: none;
+    }
+
+    
+    #resultsTable td:nth-child(-n+3){
+      border-bottom: none;
+      border-top: none;
+    }
+    #resultsTable td:nth-child(-n+2){
+      border-right: none;
+    } */
+
+    th { background: #f1f3f5; }   
     tr:hover { background: #f9fafc; }
 
     .btn {

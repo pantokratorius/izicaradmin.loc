@@ -33,7 +33,7 @@
 </div>
 
 <h3>Результаты</h3>
-<table id="resultsTable" border="1" cellspacing="0" cellpadding="5">
+<table id="resultsTable" cellspacing="0" cellpadding="5">
   <thead>
     <tr>
       <th>Бренд</th>
@@ -43,8 +43,7 @@
       <th class="purchase-price-col">Цена</th>
       <th>Продажа</th>
       <th>Срок</th>
-      <th>Склад</th>
-      <th>Поставщик</th>
+      <th style="text-align: center">Склад</th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -563,13 +562,7 @@ Object.values(grouped).forEach(brandGroup => {
         brandEntries.forEach(brandGroup => {
         const { brand, parts } = brandGroup;
 
-        // Brand header
-        const brandHeader = document.createElement("tr");
-        brandHeader.style.backgroundColor = "#d9edf7";
-        brandHeader.innerHTML = `<td colspan="9" style="font-weight:bold;">${brand}</td>`;
-        brandHeader.id = `brand-${cleanBrand(brand)}`;
-        tbody.appendChild(brandHeader);
-
+ 
         // Part groups sorted by OEM + price
         const partGroups = Object.values(parts).sort((a, b) => {
   // OEM group stays prioritized
@@ -614,7 +607,7 @@ Object.values(grouped).forEach(brandGroup => {
     partHeader.style.backgroundColor = "#f0f0f0";
     partHeader.innerHTML = `
 
-        ${hiddenCount > 0 ? `<td colspan="9"><button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button></td>` : ""}
+        ${hiddenCount > 0 ? `<td colspan="8"><button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button></td>` : ""}
     `;
     tbody.appendChild(partHeader);
 
@@ -636,18 +629,18 @@ Object.values(grouped).forEach(brandGroup => {
       const percent = document.querySelector('#percent_value').textContent
 
     // Only first row gets article & name; remove borders for subsequent rows
-    const borderStyle = idx === 0 ? "" : "border-top:0;border-bottom:0;";
+    // const borderStyle = idx === 0 ? "" : "border-top:0;border-bottom:0;";
+    const borderStyle = idx === 0 ? "" : "";
 
     row.innerHTML = `
-        <td style="${borderStyle}${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}"></td>
+        <td style="${borderStyle}">${idx === 0 ? brand ?? "-" : ""}</td>
         <td style="${borderStyle}">${idx === 0 ? item.part_number ?? "-" : ""}</td>
         <td style="${borderStyle}">${idx === 0 ? item.name ?? "-" : ""}</td>
         <td>${item.quantity ?? 0}</td>
         <td class="purchase-price-col" title="${item.price > 0 ? parseFloat(item.price).toFixed(2) : "-"}">${numberFormat(item.price) ?? "-"}</td>
         <td style="white-space: nowrap;" title="${item.price ? (item.price * (1 + percent / 100)).toFixed(2) : "-"}"><b>${item.price ? (numberFormat(item.price * (1 + percent / 100))) : "-"}</b></td>
         <td>${item.delivery ?? "-"}</td>
-        <td>${item.warehouse ?? "-"}</td>
-        <td class="supplier_name">${item.supplier ?? "-"}</td>
+        <td style="text-align:center; max-width: 200px">${item.warehouse ?? "-"}<br><p style="color: #2196f3; margin: 5px 0 0">${item.supplier ?? "-"}</p></td>
     `;
 
     if (isOEM) row.classList.add("oem-row");
