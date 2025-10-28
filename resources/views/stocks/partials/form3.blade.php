@@ -640,7 +640,7 @@ Object.values(grouped).forEach(brandGroup => {
         <td class="purchase-price-col" title="${item.price > 0 ? parseFloat(item.price).toFixed(2) : "-"}">${numberFormat(item.price) ?? "-"}</td>
         <td style="white-space: nowrap;" title="${item.price ? (item.price * (1 + percent / 100)).toFixed(2) : "-"}"><b>${item.price ? (numberFormat(item.price * (1 + percent / 100))) : "-"}</b></td>
         <td>${item.delivery ?? "-"}</td>
-        <td style="text-align:center; max-width: 200px">${item.warehouse ?? "-"}<br><p style="color: #2196f3; margin: 5px 0 0">${item.supplier ?? "-"}</p></td>
+        <td style="text-align:center; max-width: 200px">${item.warehouse ?? "-"}<br><p style="color: #2196f3; margin: 5px 0 0" class="supplier_name">${item.supplier ?? "-"}</p></td>
     `;
 
     if (isOEM) row.classList.add("oem-row");
