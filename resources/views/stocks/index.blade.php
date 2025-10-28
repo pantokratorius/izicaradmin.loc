@@ -7,7 +7,7 @@
 
 <a href="{{ route('stocks.create') }}" class="btn">➕ Добавить товар</a>
 
-<table border="1" cellspacing="0" cellpadding="8" style="margin-top:15px;width:100%;">
+<table border="0" cellspacing="0" cellpadding="8" style="margin-top:15px;width:100%;">
     <thead>
         <tr>
             <th>ID</th>
