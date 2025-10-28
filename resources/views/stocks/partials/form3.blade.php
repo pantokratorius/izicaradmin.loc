@@ -1136,7 +1136,7 @@ td > button {
   position: fixed;
   top: 100px; /* adjust to your layout */
   right: 0;
-  width: 30px; /* collapsed width */
+  width: 20px; /* collapsed width */
   max-height: 80vh;
   overflow-y: auto;
   overflow-x: hidden;
