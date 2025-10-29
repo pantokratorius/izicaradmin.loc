@@ -642,7 +642,7 @@ Object.values(grouped).forEach(brandGroup => {
         <td style="${borderStyle}">${idx === 0 ? item.part_number ?? "-" : ""}</td>
         <td style="${borderStyle}">${idx === 0 ? item.name ?? "-" : ""}</td>
         <td>${item.quantity ?? 0}</td>
-        <td class="purchase-price-col" title="${item.price ? parseFloat(item.price).toFixed(2) : "-"}">${numberFormat(item.price) ?? "-"}</td>
+        <td class="purchase-price-col" title="${item.price ? parseFloat(item.price).toFixed(2) : "-"}">${item.price ?? "-"}</td>
         <td style="white-space: nowrap;" title="${item.price ? (item.price * (1 + percent / 100)).toFixed(2) : "-"}"><b>${item.price ? (numberFormat(item.price * (1 + percent / 100))) : "-"}</b></td>
         <td>${item.delivery ?? "-"}</td>
         <td>${item.warehouse ?? "-"}</td>
