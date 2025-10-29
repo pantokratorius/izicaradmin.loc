@@ -992,10 +992,10 @@ percentInput.addEventListener('blur', function() {
                 const saleCell  = row.children[5];   // column with selling price ("Продажа")
 
                 if (priceCell && saleCell) {
-                    const basePrice = parseFloat(priceCell.textContent);
+                    const basePrice = parseFloat(priceCell.title);
                     if (!isNaN(basePrice)) {
                         const newSale = (basePrice * (1 + newPercent / 100)).toFixed(2);
-                        saleCell.textContent = newSale;
+                        saleCell.textContent = numberFormat(newSale);
                     }
                 }
             });
