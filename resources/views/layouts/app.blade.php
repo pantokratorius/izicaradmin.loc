@@ -176,6 +176,17 @@
     .replace('.', ',')
     .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 };
+
+ window.numberFormat2 = function (value) {
+  const num = parseFloat(value);
+  if (isNaN(num)) return '-';
+
+
+  return num
+    .toFixed(2)
+    .replace('.', ',')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+};
   </script>
 </body>
 </html>
