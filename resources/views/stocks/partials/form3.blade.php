@@ -1,15 +1,15 @@
-<div style="display: flex;">
+<div id="searchBar" style="display: flex;">
   <div>
     <input type="text" id="searchInput" name="part_number" placeholder="Введите артикул..." style="width: 200px">
     <button id="searchButton">Найти</button>
   </div>
   <div>
-    <input type="number" id="percent" placeholder="Проценты" style="width: 80px; margin-right: 10px; margin-left: 100px"><span id="percent_value">{{round($settings['percent'] > 0 ? $settings['percent'] : $settings['margin'], 0 )}}</span> %
+    <input type="number" id="percent" placeholder="Проценты" style="width: 100px; margin-right: 10px; margin-left: 100px"><span id="percent_value">{{round($settings['percent'] > 0 ? $settings['percent'] : $settings['margin'], 0 )}}</span> %
   </div>
 </div>
 
 <!-- Лоадер -->
-<div id="loader" style="display:none; margin:30px 0; text-align:center; position: absolute; left: 50%; top: 200px">
+<div id="loader" style="display:none; margin:60px 0; text-align:center; position: absolute; left: 50%; top: 200px">
   <div class="spinner"></div>
   <div style="margin-top:8px; color:#00acc1; font-weight:bold;">Загружаем данные...</div>
 </div>
@@ -53,7 +53,14 @@
 
 <style>
 
-
+#searchBar {
+  position: sticky;
+  top: 0;
+  background: #f5f8fb; /* or match your page color */
+  z-index: 100;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd; /* optional for separation */
+}
 .supplier-btn.empty {
   background: #eee !important;
   color: #888 !important;
@@ -1131,41 +1138,44 @@ td > button {
   background: #03a9f4 !important;
 }
 
-
-
 #brandNav {
   position: fixed;
-  bottom: 50%; /* adjust to your layout */
-  transform: translateY(50%);
   right: 0;
-  width: 0; /* collapsed width */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
   max-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  background: linear-gradient(to right, rgb(255 255 255 / 5%) 10px, rgb(255 255 255 / 98%) 10px, rgba(255, 255, 255, 0.5) 100%);
+
+  background: linear-gradient(to right, rgb(112 112 112 / 5%) 10px, rgb(31 22 155 / 98%) 10px, rgba(255, 255, 255, 0.5) 100%);
   border-left: 50px solid transparent;
   border-radius: 10px 0 0 10px;
-  /* box-shadow: -2px 0 6px rgba(0,0,0,0.1); */
   transition: width 0.3s ease;
   padding: 10px 5px;
   z-index: 1000;
   box-sizing: border-box;
+    /* display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px; */
 }
+
+
 
 /* expand on hover */
 #brandNav:hover {
-  width: auto; 
+  width: min-content; 
   background: #fff;
     border-left: 10px solid #fff;
+    border-right: 10px solid #fff;
+
 }
 
 /* content inside */
 #brandNav.shrink {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 6px;
+
 }
 
 /* brand buttons */
