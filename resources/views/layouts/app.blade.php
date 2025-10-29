@@ -88,6 +88,9 @@
       <div class="logo">IZICAR</div>
       <ul>
         <li>
+            <a href="{{route('search.index')}}"><img style="width: 15px" src="{{asset('storage/svg/search.svg') }}" /> Поиск</a>
+        </li>
+        <li>
             <a href="{{route('clients.index')}}"><img src="{{asset('storage/svg/clients.svg') }}" /> Клиенты</a>
         </li>
         <li>

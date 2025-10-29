@@ -53,9 +53,7 @@
 
 <style>
 
-table { 
-  width: calc(100% - 110px);
-}
+
 .supplier-btn.empty {
   background: #eee !important;
   color: #888 !important;
@@ -1095,7 +1093,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </style>
 
 <style>
-.brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px; width: calc(100% - 110px);}
+.brand-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
 .brand-list li{padding:6px 12px;border:1px solid #ccc;border-radius:6px;cursor:pointer;transition:all 0.2s;background:#f9f9f9;font-size:14px}
 .brand-list li:hover{background:#e0f7fa;border-color:#4dd0e1}
 .brand-list li.selected{background:#4dd0e1;color:#fff;border-color:#00acc1}
@@ -1137,13 +1135,14 @@ td > button {
 
 #brandNav {
   position: fixed;
-  bottom: 0px; /* adjust to your layout */
+  bottom: 50%; /* adjust to your layout */
+  transform: translateY(50%);
   right: 0;
-  width: 125px; /* collapsed width */
+  width: 0; /* collapsed width */
   max-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  background: #fff; /* #rgba(255,255,255, 0.5); */
+  background: #rgba(255,255,255, 0.5); 
   border-radius: 10px 0 0 10px;
   box-shadow: -2px 0 6px rgba(0,0,0,0.1);
   transition: width 0.3s ease;
@@ -1153,16 +1152,17 @@ td > button {
 }
 
 /* expand on hover */
-/* #brandNav:hover {
-  width: auto; /* full width when open 
+#brandNav:hover {
+  width: auto; 
   background: #f8f9fb;
-} */
+}
 
 /* content inside */
 #brandNav.shrink {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   gap: 6px;
 }
 

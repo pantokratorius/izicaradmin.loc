@@ -99,6 +99,7 @@ Route::post('/{part}/move-to-order', [TempPartsController::class, 'moveToOrder']
 Route::delete('/{part}', [TempPartsController::class, 'destroy'])->name('temp_parts.destroy');
 
 
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
