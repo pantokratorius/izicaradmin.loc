@@ -1142,7 +1142,7 @@ td > button {
   max-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  background: linear-gradient(to right, rgb(112 112 112 / 5%) 10px, rgb(31 22 155 / 98%) 10px, rgba(255, 255, 255, 0.5) 100%);
+  background: linear-gradient(to right, rgb(255 255 255 / 5%) 10px, rgb(255 255 255 / 98%) 10px, rgba(255, 255, 255, 0.5) 100%);
   border-left: 50px solid transparent;
   border-radius: 10px 0 0 10px;
   /* box-shadow: -2px 0 6px rgba(0,0,0,0.1); */
