@@ -1142,25 +1142,21 @@ td > button {
   max-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  background: rgba(255,255,255, 0.5); 
+  background: linear-gradient(to right, rgb(112 112 112 / 5%) 10px, rgb(31 22 155 / 98%) 10px, rgba(255, 255, 255, 0.5) 100%);
+  border-left: 50px solid transparent;
   border-radius: 10px 0 0 10px;
-  box-shadow: -2px 0 6px rgba(0,0,0,0.1);
+  /* box-shadow: -2px 0 6px rgba(0,0,0,0.1); */
   transition: width 0.3s ease;
   padding: 10px 5px;
   z-index: 1000;
   box-sizing: border-box;
 }
 
-
-::-webkit-scrollbar {
-    display: none;
-}
-
-
 /* expand on hover */
 #brandNav:hover {
-  width: calc-size(fit-content, size + 50px); 
-  background: #f8f9fb;
+  width: auto; 
+  background: #fff;
+    border-left: 10px solid #fff;
 }
 
 /* content inside */
