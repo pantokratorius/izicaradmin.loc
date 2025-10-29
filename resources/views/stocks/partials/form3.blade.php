@@ -1142,7 +1142,7 @@ td > button {
   max-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  background: #rgba(255,255,255, 0.5); 
+  background: rgba(255,255,255, 0.5); 
   border-radius: 10px 0 0 10px;
   box-shadow: -2px 0 6px rgba(0,0,0,0.1);
   transition: width 0.3s ease;
@@ -1151,9 +1151,15 @@ td > button {
   box-sizing: border-box;
 }
 
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
 /* expand on hover */
 #brandNav:hover {
-  width: auto; 
+  width: calc-size(fit-content, size + 50px); 
   background: #f8f9fb;
 }
 
