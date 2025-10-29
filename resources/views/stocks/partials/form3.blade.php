@@ -709,7 +709,7 @@ Object.values(grouped).forEach(brandGroup => {
       }); // вставляем панель над таблицей
       const table = document.getElementById("resultsTable");
       table.parentNode.insertBefore(navDiv, table);
-      document.querySelector('#scrollTopBtn').style.bottom =   20 + 'px'
+      document.querySelector('#scrollTopBtn').style.bottom =   60 + 'px'
       // 🔹 Подсветка активного бренда при прокрутке
       const brandSections = brandEntries.map(bg => ({
         id: `brand-${bg.brand.toLowerCase()}`,
