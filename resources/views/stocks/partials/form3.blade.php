@@ -61,6 +61,12 @@
   padding: 10px 0;
   border-bottom: 1px solid #ddd; /* optional for separation */
 }
+
+thead {
+  position: sticky;
+   top: 55px;
+}
+
 .supplier-btn.empty {
   background: #eee !important;
   color: #888 !important;
@@ -690,11 +696,11 @@ Object.values(grouped).forEach(brandGroup => {
     if (brandNavDiv) brandNavDiv.remove(); // удалить старую панель, если была
       const navDiv = document.createElement("div");
       navDiv.id = "brandNav"; navDiv.className = "shrink";
-      // navDiv.style.margin = "15px 0 0 220px";
-      // navDiv.style.display = "flex";
-      // navDiv.style.flexWrap = "wrap";
-      // navDiv.style.gap = "8px";
-      // navDiv.style.width = "calc(100% - 220px)"; // создаем кнопки навигации
+      navDiv.style.margin = "15px 0 0 220px";
+      navDiv.style.display = "flex";
+      navDiv.style.flexWrap = "wrap";
+      navDiv.style.gap = "8px";
+      navDiv.style.width = "calc(100% - 220px)"; // создаем кнопки навигации
       brandEntries.forEach(bg => {
         const btn = document.createElement("button");
         btn.textContent = bg.brand;
@@ -1138,81 +1144,62 @@ td > button {
   background: #03a9f4 !important;
 }
 
+
 #brandNav {
   position: fixed;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0;
-  max-height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  background: linear-gradient(to right, rgb(112 112 112 / 5%) 10px, rgb(31 22 155 / 98%) 10px, rgba(255, 255, 255, 0.5) 100%);
-  border-left: 50px solid transparent;
-  border-radius: 10px 0 0 10px;
-  transition: width 0.3s ease;
-  padding: 10px 5px;
-  z-index: 1000;
-  box-sizing: border-box;
-    /* display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 6px; */
-}
-
-
-
-/* expand on hover */
-#brandNav:hover {
-  width: min-content; 
-  background: #fff;
-    border-left: 10px solid #fff;
-    border-right: 10px solid #fff;
-
-}
-
-/* content inside */
-#brandNav.shrink {
-
-}
-
-/* brand buttons */
-.brand-nav-btn {
-  background: none;
-  border: none;
-  color: #333;
-  padding: 3px 5px;
-  text-align: left;
+  bottom: -11;
+  left: 0;
   width: 100%;
-  font-size: 13px;
-  border-radius: 6px;
+  padding: 12px 10px;
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  transition: padding 0.3s ease, font-size 0.3s ease;
+  background: rgba(33, 150, 243, 0.1);
+  border-top: 50px solid transparent;
+  height: 0;
+}
+
+#brandNav:hover {
+  height: auto;
+  background: #fff;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+   bottom: 0;
+}
+
+#brandNav.shrink {
+  padding: 6px 10px;
+}
+
+.brand-nav-btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  background: #f0f0f0;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, transform 0.2s;
-  white-space: nowrap;
+  transition: all 0.2s;
+  font-size: 10px;
+  color: #000;
 }
 
-/* icons can be added later if needed */
+#brandNav.shrink .brand-nav-btn {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
 .brand-nav-btn:hover {
-  background: #e6f2ff;
-  color: #007bff;
+  background: #e0f7fa;
+  border-color: #4dd0e1;
 }
 
-/* highlight active */
 .brand-nav-btn.active {
-  background: #007bff;
-  color: white;
-  font-weight: bold;
-}
+  background: #4dd0e1;
+  color: #fff;
+  border-color: #00acc1;
 
-/* scroll customization */
-#brandNav::-webkit-scrollbar {
-  width: 4px;
 }
-#brandNav::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
-  border-radius: 10px;
-}
-
 </style>
