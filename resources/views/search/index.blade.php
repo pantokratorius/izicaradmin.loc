@@ -5,10 +5,10 @@
 @section('content')
 <h1>Добавить товар</h1>
 
-<form method="POST" action="{{ route('stocks.store') }}">
+<form method="POST" action="{{ route('search.store') }}">
     @csrf
-    @include('stocks.partials.form3')
-    @include('stocks.partials.form')
+    @include('search.partials.form3')
+    @include('search.partials.form')
     <button type="submit" class="btn">Сохранить</button>
 </form>
 @endsection

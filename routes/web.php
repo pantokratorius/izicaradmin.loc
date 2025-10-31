@@ -36,6 +36,12 @@ Route::get('/orders/{order}/print', [OrderController::class, 'print'])
 Route::get('/orders/{order}/print2', [OrderController::class, 'print2'])
     ->name('orders.print2');
 
+Route::get('/orderses/{search}/print', [SearchController::class, 'print'])
+    ->name('search.print');
+
+Route::get('/searches/{search}/print2', [SearchController::class, 'print2'])
+    ->name('search.print2');
+
 Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
 
 
@@ -100,6 +106,10 @@ Route::delete('/{part}', [TempPartsController::class, 'destroy'])->name('temp_pa
 
 
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::get('/search/show', [SearchController::class, 'show'])->name('search.show');
+Route::get('/search/store', [SearchController::class, 'store'])->name('search.store');
+Route::delete('/search/clear', [SearchController::class, 'clear'])->name('search.clear');
+Route::post('/search/store_ajax', [SearchController::class, 'store_ajax'])->name('search_store_ajax');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

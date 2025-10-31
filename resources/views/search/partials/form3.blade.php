@@ -8,6 +8,38 @@
   </div>
 </div>
 
+
+<div id="searchPanel" style="
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    background: #1e293b;
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    z-index: 9999;
+    
+    opacity: @if($searchCount > 0) 1 @else 0 @endif;
+    
+    transition: opacity 0.6s ease, transform 0.6s ease;
+
+">
+    <a href="{{ route('search.show') }}"
+       style="color: #38bdf8; text-decoration: none; font-weight: bold;">
+        <span id="searchCount">{{ $searchCount }}</span> запчастей в корзине
+        <br><br>
+            <button id="clear_searches" type="submit" onclick="return confirm('Уверены что хотите очистить корзину?');"
+                style="width: 100%; background: transparent; border: 1px solid; color: #fff;
+                       padding: 6px 10px; border-radius: 8px; cursor: pointer;">
+                Очистить
+            </button>
+    </a>
+</div>
+
+
+
+
 <!-- Лоадер -->
 <div id="loader" style="display:none; margin:60px 0; text-align:center; position: absolute; left: 50%; top: 200px">
   <div class="spinner"></div>
@@ -151,6 +183,36 @@ thead {
     white-space: nowrap;
   }
 </style>
+<script>
+
+
+
+document.getElementById('clear_searches').addEventListener('click', async function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const token = document.querySelector('meta[name="csrf-token"]').content
+
+    const response = await fetch("{{ route('search.clear') }}", {
+        method: "DELETE",
+        headers: {
+            "X-CSRF-TOKEN": token,
+            "Accept": "application/json",
+        },
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        document.getElementById('searchCount').textContent = 0
+        // Optionally hide the panel or update count:
+        const panel = form.closest('div');
+        panel.style.opacity = '0';
+        panel.style.visibility = 'hidden';
+    } else {
+        alert('Ошибка при очистке корзины.');
+    }
+});
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById("loader");
@@ -796,7 +858,7 @@ function showQuantityPopup(item, row) {
       return;
     }
     overlay.remove();
-    addToStocks(item, row, qty); // 👈 function to send data to backend
+    addToSearch(item, row, qty); // 👈 function to send data to backend
   });
 }
 
@@ -850,7 +912,7 @@ function showToast(message, type = "success") {
 
 let selectedStocks = [];
 
-function addToStocks(item, row, quantity) {
+function addToSearch(item, row, quantity) {
   const percent = parseFloat(document.querySelector('#percent_value').textContent) || 0;
   const supplier = row.querySelector('.supplier_name')?.textContent?.trim() || "";
 
@@ -874,7 +936,7 @@ function addToStocks(item, row, quantity) {
     selectedStocks.push(stockData);
   }
 
-  fetch("{{ route('store_ajax') }}", {
+  fetch("{{ route('search_store_ajax') }}", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -894,15 +956,34 @@ function addToStocks(item, row, quantity) {
       if (response.message?.includes("increased")) {
         showToast(`➕ Кол-во увеличено (теперь ${qty} шт.)`);
       } else {
-        showToast(`✅ Добавлено на склад (теперь ${qty} шт.)`);
+        showToast(`✅ Добавлено на корзину (теперь ${qty} шт.)`);
       }
+      showSearchPanel(qty);
     })
     .catch(err => {
-      console.error("Ошибка при добавлении на склад:", err);
+      console.error("Ошибка при добавлении на корзину:", err);
       rowFlash(row, "#ffe6e6");
-      showToast("❌ Ошибка при добавлении на склад", "error");
+      showToast("❌ Ошибка при добавлении на корзину", "error");
     });
 }
+
+function showSearchPanel(count = 1) {
+    const panel = document.getElementById('searchPanel');
+    const countEl = document.getElementById('searchCount');
+    if (!panel || !countEl) return;
+
+    // Update count
+    const current = parseInt(countEl.textContent) || 0;
+    countEl.textContent = current + count;
+
+    // Show with fade
+    panel.style.visibility = 'visible';
+    panel.style.opacity = 1;
+    setTimeout(() => {
+        panel.style.opacity = '1';
+    }, 20);
+}
+
 
 
 // 🔹 Row flash helper
