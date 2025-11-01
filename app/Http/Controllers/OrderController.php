@@ -14,9 +14,26 @@ class OrderController extends Controller
     /**
      * Display a listing of the orders.
      */
-    public function index()
+    public function index(Request $request)
     { 
-        $orders = Order::with(['client', 'vehicle', 'manager'])->latest()->paginate(15);
+
+     
+
+        $query = Order::with(['client', 'vehicle', 'manager'])->latest();
+
+
+        if ($request->filled('search_by_vehicle')) {
+            $search = $request->input('search_by_vehicle');
+
+            $query->where(function($q) use ($search) {
+                $q->whereHas('vehicle', function($q) use ($search) {
+                    $q->where('id', '=', "$search");
+                });
+            });
+        }
+
+        $orders = $query->paginate(15);    
+
         return view('orders.index', compact('orders'));
     }
 

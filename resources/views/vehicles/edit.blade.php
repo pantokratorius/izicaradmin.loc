@@ -3,8 +3,19 @@
 @section('title', 'Редактировать транспортное средство')
 
 @section('content')
-<h1>Редактировать транспортное средство</h1>
-
+<div style="display: flex; justify-content: space-between; align-items: center">
+    <h1>Редактировать транспортное средство</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center">
+        <form method="GET" action="{{ route('orders.index') }}" style="margin-right: 10px; ">
+            <input type="hidden" name="search_by_vehicle" value="{{ $vehicle->id }}" >
+            <button class="btn" style="background: transparent; border: 1px solid; color: #000" type="submit">В заказы</button>
+            </form>
+            <form method="GET" action="{{ route('clients.index') }}" style="margin-right: 10px; ">
+            <input type="hidden" name="search_by_vehicle" value="{{ $vehicle->client_id }}" >
+            <button class="btn" style="background: transparent; border: 1px solid; color: #000" type="submit">В клиенты</button>
+            </form>
+    </div>
+</div>
 <form action="{{ route('vehicles.update', $vehicle->id) }}" method="POST">
     @csrf
     @method('PUT')

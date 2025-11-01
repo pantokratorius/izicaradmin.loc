@@ -25,19 +25,27 @@ public function index(Request $request)
         $query->where(function ($q) use ($search) {
             // Client fields
             $q->where('clients.first_name', 'like', "%{$search}%")
-              ->orWhere('clients.last_name', 'like', "%{$search}%")
-              ->orWhere('clients.middle_name', 'like', "%{$search}%")
-              ->orWhere('clients.email', 'like', "%{$search}%")
-              ->orWhere('clients.phone', 'like', "%{$search}%")
-              // Vehicle fields
-              ->orWhere('vehicles.vin', 'like', "%{$search}%")
-              ->orWhere('vehicles.brand_name', 'like', "%{$search}%")
-              ->orWhere('vehicles.car_brand_id', $search)
-              ->orWhere('vehicles.car_model_id', $search)
-              ->orWhere('vehicles.car_generation_id', $search);
+            ->orWhere('clients.last_name', 'like', "%{$search}%")
+            ->orWhere('clients.middle_name', 'like', "%{$search}%")
+            ->orWhere('clients.email', 'like', "%{$search}%")
+            ->orWhere('clients.phone', 'like', "%{$search}%")
+            // Vehicle fields
+            ->orWhere('vehicles.vin', 'like', "%{$search}%")
+            ->orWhere('vehicles.brand_name', 'like', "%{$search}%")
+            ->orWhere('vehicles.car_brand_id', $search)
+            ->orWhere('vehicles.car_model_id', $search)
+            ->orWhere('vehicles.car_generation_id', $search);
         });
     }
 
+    if ($request->filled('search_by_vehicle')) {
+        $search = $request->input('search_by_vehicle');
+        $query->where(function ($q) use ($search) {
+            // Client fields
+            $q->where('clients.id', $search);
+        });
+    }
+    
     $clients = $query->orderBy('clients.id', 'desc')->paginate(20)->withQueryString();
 
     return view('clients.index', compact('clients'));
