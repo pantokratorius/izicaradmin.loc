@@ -7,7 +7,7 @@
 @section('content')
 <h1>Добавить позицию</h1>
 <h4>Заказ № {{ $order->order_number }}</h4>
-<a href="{{ route('orders.show', $order->id) }}">← Назад к заказу</a>
+<a href="#" onclick="window.history.back()">← Назад к заказу</a>
 <br><br><br>
 <form method="POST" action="{{ route('orderitems.store') }}">
     @csrf
