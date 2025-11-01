@@ -203,7 +203,7 @@
                 <tbody>
                     
                     @foreach($allOrders ?? [] as $order)
-                        <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}">
+                        <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}" data-order-id="{{ $order->id }}">
                             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
                             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
@@ -499,6 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const toggleBtn = document.querySelector(".accordion-toggle");
     const content = document.querySelector(".accordion-content");
       const visibleOrders = JSON.parse(sessionStorage.getItem('visibleOrders') || '[]');
+console.log(visibleOrders);
 
   // If session contains filter data, apply it
   if (visibleOrders.length > 0) {
@@ -569,7 +570,8 @@ function openVehiclesOrders(vehicle) {
     const visibleOrders = [];
 
     rows.forEach(tr => {
-      const rowVehicleId = tr.getAttribute('data-vehicle-id');
+      const rowVehicleId = tr.getAttribute('data-vehicle-id'); 
+      
       const isVisible = rowVehicleId == vehicle.id;
       tr.style.display = isVisible ? '' : 'none';
 
@@ -580,6 +582,7 @@ function openVehiclesOrders(vehicle) {
 
     // Save to sessionStorage to persist visibility
     sessionStorage.setItem('visibleOrders', JSON.stringify(visibleOrders));
+
 
     document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
     document.getElementById('resetOrdersBtn').style.display = 'block';
