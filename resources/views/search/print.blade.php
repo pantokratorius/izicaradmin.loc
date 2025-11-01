@@ -78,7 +78,7 @@
     <button onclick="window.print()">🖨️ Печать</button>
 </div>
 
-{{-- <script>
+<script>
     document.addEventListener('DOMContentLoaded', function(){
         window.print()
     })
@@ -88,7 +88,7 @@
     }
 
     window.onfocus=function(){ window.close();}
-</script> --}}
+</script>
 
 </body>
 </html>
