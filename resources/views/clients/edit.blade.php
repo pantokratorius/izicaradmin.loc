@@ -498,6 +498,19 @@ document.addEventListener('change', function (e) {
 document.addEventListener("DOMContentLoaded", function () {
     const toggleBtn = document.querySelector(".accordion-toggle");
     const content = document.querySelector(".accordion-content");
+      const visibleOrders = JSON.parse(sessionStorage.getItem('visibleOrders') || '[]');
+
+  // If session contains filter data, apply it
+  if (visibleOrders.length > 0) {
+    const rows = document.querySelectorAll('#orders tbody tr');
+    rows.forEach(tr => {
+      const orderId = tr.getAttribute('data-order-id');
+      tr.style.display = visibleOrders.includes(orderId) ? '' : 'none';
+    });
+
+    document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
+    document.getElementById('resetOrdersBtn').style.display = 'block';
+  }
 
     toggleBtn.addEventListener("click", () => {
         if (content.style.display === "none") {
@@ -534,6 +547,7 @@ window.addEventListener("pageshow", function (event) {
 //     @endforeach
 // ];
 function resetOrdersFilter() {
+    sessionStorage.removeItem('visibleOrders');
     document.querySelectorAll('#orders tbody tr').forEach(tr => {
         tr.style.display = '';
     });
@@ -544,25 +558,34 @@ function resetOrdersFilter() {
 
 
 function openVehiclesOrders(vehicle) {
-    // Switch to orders tab
-    activateTab('orders');
+  // Switch to orders tab
+  activateTab('orders');
 
-    // Hide all orders rows first
-    document.querySelectorAll('#orders tbody tr').forEach(tr => {
-        tr.style.display = '';
+  // Show all orders initially
+  const rows = document.querySelectorAll('#orders tbody tr');
+  rows.forEach(tr => tr.style.display = '');
+
+  if (vehicle && vehicle.id) {
+    const visibleOrders = [];
+
+    rows.forEach(tr => {
+      const rowVehicleId = tr.getAttribute('data-vehicle-id');
+      const isVisible = rowVehicleId == vehicle.id;
+      tr.style.display = isVisible ? '' : 'none';
+
+      if (isVisible) {
+        visibleOrders.push(tr.getAttribute('data-order-id')); // Store order IDs for session
+      }
     });
 
-    if (vehicle && vehicle.id) {
-        document.querySelectorAll('#orders tbody tr').forEach(tr => {
-            const rowVehicleId = tr.getAttribute('data-vehicle-id');
-            tr.style.display = (rowVehicleId == vehicle.id) ? '' : 'none';
-        });
+    // Save to sessionStorage to persist visibility
+    sessionStorage.setItem('visibleOrders', JSON.stringify(visibleOrders));
 
-        // Show reset button
-        document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
-        document.getElementById('resetOrdersBtn').style.display = 'block';
-    }
+    document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
+    document.getElementById('resetOrdersBtn').style.display = 'block';
+  }
 }
+
 
 
 
