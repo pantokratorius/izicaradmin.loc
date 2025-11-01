@@ -16,19 +16,30 @@ class VehicleController extends Controller
 {
     public function index(Request $request)
     { 
-        $query = Vehicle::with(['brand', 'model', 'generation', 'serie', 'modification', 'client']);
-    //     $vehicles = Vehicle::with(['brand', 'model', 'generation', 'modification'])
-    //     ->orderBy('id', 'desc')
-    // ->paginate(20);
+        //     $vehicles = Vehicle::with(['brand', 'model', 'generation', 'modification'])
+        //     ->orderBy('id', 'desc')
+        // ->paginate(20);
+        
+    $query = Vehicle::with(['brand', 'model', 'generation', 'serie', 'modification', 'client']);
 
     if ($request->filled('search')) {
         $search = $request->input('search');
         $query->where(function ($q) use ($search) {
             $q->where('brand_name', 'like', "%{$search}%")
               ->orWhere('model_name', 'like', "%{$search}%")
+              ->orWhere('vin', 'like', "%{$search}%")
               ->orWhere('generation_name', 'like', "%{$search}%")
               ->orWhere('serie_name', 'like', "%{$search}%")
-              ->orWhere('modification_name', 'like', "%{$search}%");
+              ->orWhere('modification_name', 'like', "%{$search}%")
+              ->orWhereHas('brand', function ($q) use ($search) {
+              $q->where('name', 'like', "%{$search}%");
+          })
+          ->orWhereHas('model', function ($q) use ($search) {
+              $q->where('name', 'like', "%{$search}%");
+          })
+          ->orWhereHas('generation', function ($q) use ($search) {
+              $q->where('name', 'like', "%{$search}%");
+          });
         });
     }
     $vehicles = $query->orderBy('id', 'desc')->paginate(20)->withQueryString();
