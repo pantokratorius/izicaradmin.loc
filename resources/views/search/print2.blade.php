@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Заказ №{{ $order->order_number }}</title>
+    <title></title>
     <style>
         body { font-family: DejaVu Sans, sans-serif; font-size: 13px; margin: 30px; line-height: 1.5; }
         h3 { text-align: center; margin: 15px 0; }
@@ -33,12 +33,9 @@
     </div>
 </div>
 
-<h3>ДИСТАНЦИОННЫЙ ЗАКАЗ ТОВАРА №{{ $order->order_number }} от {{ $order->created_at->format('d.m.Y') }}</h3>
+<br>
 
-<p>
-    Марка автомобиля: {{ $order->vehicle->brand->name ?? '-' }},  
-    VIN: {{ $order->vehicle->vin  ?? '-'}}
-</p>
+
 
 <table>
     <thead>
@@ -46,8 +43,8 @@
             <th>№</th>
             <th>Производитель</th>
             <th>Наименование</th>
-            <th>Цена</th>
             <th>Кол-во</th>
+            <th>Цена</th>
             <th>Сумма</th>
         </tr>
     </thead>
@@ -56,30 +53,27 @@
 @php
     $total = 0;
 @endphp
-        @foreach ($order->items as $i => $item)
+        @foreach ($search as $i => $item)
 
          @php($total += $item->summ) 
         <tr>
-            <td>{{ $i+1 }}</td>
-            <td>{{ $item->part_make }}</td>
-            <td>{{ $item->part_name }}</td>
-            <td>{{ number_format($item->amount, 2, ',', ' ') }} р</td>
+            <td>{{ $item->id}}</td>
+            <td>{{ $item->part_number }}</td>
+            <td>{{ $item->name }}</td>
             <td>{{ $item->quantity }}</td>
-            <td>{{ number_format($item->summ, 2, ',', ' ') }} р</td>
+            <td style="white-space: nowrap;">{{ number_format($item->sell_price, 2, ',', ' ') }}</td>
+            <td style="white-space: nowrap;">{{ number_format($item->sell_price * $item->quantity, 2, ',', ' ') }}</td>
         </tr>
         @endforeach
         <tr>
-            <td colspan="5" class="right"><strong>Итого:</strong></td>
-            <td><strong>{{ number_format($total, 2, ',', ' ') }} р</strong></td>
+            <td colspan="4" class="right"><strong>Итого:</strong></td>
+            <td style="white-space: nowrap;">{{ number_format($sell_total, 2, ',', ' ') }}</td>
+            <td style="white-space: nowrap;">{{ number_format($summ_total, 2, ',', ' ') }}</td>
         </tr>
     </tbody>
 </table>
 
-<p>
-    Ожидаемая дата поставки: {{ $order->expected_date?->format('d.m.Y') ?? '—' }}<br>
-    Предоплата: {{ number_format($order->prepayment, 2, ',', ' ') }} р.<br>
-    Остаток: {{ number_format($total - $order->prepayment, 2, ',', ' ') }} р.
-</p>
+
 
 <div class="conditions">
     <p style="text-align: center; text-decoration: underline"><strong>Условия поставки и выдачи товара:</strong></p>
@@ -108,13 +102,7 @@
         Тел.: +7-960-480-62-02<br><br>
         Подпись _______________
     </div>
-    <div>
-        <strong>Заказчик</strong><br>
-        ФИО: {{ $order->client->last_name ?? $order->vehicle?->client?->last_name }} {{ $order->client->middle_name ?? $order->vehicle?->client?->middle_name }} {{ $order->client->first_name ?? $order->vehicle?->client?->first_name}}<br>
-        Тел: {{ $order->vehicle->client->phone ?? '-' }}<br>
-        Контактные данные верны, с условиями<br> поставки и выдачи товара согласен.<br>
-        Подпись _______________
-    </div>
+ 
 </div>
 
 <p style="margin-top:10px; font-size:10px;">

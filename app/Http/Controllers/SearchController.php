@@ -127,15 +127,22 @@ class SearchController extends Controller
     public function print()
     { 
         $search = Search::all();
+        $sell_total = Search::sum('sell_price');
+         $summ_total = Search::selectRaw('SUM(sell_price * quantity) as total')
+                       ->value('total');
 
-        return view('search.print', compact('search'));
+        return view('search.print', compact('search', 'sell_total', 'summ_total'));
     }
 
     public function print2(Search $search)
     {
         $search = Search::all();
 
-        return view('search.print2', compact('search'));
+        $sell_total = Search::sum('sell_price');
+         $summ_total = Search::selectRaw('SUM(sell_price * quantity) as total')
+                       ->value('total');
+
+        return view('search.print2', compact('search', 'sell_total', 'summ_total'));
     }
 
 

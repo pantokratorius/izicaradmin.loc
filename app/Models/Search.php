@@ -17,4 +17,7 @@ class Search extends Model
         'purchase_price',
         'supplier',
     ];
+
+
+
 }

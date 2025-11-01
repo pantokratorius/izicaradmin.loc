@@ -9,7 +9,7 @@
         .logo { text-align: center; margin-bottom: 10px; }
         .logo img { max-height: 80px; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #000; padding: 6px; text-align: left; text-align: center}
+        th, td { border: 1px solid #000; padding: 6px; text-align: left; text-align: center;}
         th { background: #f0f0f0; }
         .right { text-align: right; }
         .no-border td { border: none; }
@@ -34,7 +34,6 @@
             <th>№</th>
             <th>Артикул</th>
             <th>Наименование</th>
-            <th>Производитель</th>
             <th>Кол-во</th>
             <th>Цена</th>
             <th>Сумма</th>
@@ -46,23 +45,22 @@
             <td>{{ $item->id}}</td>
             <td>{{ $item->part_number }}</td>
             <td>{{ $item->name }}</td>
-            <td>{{ $item->part_make }}</td>
             <td>{{ $item->quantity }}</td>
-            <td>{{ number_format($item->purchase_price, 2, ',', ' ') }}</td>
-            <td>{{ number_format($item->sell_price, 2, ',', ' ') }}</td>
+            <td style="white-space: nowrap;">{{ number_format($item->sell_price, 2, ',', ' ') }}</td>
+            <td style="white-space: nowrap;">{{ number_format($item->sell_price * $item->quantity, 2, ',', ' ') }}</td>
         </tr>
         @endforeach
         <tr>
-            <td colspan="5" class="right"><strong>Итого:</strong></td>
-            <td></td>
-            <td></td>
+            <td colspan="4" class="right"><strong>Итого:</strong></td>
+            <td style="white-space: nowrap;">{{ number_format($sell_total, 2, ',', ' ') }}</td>
+            <td style="white-space: nowrap;">{{ number_format($summ_total, 2, ',', ' ') }}</td>
         </tr>
     </tbody>
 </table>
 
 <br><br>
 
-<table class="no-border">
+{{-- <table class="no-border">
     <tr>
         <td>Предоплата:  р.</td>
         <td></td>
@@ -74,7 +72,7 @@
 </table>
 
 <br><br><br>
-<div class="right">Заказчик _____________________</div>
+<div class="right">Заказчик _____________________</div> --}}
 
 <div class="no-print" style="margin-top:20px; text-align:left;">
     <button onclick="window.print()">🖨️ Печать</button>
