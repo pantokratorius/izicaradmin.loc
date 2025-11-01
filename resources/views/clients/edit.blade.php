@@ -499,7 +499,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const toggleBtn = document.querySelector(".accordion-toggle");
     const content = document.querySelector(".accordion-content");
       const visibleOrders = JSON.parse(sessionStorage.getItem('visibleOrders') || '[]');
-console.log(visibleOrders);
 
   // If session contains filter data, apply it
   if (visibleOrders.length > 0) {
