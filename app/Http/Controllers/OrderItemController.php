@@ -66,6 +66,7 @@ public function store_ajax(Request $request)
         // Normalize
         $data['part_make'] = trim($data['part_make']);
         $data['part_number'] = trim($data['part_number']);
+        $data['part_name'] = trim($data['name']);
 
         // Find existing item for this order
         // $existing = OrderItem::where('order_id', $data['order_id'])

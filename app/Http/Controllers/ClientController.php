@@ -12,27 +12,37 @@ use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
-    // список клиентов
+
 public function index(Request $request)
 {
-    $query = DB::table('clients');
+    $query = DB::table('clients')
+        ->leftJoin('vehicles', 'clients.id', '=', 'vehicles.client_id')
+        ->select('clients.*')
+        ->distinct();  // To avoid duplicate clients
 
     if ($request->filled('search')) {
         $search = $request->input('search');
         $query->where(function ($q) use ($search) {
-            $q->where('first_name', 'like', "%{$search}%")
-              ->orWhere('last_name', 'like', "%{$search}%")
-              ->orWhere('middle_name', 'like', "%{$search}%")
-              ->orWhere('email', 'like', "%{$search}%")
-              ->orWhere('phone', 'like', "%{$search}%");
+            // Client fields
+            $q->where('clients.first_name', 'like', "%{$search}%")
+              ->orWhere('clients.last_name', 'like', "%{$search}%")
+              ->orWhere('clients.middle_name', 'like', "%{$search}%")
+              ->orWhere('clients.email', 'like', "%{$search}%")
+              ->orWhere('clients.phone', 'like', "%{$search}%")
+              // Vehicle fields
+              ->orWhere('vehicles.vin', 'like', "%{$search}%")
+              ->orWhere('vehicles.brand_name', 'like', "%{$search}%")
+              ->orWhere('vehicles.car_brand_id', $search)
+              ->orWhere('vehicles.car_model_id', $search)
+              ->orWhere('vehicles.car_generation_id', $search);
         });
     }
 
-    $clients = $query->orderBy('id', 'desc')->paginate(20)->withQueryString();
-
+    $clients = $query->orderBy('clients.id', 'desc')->paginate(20)->withQueryString();
 
     return view('clients.index', compact('clients'));
 }
+
 
     // форма добавления
     public function create()

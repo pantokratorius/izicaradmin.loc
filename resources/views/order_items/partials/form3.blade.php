@@ -731,6 +731,7 @@ Object.values(grouped).forEach(brandGroup => {
 let selectedStocks = [];
 
 function addToOrderItems(item, row, quantity) {
+
   const orderId = document.querySelector('meta[name="order-id"]').content;
   const percent = parseFloat(document.querySelector('#percent_value').textContent) || 0;
   const supplier = item.supplier || row.querySelector('.supplier_name')?.textContent || '';
