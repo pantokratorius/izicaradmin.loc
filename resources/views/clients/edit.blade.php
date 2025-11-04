@@ -180,7 +180,7 @@
             <p>У клиента нет заказов.</p>
         @else
 
-            <table>
+            <table id="orders_table">
                 <thead>
                     <tr>
                         <th>№ заказа</th>
@@ -494,8 +494,7 @@ document.addEventListener('change', function (e) {
 });
 
 
-
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () { 
     const toggleBtn = document.querySelector(".accordion-toggle");
     const content = document.querySelector(".accordion-content");
       const visibleOrders = JSON.parse(sessionStorage.getItem('visibleOrders') || '[]');
@@ -519,7 +518,10 @@ document.addEventListener("DOMContentLoaded", function () {
             content.style.display = "none";
         }
     });
+ 
 });
+
+
 </script>
 <script>
 function openPrint(select, orderId) {
