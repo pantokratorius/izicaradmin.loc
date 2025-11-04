@@ -15,9 +15,9 @@ class OrderController extends Controller
      * Display a listing of the orders.
      */
     public function index(Request $request)
-    { 
+    {
 
-     
+
 
         $query = Order::with(['client', 'vehicle', 'manager'])->latest();
 
@@ -32,7 +32,7 @@ class OrderController extends Controller
             });
         }
 
-        $orders = $query->paginate(15);    
+        $orders = $query->paginate(15);
 
         return view('orders.index', compact('orders'));
     }
@@ -55,7 +55,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         session(['active_tab' => 'orders']);
-        
+
         $request->validate([
             'order_number' => 'required|unique:orders,order_number',
             'amount'       => 'nullable|numeric',
@@ -70,10 +70,10 @@ class OrderController extends Controller
 
         try {
             Order::create($request->all());
-            return redirect()->back()->with('success', 'Заказ добавлен');
+            return redirect()->route('orders.index')->with('success', 'Заказ добавлен');
 
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Заказ не добавлен');
+            return redirect()->route('orders.index')->with('error', 'Заказ не добавлен');
         }
 
     }
@@ -125,10 +125,10 @@ class OrderController extends Controller
 
         try {
             $order->update($request->all());
-            return redirect()->back()->with('success', 'Заказ обновлен');
+            return redirect()->route('orders.index')->with('success', 'Заказ обновлен');
 
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Заказ не обновлен');
+            return redirect()->route('orders.index')->with('error', 'Заказ не обновлен');
         }
 
     }

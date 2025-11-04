@@ -25,24 +25,10 @@
   </div>
 </div>
 
-@if(session('success'))
-  <div style="background: #d4edda; color: #155724; padding: 10px 15px; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 15px;">
-    {{ session('success') }}
-  </div>
-@endif
-
-@if(session('error'))
-  <div style="background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
-    {{ session('error') }}
-  </div>
-@endif
-
-
 
 <table>
       <thead>
         <tr>
-          <th>№</th>
           <th>№ заказа</th>
         <th>Сумма</th>
         <th>Предоплата</th>
@@ -59,7 +45,6 @@
       <tbody>
         @forelse($orders as $order)
           <tr class="order-row" data-id="{{ $order->id }}">
-            <td>{{ $loop->iteration }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ') }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ $order->prepayment }}</td>
@@ -80,7 +65,7 @@
                           style="btn btn-sm btn-warning;  cursor: pointer">
                       ✏
                   </button>
-                      <a href="{{ route('orders.copy', $order->id) }}" 
+                      <a href="{{ route('orders.copy', $order->id) }}"
                         class="btn btn-secondary" style="margin: 0 5px;"
                         onclick="return confirm('Скопировать этот заказ?')">
                         📄
@@ -173,7 +158,7 @@ document.addEventListener('change', function (e) {
     }
 });
 
-function toggleItems(orderId) { 
+function toggleItems(orderId) {
   window.location.href = "{{ route('orders.show', ':id') }}".replace(':id', orderId);
 }
 
