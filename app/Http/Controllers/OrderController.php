@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Client;
+use App\Models\OrderItem;
 use App\Models\Setting;
 use App\Models\Vehicle;
 use App\Models\User;
@@ -201,6 +202,42 @@ public function updateStatus(Request $request, $id)
     ]);
 }
 
+
+public function copyToNew(Request $request)
+    {
+        $itemIds = $request->input('ids', []);
+
+        if (!count($itemIds)) {
+            return response()->json(['error' => 'No items provided'], 400);
+        }
+
+        $newOrder = Order::create(['status' => 'new']);
+
+        $items = OrderItem::whereIn('id', $itemIds)->get();
+        foreach ($items as $item) {
+            $newOrder->items()->create($item->toArray()); // customize fields as needed
+        }
+
+        return response()->json(['redirect' => route('orders.show', $newOrder)]);
+    }
+
+    public function copyToExisting(Request $request, $order_number)
+{
+    $itemIds = $request->input('ids', []);
+
+    if (!count($itemIds)) {
+        return response()->json(['error' => 'No items provided'], 400);
+    }
+
+    $order = Order::where('order_number', $order_number)->firstOrFail();
+
+    $items = OrderItem::whereIn('id', $itemIds)->get();
+    foreach ($items as $item) {
+        $order->items()->create($item->toArray()); // customize as needed
+    }
+
+    return response()->json(['success' => true]);
+}
 
 
 }

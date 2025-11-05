@@ -117,10 +117,15 @@
 
     {{-- Кнопка назад --}}
     <div style="margin: 30px 0 50px; display: flex; justify-content: space-between; align-items: flex-start">
-        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100px">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; height: 100px">
             <a href="#" onclick="window.history.back()" class="btn btn-secondary">← Назад</a>
             <a href="{{route('orders.edit', $order->id)}}"  class="btn btn-secondary">Перейти в заказ</a>
-            <button class="btn btn-danger" onclick="deleteSelectedItems()">🗑️ Удалить выбранные</button>
+            <br>
+            <div>
+                <button class="btn btn-danger" onclick="deleteSelectedItems()">🗑️ Удалить выбранные</button>
+                <button id="btn-copy-new" class="btn btn-primary">Скопировать в новый заказ</button>
+                <button id="btn-copy-existing" class="btn btn-secondary">Скопировать в существующий заказ</button>
+            </div>
         </div>
 
         <select onchange="openPrint(this, {{ $order->id }})" class="print-select">
@@ -297,8 +302,10 @@ function deleteSelectedItems() {
     });
 }
 
-let lastChecked = null;
 
+
+//-----------------------------//-----------------------------
+let lastChecked = null;
 const checkboxes = document.querySelectorAll('.item-checkbox');
 
 checkboxes.forEach(checkbox => {
@@ -323,6 +330,70 @@ checkboxes.forEach(checkbox => {
         lastChecked = this;
     });
 });
+
+function getSelectedIds() {
+    return Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+}
+
+// Copy to new order
+document.getElementById('btn-copy-new').addEventListener('click', async function() {
+    const ids = getSelectedIds();
+    if (ids.length === 0) {
+        alert('Ничего не выбрано!');
+        return;
+    }
+
+    const response = await fetch('/orders/copy-to-new', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ ids })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        alert('Скопировано в новый заказ!');
+        window.location.href = data.redirect;
+    } else {
+        alert('Ошибка при копировании!');
+    }
+});
+
+
+// Copy to existing order
+document.getElementById('btn-copy-existing').addEventListener('click', async function() {
+    const ids = getSelectedIds();
+    if (ids.length === 0) {
+        alert('Ничего не выбрано!');
+        return;
+    }
+
+    const orderNumber = prompt("Введите номер заказа:");
+    if (!orderNumber) return;
+
+    const response = await fetch('/orders/copy-to-existing/' + orderNumber, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ ids })
+    });
+
+    if (response.ok) {
+        alert('Скопировано в заказ!');
+        window.location.reload();
+    } else {
+        alert('Ошибка при копировании!');
+    }
+});
+
+
+//-----------------------------
 
     function openPrint(select, orderId) {
     if (select.value) {

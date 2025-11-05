@@ -28,7 +28,9 @@ Route::get('/dashboard', function () {
 Route::redirect('/dashboard', '/clients');
 Route::middleware('auth')->group(function () {
 
-
+Route::post('/orders/copy-to-new', [OrderController::class, 'copyToNew'])->name('orders.copyToNew');
+Route::post('/orders/copy-to-existing/{order_number}', [OrderController::class, 'copyToExisting'])
+     ->name('orders.copyToExisting');
 
 Route::get('/orders/{order}/print', [OrderController::class, 'print'])
     ->name('orders.print');
