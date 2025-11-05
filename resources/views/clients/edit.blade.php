@@ -558,6 +558,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
  
+    const copied = '{{ session('copied') }}' || '';
+    if(copied != ''){
+        openVehiclesOrders( @json( session('orders_vehicle') ) )
+    }
+
 });
 
 
@@ -818,6 +823,7 @@ async function openVehicleModal(vehicle = null) {
 const tabs = document.querySelectorAll('.tab');
 const contents = document.querySelectorAll('.tab-content');
 
+
 function setTab(val){
     const value = val;
 
@@ -945,6 +951,7 @@ toggleBtn.addEventListener('click', () => {
         toggleBtn.textContent = 'Показать форму';
     }
 });
+
 
 
 </script>

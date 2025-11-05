@@ -112,7 +112,7 @@ public function store_ajax(Request $request)
 
     public function edit(OrderItem $orderItem)
     {
-        return view('order_items.edit', compact('orderItem'))->with('active_tab', 'orders');;
+        return view('order_items.edit', compact('orderItem'))->with('active_tab', 'orders');
     }
 
     public function update(Request $request, OrderItem $orderitem)

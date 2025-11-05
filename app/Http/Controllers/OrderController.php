@@ -167,6 +167,8 @@ class OrderController extends Controller
     $newOrder = $order->replicate();
     $newOrder->order_number = Order::max('order_number') + 1; // новый номер
     $newOrder->status = 1; // сбрасываем статус
+    $newOrder->vehicle_id = $order->vehicle_id; // сбрасываем статус
+    $newOrder->client_id = $order->client_id; // сбрасываем статус
     $newOrder->created_at = now();
     $newOrder->updated_at = now();
     $newOrder->save();
@@ -179,9 +181,8 @@ class OrderController extends Controller
         $newItem->updated_at = now();
         $newItem->save();
     }
-
     return redirect()->back()
-        ->with('success', 'Заказ успешно скопирован!');
+        ->with('success', 'Заказ успешно скопирован!')->with('copied', $newOrder->id)->with('orders_vehicle', $order->vehicle);
 }
 
 public function updateStatus(Request $request, $id)

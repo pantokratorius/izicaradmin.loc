@@ -115,7 +115,10 @@
 
     {{-- Кнопка назад --}}
     <div style="margin: 30px 0 50px; display: flex; justify-content: space-between; ">
-        <a href="#" onclick="window.history.back()" class="btn btn-secondary">← Назад к заказу</a>
+        <div style="display: flex; flex-direction: column">
+            <a href="#" onclick="window.history.back()" class="btn btn-secondary">← Назад</a>
+            <a href="{{route('orders.edit', $order->id)}}"  class="btn btn-secondary">Перейти в заказ</a>
+        </div>
 
         <select onchange="openPrint(this, {{ $order->id }})" class="print-select">
                     <option value="">🖨️ Печать...</option>
