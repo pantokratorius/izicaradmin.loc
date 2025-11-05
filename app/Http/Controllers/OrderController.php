@@ -32,6 +32,13 @@ class OrderController extends Controller
                 });
             });
         }
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                // Client fields
+                $q->where('order_number', $search);
+            });
+        }
 
         $orders = $query->paginate(15);
 
