@@ -32,6 +32,7 @@
           <th>№ заказа</th>
         <th>Сумма</th>
         <th>Предоплата</th>
+        <th>Остаток</th>
         <th>Статус</th>
         <th>Дата создания</th>
         <th>Клиент</th>
@@ -47,7 +48,8 @@
           <tr class="order-row" data-id="{{ $order->id }}">
             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ') }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ $order->prepayment }}</td>
+            <td onclick="toggleItems({{ $order->id }})">{{number_format($order->prepayment, 2, ',', ' ') }}</td>
+            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount -  $order->prepayment, 2, ',', ' ') }}</td>
             <td>
                  <select class="status_select"  data-id="{{ $order->id }}" style="padding: 3px 0">
                                     @foreach ($status as $key => $st)

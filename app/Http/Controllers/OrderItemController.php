@@ -158,4 +158,16 @@ public function updateStatus(Request $request, $id)
     ]);
 }
 
+public function batchDelete(Request $request)
+{
+    $ids = $request->input('ids');
+
+    if ($ids && is_array($ids)) {
+        OrderItem::whereIn('id', $ids)->delete();
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false], 400);
+}
+
 }

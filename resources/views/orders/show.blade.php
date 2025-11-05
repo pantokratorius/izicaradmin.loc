@@ -48,6 +48,7 @@
             <table class="table table-striped mb-0">
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="select-all"></th>
                         <th>Номер детали</th>
                         <th>Производитель</th>
                         <th>Название</th>
@@ -65,6 +66,7 @@
                 <tbody>
                     @forelse($order->items as $item)
                     <tr id="item-row-{{ $item->id }}">
+                        <td><input type="checkbox" class="item-checkbox" value="{{ $item->id }}"></td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_number }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_make }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_name }}</td>
@@ -114,10 +116,11 @@
     </div>
 
     {{-- Кнопка назад --}}
-    <div style="margin: 30px 0 50px; display: flex; justify-content: space-between; ">
-        <div style="display: flex; flex-direction: column">
+    <div style="margin: 30px 0 50px; display: flex; justify-content: space-between; align-items: flex-start">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100px">
             <a href="#" onclick="window.history.back()" class="btn btn-secondary">← Назад</a>
             <a href="{{route('orders.edit', $order->id)}}"  class="btn btn-secondary">Перейти в заказ</a>
+            <button class="btn btn-danger" onclick="deleteSelectedItems()">🗑️ Удалить выбранные</button>
         </div>
 
         <select onchange="openPrint(this, {{ $order->id }})" class="print-select">
@@ -127,6 +130,7 @@
                 </select>
     </div>
 </div>
+
 
 <!-- Modal -->
 <div id="itemModal" class="modal">
@@ -252,6 +256,73 @@
 
 
 <script>
+
+
+document.getElementById('select-all').addEventListener('change', function(e) {
+    document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+        checkbox.checked = e.target.checked;
+    });
+});
+
+function deleteSelectedItems() {
+    const selected = Array.from(document.querySelectorAll('.item-checkbox:checked'))
+                          .map(cb => cb.value);
+
+    if (selected.length === 0) {
+        alert('Выберите хотя бы одну позицию для удаления');
+        return;
+    }
+
+    if (!confirm(`Удалить выбранные позиции (${selected.length})?`)) return;
+
+    fetch(`/orderitems/batch-delete`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        body: JSON.stringify({ ids: selected })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            selected.forEach(id => document.getElementById(`item-row-${id}`).remove());
+        } else {
+            alert('Ошибка при удалении');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('Ошибка сети');
+    });
+}
+
+let lastChecked = null;
+
+const checkboxes = document.querySelectorAll('.item-checkbox');
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', function(e) {
+        if (!lastChecked) {
+            lastChecked = this;
+            return;
+        }
+
+        if (e.shiftKey) {
+            let inBetween = false;
+            checkboxes.forEach(cb => {
+                if (cb === this || cb === lastChecked) {
+                    inBetween = !inBetween;
+                }
+                if (inBetween) {
+                    cb.checked = lastChecked.checked;
+                }
+            });
+        }
+
+        lastChecked = this;
+    });
+});
 
     function openPrint(select, orderId) {
     if (select.value) {
