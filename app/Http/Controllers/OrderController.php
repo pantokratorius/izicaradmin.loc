@@ -211,7 +211,7 @@ public function copyToNew(Request $request)
             return response()->json(['error' => 'No items provided'], 400);
         }
 
-        $newOrder = Order::create(['status' => 'new']);
+        $newOrder = Order::create(['status' => 1]);
 
         $items = OrderItem::whereIn('id', $itemIds)->get();
         foreach ($items as $item) {
