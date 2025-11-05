@@ -136,6 +136,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
         @else
 
 
+<input type="text" id="vehicleSearch" class="form-control mb-3" placeholder="Поиск по VIN, бренду, модели...">
 
             <table>
                 <thead>

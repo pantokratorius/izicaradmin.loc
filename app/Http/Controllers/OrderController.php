@@ -217,8 +217,8 @@ public function copyToNew(Request $request)
         if (!count($itemIds)) {
             return response()->json(['error' => 'No items provided'], 400);
         }
-
-        $newOrder = Order::create(['status' => 1]);
+        $orders_count = Order::max('order_number') + 1;
+        $newOrder = Order::create(['status' => 1, 'order_number' => $orders_count]);
 
         $items = OrderItem::whereIn('id', $itemIds)->get();
         foreach ($items as $item) {
