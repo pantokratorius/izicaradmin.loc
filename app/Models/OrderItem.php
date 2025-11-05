@@ -33,7 +33,7 @@ class OrderItem extends Model
     }
 
        public function getSummAttribute()
-    {
+    { 
         $globalMargin = Setting::first()->margin ?? 0;
 
         // приоритет маржи

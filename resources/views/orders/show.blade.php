@@ -73,7 +73,7 @@
                             @if($item->sell_price > 0 )
                                 style="background-color: #dcefff"
                             @endif
-                        onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->sell_price ? number_format($item->sell_price * $item->quantity, 2, ',', ' ') : number_format($item->amount, 2, ',', ' ') }}</td>
+                        onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->sell_price ? number_format($item->sell_price, 2, ',', ' ') : number_format($item->amount, 2, ',', ' ') }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->quantity }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->summ, 2, ',', ' ') }}</td>
                         <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->supplier }}</td>
