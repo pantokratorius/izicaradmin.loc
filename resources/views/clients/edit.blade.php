@@ -13,10 +13,36 @@
 @endphp
 
 @section('content')
+<script>
+    // Получаем активную вкладку до рендера
+    const savedTab = localStorage.getItem('active_tab') || 'vehicles';
+    document.documentElement.setAttribute('data-active-tab', savedTab);
+</script>
 <style>
+
+    .tab-content {
+    display: none;
+}
+
+
+
+.tab.active {
+    background: #fff;
+    font-weight: bold;
+    border-top: 2px solid #14213d;
+}
+
+/* Устанавливаем активность кнопок в зависимости от localStorage */
+html[data-active-tab="vehicles"] .tab[data-tab="vehicles"],
+html[data-active-tab="orders"] .tab[data-tab="orders"] {
+    background: #fff;
+    font-weight: bold;
+    border-top: 2px solid #14213d;
+}
+
+
     .tabs { display: flex; border-bottom: 2px solid #ccc; margin-bottom: 15px; }
     .tab { padding: 10px 20px; cursor: pointer; border: 1px solid #ccc; border-bottom: none; background: #f7f7f7; margin-right: 5px; }
-    .tab.active { background: #fff; font-weight: bold; border-top: 2px solid #14213d; }
     .tab-content { border: 1px solid #ccc; padding: 10px; background: #fff; display: none; }
     .tab-content.active { display: block; }
     table { width: 100%; border-collapse: collapse; margin-top: 10px;
@@ -96,14 +122,14 @@
 <!-- Tabs -->
 <div>
     <div class="tabs">
-        <div class="tab active" data-tab="vehicles">Автомобили</div>
+        <div class="tab" data-tab="vehicles">Автомобили</div>
         <div class="tab" data-tab="orders">Заказы</div>
     </div>
 
 
 
     <!-- Vehicles tab -->
-    <div id="vehicles" class="tab-content active">
+    <div id="vehicles" class="tab-content">
         <a href="javascript:void(0)" class="btn" onclick="openVehicleModal()">Добавить автомобиль</a>
         @if($client->vehicles->isEmpty())
             <p>У клиента нет автомобилей.</p>
@@ -518,6 +544,19 @@ document.addEventListener("DOMContentLoaded", function () {
             content.style.display = "none";
         }
     });
+
+    // default: vehicles, but use session value if exists
+    let activeTab = localStorage.getItem('active_tab') || "{{ session('active_tab', 'vehicles') }}";
+    // Update html attribute for initial CSS rendering
+    document.documentElement.setAttribute('data-active-tab', activeTab);
+    activateTab(activeTab);
+
+    // add listeners
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            activateTab(tab.dataset.tab)
+        });
+    });
  
 });
 
@@ -798,28 +837,31 @@ function setTab(val){
 }
 
 
+// Активируем вкладку и сохраняем в localStorage
 function activateTab(tabName) {
-
-    setTab(tabName)
-
-    tabs.forEach(t => {
-        t.classList.toggle('active', t.dataset.tab === tabName);
+    // Активируем визуально
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.tab === tabName);
     });
-    contents.forEach(c => {
-        c.classList.toggle('active', c.id === tabName);
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.style.display = (content.id === tabName) ? 'block' : 'none';
     });
+
+    // Сохраняем значение
+    localStorage.setItem('active_tab', tabName);
+
+    // Обновляем html атрибут — влияет на начало отрисовки без мигания
+    document.documentElement.setAttribute('data-active-tab', tabName);
 }
 
-// default: vehicles, but use session value if exists
-let activeTab = "{{ session('active_tab', 'vehicles') }}";
-activateTab(activeTab);
-
-// add listeners
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        activateTab(tab.dataset.tab)
-    });
+// Инициализация — больше не нужна через DOMContentLoaded
+// Просто добавляем слушатель событий на клики кнопок
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => activateTab(tab.dataset.tab));
 });
+
+
+
 
 function openModal(id) { document.getElementById(id).style.display = 'block'; }
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }

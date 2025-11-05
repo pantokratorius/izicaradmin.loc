@@ -18,7 +18,7 @@ public function index(Request $request)
     $query = DB::table('clients')
         ->leftJoin('vehicles', 'clients.id', '=', 'vehicles.client_id')
         ->select('clients.*')
-        ->distinct();  // To avoid duplicate clients
+        ->distinct('clients.id');  // To avoid duplicate clients
 
     if ($request->filled('search')) {
         $search = $request->input('search');
@@ -45,7 +45,6 @@ public function index(Request $request)
             $q->where('clients.id', $search);
         });
     }
-    
     $clients = $query->orderBy('clients.id', 'desc')->paginate(20)->withQueryString();
 
     return view('clients.index', compact('clients'));
