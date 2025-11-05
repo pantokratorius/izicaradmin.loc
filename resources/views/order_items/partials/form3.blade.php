@@ -133,6 +133,9 @@
     display: none !important;
     white-space: nowrap;
   }
+  .purchase-price-col {
+    white-space: nowrap;
+  }
 </style>
 
 <script>
@@ -1076,13 +1079,11 @@ td > button {
 
 
 
-
 #brandNav {
   position: fixed;
-  bottom: 0;
+  bottom: -11;
   left: 0;
   width: 100%;
-  background: #fff;
   padding: 12px 10px;
   border-top: 1px solid #ddd;
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
@@ -1091,6 +1092,17 @@ td > button {
   flex-wrap: wrap;
   gap: 8px;
   transition: padding 0.3s ease, font-size 0.3s ease;
+  background: rgba(33, 150, 243, 0.1);
+  border-top: 50px solid transparent;
+  height: 0;
+}
+
+#brandNav:hover {
+  height: auto;
+  background: #fff;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+   bottom: 0;
 }
 
 #brandNav.shrink {
@@ -1124,6 +1136,5 @@ td > button {
   border-color: #00acc1;
 
 }
-
 
 </style>

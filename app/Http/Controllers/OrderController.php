@@ -83,12 +83,13 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $totalPurchasePrice = $order->items->sum(fn($item) => $item->purchase_price * $item->quantity);
-        $totalSellPrice     = $order->items->sum(fn($item) => $item->sell_price > 0 ? $item->sell_price * $item->quantity : $item->amount);
+        $totalPurchasePrice = $order->items->sum(fn($item) => $item->purchase_price );
+        $totalSellPrice     = $order->items->sum(fn($item) => $item->sell_price > 0 ? $item->sell_price : $item->amount);
+        $totalPurchasePriceSumm = $order->items->sum(fn($item) => $item->sell_price > 0 ? $item->sell_price * $item->quantity : $item->amount * $item->quantity);
 
         $globalMargin = Setting::first()->margin ?? 0;
         $order->load(['client', 'vehicle', 'manager']);
-        return view('orders.show', compact('order', 'globalMargin', 'totalPurchasePrice', 'totalSellPrice'));
+        return view('orders.show', compact('order', 'globalMargin', 'totalPurchasePrice', 'totalSellPrice', 'totalPurchasePriceSumm'));
     }
 
     /**

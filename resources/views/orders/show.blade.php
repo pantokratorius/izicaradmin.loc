@@ -15,7 +15,7 @@
 @section('content')
 <div class="container py-4">
     <h1 class="mb-4">Заказ № {{ $order->order_number }}</h1>
-
+    
     {{-- Информация о клиенте --}}
     <div class="card mb-4">
         <div class="card-header">Клиент</div>
@@ -104,7 +104,9 @@
             <th colspan="3"></th>
             <th>{{ number_format($totalPurchasePrice, 2, ',', ' ') }}</th>
             <th>{{ number_format($totalSellPrice, 2, ',', ' ') }}</th>
-            <th colspan="7"></th>
+            <th></th>
+            <th>{{ number_format($totalPurchasePriceSumm, 2, ',', ' ') }}</th>
+            <th colspan="5"></th>
         </tr>
     </tfoot>
             </table>

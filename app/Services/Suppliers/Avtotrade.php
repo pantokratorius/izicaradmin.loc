@@ -127,15 +127,17 @@ class Avtotrade implements SupplierInterface
             // There can be no stocks block, handle both cases
             if (!empty($item['stocks'])) {
                 foreach ($item['stocks'] as $stock) {
-                    $results[] = [
-                        'name'        => $item['name'] ?? null,
-                        'part_make'   => $item['brand_name'] ?? null,
-                        'part_number' => $item['article'] ?? null,
-                        'quantity'    => $stock['quantity_unpacked'] ?? 0,
-                        'price'       => $item['price'] ?? null,
-                        'delivery'    => $stock['delivery_period'] ?? null,
-                        'warehouse'   => $stock['name'] ?? null,
-                    ];
+                    if($stock['quantity_unpacked'] > 0){
+                        $results[] = [
+                            'name'        => $item['name'] ?? null,
+                            'part_make'   => $item['brand_name'] ?? null,
+                            'part_number' => $item['article'] ?? null,
+                            'quantity'    => $stock['quantity_unpacked'] ?? 0,
+                            'price'       => $item['price'] ?? null,
+                            'delivery'    => $stock['delivery_period'] ?? null,
+                            'warehouse'   => $stock['name'] ?? null,
+                        ];
+                    }
                 }
             } 
         }

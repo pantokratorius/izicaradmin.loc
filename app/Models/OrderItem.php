@@ -33,7 +33,7 @@ class OrderItem extends Model
     }
 
        public function getSummAttribute()
-    { 
+    {
         $globalMargin = Setting::first()->margin ?? 0;
 
         // приоритет маржи
@@ -56,7 +56,7 @@ class OrderItem extends Model
         $margin = $this->margin ?? $this->order->margin ?? $globalMargin;
 
         // цена с маржой
-        $base = $this->sell_price > 0 ? $this->sell_price * $this->quantity : $this->purchase_price * (1 + $margin / 100) ;
+        $base = $this->sell_price > 0 ? $this->sell_price  : $this->purchase_price * (1 + $margin / 100) ;
 
         // скидка клиента
         $discount = $this->order->client->discount ?? 0;

@@ -423,7 +423,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                 <select name="vehicle_id" id="order_vehicle_id" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
                     <option value="">-- Не указан --</option>
                     @foreach($client->vehicles ?? [] as $vehicle)
-                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand->name ?? '-' }} {{ $vehicle->model->name  ?? '-'}} ({{ $vehicle->vin }})</option>
+                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand->name ?? $vehicle->brand_name ?? '' }} {{$vehicle->model->name ?? $vehicle->model_name  ?? '-'}} ({{ $vehicle->vin }})</option>
                     @endforeach
                 </select>
             </div>
