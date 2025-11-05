@@ -138,7 +138,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
 
 <input type="text" id="vehicleSearch" class="form-control mb-3" placeholder="Поиск по VIN, бренду, модели...">
 
-            <table>
+            <table id="vehicleTable" class="table table-hover">
                 <thead>
                     <tr>
                         <th>VIN</th>
@@ -956,6 +956,27 @@ toggleBtn.addEventListener('click', () => {
 
 
 </script>
+
+<script>
+document.getElementById('vehicleSearch').addEventListener('keyup', function () {
+    const filter = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#vehicleTable tbody tr');
+
+    rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        let match = false;
+
+        cells.forEach(cell => {
+            if (cell.innerText.toLowerCase().includes(filter)) {
+                match = true;
+            }
+        });
+
+        row.style.display = match ? '' : 'none';
+    });
+});
+</script>
+
 
 <style>
 /* .accordion-content {
