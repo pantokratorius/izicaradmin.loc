@@ -29,7 +29,7 @@
 
     .main { margin-left: 220px; padding: 20px; }
     .page-header { font-size: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-    .search-box { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 250px; }
+    .search-box { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; width: 280px; }
 
     table { width: 100%; border-collapse: collapse; background: #fff; }
     th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: left; font-size: 14px; }
