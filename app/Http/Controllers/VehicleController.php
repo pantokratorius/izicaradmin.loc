@@ -156,7 +156,27 @@ class VehicleController extends Controller
         return redirect()->back()->with('success', 'Транспортное средство удалено');
     }
 
-    
+
+public function getByClient($clientId)
+{
+    $vehicles = Vehicle::with(['brand', 'model'])
+        ->where('client_id', $clientId)
+        ->get()
+        ->map(function($vehicle) {
+            return [
+                'id' => $vehicle->id,
+                'text' => sprintf(
+                    '%s %s (%s)',
+                    $vehicle->brand->name ?? $vehicle->brand_name ?? '',
+                    $vehicle->model->name ?? $vehicle->model_name ?? '-',
+                    $vehicle->vin
+                ),
+            ];
+        });
+
+    return response()->json($vehicles);
+}
+
 
 
 

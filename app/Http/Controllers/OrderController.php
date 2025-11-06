@@ -97,7 +97,8 @@ class OrderController extends Controller
 
         $globalMargin = Setting::first()->margin ?? 0;
         $order->load(['client', 'vehicle', 'manager']);
-        return view('orders.show', compact('order', 'globalMargin', 'totalPurchasePrice', 'totalSellPrice', 'totalPurchasePriceSumm'));
+        $clients = Client::all();
+        return view('orders.show', compact('order', 'globalMargin', 'totalPurchasePrice', 'totalSellPrice', 'totalPurchasePriceSumm', 'clients'));
     }
 
     /**
@@ -211,22 +212,33 @@ public function updateStatus(Request $request, $id)
 
 
 public function copyToNew(Request $request)
-    {
-        $itemIds = $request->input('ids', []);
+{
+    $items = $request->input('rows', []);
+    $clientId = $request->input('client_id');
+    $vehicleId = $request->input('vehicle_id');
 
-        if (!count($itemIds)) {
-            return response()->json(['error' => 'No items provided'], 400);
-        }
-        $orders_count = Order::max('order_number') + 1;
-        $newOrder = Order::create(['status' => 1, 'order_number' => $orders_count]);
-
-        $items = OrderItem::whereIn('id', $itemIds)->get();
-        foreach ($items as $item) {
-            $newOrder->items()->create($item->toArray()); // customize fields as needed
-        }
-
-        return response()->json(['redirect' => route('orders.show', $newOrder)]);
+    if (!count($items) || !$clientId || !$vehicleId) {
+        return response()->json(['error' => 'Missing data'], 422);
     }
+
+    $orders_count = Order::max('order_number') + 1;
+
+    $order = Order::create([
+        'order_number' => $orders_count,
+        'client_id' => $clientId,
+        'vehicle_id' => $vehicleId,
+        'status' => 1,
+    ]);
+
+    OrderItem::whereIn('id', $items)->get()->each(function ($item) use ($order) {
+        $order->items()->create($item->toArray());
+    });
+
+    return response()->json([
+        'redirect' => route('orders.show', $order->id),
+    ]);
+}
+
 
     public function copyToExisting(Request $request, $order_number)
 {

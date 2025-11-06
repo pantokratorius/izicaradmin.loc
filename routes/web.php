@@ -53,6 +53,9 @@ Route::get('/clients/{client}/vehicles', [ClientController::class, 'vehicles']);
 Route::get('/vehicles/search', [VehicleController::class, 'search'])->name('vehicles.search');
 Route::get('/clients/search', [ClientController::class, 'search'])->name('clients.search');
 
+Route::get('/clients/list', [ClientController::class, 'list']);
+Route::get('/vehicles/by-client/{client}', [VehicleController::class, 'getByClient']);
+
 
 Route::resource('vehicles', VehicleController::class)->except(['show']);
 Route::resource('orders', OrderController::class);

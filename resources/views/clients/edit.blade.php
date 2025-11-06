@@ -307,7 +307,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                   ];
               @endphp
 
-                <div style="margin-bottom:10px;">
+<div style="margin-bottom:10px;">
     <label>Марка</label>
     <div class="custom-select" id="brand-wrapper">
         <input type="text" placeholder="Выберите Марку..." class="select-search">

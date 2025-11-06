@@ -161,4 +161,10 @@ public function vehicles($clientId)
 }
 
 
+public function list()
+{
+    $clients = Client::select('id', 'first_name', 'middle_name', 'last_name', 'phone')->get();
+    return response()->json($clients);
+}
+
 }
