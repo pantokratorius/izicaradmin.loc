@@ -20,7 +20,7 @@ class OrderController extends Controller
 
 
 
-        $query = Order::with(['client', 'vehicle', 'manager'])->latest();
+        $query = Order::with(['client', 'vehicle', 'manager']);
 
 
         if ($request->filled('search_by_vehicle')) {
@@ -93,7 +93,7 @@ class OrderController extends Controller
     {
         $totalPurchasePrice = $order->items->sum(fn($item) => $item->purchase_price );
         $totalSellPrice     = $order->items->sum(fn($item) => $item->sell_price > 0 ? $item->sell_price : $item->amount);
-        $totalPurchasePriceSumm = $order->items->sum(fn($item) => $item->sell_price > 0 ? $item->sell_price * $item->quantity : $item->amount * $item->quantity);
+        $totalPurchasePriceSumm = $order->summ;
 
         $globalMargin = Setting::first()->margin ?? 0;
         $order->load(['client', 'vehicle', 'manager']);
@@ -217,18 +217,22 @@ public function copyToNew(Request $request)
     $clientId = $request->input('client_id');
     $vehicleId = $request->input('vehicle_id');
 
-    if (!count($items) || !$clientId || !$vehicleId) {
+    if (!count($items) || !$clientId ) {
         return response()->json(['error' => 'Missing data'], 422);
     }
 
     $orders_count = Order::max('order_number') + 1;
 
-    $order = Order::create([
+    $data = [
         'order_number' => $orders_count,
         'client_id' => $clientId,
-        'vehicle_id' => $vehicleId,
         'status' => 1,
-    ]);
+    ];
+    if($vehicleId){
+        $data['vehicle_id'] = $vehicleId;
+    }
+
+    $order = Order::create($data);
 
     OrderItem::whereIn('id', $items)->get()->each(function ($item) use ($order) {
         $order->items()->create($item->toArray());

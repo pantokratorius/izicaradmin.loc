@@ -103,12 +103,12 @@
                 </tbody>
                 <tfoot>
         <tr>
-            <th colspan="3"></th>
+            <th colspan="4"></th>
             <th>{{ number_format($totalPurchasePrice, 2, ',', ' ') }}</th>
             <th>{{ number_format($totalSellPrice, 2, ',', ' ') }}</th>
             <th></th>
             <th>{{ number_format($totalPurchasePriceSumm, 2, ',', ' ') }}</th>
-            <th colspan="6"></th>
+            <th colspan="5"></th>
         </tr>
     </tfoot>
             </table>
@@ -561,9 +561,11 @@ document.getElementById('confirmCopy').addEventListener('click', () => {
     })
     .then(response => response.json())
     .then(data => {
-        alert("Строки скопированы успешно!");
-        closeCopyModal();
-        window.location = data.redirect
+       if(data.redirect.length){
+            alert("Строки скопированы успешно!");
+            closeCopyModal();
+            window.location = data.redirect
+       }
         // Optionally reload or update page...
     })
     .catch(e => console.error(e));

@@ -13,31 +13,24 @@
 
 
     <!-- Клиент -->
-<div class="form-group">
-    <label for="client_id">Клиент</label>
-    <select id="client_id" name="client_id">
-        <option value="">-- Не указан --</option>
-        @foreach($clients as $client)
-            <option value="{{ $client->id }}"
-                    {{ $order->client_id == $client->id ? 'selected' : '' }}>
-                {{ $client->first_name }} {{ $client->last_name }} ({{ $client->phone }})
-            </option>
-        @endforeach
-    </select>
-</div>
-
-        <!-- Автомобиль -->
     <div class="form-group">
-        <label for="vehicle_id">Автомобиль</label>
-        <select id="vehicle_id" name="vehicle_id">
-            <option value="">-- Не указан --</option>
-            @foreach($vehicles as $vehicle)
-                <option value="{{ $vehicle->id }}" 
-                        {{ $order->vehicle_id == $vehicle->id ? 'selected' : '' }}>
-                    {{ $vehicle->brand->name ?? $vehicle->brand_name ?? '' }} {{ $vehicle->model->name ?? $vehicle->model_name ?? '' }} ({{ $vehicle->vin }})
-                </option>
-            @endforeach
-        </select>
+        <label>Клиент</label>
+        <div class="custom-select" id="client-wrapper">
+            <input type="text" placeholder="Выберите клиента..." class="select-search" 
+                   value="{{ $order->client->first_name ?? '' }} {{ $order->client->middle_name ?? '' }} {{ $order->client->last_name ?? '' }} {{ $order->client->phone ?? '' }}">
+            <ul class="select-options" style="display:none;"></ul>
+        </div>
+    </div>
+
+    <!-- Автомобиль -->
+    <div class="form-group">
+        <label>Автомобиль</label>
+        <div class="custom-select" id="vehicle-wrapper">
+            <input type="text" placeholder="Выберите автомобиль..." class="select-search" 
+                   value="{{ $order->vehicle->brand->name ?? $order->vehicle->brand_name ?? ''}} {{ $order->vehicle->model->name ?? $order->vehicle->model_name ?? '' }} {{ $order->vehicle->vin ?? ''}}"
+                   {{ $order->vehicle_id ? '' : 'disabled' }}>
+            <ul class="select-options" style="display:none;"></ul>
+        </div>
     </div>
 
     <!-- № заказа -->
@@ -140,5 +133,115 @@ button.btn {
 button.btn:hover {
     background: #1b5fbd;
 }
+
+/* Custom select styles */
+.custom-select {
+    position: relative;
+}
+.select-search {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+.select-options {
+    position: absolute;
+    width: 100%;
+    background: white;
+    max-height: 200px;
+    border: 1px solid #ddd;
+    overflow-y: auto;
+    z-index: 1000;
+    list-style: none;
+}
+.select-options li {
+    padding: 8px;
+    cursor: pointer;
+}
+.select-options li:hover {
+    background: #f0f0f0;
+}
 </style>
+
+<!-- Custom select logic -->
+<script>
+
+function createCustomSelect(wrapperId, optionsData, hiddenInputName) {
+    const wrapper = document.getElementById(wrapperId);
+    if(!wrapper) return; // stop if wrapper not found
+
+    const input = wrapper.querySelector('.select-search');
+    const ul = wrapper.querySelector('.select-options');
+
+    let hiddenInput = wrapper.querySelector('input[type="hidden"]');
+    if(!hiddenInput){
+        hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = hiddenInputName;
+        wrapper.appendChild(hiddenInput);
+    }
+
+    function renderOptions(data){
+        ul.innerHTML = '';
+        data.forEach(opt => {
+            const li = document.createElement('li');
+            li.textContent = opt.text;
+            li.dataset.value = opt.value;
+            li.addEventListener('click', async () => {
+                input.value = opt.text;
+                if(hiddenInput) hiddenInput.value = opt.value; // safety check
+                ul.style.display = 'none';
+                if(typeof opt.onSelect === 'function') await opt.onSelect(opt.value);
+            });
+            ul.appendChild(li);
+        });
+    }
+
+    renderOptions(optionsData);
+
+    input.addEventListener('focus', () => ul.style.display = 'block');
+    input.addEventListener('input', () => {
+        const filter = input.value.toLowerCase();
+        Array.from(ul.children).forEach(li => {
+            li.style.display = li.textContent.toLowerCase().includes(filter) ? '' : 'none';
+        });
+    });
+
+    document.addEventListener('click', e => {
+        if(!wrapper.contains(e.target)) ul.style.display = 'none';
+    });
+
+    return { renderOptions };
+}
+
+const clientSelect = createCustomSelect('client-wrapper', [], 'client_id');
+const vehicleSelect = createCustomSelect('vehicle-wrapper', [], 'vehicle_id');
+
+// Load clients on page load
+fetch('/clients/list')
+    .then(response => response.json())
+    .then(data => {
+        const options = data.map(client => ({
+            text: `${client.first_name ?? ''} ${client.middle_name ?? ''} ${client.last_name ?? ''} (${client.phone ?? ''})`,
+            value: client.id,
+            onSelect: loadVehiclesForClient
+        }));
+        clientSelect.renderOptions(options);
+    });
+
+// Load vehicles for selected client
+function loadVehiclesForClient(clientId) {
+    const input = document.querySelector('#vehicle-wrapper .select-search');
+    input.disabled = false;
+
+    fetch(`/vehicles/by-client/${clientId}`)
+        .then(response => response.json())
+        .then(data => {
+            const options = data.map(vehicle => ({
+                text: vehicle.text,
+                value: vehicle.id
+            }));
+            vehicleSelect.renderOptions(options);
+        });
+}
+</script>
 @endsection

@@ -47,9 +47,9 @@
         @forelse($orders as $order)
           <tr class="order-row" data-id="{{ $order->id }}">
             <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ') }}</td>
+            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->summ, 2, ',', ' ') }}</td>
             <td onclick="toggleItems({{ $order->id }})">{{number_format($order->prepayment, 2, ',', ' ') }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount -  $order->prepayment, 2, ',', ' ') }}</td>
+            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->summ -  $order->prepayment, 2, ',', ' ') }}</td>
             <td>
                  <select class="status_select"  data-id="{{ $order->id }}" style="padding: 3px 0">
                                     @foreach ($status as $key => $st)
