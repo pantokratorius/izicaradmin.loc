@@ -78,7 +78,7 @@
         const rows = document.querySelectorAll('.vehicle-row');
 
         rows.forEach(row => {
-            row.addEventListener('click', function() {
+            row.addEventListener('dblclick', function() {
                 const vehicleId = this.dataset.id;
                 // Open vehicle edit page
                 window.location.href = `/vehicles/${vehicleId}/edit`;

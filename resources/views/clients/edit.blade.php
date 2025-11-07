@@ -160,19 +160,19 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                 <tbody>
                     @foreach($client->vehicles ?? [] as $vehicle)
                         <tr style="cursor:pointer;" >
-                            <td onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vin }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->brand->name ?? $vehicle->brand_name }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->model->name ?? $vehicle->model_name ?? '-'}}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->generation->name ?? $vehicle->generation_name ?? '-' }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->serie->name ?? $vehicle->serie_name ?? '-' }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->body ?? '-' }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->modification->name ?? '-' }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->registration_number ?? '-' }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->sts ?? '-' }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->pts ?? '-' }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->year_of_manufacture }}</td>
-                            <td  onclick="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->engine_type }}</td>
+                            <td ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vin }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->brand->name ?? $vehicle->brand_name }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->model->name ?? $vehicle->model_name ?? '-'}}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->generation->name ?? $vehicle->generation_name ?? '-' }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->serie->name ?? $vehicle->serie_name ?? '-' }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->body ?? '-' }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->modification->name ?? '-' }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->registration_number ?? '-' }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->sts ?? '-' }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->pts ?? '-' }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->year_of_manufacture }}</td>
+                            <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->engine_type }}</td>
                             <td style="display: flex; flex-direction: row-reverse"><form
                   action="{{ route('vehicles.destroy', $vehicle->id) }}"
                   method="POST" style="">
@@ -231,11 +231,11 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                     
                     @foreach($allOrders ?? [] as $order)
                         <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}" data-order-id="{{ $order->id }}">
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->prepayment, 2, ',', ' ') ?? '-' }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->prepayment, 2, ',', ' ') ?? '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->prepayment, 2, ',', ' ') ?? '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->prepayment, 2, ',', ' ') ?? '-' }}</td>
                             <td>
                                 <select class="status_select"  data-id="{{ $order->id }}" style="padding: 3px 0">
                                     @foreach ($status as $key => $st)
@@ -243,14 +243,14 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                                     @endforeach
                                 </select>
                             </td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? ($order->vehicle->brand->name ?? $order->vehicle->brand_name).' '.($order->vehicle->model->name ?? $order->vehicle->model_name) : '-' }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ $order->margin ?? $globalMargin ?? '-' }}</td>
-                            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->purchase_sum, 2, ',', ' ') }} 
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? ($order->vehicle->brand->name ?? $order->vehicle->brand_name).' '.($order->vehicle->model->name ?? $order->vehicle->model_name) : '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->margin ?? $globalMargin ?? '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->purchase_sum, 2, ',', ' ') }} 
                                 ({{$order->purchase_sum > 0 ?  number_format( ($order->amount - $order->purchase_sum) / $order->purchase_sum * 100 , 2, ',', ' ') : 0}}%)</td>
-                                <td onclick="toggleItems({{ $order->id }})"></td>
+                                <td ondblclick="toggleItems({{ $order->id }})"></td>
                             <td >
                                 <div style="display: flex; align-items: flex-start">
                       

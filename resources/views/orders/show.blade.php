@@ -67,18 +67,18 @@
                     @forelse($order->items as $item)
                     <tr id="item-row-{{ $item->id }}">
                         <td><input type="checkbox" class="item-checkbox" value="{{ $item->id }}"></td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_number }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_make }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_name }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->purchase_price, 2, ',', ' ') }}</td>
+                        <td ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_number }}</td>
+                        <td ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_make }}</td>
+                        <td ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->part_name }}</td>
+                        <td ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->purchase_price, 2, ',', ' ') }}</td>
                         <td 
                             @if($item->sell_price > 0 )
                                 style="background-color: #dcefff"
                             @endif
-                        onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->sell_price ? number_format($item->sell_price, 2, ',', ' ') : number_format($item->amount, 2, ',', ' ') }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->quantity }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->summ, 2, ',', ' ') }}</td>
-                        <td onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->supplier }}</td>
+                        ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->sell_price ? number_format($item->sell_price, 2, ',', ' ') : number_format($item->amount, 2, ',', ' ') }}</td>
+                        <td ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->quantity }}</td>
+                        <td ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ number_format($item->summ, 2, ',', ' ') }}</td>
+                        <td ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->supplier }}</td>
                         <td> <select class="status_select"  data-id="{{ $item->id }}" style="padding: 3px 0">
                                     @foreach ($status as $key => $st)
                                         <option value="{{$key}}" {{ $item->status == $key ? 'selected' : '' }}>{{$st}}</option>
@@ -88,8 +88,8 @@
                         @if($item->margin)
                         style="background-color: #dfffdc"
                         @endif
-                        onclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->margin ?? $globalMargin }}</td>
-                        <td class="text-end" onclick='openItemModal({{ $order->id }}, @json($item))'>
+                        ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->margin ?? $globalMargin }}</td>
+                        <td class="text-end" ondblclick='openItemModal({{ $order->id }}, @json($item))'>
                             {{ $item->comment }}
                         </td>
                         <td ><button class="btn btn-sm btn-danger" onclick="deleteItem({{ $item->id }})">🗑</button></td>

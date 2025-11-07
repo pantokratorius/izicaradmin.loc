@@ -15,19 +15,6 @@
   </div>
 </div>
 
-@if(session('success'))
-  <div style="background: #d4edda; color: #155724; padding: 10px 15px; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 15px;">
-    {{ session('success') }}
-  </div>
-@endif
-
-@if(session('error'))
-  <div style="background: #f8d7da; color: #721c24; padding: 10px 15px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px;">
-    {{ session('error') }}
-  </div>
-@endif
-
-
 
 <table>
       <thead>
@@ -69,7 +56,7 @@
         const rows = document.querySelectorAll('.client-row');
 
         rows.forEach(row => {
-            row.addEventListener('click', function() {
+            row.addEventListener('dblclick', function() {
                 const clientId = this.dataset.id;
                 // Open client edit page
                 window.location.href = `/clients/${clientId}/edit`;

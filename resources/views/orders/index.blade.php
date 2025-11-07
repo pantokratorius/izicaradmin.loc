@@ -46,10 +46,10 @@
       <tbody>
         @forelse($orders as $order)
           <tr class="order-row" data-id="{{ $order->id }}">
-            <td onclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->summ, 2, ',', ' ') }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{number_format($order->prepayment, 2, ',', ' ') }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ number_format($order->summ -  $order->prepayment, 2, ',', ' ') }}</td>
+            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
+            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->summ, 2, ',', ' ') }}</td>
+            <td ondblclick="toggleItems({{ $order->id }})">{{number_format($order->prepayment, 2, ',', ' ') }}</td>
+            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->summ -  $order->prepayment, 2, ',', ' ') }}</td>
             <td>
                  <select class="status_select"  data-id="{{ $order->id }}" style="padding: 3px 0">
                                     @foreach ($status as $key => $st)
@@ -57,11 +57,11 @@
                                     @endforeach
                                 </select>
             </td>
-            <td onclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ $order->client?->first_name }} {{ $order->client?->middle_name }} {{ $order->client?->last_name }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ $order->vehicle?->brand?->name ??  $order->vehicle?->brand_name .' '. $order->vehicle?->model?->name  ?? $order->vehicle?->model_name }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
-            <td onclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
+            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
+            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->client?->first_name }} {{ $order->client?->middle_name }} {{ $order->client?->last_name }}</td>
+            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->vehicle?->brand?->name ??  $order->vehicle?->brand_name .' '. $order->vehicle?->model?->name  ?? $order->vehicle?->model_name }}</td>
+            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
+            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
             <td style="display: flex; align-items: center; justify-content: center">
               <button  onclick="openOrderModal({{ $order->id }})"
                           style="btn btn-sm btn-warning;  cursor: pointer">
