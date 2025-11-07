@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Client;
 use App\Models\OrderItem;
+use App\Models\Search;
 use App\Models\Setting;
 use App\Models\Vehicle;
 use App\Models\User;
@@ -257,6 +258,70 @@ public function copyToNew(Request $request)
     $items = OrderItem::whereIn('id', $itemIds)->get();
     foreach ($items as $item) {
         $order->items()->create($item->toArray()); // customize as needed
+    }
+
+    return response()->json(['success' => true]);
+}
+
+public function copyToNew2(Request $request)
+{
+    $items = $request->input('rows', []);
+    $clientId = $request->input('client_id');
+    $vehicleId = $request->input('vehicle_id');
+
+    if (!count($items) || !$clientId ) {
+        return response()->json(['error' => 'Missing data'], 422);
+    }
+
+    $orders_count = Order::max('order_number') + 1;
+
+    $data = [
+        'order_number' => $orders_count,
+        'client_id' => $clientId,
+        'status' => 1,
+    ];
+    if($vehicleId){
+        $data['vehicle_id'] = $vehicleId;
+    }
+
+    $order = Order::create($data);
+
+    $rows = $request->input('rows', []); // array of search IDs
+
+    Search::whereIn('id', $rows)->get()->each(function ($search) use ($order) {
+        // Convert search record to array (you can filter fields if needed)
+        $data = $search->toArray();
+
+        // Optionally remove 'id' or any unwanted fields
+        unset($data['id']);
+
+        // Create new item under order->items()
+        $order->items()->create($data);
+    });
+
+    return response()->json([
+        'redirect' => route('orders.show', $order->id),
+    ]);
+}
+
+
+    public function copyToExisting2(Request $request, $order_number)
+{
+    $rowIds = $request->input('ids', []); // get IDs from request
+
+    if (empty($rowIds)) {
+        return response()->json(['error' => 'Ничего не выбрано'], 400);
+    }
+
+    $order = Order::where('order_number', $order_number)->firstOrFail();
+
+    // get search rows by id
+    $searchItems = Search::whereIn('id', $rowIds)->get();
+
+    foreach ($searchItems as $search) {
+        $data = $search->toArray();
+        unset($data['id']); // remove original ID if necessary
+        $order->items()->create($data); // creates linked order_item
     }
 
     return response()->json(['success' => true]);

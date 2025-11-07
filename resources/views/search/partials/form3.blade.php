@@ -29,7 +29,7 @@
        style="color: #38bdf8; text-decoration: none; font-weight: bold;">
         <span id="searchCount">{{ $searchCount }}</span> запчастей в корзине
         <br><br>
-            <button id="clear_searches" type="submit" onclick="return confirm('Уверены что хотите очистить корзину?');"
+            <button id="clear_searches" type="submit"
                 style="width: 100%; background: transparent; border: 1px solid; color: #fff;
                        padding: 6px 10px; border-radius: 8px; cursor: pointer;">
                 Очистить
@@ -189,7 +189,7 @@ thead {
 
 document.getElementById('clear_searches').addEventListener('click', async function (e) {
     e.preventDefault();
-
+    if(! confirm('Уверены что хотите очистить корзину?')) return false
     const form = e.target;
     const token = document.querySelector('meta[name="csrf-token"]').content
 
