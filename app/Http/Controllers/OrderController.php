@@ -16,35 +16,40 @@ class OrderController extends Controller
     /**
      * Display a listing of the orders.
      */
-    public function index(Request $request)
-    {
+ public function index(Request $request)
+{
+    $query = Order::with(['client', 'vehicle', 'manager']);
 
-
-
-        $query = Order::with(['client', 'vehicle', 'manager']);
-
-
-        if ($request->filled('search_by_vehicle')) {
-            $search = $request->input('search_by_vehicle');
-
-            $query->where(function($q) use ($search) {
-                $q->whereHas('vehicle', function($q) use ($search) {
-                    $q->where('id', '=', "$search");
-                });
-            });
-        }
-        if ($request->filled('search')) {
-            $search = $request->input('search');
-            $query->where(function ($q) use ($search) {
-                // Client fields
-                $q->where('order_number', $search);
-            });
-        }
-
-        $orders = $query->orderBy('id', 'desc')->paginate(15);
-
-        return view('orders.index', compact('orders'));
+    // 🔹 Filter by vehicle
+    if ($request->filled('search_by_vehicle')) {
+        $search = $request->input('search_by_vehicle');
+        $query->whereHas('vehicle', function ($q) use ($search) {
+            $q->where('id', $search);
+        });
     }
+
+    // 🔹 Full search (orders + order_items)
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+
+        $query->where(function ($q) use ($search) {
+            // Search in orders table
+            $q->where('order_number', 'like', "%{$search}%")
+              ->orWhereHas('items', function ($sub) use ($search) {
+                  $sub->where(function ($s) use ($search) {
+                      $s->where('part_name', 'like', "%{$search}%")
+                        ->orWhere('part_make', 'like', "%{$search}%")
+                        ->orWhere('part_number', 'like', "%{$search}%");
+                  });
+              });
+        });
+    }
+
+    $orders = $query->orderBy('id', 'desc')->paginate(15);
+
+    return view('orders.index', compact('orders'));
+}
+
 
     /**
      * Show the form for creating a new order.
@@ -155,18 +160,33 @@ class OrderController extends Controller
     }
 
 
-    public function print(Order $order)
+    public function print(Order $order, Request $request)
     {
-        $order->load(['client', 'vehicle.brand', 'vehicle.client', 'items']);
+        $order->load(['client', 'vehicle.brand', 'vehicle.client']);
 
-        return view('orders.print', compact('order'));
+        // Check if specific items are requested
+        if ($request->has('items')) { 
+            $itemIds = explode(',', $request->query('items'));
+            $items = $order->items()->whereIn('id', $itemIds)->get();
+        } else {
+            $items = $order->items; // all items
+        }
+
+        return view('orders.print', compact('order', 'items'));
     }
 
-    public function print2(Order $order)
+    public function print2(Order $order, Request $request)
     {
         $order->load(['client', 'vehicle.brand', 'vehicle.client', 'items']);
 
-        return view('orders.print2', compact('order'));
+          if ($request->has('items')) { 
+            $itemIds = explode(',', $request->query('items'));
+            $items = $order->items()->whereIn('id', $itemIds)->get();
+        } else {
+            $items = $order->items; // all items
+        }
+
+        return view('orders.print2', compact('order', 'items'));
     }
 
     public function copy($id)

@@ -15,36 +15,59 @@
             <th>Название</th>
             <th>Бренд</th>
             <th>Артикул</th>
-            <th>Количество</th>
             <th>Цена покупки</th>
             <th>Цена продажи</th>
+            <th>Количество</th>
+            <th>Сумма</th>
+            <th>Наценка %</th>
             <th>Склад</th>
             <th>Поставщик</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-    @foreach($searches as $search)
-<tr class="editable-row" data-edit-url="{{ route('stocks.edit', $search) }}">
+    @forelse($searches as $search)
+<tr class="editable-row" data-edit-url="{{ route('search.edit', $search) }}">
     <td><input type="checkbox" class="item-checkbox" value="{{ $search->id }}"></td>
     <td class="edit">{{ $search->id }}</td>
     <td class="edit">{{ $search->name }}</td>
     <td class="edit">{{ $search->part_make }}</td>
     <td class="edit">{{ $search->part_number }}</td>
+    <td class="edit">{{ number_format($search->purchase_price, 2, ',', ' ')  }}</td>
+    <td class="edit"
+    @if($search->sell_price > 0 )
+    style="background-color: #dcefff"
+    @endif
+    >{{ $search->sell_price ? number_format($search->sell_price, 2, ',', ' ') : number_format($search->amount, 2, ',', ' ')  }}</td>
     <td class="edit">{{ $search->quantity }}</td>
-    <td class="edit">{{ $search->purchase_price }}</td>
-    <td class="edit">{{ $search->sell_price }}</td>
+    <td class="edit">{{ number_format($search->quantity * ($search->sell_price ?? $search->amount), 2, ',', ' ')  }}</td>
+    <td class="edit"
+      @if($search->sell_price > 0 )
+            style="background-color: #dcefff"
+        @endif
+    >{{  $search->sell_price > 0 ? round( ($search->sell_price / $search->purchase_price - 1) * 100, 2) : $globalMargin }}</td>
     <td class="edit">{{ $search->warehouse }}</td>
     <td class="edit">{{ $search->supplier }}</td>
     <td style="text-align: center">
-        <a style="display: none" href="{{ route('stocks.edit', $search) }}">✏️</a>
-        <form action="{{ route('stocks.destroy', $search) }}" method="POST" style="display:inline;">
-            @csrf @method('DELETE')
-            <button style="cursor: pointer" type="submit" onclick="return confirm('Удалить?')">🗑</button> 
-        </form>
+        <a style="display: none" href="{{ route('search.edit', $search) }}">✏️</a>
+        <form action="{{ route('search.destroy', $search->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" onclick="return confirm('Удалить?')">🗑</button>
+            </form>
     </td>
 </tr>
-@endforeach
+        
+ @empty
+          <tr>
+            <td colspan="7" style="text-align: center;">Нет данных</td>
+          </tr>
+        @endforelse
+        <tr>
+            <th colspan="8"></th>
+            <th>{{ number_format($search->summ , 2, ',', ' ') }}</th>
+            <th colspan="4"></th>
+        </tr>
     </tbody>
 </table>
 <p>
@@ -59,6 +82,8 @@
                 <button class="btn btn-danger" onclick="deleteSelectedItems()">🗑️ Удалить выбранные</button>
                 <button id="btn-copy-new" class="btn btn-primary" onclick="openCopyModal()">Скопировать в новый заказ</button>
                 <button id="btn-copy-existing" class="btn btn-secondary">Скопировать в существующий заказ</button>
+                <button class="btn btn-success" onclick="addToStocks()" style="background: antiquewhite">📦 Добавить на склад</button>
+
             </div>
 
                 </p>
@@ -169,6 +194,34 @@
 
 <script>
 
+document.querySelectorAll('.btn-delete-row').forEach(btn => {
+    btn.addEventListener('click', async function() {
+        const id = this.dataset.id;
+        if (!confirm('Удалить эту позицию?')) return;
+
+        try {
+            const res = await fetch(`/search/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                const row = document.getElementById(`item-row-${id}`);
+                if (row) row.remove();
+                alert('Удалено!');
+            } else {
+                alert('Ошибка при удалении');
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Ошибка сети');
+        }
+    });
+});
 
 document.getElementById('select-all').addEventListener('change', function(e) {
     document.querySelectorAll('.item-checkbox').forEach(checkbox => {
@@ -270,6 +323,113 @@ function openCopyModal() {
     // Open modal
     document.getElementById('copySelectedModal').style.display = 'flex';
 }
+
+  //------------------------------------------------------------
+// 🧩 Add selected items to Stocks
+//------------------------------------------------------------
+
+function parseFormattedNumber(str) {
+    if (str == null) return 0;
+    // remove non-breaking space too
+    str = String(str).replace(/\u00A0/g, ' ').trim();
+    // remove spaces (thousand separators), replace comma with dot
+    str = str.replace(/\s+/g, '').replace(',', '.');
+    // remove any non-digit except dot and minus
+    str = str.replace(/[^0-9.\-]/g, '');
+    const n = parseFloat(str);
+    return isNaN(n) ? 0 : n;
+}
+
+
+
+function addToStocks() {
+    const selectedRows = getSelectedIds(); // get selected checkboxes
+    if (!selectedRows.length) {
+        alert("Пожалуйста, выберите хотя бы одну строку для добавления на склад.");
+        return;
+    }
+
+    const percent = parseFloat(document.querySelector('#percent_value')?.textContent) || 0;
+    const selectedStocks = [];
+
+    selectedRows.forEach(id => {
+        const row = document.querySelector(`.item-checkbox[value="${id}"]`).closest('tr');
+
+        const item = {
+            part_number: row.querySelector('.edit:nth-child(5)')?.textContent?.trim() ?? "",
+            part_make: row.querySelector('.edit:nth-child(4)')?.textContent?.trim() ?? "",
+            name: row.querySelector('.edit:nth-child(3)')?.textContent?.trim() ?? "",
+            quantity: parseInt(row.querySelector('.edit:nth-child(6)')?.textContent ?? "1", 10),
+            purchase_price: parseFormattedNumber(row.querySelector('.edit:nth-child(7)')?.textContent) || 0,
+            sell_price: parseFormattedNumber(row.querySelector('.edit:nth-child(8)')?.textContent) || 0,
+            warehouse: row.querySelector('.edit:nth-child(9)')?.textContent?.trim() ?? "",
+            supplier: row.querySelector('.edit:nth-child(10)')?.textContent?.trim() ?? "",
+        };
+
+        const stockData = {
+            part_number: item.part_number,
+            part_make: item.part_make,
+            name: item.name,
+            quantity: item.quantity,
+            purchase_price: item.purchase_price,
+            sell_price: (item.sell_price || item.purchase_price * (1 + percent / 100)).toFixed(2),
+            warehouse: item.warehouse,
+            supplier: item.supplier,
+        };
+
+        const key = `${stockData.part_make}_${stockData.part_number}_${stockData.supplier}`;
+        const existing = selectedStocks.find(s => `${s.part_make}_${s.part_number}_${s.supplier}` === key);
+
+        if (existing) {
+            existing.quantity += stockData.quantity;
+        } else {
+            selectedStocks.push(stockData);
+        }
+
+        // send to backend
+        fetch("{{ route('store_ajax') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": '{{ csrf_token() }}',
+            },
+            body: JSON.stringify(stockData),
+        })
+            .then(r => {
+                if (!r.ok) throw new Error("HTTP " + r.status);
+                return r.json();
+            })
+            .then(response => {
+                rowFlash(row, "#d4edda");
+                const qty = response?.data?.quantity ?? 1;
+                if (response.message?.includes("increased")) {
+                    showToast(`➕ Кол-во увеличено (теперь ${qty} шт.)`);
+                } else {
+                    showToast(`✅ Добавлено на склад (теперь ${qty} шт.)`);
+                }
+            })
+            .catch(err => {
+                console.error("Ошибка при добавлении на склад:", err);
+                rowFlash(row, "#ffe6e6");
+                showToast("❌ Ошибка при добавлении на склад", "error");
+            });
+    });
+}
+
+function rowFlash(row, color) {
+    const original = row.style.backgroundColor;
+    row.style.backgroundColor = color;
+    setTimeout(() => row.style.backgroundColor = original, 1000);
+}
+
+function showToast(message) {
+    alert(message); // or your custom toast
+}
+
+
+
+
+
 
 // Function to close modal
 function closeCopyModal() {
@@ -408,12 +568,25 @@ document.getElementById('btn-copy-existing').addEventListener('click', async fun
 
 
 
-function openPrint(select, orderId) {
-    if (select.value) {
-        window.open(select.value, '_blank');
-        select.selectedIndex = 0; // сбрасываем обратно на первый вариант
+    function openPrint(select, orderId) {
+        if (!select.value) return;
+
+        // Get selected item IDs
+        const selectedIds = getSelectedIds(); // your existing helper
+        let url = select.value;
+
+        if (selectedIds.length > 0) {
+            // Append selected IDs as query string
+            const params = new URLSearchParams();
+            params.append('items', selectedIds.join(','));
+            url += '?' + params.toString();
+        }
+
+        window.open(url, '_blank');
+
+        // Reset dropdown
+        select.selectedIndex = 0;
     }
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.editable-row').forEach(row => {

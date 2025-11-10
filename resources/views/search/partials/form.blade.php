@@ -7,32 +7,32 @@
 
 <div class="form-group">
     <label>Бренд</label>
-    <input type="text" name="part_make" value="{{ old('part_make', $stock->part_make ?? '') }}">
+    <input type="text" name="part_make" value="{{ old('part_make', $search->part_make ?? '') }}">
 </div>
 
 <div class="form-group">
     <label>Название</label>
-    <input type="text" name="name" value="{{ old('name', $stock->name ?? '') }}">
+    <input type="text" name="name" value="{{ old('name', $search->name ?? '') }}">
 </div>
 
 <div class="form-group">
     <label>Количество</label>
-    <input type="number" name="quantity" value="{{ old('quantity', $stock->quantity ?? 0) }}">
+    <input type="number" name="quantity" value="{{ old('quantity', $search->quantity ?? 0) }}">
 </div>
 
 <div class="form-group">
     <label>Цена закупки</label>
-    <input type="number" step="0.01" name="purchase_price" value="{{ old('purchase_price', $stock->purchase_price ?? '') }}">
+    <input type="number" step="0.01" name="purchase_price" value="{{ old('purchase_price', $search->purchase_price ?? '') }}">
 </div>
 
 <div class="form-group">
     <label>Цена продажи</label>
-    <input type="number" step="0.01" name="sell_price" value="{{ old('sell_price', $stock->sell_price ?? '') }}">
+    <input type="number" step="0.01" name="sell_price" value="{{ old('sell_price', $search->sell_price ?? '') }}">
 </div>
 
 <div class="form-group">
     <label>Склад</label>
-    <input type="text" name="warehouse" value="{{ old('warehouse', $stock->warehouse ?? '') }}">
+    <input type="text" name="warehouse" value="{{ old('warehouse', $search->warehouse ?? '') }}">
 </div>
 
 @php
@@ -47,7 +47,7 @@
     <select name="supplier">
         <option value="">Выберите поставщика</option>
         @foreach($suppliers as $v)
-            <option value="{{$v}}" @if($v == old('supplier', $stock->supplier ?? '') ) selected @endif>{{$v}}</option>
+            <option value="{{$v}}" @if($v == old('supplier', $search->supplier ?? '') ) selected @endif>{{$v}}</option>
         @endforeach
     </select>
 </div>

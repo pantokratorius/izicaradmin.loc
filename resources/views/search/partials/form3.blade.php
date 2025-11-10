@@ -763,14 +763,18 @@ Object.values(grouped).forEach(brandGroup => {
       navDiv.style.flexWrap = "wrap";
       navDiv.style.gap = "8px";
       navDiv.style.width = "calc(100% - 220px)"; // создаем кнопки навигации
-      brandEntries.forEach(bg => {
+      brandEntries
+      .sort((a, b) => a.brand.localeCompare(b.brand))
+      .forEach(bg => {
         const btn = document.createElement("button");
         btn.textContent = bg.brand;
         btn.className = "brand-nav-btn";
         btn.addEventListener("click", (e) => {
           e.preventDefault();
           const target = document.getElementById(`brand-${bg.brand.toLowerCase()}`);
-          if (target) { target.scrollIntoView({ behavior: "instant", block: "start" });
+          if (target) {
+             target.scrollIntoView({ behavior: "instant", block: "start" });
+             window.scrollBy(0, -100)
         }
       });
         navDiv.appendChild(btn);

@@ -57,7 +57,7 @@
 
          @php($total += $item->summ) 
         <tr>
-            <td>{{ $item->id}}</td>
+            <td>{{ $i + 1}}</td>
             <td>{{ $item->part_number }}</td>
             <td>{{ $item->name }}</td>
             <td>{{ $item->quantity }}</td>

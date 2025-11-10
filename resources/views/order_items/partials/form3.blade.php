@@ -33,7 +33,7 @@
 </div>
 
 <h3>Результаты</h3>
-<table id="resultsTable" border="1" cellspacing="0" cellpadding="5">
+<table id="resultsTable" border="0" cellspacing="0" cellpadding="5">
   <thead>
     <tr>
       <th>Бренд</th>
@@ -568,7 +568,6 @@ Object.values(grouped).forEach(brandGroup => {
         // Brand header
         const brandHeader = document.createElement("tr");
         brandHeader.style.backgroundColor = "#d9edf7";
-        brandHeader.innerHTML = `<td colspan="9" style="font-weight:bold;">${brand}</td>`;
         brandHeader.id = `brand-${cleanBrand(brand)}`;
         tbody.appendChild(brandHeader);
 
@@ -616,7 +615,7 @@ Object.values(grouped).forEach(brandGroup => {
     partHeader.style.backgroundColor = "#f0f0f0";
     partHeader.innerHTML = `
 
-        ${hiddenCount > 0 ? `<td colspan="9"><button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button></td>` : ""}
+        ${hiddenCount > 0 ? `<td colspan="8"><button data-toggle="${toggleId}" style="margin-left:10px;">Показать ещё ${hiddenCount}</button></td>` : ""}
     `;
     tbody.appendChild(partHeader);
 
@@ -641,15 +640,14 @@ Object.values(grouped).forEach(brandGroup => {
     const borderStyle = idx === 0 ? "" : "border-top:0;border-bottom:0;";
 
      row.innerHTML = `
-        <td style="${borderStyle}${isSelectedBrand ? 'background:#e6f7ff;font-weight:bold;' : ''}"></td>
+        <td style="${borderStyle}">${idx === 0 ? brand ?? "-" : ""}</td>
         <td style="${borderStyle}">${idx === 0 ? item.part_number ?? "-" : ""}</td>
         <td style="${borderStyle}">${idx === 0 ? item.name ?? "-" : ""}</td>
         <td>${item.quantity ?? 0}</td>
-        <td class="purchase-price-col" title="${item.price ? parseFloat(item.price).toFixed(2) : "-"}">${numberFormat2(item.price) ?? "-"}</td>
+        <td class="purchase-price-col" title="${item.price > 0 ? parseFloat(item.price).toFixed(2) : "-"}">${numberFormat2(item.price) ?? "-"}</td>
         <td style="white-space: nowrap;" title="${item.price ? (item.price * (1 + percent / 100)).toFixed(2) : "-"}"><b>${item.price ? (numberFormat(item.price * (1 + percent / 100))) : "-"}</b></td>
         <td>${item.delivery ?? "-"}</td>
-        <td>${item.warehouse ?? "-"}</td>
-        <td class="supplier_name">${item.supplier ?? "-"}</td>
+        <td style="text-align:center; max-width: 200px">${item.warehouse ?? "-"}<br><p style="color: #2196f3; margin: 5px 0 0" class="supplier_name">${item.supplier ?? "-"}</p></td>
     `;
 
     if (isOEM) row.classList.add("oem-row");
@@ -693,14 +691,18 @@ Object.values(grouped).forEach(brandGroup => {
       navDiv.style.flexWrap = "wrap";
       navDiv.style.gap = "8px";
       navDiv.style.width = "calc(100% - 220px)"; // создаем кнопки навигации
-      brandEntries.forEach(bg => {
+      brandEntries
+      .sort((a, b) => a.brand.localeCompare(b.brand))
+      .forEach(bg => {
         const btn = document.createElement("button");
         btn.textContent = bg.brand;
         btn.className = "brand-nav-btn";
         btn.addEventListener("click", (e) => {
           e.preventDefault();
           const target = document.getElementById(`brand-${bg.brand.toLowerCase()}`);
-          if (target) { target.scrollIntoView({ behavior: "instant", block: "start" });
+          if (target) { 
+            target.scrollIntoView({ behavior: "instant", block: "start" });
+            window.scrollBy(0, -100)
         }
       });
         navDiv.appendChild(btn);

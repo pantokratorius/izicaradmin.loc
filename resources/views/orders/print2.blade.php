@@ -56,7 +56,7 @@
 @php
     $total = 0;
 @endphp
-        @foreach ($order->items as $i => $item)
+        @foreach ($items as $i => $item)
 
          @php($total += $item->summ) 
         <tr>

@@ -85,10 +85,13 @@
                                     @endforeach
                                 </select></td>
                         <td 
-                        @if($item->margin)
+                        @if($item->sell_price > 0 )
+                            style="background-color: #dcefff"
+                        @elseif($item->margin)
                         style="background-color: #dfffdc"
-                        @endif
-                        ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{ $item->margin ?? $globalMargin }}</td>
+                            @endif
+                            ondblclick='openItemModal({{ $order->id }}, @json($item))'>{{  $item->sell_price > 0 ? round( ($item->sell_price / $item->purchase_price - 1) * 100, 2) : ($item->margin ?? $globalMargin) }}
+                        </td>
                         <td class="text-end" ondblclick='openItemModal({{ $order->id }}, @json($item))'>
                             {{ $item->comment }}
                         </td>
@@ -126,6 +129,7 @@
                 <button class="btn btn-danger" onclick="deleteSelectedItems()">🗑️ Удалить выбранные</button>
                 <button id="btn-copy-new" class="btn btn-primary" onclick="openCopyModal()">Скопировать в новый заказ</button>
                 <button id="btn-copy-existing" class="btn btn-secondary">Скопировать в существующий заказ</button>
+                <button class="btn btn-success" onclick="addToStocks()">📦 Добавить на склад</button>
             </div>
         </div>
 
@@ -362,6 +366,112 @@
 
 
 <script>
+
+// helper to parse numbers like "1 234,56" => 1234.56
+function parseFormattedNumber(str) {
+    if (str == null) return 0;
+    // remove non-breaking space too
+    str = String(str).replace(/\u00A0/g, ' ').trim();
+    // remove spaces (thousand separators), replace comma with dot
+    str = str.replace(/\s+/g, '').replace(',', '.');
+    // remove any non-digit except dot and minus
+    str = str.replace(/[^0-9.\-]/g, '');
+    const n = parseFloat(str);
+    return isNaN(n) ? 0 : n;
+}
+
+function addToStocks() {
+    const selectedRows = getSelectedIds(); // your existing function
+    if (!selectedRows.length) {
+        alert("Пожалуйста, выберите хотя бы одну строку для добавления на склад.");
+        return;
+    }
+
+    const percent = parseFloat(document.querySelector('#percent_value')?.textContent) || 0;
+
+    selectedRows.forEach(id => {
+        const checkbox = document.querySelector(`.item-checkbox[value="${id}"]`);
+        if (!checkbox) return;
+        const row = checkbox.closest('tr');
+        if (!row) return;
+
+        // get all tds (including non-edit ones) so indices match your template
+        const tds = row.querySelectorAll('td');
+
+        const part_number = tds[1]?.textContent?.trim() ?? "";
+        const part_make   = tds[2]?.textContent?.trim() ?? "";
+        const part_name   = tds[3]?.textContent?.trim() ?? "";
+        const purchase_raw = tds[4]?.textContent ?? "";
+        const sell_raw     = tds[5]?.textContent ?? "";
+        const quantity_raw = tds[6]?.textContent ?? "1";
+        const supplier     = tds[8]?.textContent?.trim() ?? "";
+        const warehouse    = ""; // your row doesn't show warehouse column — leave empty or set if you have it
+
+        const purchase_price = parseFormattedNumber(purchase_raw);
+        let sell_price = parseFormattedNumber(sell_raw);
+
+        // if sell_price === 0 compute from purchase and percent
+        if (!sell_price && purchase_price) {
+            sell_price = +(purchase_price * (1 + percent / 100)).toFixed(2);
+        }
+
+        const quantity = parseInt(quantity_raw.toString().replace(/\s+/g, ''), 10) || 1;
+
+        const stockData = {
+            name: part_name,
+            part_make,
+            part_number,
+            quantity,
+            purchase_price,
+            sell_price: sell_price.toFixed ? sell_price.toFixed(2) : String(sell_price),
+            warehouse,
+            supplier
+        };
+
+        // send to backend
+        fetch("{{ route('store_ajax') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": '{{ csrf_token() }}',
+            },
+            body: JSON.stringify(stockData),
+        })
+        .then(r => {
+            if (!r.ok) throw new Error("HTTP " + r.status);
+            return r.json();
+        })
+        .then(response => {
+            rowFlash(row, "#d4edda");
+            const qty = response?.data?.quantity ?? quantity;
+            if (response.message?.includes("increased")) {
+                showToast(`➕ Кол-во увеличено (теперь ${qty} шт.)`);
+            } else {
+                showToast(`✅ Добавлено на склад (теперь ${qty} шт.)`);
+            }
+        })
+        .catch(err => {
+            console.error("Ошибка при добавлении на склад:", err);
+            rowFlash(row, "#ffe6e6");
+            showToast("❌ Ошибка при добавлении на склад", "error");
+        });
+    });
+}
+
+
+//------------------------------------------------------------
+// 🌈 Helpers
+//------------------------------------------------------------
+function rowFlash(row, color) {
+    const original = row.style.backgroundColor;
+    row.style.backgroundColor = color;
+    setTimeout(() => row.style.backgroundColor = original, 1000);
+}
+
+function showToast(message) {
+    alert(message); // or replace with your custom toast
+}
+
 
 
 document.getElementById('select-all').addEventListener('change', function(e) {
@@ -604,11 +714,24 @@ document.getElementById('btn-copy-existing').addEventListener('click', async fun
 //-----------------------------
 
     function openPrint(select, orderId) {
-    if (select.value) {
-        window.open(select.value, '_blank');
-        select.selectedIndex = 0; // сбрасываем обратно на первый вариант
+        if (!select.value) return;
+
+        // Get selected item IDs
+        const selectedIds = getSelectedIds(); // your existing helper
+        let url = select.value;
+
+        if (selectedIds.length > 0) {
+            // Append selected IDs as query string
+            const params = new URLSearchParams();
+            params.append('items', selectedIds.join(','));
+            url += '?' + params.toString();
+        }
+
+        window.open(url, '_blank');
+
+        // Reset dropdown
+        select.selectedIndex = 0;
     }
-}
 
 document.addEventListener('change', function (e) {
     if (e.target.classList.contains('status_select')) {

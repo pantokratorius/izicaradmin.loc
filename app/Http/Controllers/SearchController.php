@@ -27,10 +27,12 @@ class SearchController extends Controller
 
     public function show()
 {
+
+    $globalMargin = Setting::first()->margin ?? 0;
     $searches = Search::orderBy('id', 'desc')->paginate(20); 
     $searchCount = Search::count(); // how many rows in the table
 
-    return view('search.show', compact('searchCount', 'searches'));
+    return view('search.show', compact('searchCount', 'searches', 'globalMargin'));
 }
 
     public function store(Request $request)
@@ -87,12 +89,12 @@ class SearchController extends Controller
 
     public function update(Request $request, Search $search)
     {
+
         $data = $request->validate([
             'name'            => 'required|string|max:255',
             'part_make'       => 'nullable|string|max:255',
             'part_number'     => 'nullable|string|max:255',
             'quantity'        => 'integer|min:0',
-            'reserved'        => 'integer|min:0',
             'sell_price'      => 'nullable|numeric',
             'warehouse'       => 'nullable|string|max:255',
             'purchase_price'  => 'nullable|numeric',
@@ -104,13 +106,14 @@ class SearchController extends Controller
         ]);
 
         $search->update($data);
-        return redirect()->route('search.index')->with('success', 'Товар обновлен');
+        return redirect()->route('search.show')->with('success', 'Товар обновлен');
     }
 
-    public function destroy(Search $search)
+    public function destroy($search)
     {
-        $search->delete();
-        return redirect()->route('search.index')->with('success', 'Товар удален');
+        $model =  Search::findOrFail($search);
+        $model ->delete();
+        return redirect()->route('search.show')->with('success', 'Товар удален');
     }
 
     public function clear(Search $search)
@@ -124,26 +127,41 @@ class SearchController extends Controller
 
     }
 
-    public function print()
-    { 
-        $search = Search::all();
-        $sell_total = Search::sum('sell_price');
-         $summ_total = Search::selectRaw('SUM(sell_price * quantity) as total')
-                       ->value('total');
+ public function print(Request $request)
+    {
+        if ($request->has('items')) {
+            $itemIds = explode(',', $request->query('items'));
+            $search = Search::whereIn('id', $itemIds)->get();
+        } else {
+            $search = Search::all();
+        }
+
+        $sell_total = $search->sum('sell_price');
+        $summ_total = $search->sum(function ($item) {
+            return $item->sell_price * $item->quantity;
+        });
 
         return view('search.print', compact('search', 'sell_total', 'summ_total'));
     }
 
-    public function print2(Search $search)
-    {
-        $search = Search::all();
 
-        $sell_total = Search::sum('sell_price');
-         $summ_total = Search::selectRaw('SUM(sell_price * quantity) as total')
-                       ->value('total');
+    public function print2(Request $request)
+    {
+        if ($request->has('items')) {
+            $itemIds = explode(',', $request->query('items'));
+            $search = Search::whereIn('id', $itemIds)->get();
+        } else {
+            $search = Search::all();
+        }
+
+        $sell_total = $search->sum('sell_price');
+        $summ_total = $search->sum(function ($item) {
+            return $item->sell_price * $item->quantity;
+        });
 
         return view('search.print2', compact('search', 'sell_total', 'summ_total'));
     }
+
 
 
 
