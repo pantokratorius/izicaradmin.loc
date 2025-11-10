@@ -34,7 +34,7 @@
     <td class="edit">{{ $search->part_make }}</td>
     <td class="edit">{{ $search->part_number }}</td>
     <td class="edit">{{ number_format($search->purchase_price, 2, ',', ' ')  }}</td>
-    <td class="edit"
+    <td class="edit" style="white-space: nowrap "
     @if($search->sell_price > 0 )
     style="background-color: #dcefff"
     @endif
