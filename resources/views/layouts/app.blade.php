@@ -41,6 +41,7 @@
     
     th{
       border: 1px solid  #e9e9e9; /* #e0e0e0; */
+      text-align: center;
     }
     td {
       border: none;
