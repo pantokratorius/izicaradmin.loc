@@ -34,13 +34,13 @@
     <td class="edit">{{ $search->part_make }}</td>
     <td class="edit">{{ $search->part_number }}</td>
     <td class="edit">{{ number_format($search->purchase_price, 2, ',', ' ')  }}</td>
-    <td class="edit" style="white-space: nowrap "
+    <td class="edit" 
     @if($search->sell_price > 0 )
     style="background-color: #dcefff"
     @endif
     >{{ $search->sell_price ? number_format($search->sell_price, 2, ',', ' ') : number_format($search->amount, 2, ',', ' ')  }}</td>
     <td class="edit">{{ $search->quantity }}</td>
-    <td class="edit">{{ number_format($search->quantity * ($search->sell_price ?? $search->amount), 2, ',', ' ')  }}</td>
+    <td class="edit" style="white-space: nowrap ">{{ number_format($search->quantity * ($search->sell_price ?? $search->amount), 2, ',', ' ')  }}</td>
     <td class="edit"
       @if($search->sell_price > 0 )
             style="background-color: #dcefff"
