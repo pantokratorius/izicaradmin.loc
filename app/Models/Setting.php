@@ -10,4 +10,11 @@ class Setting extends Model
         'margin',
         'percent',
     ];
+
+
+    protected $casts = [
+        'suppliers' => 'array',
+    ];
+
+
 }

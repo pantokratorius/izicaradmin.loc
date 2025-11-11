@@ -76,7 +76,8 @@ Route::get('/cars/series/{generation}', [CarController::class, 'series']);
 Route::get('/cars/modifications/{serie}', [CarController::class, 'modifications']);
 
 Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
-Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+Route::post('/settings/update', [SettingController::class, 'update'])->name('settings.update');
+Route::post('/settings/update-suppliers', [SettingController::class, 'updateSuppliers'])->name('settings.updateSuppliers');
 Route::post('/settings/update-percent', [SettingController::class, 'updatePercent'])
     ->name('settings.updatePercent');
 

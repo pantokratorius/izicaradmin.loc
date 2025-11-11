@@ -43,4 +43,35 @@ class SettingController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Проценты обновлены!', 'value' => $percent]);
     }
+
+    public function updateSuppliers(Request $request)
+{
+    $setting = Setting::first();
+    $suppliers = $setting->suppliers ?? [];
+
+    // Mark submitted checkboxes as active
+    foreach ($request->input('suppliers', []) as $name => $value) {
+        $suppliers[$name] = true;
+    }
+
+    // Mark unchecked suppliers as inactive
+    foreach ($suppliers as $name => $value) {
+        if (!isset($request->suppliers[$name])) {
+            $suppliers[$name] = false;
+        }
+    }
+
+    // Add new supplier if submitted
+    if ($new = trim($request->input('new_supplier'))) {
+        $suppliers[$new] = true;
+    }
+
+    $setting->suppliers = $suppliers;
+    $setting->save();
+
+
+    return back()->with('success', 'Поставщики обновлены.');
+}
+
+
 }

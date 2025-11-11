@@ -11,11 +11,11 @@ class SearchController extends Controller
 {
     public function index()
     { 
-
+        $suppliers = array_keys(array_filter(Setting::first()->suppliers ?? []));
         $searchCount = Search::count();
         $brandGroups = BrandGroup::all();
         $settings = Setting::first();
-        return view('search.index', compact('settings', 'brandGroups', 'searchCount'));
+        return view('search.index', compact('settings', 'brandGroups', 'searchCount', 'suppliers'));
     }
 
     public function create()
