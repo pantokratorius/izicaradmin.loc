@@ -109,7 +109,7 @@ public function index(Request $request)
                 $q4->where('name', 'like', "%{$search}%");
             })
             ->orWhereHas('serie', function ($q5) use ($search) {
-                $q5->where('name', 'like', "%{$search}%");
+                $q5->where('name', 'like', "%{$search}%"); 
             })
             ->orWhereHas('modification', function ($q6) use ($search) {
                 $q6->where('name', 'like', "%{$search}%");
