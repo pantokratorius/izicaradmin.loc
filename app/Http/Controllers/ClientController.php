@@ -77,25 +77,65 @@ public function index(Request $request)
 }
 
     // форма редактирования
-    public function edit($id)
-    {
-        $client = Client::findOrFail($id);
+   public function edit(Request $request, $id)
+{
+    $client = Client::findOrFail($id);
 
-        // Paginate vehicles with their orders
-        $vehicles = $client->vehicles()->with('orders.vehicle')->paginate(10);
+    // Base query for vehicles
+    $vehiclesQuery = $client->vehicles()->with([
+    'orders', 
+    'brand', 
+    'model', 
+    'generation', 
+    'serie', 
+    'modification'
+]);
 
-        // Merge all orders (direct + via vehicles)
-        $allOrders = $client->orders
-            ->merge($vehicles->pluck('orders')->flatten()) // only orders from paginated vehicles
-            ->unique('id') // avoid duplicates
-            ->values();
+    // Apply search if provided
+    if ($search = $request->get('search')) {
+        $vehiclesQuery->where(function ($q) use ($search) {
+            $q->where('vin', 'like', "%{$search}%")
+            ->orWhere('brand_name', 'like', "%{$search}%")
+            ->orWhere('model_name', 'like', "%{$search}%")
+            ->orWhere('generation_name', 'like', "%{$search}%")
+            ->orWhere('serie_name', 'like', "%{$search}%")
+            ->orWhereHas('brand', function ($q2) use ($search) {
+                $q2->where('name', 'like', "%{$search}%");
+            })
+            ->orWhereHas('model', function ($q3) use ($search) {
+                $q3->where('name', 'like', "%{$search}%");
+            })
+            ->orWhereHas('generation', function ($q4) use ($search) {
+                $q4->where('name', 'like', "%{$search}%");
+            })
+            ->orWhereHas('serie', function ($q5) use ($search) {
+                $q5->where('name', 'like', "%{$search}%");
+            })
+            ->orWhereHas('modification', function ($q6) use ($search) {
+                $q6->where('name', 'like', "%{$search}%");
+            });
+        });
 
-        $brands = CarBrand::orderBy('name')->get();
-        $orders_count = Order::max('order_number') + 1;
-        $globalMargin = Setting::first()->margin ?? 0;
-
-        return view('clients.edit', compact('client', 'brands', 'orders_count', 'globalMargin', 'allOrders', 'vehicles'));
+        
     }
+
+    // Paginate vehicles
+    $vehicles = $vehiclesQuery->paginate(10)->withQueryString(); // keeps ?search=... in pagination links
+
+    // Merge all orders for direct + vehicle orders
+    $allOrders = $client->orders
+        ->merge($vehicles->pluck('orders')->flatten())
+        ->unique('id')
+        ->sortByDesc('created_at')
+        ->values();
+
+    $brands = CarBrand::orderBy('name')->get();
+    $orders_count = Order::max('order_number') + 1;
+    $globalMargin = Setting::first()->margin ?? 0;
+
+    return view('clients.edit', compact('client', 'brands', 'orders_count', 'globalMargin', 'allOrders', 'vehicles'));
+}
+
 
     // обновление клиента
     public function update(Request $request, $id)

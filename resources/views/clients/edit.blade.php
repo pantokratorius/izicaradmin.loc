@@ -136,7 +136,12 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
         @else
 
 
-<input type="text" id="vehicleSearch" class="form-control mb-3" placeholder="Поиск по VIN, бренду, модели...">
+<form method="GET" action="{{ route('clients.edit', $client->id) }}">
+    <input type="text" name="search" class="search-box"
+           placeholder="Поиск по VIN, бренду, модели..."
+           value="{{ request('search') }}">
+    <button type="submit">🔍</button>
+</form>
 
             <table id="vehicleTable" class="table table-hover">
                 <thead>
@@ -1030,31 +1035,6 @@ toggleBtn.addEventListener('click', () => {
 
 </script>
 
-<script>
-let vehicleSearchTimeout;
-
-document.getElementById('vehicleSearch').addEventListener('keyup', function () {
-    clearTimeout(vehicleSearchTimeout); // cancel previous timer
-
-    vehicleSearchTimeout = setTimeout(() => {
-        const filter = this.value.toLowerCase();
-        const rows = document.querySelectorAll('#vehicleTable tbody tr');
-
-        rows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            let match = false;
-
-            cells.forEach(cell => {
-                if (cell.innerText.toLowerCase().includes(filter)) {
-                    match = true;
-                }
-            });
-
-            row.style.display = match ? '' : 'none';
-        });
-    }, 300); // ← adjust delay here (ms)
-});
-</script>
 
 
 <style>

@@ -49,8 +49,8 @@ class VehicleController extends Controller
 
     public function create()
     {
-        $brands = \App\Models\CarBrand::all(); // Fetch all car brands
-    return view('vehicles.create', compact('brands'));
+        $brands = CarBrand::all(); // Fetch all car brands
+        return view('vehicles.create', compact('brands'));
     }
 
     public function store(Request $request)
