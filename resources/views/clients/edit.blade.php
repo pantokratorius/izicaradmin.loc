@@ -518,6 +518,7 @@ document.getElementById('orderItemSearch').addEventListener('input', function() 
 
     // Collect all visible order IDs from the page
     const visibleOrders = Array.from(document.querySelectorAll('.order'))
+    .filter(el => el.offsetParent !== null)
         .map(el => el.dataset.orderId);
 
     fetch(`/orderitems/search?q=${encodeURIComponent(query)}&orders=${visibleOrders.join(',')}`)
