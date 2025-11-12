@@ -17,9 +17,10 @@ class StockController extends Controller
 
     public function create()
     { 
+        $suppliers = array_keys(array_filter(Setting::first()->suppliers ?? []));
         $brandGroups = BrandGroup::all();
         $settings = Setting::first();
-        return view('stocks.create', compact('settings', 'brandGroups'));
+        return view('stocks.create', compact('settings', 'brandGroups', 'suppliers'));
     } 
 
     public function store(Request $request)

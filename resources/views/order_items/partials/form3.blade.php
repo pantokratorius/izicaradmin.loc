@@ -156,9 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedSuppliers = new Set();
   let sortMode = "price";
 
-  const suppliers = ["ABS","Москворечье", "Берг", "Фаворит", "Форум-Авто",
-                        "Профит Лига", "Микадо", "Росско", "STparts", "Авторусь",
-                        "Автоспутник", "Авто-Евро", "Авто Союз", "Ats-Auto", "АвтоТрейд"];
+  const suppliers = @json($suppliers);
   let supplierLoading = {};
 
   // 🔹 показать лоадер

@@ -20,9 +20,10 @@ class OrderItemController extends Controller
 
     public function create(Order $order)
     {
+        $suppliers = array_keys(array_filter(Setting::first()->suppliers ?? []));
         $brandGroups = BrandGroup::all();
         $settings = Setting::first();    
-        return view('order_items.create', compact('settings', 'brandGroups', 'order'));
+        return view('order_items.create', compact('settings', 'brandGroups', 'order', 'suppliers'));
     }
 
         public function store(Request $request)
