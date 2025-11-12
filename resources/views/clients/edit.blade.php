@@ -198,6 +198,16 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
 
     <div id="orders" class="tab-content">
         <a href="javascript:void(0)" class="btn" onclick="openOrderModal()">Добавить заказ</a>
+
+
+        <div style="margin-bottom:10px;">
+                <label>Поиск деталей</label>
+                <input type="text" id="orderItemSearch" placeholder="Введите номер или название детали"
+                    style="width:250px;padding:8px;border:1px solid #ccc;border-radius:4px; margin-left: 5px">
+                <div id="orderItemResults" style="border:1px solid #ddd;max-height:150px;overflow-y:auto;margin-top:5px;display:none;"></div>
+            </div>
+
+
         <div style="margin-bottom: 10px;">
     <button id="resetOrdersBtn" type="button" onclick="resetOrdersFilter()" style="display:none;">
         Показать все заказы
@@ -230,7 +240,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                 <tbody>
                     
                     @foreach($allOrders ?? [] as $order)
-                        <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}" data-order-id="{{ $order->id }}">
+                        <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}" data-order-id="{{ $order->id }}" class="order">
                             <td ondblclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
                             <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
                             <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
@@ -487,6 +497,60 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
         </form>
     </div>
 </div>
+
+
+<script>
+document.getElementById('orderItemSearch').addEventListener('input', function() {
+    const query = this.value.trim();
+    const resultsContainer = document.getElementById('orderItemResults');
+
+    if (query.length < 2) {
+        resultsContainer.style.display = 'none';
+        resultsContainer.innerHTML = '';
+        return;
+    }
+
+    // Collect all visible order IDs from the page
+    const visibleOrders = Array.from(document.querySelectorAll('.order'))
+        .map(el => el.dataset.orderId);
+
+    fetch(`/orderitems/search?q=${encodeURIComponent(query)}&orders=${visibleOrders.join(',')}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.length) {
+                resultsContainer.innerHTML = '<div style="padding:5px;">Ничего не найдено</div>';
+                resultsContainer.style.display = 'block';
+                return;
+            }
+
+            resultsContainer.innerHTML = data.map(item => `
+                <div style="padding:5px;border-bottom:1px solid #eee;cursor:pointer;"
+                     onclick="selectOrderByItem(${item.order_id}, '${item.order_number}', '${item.part_number}', '${item.part_name}')">
+                     <b>${item.part_number}</b> — ${item.part_name}
+                     <br><small>Заказ № ${item.order_id ?? '-'}</small>
+                </div>
+            `).join('');
+            resultsContainer.style.display = 'block';
+        })
+        .catch(() => {
+            resultsContainer.innerHTML = '<div style="padding:5px;color:red;">Ошибка загрузки</div>';
+            resultsContainer.style.display = 'block';
+        });
+});
+
+
+function selectOrderByItem(orderId, orderNumber, partNumber, name) {
+    // alert(`Найдено в заказе №${orderNumber}: ${partNumber} — ${name}`);
+    // Optionally, you can auto-open or scroll to that order on the page:
+    const orderRow = document.querySelector(`[data-order-id="${orderId}"]`);
+    if (orderRow) {
+        orderRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        orderRow.style.background = '#ffffcc';
+        setTimeout(() => orderRow.style.background = '', 2000);
+    }
+}
+</script>
+
 
 <script>
 

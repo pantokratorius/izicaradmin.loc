@@ -134,41 +134,61 @@ public function store_ajax(Request $request)
         return response()->json(['success' => true, 'item' => $orderitem]);
     }
     
-   
-public function destroy(OrderItem $orderitem)
-{
-    $orderitem->delete();
+    
+    public function destroy(OrderItem $orderitem)
+    {
+        $orderitem->delete();
 
-    return response()->json(['success' => true]);
-}
-
-
-public function updateStatus(Request $request, $id)
-{
-    $request->validate([
-        'status' => 'required|string|max:50',
-    ]);
-
-    $orderItem = OrderItem::findOrFail($id);
-    $orderItem->status = $request->status;
-    $orderItem->save();
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Статус успешно обновлён!',
-    ]);
-}
-
-public function batchDelete(Request $request)
-{
-    $ids = $request->input('ids');
-
-    if ($ids && is_array($ids)) {
-        OrderItem::whereIn('id', $ids)->delete();
         return response()->json(['success' => true]);
     }
 
-    return response()->json(['success' => false], 400);
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|string|max:50',
+        ]);
+
+        $orderItem = OrderItem::findOrFail($id);
+        $orderItem->status = $request->status;
+        $orderItem->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Статус успешно обновлён!',
+        ]);
+    }
+
+    public function batchDelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if ($ids && is_array($ids)) {
+            OrderItem::whereIn('id', $ids)->delete();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 400);
+    }
+
+
+    public function search(Request $request)
+    {
+    $query = trim($request->get('q', ''));
+    $orders = explode(',', $request->get('orders', ''));
+
+    $items = OrderItem::with('order')
+        ->whereIn('order_id', $orders) // ✅ restrict to visible orders
+        ->where(function ($q) use ($query) {
+            $q->where('part_make', 'like', "%{$query}%")
+              ->orWhere('part_number', 'like', "%{$query}%")
+              ->orWhere('part_name', 'like', "%{$query}%");
+        })
+        ->limit(15)
+        ->get(['id', 'order_id', 'part_number', 'part_make', 'part_name']);
+
+    return response()->json($items);
 }
+
 
 }

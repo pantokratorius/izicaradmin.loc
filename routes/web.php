@@ -62,9 +62,13 @@ Route::get('/vehicles/by-client/{client}', [VehicleController::class, 'getByClie
 
 Route::resource('vehicles', VehicleController::class)->except(['show']);
 Route::resource('orders', OrderController::class);
-Route::resource('orderitems', OrderItemController::class);
-Route::get('/orderitems/create/{order}', [OrderItemController::class, 'create'])->name('orderitems.create');
-Route::post('/orderitems/batch-delete', [OrderItemController::class, 'batchDelete']);
+Route::get('/orderitems/search', [OrderItemController::class, 'search'])
+    ->name('orderitems.search');
+    Route::get('/orderitems/create/{order}', [OrderItemController::class, 'create'])->name('orderitems.create');
+    Route::post('/orderitems/batch-delete', [OrderItemController::class, 'batchDelete']);
+    Route::resource('orderitems', OrderItemController::class);
+
+
 Route::get('/orders/{order}/copy', [OrderController::class, 'copy'])->name('orders.copy');
 
 
