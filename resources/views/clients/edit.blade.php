@@ -1030,22 +1030,28 @@ toggleBtn.addEventListener('click', () => {
 </script>
 
 <script>
+let vehicleSearchTimeout;
+
 document.getElementById('vehicleSearch').addEventListener('keyup', function () {
-    const filter = this.value.toLowerCase();
-    const rows = document.querySelectorAll('#vehicleTable tbody tr');
+    clearTimeout(vehicleSearchTimeout); // cancel previous timer
 
-    rows.forEach(row => {
-        const cells = row.querySelectorAll('td');
-        let match = false;
+    vehicleSearchTimeout = setTimeout(() => {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#vehicleTable tbody tr');
 
-        cells.forEach(cell => {
-            if (cell.innerText.toLowerCase().includes(filter)) {
-                match = true;
-            }
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            let match = false;
+
+            cells.forEach(cell => {
+                if (cell.innerText.toLowerCase().includes(filter)) {
+                    match = true;
+                }
+            });
+
+            row.style.display = match ? '' : 'none';
         });
-
-        row.style.display = match ? '' : 'none';
-    });
+    }, 300); // ← adjust delay here (ms)
 });
 </script>
 
