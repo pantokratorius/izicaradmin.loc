@@ -60,6 +60,7 @@
     <br><hr><br>
 
     {{-- 🔹 Import parts file --}}
+    <h3>Импорт АТС</h3>
     <form action="{{ route('parts.import') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="file" name="file" accept=".xls,.xlsx">
