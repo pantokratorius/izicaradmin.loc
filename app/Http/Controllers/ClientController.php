@@ -79,25 +79,22 @@ public function index(Request $request)
     // форма редактирования
     public function edit($id)
     {
+        $client = Client::findOrFail($id);
 
-    $client = Client::with([
-        'orders.vehicle',    // orders linked directly + their vehicle
-        'vehicles.orders'    // orders linked through vehicles
-    ])->findOrFail($id);
+        // Paginate vehicles with their orders
+        $vehicles = $client->vehicles()->with('orders.vehicle')->paginate(10);
 
-    $allOrders = $client->orders
-        ->merge($client->vehicles->flatMap->orders)
-        ->unique('id') // avoid duplicates if some order is linked twice
-        ->values();
+        // Merge all orders (direct + via vehicles)
+        $allOrders = $client->orders
+            ->merge($vehicles->pluck('orders')->flatten()) // only orders from paginated vehicles
+            ->unique('id') // avoid duplicates
+            ->values();
+
         $brands = CarBrand::orderBy('name')->get();
         $orders_count = Order::max('order_number') + 1;
         $globalMargin = Setting::first()->margin ?? 0;
-        
-        if (!$client) {
-            return redirect()->route('clients.index')->with('error', 'Клиент не найден');
-        }
 
-        return view('clients.edit', compact('client', 'brands', 'orders_count', 'globalMargin', 'allOrders'));
+        return view('clients.edit', compact('client', 'brands', 'orders_count', 'globalMargin', 'allOrders', 'vehicles'));
     }
 
     // обновление клиента

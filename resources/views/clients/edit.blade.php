@@ -158,7 +158,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($client->vehicles ?? [] as $vehicle)
+                    @foreach($vehicles ?? [] as $vehicle)
                         <tr style="cursor:pointer;" >
                             <td ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vin }}</td>
                             <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
@@ -190,6 +190,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                     @endforeach
                 </tbody>
             </table>
+            <x-pagination :paginator="$vehicles" />
         @endif
     </div>
 
