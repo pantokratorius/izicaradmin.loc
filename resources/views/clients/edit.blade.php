@@ -248,8 +248,8 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                             <td ondblclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
                             <td ondblclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
                             <td ondblclick="toggleItems({{ $order->id }})">{{ $order->margin ?? $globalMargin ?? '-' }}</td>
-                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->purchase_sum, 2, ',', ' ') }} 
-                                ({{$order->purchase_sum > 0 ?  number_format( ($order->amount - $order->purchase_sum) / $order->purchase_sum * 100 , 2, ',', ' ') : 0}}%)</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->summ - $order->purchase_sum, 2, ',', ' ') }} 
+                                ({{$order->purchase_sum > 0 ?  number_format( ($order->summ - $order->purchase_sum) / $order->purchase_sum * 100 , 2, ',', ' ') : 0}}%)</td>
                                 <td ondblclick="toggleItems({{ $order->id }})"></td>
                             <td >
                                 <div style="display: flex; align-items: flex-start">
