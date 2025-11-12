@@ -657,14 +657,19 @@ window.addEventListener("pageshow", function (event) {
 //     { value: {{ $brand->id }}, text: "{{ $brand->name }}" },
 //     @endforeach
 // ];
+
+function updateResetOrdersButtonVisibility() {
+    const rows = document.querySelectorAll('#orders tbody tr');
+    const hidden = Array.from(rows).some(tr => tr.style.display === 'none');
+    document.getElementById('resetOrdersBtn').style.display = hidden ? 'inline-block' : 'none';
+}
+
 function resetOrdersFilter() {
     sessionStorage.removeItem('visibleOrders');
     document.querySelectorAll('#orders tbody tr').forEach(tr => {
         tr.style.display = '';
     });
-
-    // Hide reset button
-    document.getElementById('resetOrdersBtn').style.display = 'none';
+    updateResetOrdersButtonVisibility(); // ✅ hide button if everything is visible
 }
 
 
@@ -697,6 +702,9 @@ function openVehiclesOrders(vehicle) {
     document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
     document.getElementById('resetOrdersBtn').style.display = 'block';
   }
+
+    updateResetOrdersButtonVisibility()
+
 }
 
 
