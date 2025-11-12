@@ -177,8 +177,8 @@ public function store_ajax(Request $request)
     $query = trim($request->get('q', ''));
     $orders = explode(',', $request->get('orders', ''));
 
-    $items = OrderItem::with('order')
-        ->whereIn('order_id', $orders) // ✅ restrict to visible orders
+    $items = OrderItem::with(['order:id,order_number'])
+        ->whereIn('order_id', $orders) // ✅ restrict to visible orders 
         ->where(function ($q) use ($query) {
             $q->where('part_make', 'like', "%{$query}%")
               ->orWhere('part_number', 'like', "%{$query}%")
@@ -186,8 +186,16 @@ public function store_ajax(Request $request)
         })
         ->limit(15)
         ->get(['id', 'order_id', 'part_number', 'part_make', 'part_name']);
-
-    return response()->json($items);
+    return response()->json(
+    $items->map(fn($item) => [
+        'id' => $item->id,
+        'order_id' => $item->order_id,
+        'order_number' => $item->order->order_number ?? null,
+        'part_number' => $item->part_number,
+        'part_make' => $item->part_make,
+        'part_name' => $item->part_name,
+    ])
+);
 }
 
 

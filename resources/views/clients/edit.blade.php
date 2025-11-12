@@ -527,7 +527,7 @@ document.getElementById('orderItemSearch').addEventListener('input', function() 
                 <div style="padding:5px;border-bottom:1px solid #eee;cursor:pointer;"
                      onclick="selectOrderByItem(${item.order_id}, '${item.order_number}', '${item.part_number}', '${item.part_name}')">
                      <b>${item.part_number}</b> — ${item.part_name}
-                     <br><small>Заказ № ${item.order_id ?? '-'}</small>
+                     <br><small>Заказ № ${item.order_number ?? '-'}</small>
                 </div>
             `).join('');
             resultsContainer.style.display = 'block';
