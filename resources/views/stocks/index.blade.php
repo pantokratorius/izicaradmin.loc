@@ -45,8 +45,7 @@
 @endforeach
     </tbody>
 </table>
-
-{{ $stocks->links() }}
+<x-pagination :paginator="$stocks" />
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
