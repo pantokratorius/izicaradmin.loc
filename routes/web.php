@@ -62,11 +62,12 @@ Route::get('/vehicles/by-client/{client}', [VehicleController::class, 'getByClie
 
 Route::resource('vehicles', VehicleController::class)->except(['show']);
 Route::resource('orders', OrderController::class);
+Route::resource('orderitems', OrderItemController::class);
 Route::get('/orderitems/search', [OrderItemController::class, 'search'])
     ->name('orderitems.search');
     Route::get('/orderitems/create/{order}', [OrderItemController::class, 'create'])->name('orderitems.create');
     Route::post('/orderitems/batch-delete', [OrderItemController::class, 'batchDelete']);
-    Route::resource('orderitems', OrderItemController::class);
+    
 
 
 Route::get('/orders/{order}/copy', [OrderController::class, 'copy'])->name('orders.copy');
@@ -112,6 +113,7 @@ Route::post('/stocks/store_ajax', [StockController::class, 'store_ajax'])->name(
 
 Route::post('/orderitems/orderitem_store_ajax', [OrderItemController::class, 'store_ajax'])->name('orderitem_store_ajax');
 Route::post('/orderitem/{id}/status', [OrderItemController::class, 'updateStatus'])->name('orderitems.updateStatus');
+
 
 Route::post('/', [TempPartsController::class, 'store'])->name('temp_parts.store');
 Route::post('/{part}/move-to-stock', [TempPartsController::class, 'moveToStock'])->name('temp_parts.moveToStock');
