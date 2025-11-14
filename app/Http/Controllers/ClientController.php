@@ -31,6 +31,7 @@ public function index(Request $request)
             ->orWhere('clients.phone', 'like', "%{$search}%")
             // Vehicle fields
             ->orWhere('vehicles.vin', 'like', "%{$search}%")
+            ->orWhere('vehicles.vin2', 'like', "%{$search}%")
             ->orWhere('vehicles.brand_name', 'like', "%{$search}%")
             ->orWhere('vehicles.car_brand_id', $search)
             ->orWhere('vehicles.car_model_id', $search)
@@ -69,6 +70,7 @@ public function index(Request $request)
         'email'       => $request->email,
         'segment'     => $request->segment,
         'discount'    => $request->discount,
+        'comment'    => $request->comment,
         'created_at'     => now(),
         'updated_at'  => now(),
     ]);
@@ -95,6 +97,7 @@ public function index(Request $request)
     if ($search = $request->get('search')) {
         $vehiclesQuery->where(function ($q) use ($search) {
             $q->where('vin', 'like', "%{$search}%")
+            ->orWhere('vin2', 'like', "%{$search}%")
             ->orWhere('brand_name', 'like', "%{$search}%")
             ->orWhere('model_name', 'like', "%{$search}%")
             ->orWhere('generation_name', 'like', "%{$search}%")
@@ -148,6 +151,7 @@ public function index(Request $request)
         'email'       => $request->email,
         'segment'     => $request->segment,
         'discount'    => $request->discount,
+        'comment'    => $request->comment,
         'updated_at'  => now(),
     ]);
 

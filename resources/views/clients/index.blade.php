@@ -27,6 +27,7 @@
           <th>Email</th>
           <th>Сегмент</th>
           <th>Скидка (%)</th>
+          <th>Коммент</th>
         </tr>
       </thead>
       <tbody>
@@ -40,6 +41,7 @@
             <td>{{ $client->email }}</td>
             <td>{{ $client->segment ?? '-' }}</td>
             <td>{{ $client->discount }}</td>
+            <td>{{ $client->comment }}</td>
           </tr>
         @empty
           <tr>

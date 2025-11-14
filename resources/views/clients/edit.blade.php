@@ -85,7 +85,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
     </div>
     <div style="margin-bottom:15px;">
         <label>Телефон</label><br>
-        <input type="text" name="phone" value="{{ old('phone', $client->phone) }}" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+        <input type="text" name="phone" value="{{ old('phone', $client->phone) }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
         @error('phone') <small style="color:red">{{ $message }}</small> @enderror
     </div>
     <div style="margin-bottom:15px;">
@@ -108,6 +108,11 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
         <label>Скидка (%)</label><br>
         <input type="number" step="0.01" name="discount" value="{{ old('discount', $client->discount) }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
         @error('discount') <small style="color:red">{{ $message }}</small> @enderror
+    </div>
+      <div style="margin-bottom:15px;">
+      <label>Коммент</label><br>
+      <input type="text" name="comment" value="{{ old('comment', $client->comment) }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+      @error('comment') <small style="color:red">{{ $message }}</small> @enderror
     </div>
     <button type="submit" style="background:#14213d;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">Обновить</button>
 </form>
@@ -165,7 +170,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                 <tbody>
                     @foreach($vehicles ?? [] as $vehicle)
                         <tr style="cursor:pointer;" >
-                            <td ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vin }}</td>
+                            <td ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vin }} @if($vehicle->vin2)<br>{{$vehicle->vin2}}@endif</td>
                             <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->vehicle_type }}</td>
                             <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->brand->name ?? $vehicle->brand_name }}</td>
                             <td  ondblclick ="openVehiclesOrders({{ $vehicle }})">{{ $vehicle->model->name ?? $vehicle->model_name ?? '-'}}</td>
@@ -316,7 +321,9 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
               <input type="hidden" name="client_id" value="{{ $client->id }}">
               @php
                   $fields = [
-                      'vin'=>'VIN','vehicle_type'=>'Тип транспортного средства',
+                      'vin'=>'VIN',
+                      'vin2'=>'VIN2',
+                      'vehicle_type'=>'Тип транспортного средства',
                       'body'=>'Кузов', 
                       'registration_number'=>'Гос номер','sts'=>'СТС','pts'=>'ПТС',
                       'year_of_manufacture'=>'Год','engine_type'=>'Тип двигателя'
@@ -440,7 +447,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                 <select name="vehicle_id" id="order_vehicle_id" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
                     <option value="">-- Не указан --</option>
                     @foreach($client->vehicles ?? [] as $vehicle)
-                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand->name ?? $vehicle->brand_name ?? '' }} {{$vehicle->model->name ?? $vehicle->model_name  ?? '-'}} ({{ $vehicle->vin }})</option>
+                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand->name ?? $vehicle->brand_name ?? '' }} {{$vehicle->model->name ?? $vehicle->model_name  ?? '-'}} ({{ $vehicle->vin }}) {{$vehicle->vin2 != '' ? '(' . $vehicle->vin2 . ')' : '' }}</option>
                     @endforeach
                 </select>
             </div>

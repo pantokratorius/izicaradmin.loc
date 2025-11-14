@@ -69,6 +69,11 @@
         <input type="text" id="vin" name="vin">
     </div>
 
+    <div class="form-group">
+        <label for="vin2">VIN2</label>
+        <input type="text" id="vin2" name="vin2">
+    </div>
+
     <!-- Тип транспортного средства -->
     <div class="form-group">
         <label for="vehicle_type">Тип транспортного средства</label>

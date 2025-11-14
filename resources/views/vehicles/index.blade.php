@@ -49,7 +49,7 @@
             <td>{{ $vehicle->serie->name ?? $vehicle->serie_name ?? '-' }}</td>
             <td>{{ $vehicle->body ?? '-' }}</td>
             <td>{{ $vehicle->modification->name ??  $vehicle->modification_name ?? '-' }}</td>
-            <td>{{ $vehicle->vin ??  '-' }}</td>
+            <td>{{ $vehicle->vin ??  '-' }} @if($vehicle->vin2)<br><span style="font-size: 11px">{{$vehicle->vin2}}</span>@endif</td>
             <td>{{ $vehicle->registration_number ?? '-' }}</td>
             <td>{{ $vehicle->sts ?? '-' }}</td>
             <td>{{ $vehicle->pts ?? '-' }}</td>

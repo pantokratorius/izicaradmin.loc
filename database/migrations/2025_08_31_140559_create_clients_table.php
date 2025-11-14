@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email')->nullable(); // email
             $table->string('segment')->nullable(); // сегмент
             $table->decimal('discount', 5, 2)->default(0)->nullable(); // скидка (например, 10.50%)
-            
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

@@ -28,6 +28,7 @@ class VehicleController extends Controller
             $q->where('brand_name', 'like', "%{$search}%")
               ->orWhere('model_name', 'like', "%{$search}%")
               ->orWhere('vin', 'like', "%{$search}%")
+              ->orWhere('vin2', 'like', "%{$search}%")
               ->orWhere('generation_name', 'like', "%{$search}%")
               ->orWhere('serie_name', 'like', "%{$search}%")
               ->orWhere('modification_name', 'like', "%{$search}%")
@@ -58,6 +59,7 @@ class VehicleController extends Controller
         session(['active_tab' => 'vehicles']);
         $request->validate([
             'vin' => 'unique:vehicles|nullable',
+            'vin2' => 'unique:vehicles|nullable',
             'year_of_manufacture' => 'integer|nullable',
         ]);
 
@@ -103,6 +105,10 @@ class VehicleController extends Controller
         'vin' => [
             Rule::unique('vehicles', 'vin')->ignore($vehicle->id),
         ],
+        'vin2' => [
+            'nullable',
+            Rule::unique('vehicles', 'vin2')->ignore($vehicle->id),
+        ],
         'year_of_manufacture' => 'integer|nullable',
     ]);
 
@@ -134,6 +140,7 @@ class VehicleController extends Controller
 {
     $q = $request->get('q', '');
     $vehicles = Vehicle::where('vin', 'like', "%$q%")
+        ->orWhere('vin2', 'like', "%$q%")
         ->orWhere('brand_name', 'like', "%$q%")
         ->orWhere('model_name', 'like', "%$q%")
         ->limit(20)
@@ -142,7 +149,7 @@ class VehicleController extends Controller
     return response()->json(
         $vehicles->map(fn($v) => [
             'id' => $v->id,
-            'text' => trim(($v->brand_name ?? '') . ' ' . ($v->model_name ?? '') . ' (' . $v->vin . ')')
+            'text' => trim(($v->brand_name ?? '') . ' ' . ($v->model_name ?? '') . ' (' . $v->vin . ')' . ( $v->vin2 != '' ? ' (' . $v->vin2 . ')' : '' ))
         ])
     );
 }
@@ -160,21 +167,34 @@ class VehicleController extends Controller
 public function getByClient($clientId)
 {
     $vehicles = Vehicle::with(['brand', 'model'])
-        ->where('client_id', $clientId)
-        ->get()
-        ->map(function($vehicle) {
-            return [
-                'id' => $vehicle->id,
-                'text' => sprintf(
-                    '%s %s (%s)',
-                    $vehicle->brand->name ?? $vehicle->brand_name ?? '',
-                    $vehicle->model->name ?? $vehicle->model_name ?? '-',
-                    $vehicle->vin
-                ),
-            ];
-        });
+    ->where('client_id', $clientId)
+    ->get()
+    ->map(function($vehicle) {
+        
+        // Base text
+        $text = sprintf(
+            '%s %s (%s',
+            $vehicle->brand->name ?? $vehicle->brand_name ?? '',
+            $vehicle->model->name ?? $vehicle->model_name ?? '-',
+            $vehicle->vin ?? ''
+        );
 
-    return response()->json($vehicles);
+        // Add vin2 if not empty
+        if (!empty($vehicle->vin2)) {
+            $text .= ', ' . $vehicle->vin2;
+        }
+
+        // Close the parenthesis
+        $text .= ')';
+
+        return [
+            'id' => $vehicle->id,
+            'text' => $text,
+        ];
+    });
+
+return response()->json($vehicles);
+
 }
 
 

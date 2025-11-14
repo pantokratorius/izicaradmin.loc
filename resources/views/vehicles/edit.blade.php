@@ -102,6 +102,11 @@
         <label for="vin">VIN</label>
         <input type="text" id="vin" name="vin" value="{{ $vehicle->vin }}">
     </div>
+    <!-- VIN2 -->
+    <div class="form-group">
+        <label for="vin2">VIN2</label>
+        <input type="text" id="vin2" name="vin2" value="{{ $vehicle->vin2 }}">
+    </div>
 
     <!-- Тип транспортного средства -->
     <div class="form-group">

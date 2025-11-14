@@ -60,6 +60,13 @@
       @error('discount') <small style="color:red">{{ $message }}</small> @enderror
     </div>
 
+
+    <div style="margin-bottom:15px;">
+      <label>Коммент</label><br>
+      <input type="text" name="comment" value="{{ old('comment') }}" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+      @error('comment') <small style="color:red">{{ $message }}</small> @enderror
+    </div>
+
     <button type="submit" style="background:#14213d;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;">
       Сохранить
     </button>
