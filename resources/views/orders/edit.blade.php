@@ -166,6 +166,9 @@ button.btn:hover {
 <script>
 
 function createCustomSelect(wrapperId, optionsData, hiddenInputName) {
+
+document.querySelector(`input[name="${hiddenInput}"]`).remove()
+
     const wrapper = document.getElementById(wrapperId);
     if(!wrapper) return; // stop if wrapper not found
 

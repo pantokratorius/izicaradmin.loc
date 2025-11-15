@@ -447,7 +447,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                 <select name="vehicle_id" id="order_vehicle_id" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
                     <option value="">-- Не указан --</option>
                     @foreach($client->vehicles ?? [] as $vehicle)
-                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand->name ?? $vehicle->brand_name ?? '' }} {{$vehicle->model->name ?? $vehicle->model_name  ?? '-'}} ({{ $vehicle->vin }}) {{$vehicle->vin2 != '' ? '(' . $vehicle->vin2 . ')' : '' }}</option>
+                        <option id="vehicle_option" value="{{ $vehicle->id }}">{{ $vehicle->brand->name ?? $vehicle->brand_name ?? '' }} {{$vehicle->model->name ?? $vehicle->model_name  ?? '-'}} ({{ $vehicle->vin }}) {{$vehicle->vin2 != '' ? '(' . $vehicle->vin2 . ')' : '' }}</option>
                     @endforeach
                 </select>
             </div>
@@ -970,7 +970,9 @@ selectObjects[0].renderOptions(brands);
 
 
 // Order modal open for edit or add
-function openOrderModal(order = null) {
+function openOrderModal(order = null) {   
+
+
     const form = document.getElementById('orderForm');
     if(order) {
         document.getElementById('orderModalTitle').innerText = 'Редактировать заказ';

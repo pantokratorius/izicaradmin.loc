@@ -64,6 +64,7 @@
                 window.location.href = `/clients/${clientId}/edit`;
             });
         });
+        localStorage.setItem('active_tab', 'vehicles')
     });
 </script>
 

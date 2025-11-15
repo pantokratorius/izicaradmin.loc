@@ -45,6 +45,7 @@ class OrderController extends Controller
         });
     }
 
+    session(['return_to' => url()->previous()]);
     $orders = $query->orderBy('id', 'desc')->paginate(15);
 
     return view('orders.index', compact('orders'));
@@ -116,6 +117,8 @@ class OrderController extends Controller
         $vehicles = Vehicle::all();
         $managers = User::all();
 
+        session(['return_to' => url()->previous()]);
+
         return view('orders.edit', compact('order', 'clients', 'vehicles', 'managers'));
     }
 
@@ -125,7 +128,6 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         session(['active_tab' => 'orders']);
-
 
         $request->validate([
             'order_number' => 'required|unique:orders,order_number,' . $order->id,
@@ -139,12 +141,13 @@ class OrderController extends Controller
         ]);
 
 
+            $returnTo = session('return_to', back());
         try {
             $order->update($request->all());
-            return redirect()->route('orders.index')->with('success', 'Заказ обновлен');
+            return redirect($returnTo)->with('success', 'Заказ обновлен');
 
         } catch (\Throwable $th) {
-            return redirect()->route('orders.index')->with('error', 'Заказ не обновлен');
+            return redirect($returnTo)->with('error', 'Заказ не обновлен');
         }
 
     }
