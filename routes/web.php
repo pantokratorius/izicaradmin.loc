@@ -62,10 +62,10 @@ Route::get('/vehicles/by-client/{client}', [VehicleController::class, 'getByClie
 
 Route::resource('vehicles', VehicleController::class)->except(['show']);
 Route::resource('orders', OrderController::class);
-Route::resource('orderitems', OrderItemController::class);
 Route::get('/orderitems/search', [OrderItemController::class, 'search'])
     ->name('orderitems.search');
 Route::get('/orderitems/create/{order}', [OrderItemController::class, 'create'])->name('orderitems.create');
+Route::resource('orderitems', OrderItemController::class);
 Route::post('/orderitems/batch-delete', [OrderItemController::class, 'batchDelete']);
     
 
