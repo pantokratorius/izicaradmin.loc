@@ -129,6 +129,7 @@ Route::get('/search/store', [SearchController::class, 'store'])->name('search.st
 Route::delete('/search/clear', [SearchController::class, 'clear'])->name('search.clear');
 Route::delete('/search/destroy/{id}', [SearchController::class, 'destroy'])->name('search.destroy');
 Route::post('/search/store_ajax', [SearchController::class, 'store_ajax'])->name('search_store_ajax');
+Route::post('/search/batch-delete', [SearchController::class, 'batchDelete']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

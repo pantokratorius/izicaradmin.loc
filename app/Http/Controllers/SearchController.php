@@ -163,6 +163,19 @@ class SearchController extends Controller
     }
 
 
+        public function batchDelete(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if ($ids && is_array($ids)) {
+            Search::whereIn('id', $ids)->delete();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 400);
+    }
+
+
 
 
 }

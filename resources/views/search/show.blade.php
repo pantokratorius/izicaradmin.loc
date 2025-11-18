@@ -26,8 +26,9 @@
         </tr>
     </thead>
     <tbody>
+        @if($searches->count()) 
     @forelse($searches as $search)
-<tr class="editable-row" data-edit-url="{{ route('search.edit', $search) }}">
+<tr class="editable-row" data-edit-url="{{ route('search.edit', $search) }}" id="item-row-{{ $search->id }}">
     <td><input type="checkbox" class="item-checkbox" value="{{ $search->id }}"></td>
     <td class="edit">{{ $search->id }}</td>
     <td class="edit">{{ $search->name }}</td>
@@ -58,7 +59,7 @@
     </td>
 </tr>
         
- @empty
+        @empty
           <tr>
             <td colspan="7" style="text-align: center;">Нет данных</td>
           </tr>
@@ -68,6 +69,7 @@
             <th>{{ number_format($search->summ , 2, ',', ' ') }}</th>
             <th colspan="4"></th>
         </tr>
+        @endif
     </tbody>
 </table>
 <p>
@@ -77,14 +79,14 @@
         <option value="{{ route('search.print', $search->id) }}">Заказ 1</option>
         <option value="{{ route('search.print2', $search->id) }}">Заказ 2</option>
     </select>
-@endisset
- <div>
-                <button class="btn btn-danger" onclick="deleteSelectedItems()">🗑️ Удалить выбранные</button>
-                <button id="btn-copy-new" class="btn btn-primary" onclick="openCopyModal()">Скопировать в новый заказ</button>
-                <button id="btn-copy-existing" class="btn btn-secondary">Скопировать в существующий заказ</button>
-                <button class="btn btn-success" onclick="addToStocks()" style="background: antiquewhite">📦 Добавить на склад</button>
-
-            </div>
+    <div>
+        <button class="btn btn-danger" onclick="deleteSelectedItems()">🗑️ Удалить выбранные</button>
+        <button id="btn-copy-new" class="btn btn-primary" onclick="openCopyModal()">Скопировать в новый заказ</button>
+        <button id="btn-copy-existing" class="btn btn-secondary">Скопировать в существующий заказ</button>
+        <button class="btn btn-success" onclick="addToStocks()" style="background: antiquewhite">📦 Добавить на склад</button>
+        
+    </div>
+    @endisset
 
                 </p>
 {{ $searches->links() }}
@@ -207,8 +209,9 @@ document.querySelectorAll('.btn-delete-row').forEach(btn => {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 }
             });
-
+            
             const data = await res.json();
+            console.log(data);
             if (data.success) {
                 const row = document.getElementById(`item-row-${id}`);
                 if (row) row.remove();
@@ -240,7 +243,7 @@ function deleteSelectedItems() {
 
     if (!confirm(`Удалить выбранные позиции (${selected.length})?`)) return;
 
-    fetch(`/orderitems/batch-delete`, {
+    fetch(`/search/batch-delete`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
