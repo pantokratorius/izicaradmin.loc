@@ -15,12 +15,14 @@ class Autosputnik implements SupplierInterface
 
     public function asyncSearchBrands(Client $client, string $article): PromiseInterface
     {
-        return $client->getAsync("https://api.auto-sputnik.ru/search_result.php", [
+        return $client->getAsync("https://newapi.auto-sputnik.ru/products/getbrands", [
+
+             'headers' => [
+                'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaXppY2FyMiIsInVzZXJpZCI6Ijg4MjEyIiwiZXhwIjoxNzYzNDY0NDk0LCJpc3MiOiJhcGlhdXRvc3B1dG5payIsImF1ZCI6ImFwaWF1dG9zcHV0bmlrY2xpZW50In0.uaWqS5sORBDrv9OzRvQbFvRgaogunBWwmsZavmn5oKE',
+            ],
             'query' => [
-                'options[login]'   => 'izicar2',
-                'options[pass]'   => '123456',
-                'options[datatyp]'   => 'json',
-                'data[articul]'   => $article,
+                'displaycountproduct'   => 'false',
+                'articul'   => $article,
             ],
         ])->then(function ($response) {
 

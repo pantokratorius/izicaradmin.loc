@@ -39,7 +39,7 @@
     <div class="card" style="margin-bottom: 10px">
       <div class="card-header d-flex justify-content-between align-items-center">
     <span>Позиции</span>
-    <button class="btn" style="background: #d7d7d7" onclick="location='{{route('orderitems.create', $order->id)}}'">
+    <button class="btn" style="background: #d7d7d7" onclick="location='{{route('orderitems.createWithOrder', ['order' =>$order->id])}}'">
         ➕ Добавить позицию
     </button>
 </div>
