@@ -54,16 +54,17 @@ public function asyncSearchItems(Client $client, string $article, ?string $brand
     return $client->postAsync('https://newapi.auto-sputnik.ru/products/getproducts', [
         'headers' => [
             'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaXppY2FyMiIsInVzZXJpZCI6Ijg4MjEyIiwiZXhwIjoxNzYzNDY0NDk0LCJpc3MiOiJhcGlhdXRvc3B1dG5payIsImF1ZCI6ImFwaWF1dG9zcHV0bmlrY2xpZW50In0.uaWqS5sORBDrv9OzRvQbFvRgaogunBWwmsZavmn5oKE',
+            'Accept'        => 'application/json',
+            'Content-Type'  => 'application/json'
         ],
-        'query' => [
+        'json' => [
             'articul' => $article,
             'brand'   => $brand,
             'analogi' => true,
-            'tranzit' => true,
+            'tranzit' => false,
         ],
     ])->then(function ($response) {  
 
-        // ---- READ RESPONSE ----
         $body = $response->getBody()->getContents();
         $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
 
@@ -74,7 +75,6 @@ public function asyncSearchItems(Client $client, string $article, ?string $brand
             return [];
         }
 
-        // ---- TRANSFORM DATA INTO YOUR FORMAT ----
         return collect($json['data'])->map(function ($item) {
 
             return [
@@ -84,7 +84,7 @@ public function asyncSearchItems(Client $client, string $article, ?string $brand
                 'quantity'      => $item['quantity'] ?? null,
                 'price'         => $item['price'] ?? null,
                 'delivery'      => $item['delivery_day'] ?? null,
-                'warehouse'     =>$item['price_name'] ?? null,
+                'warehouse'     =>'test' ?? null,
             ];
 
         })->toArray();

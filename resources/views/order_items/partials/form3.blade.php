@@ -44,7 +44,6 @@
       <th>Продажа</th>
       <th>Срок</th>
       <th>Склад</th>
-      <th>Поставщик</th>
     </tr>
   </thead>
   <tbody></tbody>
