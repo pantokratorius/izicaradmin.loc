@@ -61,7 +61,7 @@ public function asyncSearchItems(Client $client, string $article, ?string $brand
             'articul' => $article,
             'brand'   => $brand,
             'analogi' => true,
-            'tranzit' => true,
+            'tranzit' => false,
         ],
     ])->then(function ($response) {  
 
