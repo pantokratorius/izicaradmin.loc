@@ -153,30 +153,31 @@
     <script>
     // === Global Number Formatter (like PHP number_format) ===
     window.numberFormat = function (value) {
-  const num = parseFloat(value);
-  if (isNaN(num)) return '-';
+      const num = parseFloat(value);
+      if (isNaN(num)) return '-';
 
-  let rounded;
+      let rounded;
 
-  if (num > 1000) {
-    const step = 50;
-    const divided = num / step;
-    const fraction = divided - Math.floor(divided);
+      if (num > 100) {
+        const step = 50;
+        const divided = num / step;
+        const fraction = divided - Math.floor(divided);
 
-    // Round down if exactly .5, otherwise normal rounding
-    rounded =
-      Math.abs(fraction - 0.5) < 1e-9
-        ? Math.floor(divided) * step
-        : Math.round(divided) * step;
-  } else {
-    rounded = num; // just format normally
-  }
+        // Round down if exactly .5, otherwise normal rounding
+        rounded =
+          // Math.abs(fraction - 0.5) < 1e-9
+          //   ? Math.floor(divided) * step
+          //   : 
+            Math.ceil(divided) * step;
+      } else {
+        rounded = num; // just format normally
+      }
 
-  return rounded
-    .toFixed(2)
-    .replace('.', ',')
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-};
+      return rounded
+        .toFixed(2)
+        .replace('.', ',')
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    };
 
  window.numberFormat2 = function (value) {
   const num = parseFloat(value);
