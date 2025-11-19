@@ -114,7 +114,6 @@ class Avtotrade implements SupplierInterface
 
         // optional debug:
         // Log::info('AUTOTRADE REQUEST: ' . json_encode($request_data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
-        Log::info('AUTOTRADE RESPONSE: ' . $raw);
 
         // Validate JSON structure
         if (empty($json['items']) || !is_array($json['items'])) {
