@@ -84,7 +84,7 @@ public function asyncSearchItems(Client $client, string $article, ?string $brand
                 'quantity'      => $item['quantity'] ?? null,
                 'price'         => $item['price'] ?? null,
                 'delivery'      => $item['delivery_day'] ?? null,
-                'warehouse'     =>'test' ?? null,
+                'warehouse'     => $item['price_name'] ?? null,
             ];
 
         })->toArray();
