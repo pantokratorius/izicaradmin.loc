@@ -10,6 +10,7 @@
             'Выдан',
             'Отменен'
     ];
+    
 @endphp
 
 @section('content')
@@ -208,7 +209,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
 
 
     <div id="orders" class="tab-content">
-        <a href="javascript:void(0)" class="btn" onclick="openOrderModal()">Добавить заказ</a>
+        <a href="javascript:void(0)" class="btn" onclick="openOrderModal(null, sessionStorage.getItem('actualVehicle'))">Добавить заказ</a>
 
 
         <div style="margin-bottom:10px;">
@@ -447,7 +448,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
                 <select name="vehicle_id" id="order_vehicle_id" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
                     <option value="">-- Не указан --</option>
                     @foreach($client->vehicles ?? [] as $vehicle)
-                        <option id="vehicle_option" value="{{ $vehicle->id }}">{{ $vehicle->brand->name ?? $vehicle->brand_name ?? '' }} {{$vehicle->model->name ?? $vehicle->model_name  ?? '-'}} ({{ $vehicle->vin }}) {{$vehicle->vin2 != '' ? '(' . $vehicle->vin2 . ')' : '' }}</option>
+                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand->name ?? $vehicle->brand_name ?? '' }} {{$vehicle->model->name ?? $vehicle->model_name  ?? '-'}} ({{ $vehicle->vin }}) {{$vehicle->vin2 != '' ? '(' . $vehicle->vin2 . ')' : '' }}</option>
                     @endforeach
                 </select>
             </div>
@@ -711,6 +712,7 @@ function openVehiclesOrders(vehicle) {
 
     // Save to sessionStorage to persist visibility
     sessionStorage.setItem('visibleOrders', JSON.stringify(visibleOrders));
+    sessionStorage.setItem('actualVehicle', JSON.stringify(vehicle.id));
 
 
     document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
@@ -970,34 +972,56 @@ selectObjects[0].renderOptions(brands);
 
 
 // Order modal open for edit or add
-function openOrderModal(order = null) {   
-
-
+function openOrderModal(order = null, vehicleId = null) {
     const form = document.getElementById('orderForm');
-    if(order) {
+
+    if (order) {
         document.getElementById('orderModalTitle').innerText = 'Редактировать заказ';
         form.action = '/orders/' + order.id;
         form.method = 'POST';
-        if(!form.querySelector('[name="_method"]')) {
+
+        if (!form.querySelector('[name="_method"]')) {
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = '_method';
             input.value = 'PUT';
             form.appendChild(input);
         }
-        for(let key in order) {
-            if(document.getElementById('order_'+key)) document.getElementById('order_'+key).value = order[key] ?? '';
+
+        // Заполняем все поля
+        for (let key in order) {
+            if (document.getElementById('order_' + key)) {
+                document.getElementById('order_' + key).value = order[key] ?? '';
+            }
         }
+
+        // Устанавливаем выбранный автомобиль
+        if (order.vehicle_id) {
+            document.getElementById('order_vehicle_id').value = order.vehicle_id;
+        }
+
     } else {
         document.getElementById('orderModalTitle').innerText = 'Добавить заказ';
         form.action = '{{ route("orders.store") }}';
         form.method = 'POST';
-        form.querySelectorAll('input').forEach(i => { if(i.type !== 'hidden' && !['order_number', 'created_at'].includes(i.name)){ 
-            i.value = '';
-        } });
+
+        form.querySelectorAll('input').forEach(i => {
+            if (i.type !== 'hidden' && !['order_number', 'created_at'].includes(i.name)) {
+                i.value = '';
+            }
+        });
+
+        // Устанавливаем автомобиль, из которого зашли
+        if (vehicleId) {
+            document.getElementById('order_vehicle_id').value = vehicleId;
+        } else {
+            document.getElementById('order_vehicle_id').selectedIndex = 0;
+        }
     }
+
     openModal('orderModal');
 }
+
 
   setTimeout(() => {
       const success = document.querySelectorAll('.successMessage');
