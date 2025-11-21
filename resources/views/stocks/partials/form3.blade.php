@@ -862,7 +862,7 @@ function addToStocks(item, row, quantity) {
     name: item.name ?? "",
     quantity,
     purchase_price: parseFloat(item.price) || 0,
-    sell_price: item.price ? (item.price * (1 + percent / 100)).toFixed(2) : 0,
+    sell_price: item.price ? (item.price * (1 + percent / 100)).toFixed(2).replace(/\s+/g, '').replace(',', '.') : 0,
     warehouse: item.warehouse ?? "",
     supplier,
   };
