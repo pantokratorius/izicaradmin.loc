@@ -603,44 +603,27 @@ document.addEventListener('change', function (e) {
 document.addEventListener("DOMContentLoaded", function () { 
     const toggleBtn = document.querySelector(".accordion-toggle");
     const content = document.querySelector(".accordion-content");
-      const visibleOrders = JSON.parse(sessionStorage.getItem('visibleOrders') || '[]');
 
-  // If session contains filter data, apply it
-  if (visibleOrders.length > 0) {
-    const rows = document.querySelectorAll('#orders tbody tr');
-    rows.forEach(tr => {
-      const orderId = tr.getAttribute('data-order-id');
-      tr.style.display = visibleOrders.includes(orderId) ? '' : 'none';
-    });
-
-    document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
-    document.getElementById('resetOrdersBtn').style.display = 'block';
-  }
+    const vehicleId = JSON.parse(sessionStorage.getItem('actualVehicle') || 'null');
+    if (vehicleId) {
+        openVehiclesOrders({ id: vehicleId }, true);  // restore filter after page reload
+    }
 
     toggleBtn.addEventListener("click", () => {
-        if (content.style.display === "none") {
-            content.style.display = "block";
-        } else {
-            content.style.display = "none";
-        }
+        content.style.display = (content.style.display === "none") ? "block" : "none";
     });
 
-    // default: vehicles, but use session value if exists
     let activeTab = localStorage.getItem('active_tab') || "{{ session('active_tab', 'vehicles') }}";
-    // Update html attribute for initial CSS rendering
     document.documentElement.setAttribute('data-active-tab', activeTab);
     activateTab(activeTab);
 
-    // add listeners
     tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            activateTab(tab.dataset.tab)
-        });
+        tab.addEventListener('click', () => activateTab(tab.dataset.tab));
     });
- 
+
     const copied = '{{ session('copied') }}' || '';
     if(copied != ''){
-        openVehiclesOrders( @json( session('orders_vehicle') ) )
+        openVehiclesOrders(@json(session('orders_vehicle')), true);
     }
 
 });
@@ -688,11 +671,11 @@ function resetOrdersFilter() {
 }
 
 
-function openVehiclesOrders(vehicle) {
-  // Switch to orders tab
-  activateTab('orders');
+function openVehiclesOrders(vehicle, skipTabSwitch = false) {
+  if (!skipTabSwitch) {
+      activateTab('orders');
+  }
 
-  // Show all orders initially
   const rows = document.querySelectorAll('#orders tbody tr');
   rows.forEach(tr => tr.style.display = '');
 
@@ -701,27 +684,22 @@ function openVehiclesOrders(vehicle) {
 
     rows.forEach(tr => {
       const rowVehicleId = tr.getAttribute('data-vehicle-id'); 
-      
       const isVisible = rowVehicleId == vehicle.id;
       tr.style.display = isVisible ? '' : 'none';
 
-      if (isVisible) {
-        visibleOrders.push(tr.getAttribute('data-order-id')); // Store order IDs for session
-      }
+      if (isVisible) visibleOrders.push(tr.getAttribute('data-order-id'));
     });
 
-    // Save to sessionStorage to persist visibility
     sessionStorage.setItem('visibleOrders', JSON.stringify(visibleOrders));
     sessionStorage.setItem('actualVehicle', JSON.stringify(vehicle.id));
-
 
     document.getElementById('resetOrdersBtn').parentNode.style.display = 'inline-block';
     document.getElementById('resetOrdersBtn').style.display = 'block';
   }
 
-    updateResetOrdersButtonVisibility()
-
+  updateResetOrdersButtonVisibility();
 }
+
 
 
 

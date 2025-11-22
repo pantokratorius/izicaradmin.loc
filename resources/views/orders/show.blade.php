@@ -20,7 +20,9 @@
     <div class="card mb-4">
         <div class="card-header">Клиент</div>
         <div class="card-body" style="margin-left: 10px">
-            <p><strong>Имя:</strong> {{ $order->client->first_name ?? $order->vehicle->client->first_name ??'—' }} {{ $order->client?->middle_name ?? $order->vehicle->client->middle_name ?? '' }} {{ $order->client?->last_name ?? $order->vehicle->client->last_name ?? '' }}</p>
+            <p><strong>Имя:</strong> 
+                    {{ $order->client->first_name ?? $order->vehicle->client->first_name ??'—' }} {{ $order->client?->middle_name ?? $order->vehicle->client->middle_name ?? '' }} {{ $order->client?->last_name ?? $order->vehicle->client->last_name ?? '' }}
+            </p>
             <p><strong>Email:</strong> {{ $order->client->email ?? $order->vehicle->client->email ?? '—' }}</p>
             <p><strong>Телефон:</strong> {{ $order->client->phone ?? $order->vehicle->client->phone ?? '—' }}</p>
         </div>
@@ -42,6 +44,7 @@
     <button class="btn" style="background: #d7d7d7" onclick="location='{{route('orderitems.createWithOrder', ['order' =>$order->id])}}'">
         ➕ Добавить позицию
     </button>
+    @if($order->client)&nbsp;&nbsp;&nbsp;<a href="{{route('clients.edit', $order->client->id)}}"> Перейти к клиенту</a>@endif 
 </div>
     </div>
         <div class="card-body p-0">

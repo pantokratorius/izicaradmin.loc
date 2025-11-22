@@ -68,8 +68,9 @@ class OrderController extends Controller
      * Store a newly created order in storage.
      */
     public function store(Request $request)
-    {
+    {      
         session(['active_tab' => 'orders']);
+        $returnTo = session('return_to', back());
 
         $request->validate([
             'order_number' => 'required|unique:orders,order_number',
@@ -85,10 +86,10 @@ class OrderController extends Controller
 
         try {
             Order::create($request->all());
-            return redirect()->route('orders.index')->with('success', 'Заказ добавлен');
+            return redirect($returnTo)->with('success', 'Заказ добавлен');
 
         } catch (\Throwable $th) {
-            return redirect()->route('orders.index')->with('error', 'Заказ не добавлен');
+            return redirect($returnTo)->with('error', 'Заказ не добавлен');
         }
 
     }
