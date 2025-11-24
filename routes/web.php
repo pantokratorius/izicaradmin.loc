@@ -32,6 +32,7 @@ Route::post('/orders/copy-to-new', [OrderController::class, 'copyToNew'])->name(
 Route::post('/orders/copy-to-existing/{order_number}', [OrderController::class, 'copyToExisting'])
      ->name('orders.copyToExisting');
 Route::post('/orders/copy-to-new2', [OrderController::class, 'copyToNew2'])->name('orders.copyToNew2');
+Route::post('/orders/copy-to-draft', [OrderController::class, 'copyToDraft'])->name('orders.copyToDraft');
 Route::post('/orders/copy-to-existing2/{order_number}', [OrderController::class, 'copyToExisting2'])
      ->name('orders.copyToExisting2');
 

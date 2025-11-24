@@ -188,8 +188,36 @@ async function populateVehicles(clientId) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    const preselectedVehicle = @json($vehicle);
+    const preselectedClient  = @json($client);
+
+
+
     setupSearch("client_search", "client_id", "client_results", "{{ route('clients.search') }}");
     setupSearch("vehicle_search", "vehicle_id", "vehicle_results", "{{ route('vehicles.search') }}");
+
+    if (preselectedClient) {
+        // Fill client hidden input
+        document.getElementById('client_id').value = preselectedClient.id;
+
+        // Fill client visible input
+        document.getElementById('client_search').value =
+            `${preselectedClient.first_name} ${preselectedClient.middle_name ?? ''} ${preselectedClient.last_name ?? ''} (${preselectedClient.phone ?? ''})`;
+
+        // Load vehicles for this client
+        populateVehicles(preselectedClient.id);
+    }
+
+    if (preselectedVehicle) {
+        // Fill vehicle hidden input
+        document.getElementById('vehicle_id').value = preselectedVehicle.id;
+
+        // Fill vehicle visible input
+        document.getElementById('vehicle_search').value =
+            `${preselectedVehicle.brand_name || ''} ${preselectedVehicle.model_name || ''} (${preselectedVehicle.plate_number || ''})`;
+    }
+
 });
 </script>
 

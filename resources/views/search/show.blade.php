@@ -81,6 +81,7 @@
     </select>
     <div>
         <button class="btn btn-danger" onclick="deleteSelectedItems()">🗑️ Удалить выбранные</button>
+        <button id="btn-copy-new" class="btn btn-info" onclick="openCopyModal('draft')">Скопировать в черновик</button>
         <button id="btn-copy-new" class="btn btn-primary" onclick="openCopyModal()">Скопировать в новый заказ</button>
         <button id="btn-copy-existing" class="btn btn-secondary">Скопировать в существующий заказ</button>
         <button class="btn btn-success" onclick="addToStocks()" style="background: antiquewhite">📦 Добавить на склад</button>
@@ -185,6 +186,11 @@
 .btn-primary {
     background: #2c7be5;
     color: #fff;
+}
+
+.btn-info {
+    background: #31d2f2;
+    color: #000;
 }
 
 .btn-secondary {
@@ -302,30 +308,31 @@ function getSelectedIds() {
 
 // Copy to new order
 
-function openCopyModal() {
-    const selectedRows = getSelectedIds(); // Ваша функция получения выделенных строк
+function openCopyModal(mode = 'new') {
+    window.copyMode = mode; // save mode globally
+
+    const selectedRows = getSelectedIds();
 
     if (!selectedRows.length) {
-        alert("Пожалуйста, выберите хотя бы одну строку для копирования.");
+        alert("Пожалуйста, выберите хотя бы одну строку.");
         return;
     }
 
-    // Reset form fields
+    // Reset fields
     document.querySelector('input[name="client_id"]').value = '';
     document.querySelector('#client-wrapper .select-search').value = '';
 
     const vehicleInput = document.querySelector('#vehicle-wrapper .select-search');
     vehicleInput.value = '';
-    vehicleInput.disabled = true; // disable until client is selected
-    document.querySelector('input[name="vehicle_id"]').value = '';
+    vehicleInput.disabled = true;
 
-    // Clear vehicle dropdown options if previously loaded
-    const vehicleOptions = document.querySelector('#vehicle-wrapper .select-options');
-    vehicleOptions.innerHTML = '';
+    document.querySelector('input[name="vehicle_id"]').value = '';
+    document.querySelector('#vehicle-wrapper .select-options').innerHTML = '';
 
     // Open modal
     document.getElementById('copySelectedModal').style.display = 'flex';
 }
+
 
   //------------------------------------------------------------
 // 🧩 Add selected items to Stocks
@@ -514,31 +521,39 @@ function loadVehiclesForClient(clientId) {
 // Event listeners for modal buttons
 document.getElementById('cancelCopy').addEventListener('click', closeCopyModal);
 document.getElementById('confirmCopy').addEventListener('click', () => {
-    // Collect data and send POST
+
     const clientId = document.querySelector('input[name="client_id"]').value;
     const vehicleId = document.querySelector('input[name="vehicle_id"]').value;
+    const selectedRows = getSelectedIds();
 
-    const selectedRows = getSelectedIds(); // Your method to retrieve selected rows
+    // choose URL depending on mode
+    const url = (window.copyMode === 'draft')
+        ? '/orders/copy-to-draft'
+        : '/orders/copy-to-new2';
 
-    fetch('/orders/copy-to-new2', {
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
         },
-        body: JSON.stringify({ client_id: clientId, vehicle_id: vehicleId, rows: selectedRows })
+        body: JSON.stringify({
+            client_id: clientId,
+            vehicle_id: vehicleId,
+            rows: selectedRows
+        })
     })
-    .then(response => response.json())
+    .then(r => r.json())
     .then(data => {
-       if(data.redirect.length){
-            alert("Строки скопированы успешно!");
+        if (data.redirect) {
+            alert("Скопировано успешно!");
             closeCopyModal();
-            window.location = data.redirect
-       }
-        // Optionally reload or update page...
+            window.location = data.redirect;
+        }
     })
-    .catch(e => console.error(e));
+    .catch(console.error);
 });
+
 
 
 // Copy to existing order

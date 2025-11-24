@@ -112,6 +112,9 @@
         <li>
           <a href="{{ route('brand-groups.index') }}" target="_blank"><img style="width: 18px; height: 16px; color: #fff" src="{{asset('storage/svg/brands.svg') }}" target="_blank" /> Бренды</a>  
         </li>
+        {{-- <li>
+          <a href="{{ route('drafts.index') }}" target="_blank"><img style="width: 18px; height: 16px; color: #fff" src="{{asset('storage/svg/brands.svg') }}" target="_blank" /> Черновики</a>  
+        </li> --}}
         <li>Проценка</li>
         <li>Черновики</li>
         <li>Деньги</li>

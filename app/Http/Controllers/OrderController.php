@@ -55,13 +55,26 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new order.
      */
-    public function create()
+    public function create(Request $request)
     {
+
+        $vehicleId = $request->input('vehicle');
+
+        $vehicle = null;
+        $client = null;
+
+        if ($vehicleId) {
+            $vehicle = Vehicle::with('client')->find($vehicleId);
+            if ($vehicle) {
+                $client = $vehicle->client;
+            }
+        }
+
         $clients = Client::all();
         $vehicles = Vehicle::all();
         $managers = User::all(); // or filter by role if you have roles
         $orders_count = Order::max('order_number') + 1;
-        return view('orders.create', compact('clients', 'vehicles', 'managers', 'orders_count'));
+        return view('orders.create', compact('clients', 'vehicles', 'managers', 'orders_count', 'vehicle', 'client'));
     }
 
     /**
@@ -303,6 +316,47 @@ public function copyToNew2(Request $request)
         'order_number' => $orders_count,
         'client_id' => $clientId,
         'status' => 1,
+    ];
+    if($vehicleId){
+        $data['vehicle_id'] = $vehicleId;
+    }
+
+    $order = Order::create($data);
+
+    $rows = $request->input('rows', []); // array of search IDs
+
+    Search::whereIn('id', $rows)->get()->each(function ($search) use ($order) {
+        // Convert search record to array (you can filter fields if needed)
+        $data = $search->toArray();
+
+        // Optionally remove 'id' or any unwanted fields
+        unset($data['id']);
+
+        // Create new item under order->items()
+        $order->items()->create($data);
+    });
+
+    return response()->json([
+        'redirect' => route('orders.show', $order->id),
+    ]);
+}
+
+public function copyToDraft(Request $request)
+{
+    $items = $request->input('rows', []);
+    $clientId = $request->input('client_id');
+    $vehicleId = $request->input('vehicle_id');
+
+    if (!count($items) || !$clientId ) {
+        return response()->json(['error' => 'Missing data'], 422);
+    }
+
+    $orders_count = Order::max('order_number') + 1;
+
+    $data = [
+        'order_number' => $orders_count,
+        'client_id' => $clientId,
+        'status' => 0,
     ];
     if($vehicleId){
         $data['vehicle_id'] = $vehicleId;

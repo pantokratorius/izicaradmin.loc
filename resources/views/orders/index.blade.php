@@ -4,7 +4,8 @@
 
 @php
     $status = [
-       1 => 'Новый',
+             'Черновик',
+             'Новый',
             'В работе',
             'Пришел',
             'Выдан',
@@ -21,7 +22,7 @@
              placeholder="Поиск по наименованию и номеру телефона"
              value="{{ request('search') }}">
     </form>
-    <a href="{{ route('orders.create') }}" class="btn btn-add">+ Добавить</a>
+    <a href="{{ route('orders.create', ['vehicle' => request('search_by_vehicle')]) }}" class="btn btn-add">+ Добавить</a>
   </div>
 </div>
 
