@@ -384,26 +384,26 @@ public function copyToDraft(Request $request)
 
 
     public function copyToExisting2(Request $request, $order_number)
-{
-    $rowIds = $request->input('ids', []); // get IDs from request
+    {
+        $rowIds = $request->input('ids', []); // get IDs from request
 
-    if (empty($rowIds)) {
-        return response()->json(['error' => 'Ничего не выбрано'], 400);
+        if (empty($rowIds)) {
+            return response()->json(['error' => 'Ничего не выбрано'], 400);
+        }
+
+        $order = Order::where('order_number', $order_number)->firstOrFail();
+
+        // get search rows by id
+        $searchItems = Search::whereIn('id', $rowIds)->get();
+
+        foreach ($searchItems as $search) {
+            $data = $search->toArray();
+            unset($data['id']); // remove original ID if necessary
+            $order->items()->create($data); // creates linked order_item
+        }
+
+        return response()->json(['success' => true]);
     }
-
-    $order = Order::where('order_number', $order_number)->firstOrFail();
-
-    // get search rows by id
-    $searchItems = Search::whereIn('id', $rowIds)->get();
-
-    foreach ($searchItems as $search) {
-        $data = $search->toArray();
-        unset($data['id']); // remove original ID if necessary
-        $order->items()->create($data); // creates linked order_item
-    }
-
-    return response()->json(['success' => true]);
-}
 
 
 }

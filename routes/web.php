@@ -6,6 +6,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DraftOrderController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\OrderItemController;
@@ -69,7 +70,11 @@ Route::get('/orderitems/create/order/{order}', [OrderItemController::class, 'cre
 Route::resource('orderitems', OrderItemController::class);
 Route::post('/orderitems/batch-delete', [OrderItemController::class, 'batchDelete']);
     
-
+Route::prefix('draft-orders')->name('draft-orders.')->group(function () {
+    Route::get('/', [DraftOrderController::class, 'index'])->name('index');
+    Route::get('/{draftOrder}', [DraftOrderController::class, 'show'])->name('show');
+    Route::get('/create', [DraftOrderController::class, 'create'])->name('create');
+});
 
 Route::get('/orders/{order}/copy', [OrderController::class, 'copy'])->name('orders.copy');
 
