@@ -5,11 +5,11 @@
 @section('content')
 <h1>Редактировать заказ</h1>
 
-<form id="orderForm" action="{{ route('orders.update', $order->id) }}" method="POST">
+<form id="orderForm" action="{{ route('draft-orders.update', $draftOrder->id) }}" method="POST">
     @csrf
     @method('PUT')
 
-    <input type="hidden" name="client_id" value="{{ $order->client_id }}">
+    <input type="hidden" name="client_id" value="{{ $draftOrder->client_id }}">
 
 
     <!-- Клиент -->
@@ -17,7 +17,7 @@
         <label>Клиент</label>
         <div class="custom-select" id="client-wrapper">
             <input type="text" placeholder="Выберите клиента..." class="select-search" 
-                   value="{{ $order->client->first_name ?? '' }} {{ $order->client->middle_name ?? '' }} {{ $order->client->last_name ?? '' }} {{ $order->client->phone ?? '' }}">
+                   value="{{ $draftOrder->client->first_name ?? '' }} {{ $draftOrder->client->middle_name ?? '' }} {{ $draftOrder->client->last_name ?? '' }} {{ $draftOrder->client->phone ?? '' }}">
             <ul class="select-options" style="display:none;"></ul>
         </div>
     </div>
@@ -27,8 +27,8 @@
         <label>Автомобиль</label>
         <div class="custom-select" id="vehicle-wrapper">
             <input type="text" placeholder="Выберите автомобиль..." class="select-search" 
-                   value="{{ $order->vehicle->brand->name ?? $order->vehicle->brand_name ?? ''}} {{ $order->vehicle->model->name ?? $order->vehicle->model_name ?? '' }} {{ $order->vehicle->vin ?? ''}}"
-                   {{ $order->vehicle_id ? '' : 'disabled' }}>
+                   value="{{ $draftOrder->vehicle->brand->name ?? $draftOrder->vehicle->brand_name ?? ''}} {{ $draftOrder->vehicle->model->name ?? $draftOrder->vehicle->model_name ?? '' }} {{ $draftOrder->vehicle->vin ?? ''}}"
+                   {{ $draftOrder->vehicle_id ? '' : 'disabled' }}>
             <ul class="select-options" style="display:none;"></ul>
         </div>
     </div>
@@ -37,28 +37,28 @@
     <div class="form-group">
         <label for="order_number">№ заказа</label>
         <input type="text" id="order_number" name="order_number" 
-               value="{{ old('order_number', $order->order_number) }}">
+               value="{{ old('order_number', $draftOrder->order_number) }}">
     </div>
 
     <!-- Дата создания -->
     <div class="form-group">
         <label for="created_at">Дата создания</label>
         <input type="date" id="created_at" name="created_at" 
-               value="{{ old('created_at', $order->created_at?->format('Y-m-d')) }}">
+               value="{{ old('created_at', $draftOrder->created_at->format('Y-m-d')) }}">
     </div>
 
     <!-- Пробег -->
     <div class="form-group">
         <label for="mileage">Пробег</label>
         <input type="text" id="mileage" name="mileage" 
-               value="{{ old('mileage', $order->mileage) }}">
+               value="{{ old('mileage', $draftOrder->mileage) }}">
     </div>
 
     <!-- Предоплата -->
     <div class="form-group">
         <label for="prepayment">Предоплата</label>
         <input type="text" id="prepayment" name="prepayment" 
-               value="{{ old('prepayment', $order->prepayment) }}">
+               value="{{ old('prepayment', $draftOrder->prepayment) }}">
     </div>
 
 
@@ -70,7 +70,7 @@
             <option value="">-- Не указан --</option>
             @foreach($managers as $manager)
                 <option value="{{ $manager->id }}" 
-                        {{ $order->manager_id == $manager->id ? 'selected' : '' }}>
+                        {{ $draftOrder->manager_id == $manager->id ? 'selected' : '' }}>
                     {{ $manager->name }}
                 </option>
             @endforeach
@@ -82,11 +82,12 @@
     <div class="form-group">
         <label for="status">Статус заказа</label>
         <select id="status" name="status">
-            <option value="1" {{ old('status', $order->status) === 1 ? 'selected' : '' }}>Новый</option>
-            <option value="2" {{ old('status', $order->status) === 2 ? 'selected' : '' }}>В работе</option>
-            <option value="3" {{ old('status', $order->status) === 3 ? 'selected' : '' }}>Пришел</option>
-            <option value="4" {{ old('status', $order->status) === 4 ? 'selected' : '' }}>Выдан</option>
-            <option value="5" {{ old('status', $order->status) === 5 ? 'selected' : '' }}>Отменен</option>
+            <option value="0" {{ old('status', $draftOrder->status) === 0 ? 'selected' : '' }}>Черновик</option>
+            <option value="1" {{ old('status', $draftOrder->status) === 1 ? 'selected' : '' }}>Новый</option>
+            <option value="2" {{ old('status', $draftOrder->status) === 2 ? 'selected' : '' }}>В работе</option>
+            <option value="3" {{ old('status', $draftOrder->status) === 3 ? 'selected' : '' }}>Пришел</option>
+            <option value="4" {{ old('status', $draftOrder->status) === 4 ? 'selected' : '' }}>Выдан</option>
+            <option value="5" {{ old('status', $draftOrder->status) === 5 ? 'selected' : '' }}>Отменен</option>
         </select>
     </div>
     
@@ -94,14 +95,14 @@
     <div class="form-group">
         <label for="margin">Наценка %</label>
         <input type="text" id="margin" name="margin" 
-               value="{{ old('margin', $order->margin) }}">
+               value="{{ old('margin', $draftOrder->margin) }}">
     </div>
 
     <!-- Комментарий -->
     <div class="form-group">
         <label for="comment">Комментарий</label>
         <input type="text" id="comment" name="comment" 
-               value="{{ old('comment', $order->comment) }}">
+               value="{{ old('comment', $draftOrder->comment) }}">
     </div>
 
     <button type="submit" class="btn">Сохранить</button>

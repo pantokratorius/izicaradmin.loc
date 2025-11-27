@@ -3,10 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DraftOrder extends Model
 {
+
+    use HasFactory;
+
+        protected $fillable = [
+        'order_number',
+        'amount',
+        'created_at',
+        'vehicle_id',
+        'client_id',
+        'manager_id',
+        'mileage',
+        'prepayment',
+        'status',
+        'margin',
+        'comment',
+    ];
+
     protected $table = 'orders';
 
     protected static function booted()

@@ -430,7 +430,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
             <input type="hidden" name="client_id" value="{{ $client->id }}">
             <div style="margin-bottom:10px;">
                 <label>№ заказа</label>
-                <input type="text" name="order_number" value="{{$orders_count}}" id="order_order_number" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
+                <input type="text" name="order_number" value="{{$orders_count}}" id="order_number" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;">
             </div>
             <div style="margin-bottom:10px;">
                 <label>Дата создания</label>

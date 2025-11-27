@@ -73,8 +73,15 @@ Route::post('/orderitems/batch-delete', [OrderItemController::class, 'batchDelet
 Route::prefix('draft-orders')->name('draft-orders.')->group(function () {
     Route::get('/', [DraftOrderController::class, 'index'])->name('index');
     Route::get('/{draftOrder}', [DraftOrderController::class, 'show'])->name('show');
+    Route::get('/{draftOrder}/edit', [DraftOrderController::class, 'edit'])->name('edit');
     Route::get('/create', [DraftOrderController::class, 'create'])->name('create');
-});
+    Route::put('/update/{draftOrder}', [DraftOrderController::class, 'update'])->name('update');
+    Route::get('/destroy/{draftOrder}', [DraftOrderController::class, 'destroy'])->name('destroy');
+    Route::get('/{draftOrder}/print', [DraftOrderController::class, 'print'])
+    ->name('print');
+    Route::get('/{draftOrder}/print2', [DraftOrderController::class, 'print2'])
+    ->name('print2');
+}); 
 
 Route::get('/orders/{order}/copy', [OrderController::class, 'copy'])->name('orders.copy');
 
