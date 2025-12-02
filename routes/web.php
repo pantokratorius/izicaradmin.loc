@@ -67,9 +67,10 @@ Route::resource('orders', OrderController::class);
 Route::get('/orderitems/search', [OrderItemController::class, 'search'])
     ->name('orderitems.search');
 Route::get('/orderitems/create/order/{order}', [OrderItemController::class, 'create'])->name('orderitems.createWithOrder');
+Route::get('/orderitems/create/draftorder/{draftOrder}', [OrderItemController::class, 'create_draft_order'])->name('orderitems.createWithDraftOrder');
 Route::resource('orderitems', OrderItemController::class);
 Route::post('/orderitems/batch-delete', [OrderItemController::class, 'batchDelete']);
-    
+  
 Route::prefix('draft-orders')->name('draft-orders.')->group(function () {
     Route::get('/', [DraftOrderController::class, 'index'])->name('index');
     Route::get('/{draftOrder}', [DraftOrderController::class, 'show'])->name('show');
@@ -147,6 +148,7 @@ Route::post('/search/batch-delete', [SearchController::class, 'batchDelete']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
 });
 
 require __DIR__.'/auth.php';

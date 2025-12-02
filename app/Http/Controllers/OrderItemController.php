@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BrandGroup;
+use App\Models\DraftOrder;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Setting;
@@ -12,20 +13,30 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderItemController extends Controller
 {
+    
     public function index()
-    {
+    {  
         $items = OrderItem::with('order')->paginate(20);
         return view('order_items.index', compact('items'));
     }   
-
-    public function create(Order $order)
-    {
-        $suppliers = array_keys(array_filter(Setting::first()->suppliers ?? []));
-        $brandGroups = BrandGroup::all();
-        $settings = Setting::first();    
-        return view('order_items.create', compact('settings', 'brandGroups', 'order', 'suppliers'));
-    }
-
+    
+        public function create(Order $order)
+        {  
+            $suppliers = array_keys(array_filter(Setting::first()->suppliers ?? []));
+            $brandGroups = BrandGroup::all();
+            $settings = Setting::first();    
+            return view('order_items.create', compact('settings', 'brandGroups', 'order', 'suppliers'));
+        }
+    
+        public function create_draft_order(DraftOrder $draftOrder)
+        {   
+            $suppliers = array_keys(array_filter(Setting::first()->suppliers ?? []));
+            $brandGroups = BrandGroup::all();
+            $settings = Setting::first();   
+            $draft = 1; 
+            return view('order_items.create', compact('settings', 'brandGroups', 'draftOrder', 'suppliers', 'draft'));
+        }
+    
         public function store(Request $request)
         {
             $data = $request->validate([

@@ -1,5 +1,5 @@
 
-<input type="hidden" name="order_id" id="order_id" value={{$order->id}}>
+<input type="hidden" name="order_id" id="order_id" value={{isset($draft) ? $draftOrder->id : $order->id}}>
 <input type="hidden" name="item_id" id="item_id">
 
 

@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 
     class DraftOrderController extends Controller
     {
+
+       
+
         public function index()
         {
             $orders = DraftOrder::with(['client', 'vehicle', 'manager'])
@@ -47,7 +50,6 @@ use Illuminate\Http\Request;
 
         public function show(DraftOrder $draftOrder)
         {
-
             $globalMargin = Setting::first()->margin ?? 0;
             $draftOrder->load(['client', 'vehicle', 'manager']);
             $clients = Client::all();

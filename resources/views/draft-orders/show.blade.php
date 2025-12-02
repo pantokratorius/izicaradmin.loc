@@ -42,7 +42,7 @@
     <div class="card" style="margin-bottom: 10px">
       <div class="card-header d-flex justify-content-between align-items-center">
     <span>Позиции</span>
-    <button class="btn" style="background: #d7d7d7" onclick="location='{{route('orderitems.createWithOrder', ['order' =>$draftOrder->id])}}'">
+    <button class="btn" style="background: #d7d7d7" onclick="location='{{route('orderitems.createWithDraftOrder', ['draftOrder' =>$draftOrder])}}'">
         ➕ Добавить позицию
     </button>
     @if($draftOrder->client)&nbsp;&nbsp;&nbsp;<a href="{{route('clients.edit', $draftOrder->client->id)}}"> Перейти к клиенту</a>@endif 
