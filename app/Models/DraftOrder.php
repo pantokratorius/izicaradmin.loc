@@ -30,7 +30,8 @@ class DraftOrder extends Model
     protected static function booted()
     {
         static::addGlobalScope('onlyDrafts', function (Builder $builder) {
-            $builder->where('status', 0);
+            $builder->where('status', 0)
+            ->orderBy('status', 'desc');
         });
     }
 

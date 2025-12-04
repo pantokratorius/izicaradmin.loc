@@ -131,6 +131,7 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
     <div class="tabs">
         <div class="tab" data-tab="vehicles">Автомобили</div>
         <div class="tab" data-tab="orders">Заказы</div>
+        <div class="tab" data-tab="draft-orders">Черновики</div>
     </div>
 
 
@@ -311,6 +312,114 @@ html[data-active-tab="orders"] .tab[data-tab="orders"] {
             </table>
         @endif
     </div>
+
+
+    <div id="draft-orders" class="tab-content">
+        <a href="javascript:void(0)" class="btn" onclick="openOrderModal(null, sessionStorage.getItem('actualVehicle'))">Добавить заказ</a>
+
+
+        <div style="margin-bottom:10px;">
+                <label>Поиск деталей</label>
+                <input type="text" id="orderItemSearch" placeholder="Введите номер или название детали"
+                    style="width:250px;padding:8px;border:1px solid #ccc;border-radius:4px; margin-left: 5px">
+                <div id="orderItemResults" style="border:1px solid #ddd;max-height:150px;overflow-y:auto;margin-top:5px;display:none;"></div>
+            </div>
+
+
+        <div style="margin-bottom: 10px;">
+    <button id="resetOrdersBtn" type="button" onclick="resetOrdersFilter()" style="display:none;">
+        Показать все заказы
+    </button>
+</div>  
+        @if($allDraftOrders->isEmpty())
+            <p>У клиента нет заказов.</p>
+        @else
+
+            <table id="orders_table">
+                <thead>
+                    <tr>
+                        <th>№ заказа</th>
+                        <th>Закупка</th>
+                        <th>Продажа</th>
+                        <th>Предоплата</th>
+                        <th>Остаток</th>
+                        <th>Статус</th>
+                        <th>Дата создания</th>
+                        <th>Автомобиль</th>
+                        <th>Менеджер</th>
+                        <th>Пробег</th>
+                        <th>Наценка %</th>
+                        <th>Прибыль</th>
+                        <th>Коммент</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    @foreach($allDraftOrders ?? [] as $order)
+                        <tr style="cursor:pointer; " id="toggle-btn-{{ $order->id }}" data-vehicle-id="{{ $order->vehicle_id }}" data-order-id="{{ $order->id }}" class="order">
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->order_number }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->purchase_sum, 2, ',', ' ') }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->amount, 2, ',', ' ')}}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->prepayment, 2, ',', ' ') ?? '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->amount - $order->prepayment, 2, ',', ' ') ?? '-' }}</td>
+                            <td>
+                                <select class="status_select"  data-id="{{ $order->id }}" style="padding: 3px 0">
+                                    @foreach ($status as $key => $st)
+                                        <option value="{{$key}}" {{ $order->status == $key ? 'selected' : '' }}>{{$st}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->created_at  ?  $order->created_at->format('d.m.Y') : '' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->vehicle ? ($order->vehicle->brand->name ?? $order->vehicle->brand_name).' '.($order->vehicle->model->name ?? $order->vehicle->model_name) : '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->manager ? $order->manager->name : '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->mileage ?? '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ $order->margin ?? $globalMargin ?? '-' }}</td>
+                            <td ondblclick="toggleItems({{ $order->id }})">{{ number_format($order->summ - $order->purchase_sum, 2, ',', ' ') }} 
+                                ({{$order->purchase_sum > 0 ?  number_format( ($order->summ - $order->purchase_sum) / $order->purchase_sum * 100 , 2, ',', ' ') : 0}}%)</td>
+                                <td ondblclick="toggleItems({{ $order->id }})"></td>
+                            <td >
+                                <div style="display: flex; align-items: flex-start">
+                      
+                  @if(!$allOrders->isEmpty())
+                  <a href="{{ route('orders.copy', $order->id) }}" 
+                        class="btn btn-secondary"
+                        onclick="return confirm('Скопировать этот заказ?')">
+                        📄
+                    </a>
+
+                    <button  onclick="openOrderModal({{ $order }})"
+
+                            style="btn btn-sm btn-warning; margin: 0 5px; cursor: pointer">
+                        ✏
+                    </button>
+                  @endif
+            <form
+                  action="{{ route('orders.destroy', $order->id) }}"
+                  method="POST" style="">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="if(!confirm('Удалить заказ?')) return false" style="btn btn-sm btn-danger; cursor: pointer">🗑</button>
+                </form>
+            </div></td>
+                <td>
+                <select onchange="openPrint(this, {{ $order->id }})" class="print-select">
+                    <option value="">🖨️ Печать...</option>
+                    <option value="{{ route('orders.print', $order->id) }}">Заказ 1</option>
+                    <option value="{{ route('orders.print2', $order->id) }}">Заказ 2</option>
+                </select>
+            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+    </div>
+
+
+
+
 </div>
 
 <!-- Vehicle Modal -->

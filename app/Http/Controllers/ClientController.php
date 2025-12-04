@@ -126,17 +126,25 @@ public function index(Request $request)
     $vehicles = $vehiclesQuery->paginate(10)->withQueryString(); // keeps ?search=... in pagination links
 
     // Merge all orders for direct + vehicle orders
-    $allOrders = $client->orders
-        ->merge($vehicles->pluck('orders')->flatten())
+    $allOrders = $client->orders->where('status', '>', 0)
+        ->merge($vehicles->pluck('orders')->flatten()->where('status', '>', 0))
         ->unique('id')
         ->sortByDesc('created_at')
         ->values();
+
+    $allDraftOrders = $client->draftOrders->where('status',  0)
+        ->merge($vehicles->pluck('orders')->flatten()->where('status',  0))
+        ->unique('id')
+        ->sortByDesc('created_at')
+        ->values();
+
+
 
     $brands = CarBrand::orderBy('name')->get();
     $orders_count = Order::max('order_number') + 1;
     $globalMargin = Setting::first()->margin ?? 0;
 
-    return view('clients.edit', compact('client', 'brands', 'orders_count', 'globalMargin', 'allOrders', 'vehicles'));
+    return view('clients.edit', compact('client', 'brands', 'orders_count', 'globalMargin', 'allOrders', 'allDraftOrders', 'vehicles'));
 }
 
 

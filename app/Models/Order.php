@@ -31,7 +31,8 @@ class Order extends Model
     protected static function booted()
     {
         static::addGlobalScope('nonDraft', function (Builder $builder) {
-            $builder->where('status', '>', 0);
+            $builder->where('status', '>', 0)
+                ->orderBy('status', 'desc');
         });
     }
 
