@@ -17,6 +17,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TempPartsController;
+use App\Http\Controllers\TransferController;
 use App\Models\TempParts;
 
 Route::get('/', function () {
@@ -28,6 +29,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::redirect('/dashboard', '/clients');
 Route::middleware('auth')->group(function () {
+
+Route::middleware('admin')->prefix('transfer')->name('transfer.')->group(function () {
+    Route::get('/', [TransferController::class, 'index'])->name('index');
+    Route::post('/', [TransferController::class, 'store'])->name('store');
+    Route::get('/attachments/{attachment}', [TransferController::class, 'download'])->name('download');
+    Route::delete('/{entry}', [TransferController::class, 'destroy'])->name('destroy');
+});
 
 Route::post('/orders/copy-to-new', [OrderController::class, 'copyToNew'])->name('orders.copyToNew');
 Route::post('/orders/copy-to-existing/{order_number}', [OrderController::class, 'copyToExisting'])

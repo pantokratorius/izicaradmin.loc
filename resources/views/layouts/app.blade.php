@@ -115,6 +115,11 @@
         <li>
           <a href="{{ route('draft-orders.index') }}" ><img style="width: 18px; height: 16px; color: #fff" src="{{asset('storage/svg/brands.svg') }}" target="_blank" /> Черновики</a>  
         </li>
+        @if(Auth::user()?->is_admin)
+        <li>
+          <a href="{{ route('transfer.index') }}">↗ Передача</a>
+        </li>
+        @endif
         <li>Проценка</li>
         <li>Черновики</li>
         <li>Деньги</li>
@@ -195,5 +200,4 @@
   </script>
 </body>
 </html>
-
 
