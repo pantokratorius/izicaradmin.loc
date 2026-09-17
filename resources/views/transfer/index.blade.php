@@ -151,11 +151,7 @@
 
   <div class="transfer-pages">{{ $entries->links() }}</div>
 </div>
-<style>
-  .sidebar {
-    display: none;
-  }
-</style>
+
 <script>
 document.addEventListener('click', async function (e) {
     const button = e.target.closest('[data-copy]');
