@@ -34,6 +34,7 @@ Route::middleware('admin')->prefix('transfer')->name('transfer.')->group(functio
     Route::get('/', [TransferController::class, 'index'])->name('index');
     Route::post('/', [TransferController::class, 'store'])->name('store');
     Route::get('/attachments/{attachment}', [TransferController::class, 'download'])->name('download');
+    Route::delete('/clear/all', [TransferController::class, 'destroyAll'])->name('destroyAll');
     Route::delete('/{entry}', [TransferController::class, 'destroy'])->name('destroy');
 });
 

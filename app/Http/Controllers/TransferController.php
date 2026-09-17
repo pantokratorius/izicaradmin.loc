@@ -132,4 +132,17 @@ class TransferController extends Controller
             default => (int) ceil($number / 1024),
         };
     }
+
+    public function destroyAll(): RedirectResponse
+    {
+        $paths = TransferAttachment::query()->pluck('path')->all();
+
+        DB::transaction(function () {
+            TransferEntry::query()->delete();
+        });
+
+        DeleteTransferFiles::dispatch($paths);
+
+        return to_route('transfer.index')->with('success', 'Все записи удалены');
+    }
 }

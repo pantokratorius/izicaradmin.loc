@@ -34,6 +34,19 @@
   .download-link { flex:none; color:#2563eb; text-decoration:none; font-size:13px; font-weight:600; }
   .empty-feed { text-align:center; color:#7b8494; padding:35px 15px; }
   .transfer-pages nav { margin-top:18px; }
+  .delete-all-button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 15px;
+  background: #dc2626;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.delete-all-button:hover {
+  background: #b91c1c;
+}
   @media (max-width: 700px) {
     .sidebar { display:none; }
     .main { margin-left:0; padding:12px; }
@@ -49,10 +62,18 @@
 <div class="transfer-wrap">
   <div class="transfer-title">
     <div>
-      <h1>Передача</h1>
-      <p>Тексты и файлы для быстрого доступа с другого устройства</p>
+        <h1>Передача</h1>
+        <p>Тексты и файлы для быстрого доступа с другого устройства</p>
     </div>
-  </div>
+
+    @if($entries->total() > 0)
+        <form method="POST" action="{{ route('transfer.destroyAll') }}" onsubmit="return confirm('Удалить все записи и все файлы? Это действие нельзя отменить.')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="delete-all-button">Очистить всё</button>
+        </form>
+    @endif
+</div>
 
   <form class="transfer-card transfer-compose" method="POST" action="{{ route('transfer.store') }}" enctype="multipart/form-data">
     @csrf
@@ -130,20 +151,58 @@
 
   <div class="transfer-pages">{{ $entries->links() }}</div>
 </div>
-
+<style>
+  .sidebar {
+    display: none;
+  }
+</style>
 <script>
-  document.querySelectorAll('[data-copy]').forEach((button) => {
-    button.addEventListener('click', async () => {
-      const body = document.getElementById(`entry-body-${button.dataset.copy}`);
-      try {
-        await navigator.clipboard.writeText(body.innerText);
-        const label = button.textContent;
+document.addEventListener('click', async function (e) {
+    const button = e.target.closest('[data-copy]');
+    if (!button) return;
+
+    const body = document.getElementById(`entry-body-${button.dataset.copy}`);
+    if (!body) return;
+
+    const text = body.innerText || body.textContent || '';
+
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+        } else {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            textarea.style.top = '0';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+
+            const ok = document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            if (!ok) {
+                throw new Error('Copy command failed');
+            }
+        }
+
+        const oldText = button.textContent;
         button.textContent = 'Скопировано';
-        setTimeout(() => button.textContent = label, 1400);
-      } catch (error) {
-        window.getSelection().selectAllChildren(body);
-      }
-    });
-  });
+        setTimeout(() => {
+            button.textContent = oldText;
+        }, 1400);
+    } catch (error) {
+        console.error('Copy failed:', error);
+
+        const range = document.createRange();
+        range.selectNodeContents(body);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        alert('Не удалось скопировать автоматически. Текст выделен — нажмите Ctrl+C.');
+    }
+});
 </script>
 @endsection
