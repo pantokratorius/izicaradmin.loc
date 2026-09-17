@@ -56,12 +56,28 @@
 
   <form class="transfer-card transfer-compose" method="POST" action="{{ route('transfer.store') }}" enctype="multipart/form-data">
     @csrf
+    @if($errors->any())
+      <div role="alert" style="margin-bottom:12px; padding:10px 12px; border:1px solid #f3b7bd; border-radius:8px; background:#fff1f2; color:#9f1239;">
+        <strong>Не удалось сохранить запись:</strong>
+        <ul style="margin:6px 0 0; padding-left:20px;">
+          @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
     <textarea name="body" placeholder="Вставьте текст, ссылку или заметку…">{{ old('body') }}</textarea>
     <div class="transfer-actions">
       <input class="file-picker" type="file" name="files[]" multiple>
       <button class="send-button" type="submit">Отправить</button>
     </div>
-    <p class="upload-note">До 10 файлов, не более 50 МБ каждый. Можно загружать документы, архивы, изображения и другие обычные файлы.</p>
+    <p class="upload-note">
+      До 10 файлов, не более {{ $maximumFileSizeMb }} МБ каждый.
+      @if($maximumRequestSizeMb > 0)
+        Общий лимит одного запроса на сервере — {{ $maximumRequestSizeMb }} МБ.
+      @endif
+      Можно загружать документы, архивы, изображения и другие обычные файлы.
+    </p>
   </form>
 
   <form class="transfer-search" method="GET" action="{{ route('transfer.index') }}">
