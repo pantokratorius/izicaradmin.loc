@@ -43,6 +43,21 @@
   font-weight: 700;
   cursor: pointer;
 }
+.file-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #eef2f7;
+  color: #14213d;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.file-button input {
+  display: none;
+}
 
 .delete-all-button:hover {
   background: #b91c1c;
@@ -89,7 +104,15 @@
     @endif
     <textarea name="body" placeholder="Вставьте текст, ссылку или заметку…">{{ old('body') }}</textarea>
     <div class="transfer-actions">
-      <input class="file-picker" type="file" name="files[]" multiple>
+      <label class="file-button">
+    📎 Выбрать файл / фото
+    <input
+        type="file"
+        name="files[]"
+        multiple
+        accept="image/*,video/*,application/pdf,.doc,.docx,.xls,.xlsx,.txt,.zip,.rar,.7z"
+    >
+</label>
       <button class="send-button" type="submit">Отправить</button>
     </div>
     <p class="upload-note">
