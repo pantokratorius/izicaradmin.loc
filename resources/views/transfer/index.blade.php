@@ -34,7 +34,7 @@
   .download-link { flex:none; color:#2563eb; text-decoration:none; font-size:13px; font-weight:600; }
   .empty-feed { text-align:center; color:#7b8494; padding:35px 15px; }
   .transfer-pages nav { margin-top:18px; }
-  .transfer-pages svg {width: 15px;}
+  .transfer-pages svg {width: 12px;}
   .delete-all-button {
   border: 0;
   border-radius: 8px;
